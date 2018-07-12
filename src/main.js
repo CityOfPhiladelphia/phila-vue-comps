@@ -10,6 +10,8 @@ import List from './components/List.vue';
 import OverlayToggleGroup from './components/OverlayToggleGroup.vue';
 import TabGroup from './components/TabGroup.vue';
 import VerticalTable from './components/VerticalTable.vue';
+import TopicComponent from './components/TopicComponent.vue';
+import TopicComponentGroup from './components/TopicComponentGroup.vue';
 
 
 exports.Badge = Badge;
@@ -24,3 +26,5 @@ exports.List = List;
 exports.OverlayToggleGroup = OverlayToggleGroup;
 exports.TabGroup = TabGroup;
 exports.VerticalTable = VerticalTable;
+exports.TopicComponent = TopicComponent;
+exports.TopicComponentGroup = TopicComponentGroup;

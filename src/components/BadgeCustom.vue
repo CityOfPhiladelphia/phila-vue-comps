@@ -10,7 +10,7 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import TopicComponentGroup from '../TopicComponentGroup.vue';
+  import TopicComponentGroup from './TopicComponentGroup.vue';
 
   export default {
     mixins: [TopicComponent],

@@ -1,13 +1,13 @@
 {
-  "name": "@cityofphiladelphia/phila-vue-mapping",
-  "description": "A Vue.js component for data-rich web mapping",
-  "version": "0.0.4",
+  "name": "@cityofphiladelphia/phila-vue-comps",
+  "description": "A library of vue components for js apps",
+  "version": "0.0.1",
   "author": "City of Philadelphia <maps@phila.gov>",
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "dev": "yarn build -w"
   },
-  "main": "./dist/phila-vue-mapping.js",
+  "main": "./dist/phila-vue-comps.js",
   "dependencies": {
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",

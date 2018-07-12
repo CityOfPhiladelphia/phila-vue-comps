@@ -30,7 +30,7 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import TopicComponentGroup from '../TopicComponentGroup.vue';
+  import TopicComponentGroup from './TopicComponentGroup.vue';
   // console.log('in TabGroup.vue script, TopicComponentGroup:', TopicComponentGroup);
 
   export default {
