@@ -191,12 +191,14 @@
   height: 48px;
   border-radius: 2px;
   box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+  margin-bottom: 10px;
 }
 
 .mb-search-control-container-mobile {
   height: 38px;
   border-radius: 2px;
   box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+  margin-bottom: 10px;
 }
 
 .mb-search-control-form {
