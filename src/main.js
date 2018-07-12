@@ -1,3 +1,4 @@
+import AddressInput from './components/AddressInput.vue';
 import Badge from './components/Badge.vue';
 import BadgeCustom from './components/BadgeCustom.vue';
 import Callout from './components/Callout.vue';
@@ -13,7 +14,7 @@ import VerticalTable from './components/VerticalTable.vue';
 import TopicComponent from './components/TopicComponent.vue';
 import TopicComponentGroup from './components/TopicComponentGroup.vue';
 
-
+exports.AddressInput = AddressInput;
 exports.Badge = Badge;
 exports.BadgeCustom = BadgeCustom;
 exports.Callout = Callout;
