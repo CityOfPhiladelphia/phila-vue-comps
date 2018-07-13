@@ -32,16 +32,11 @@
 </template>
 
 <script>
-  // import * as L from 'leaflet';
   import debounce from 'lodash.debounce';
   import axios from 'axios';
 
   export default {
-    // props: ['position'],
     computed: {
-      // map() {
-      //   return this.$store.state.map.map;
-      // },
       addressEntered() {
         return this.$store.state.map.addressEntered;
       },
@@ -95,41 +90,10 @@
       },
     },
     methods: {
-      // createLeafletElement(L) {
-      //   // console.log('AddressInput.vue createLeafletElement is running')
-      //   // subclass Control to accept an el which gets mounted to the map
-      //   class ControlParent extends L.Control {
-      //     constructor(el, options) {
-      //       super(options);
-      //       this.el = el;
-      //     }
-      //     onAdd() {
-      //       const el = this.el;
-      //
-      //       // keep clicks from hitting the map
-      //       L.DomEvent.disableClickPropagation(el);
-      //       L.DomEvent.disableScrollPropagation(el);
-      //
-      //       return el;
-      //     }
-      //   }
-      //
-      //   const el = this.$el;
-      //   return new ControlParent(el, {
-      //     position: this.position
-      //   });
-      // },
-      // parentMounted(parent, props) {
-      //   // console.log('AddressInput.vue parentMounted is running, parent:', parent, 'props:', props);
-      //   const leafletElement = this.createLeafletElement(L);
-      //   this.$leafletElement = leafletElement;
-      //   const map = this.map;
-      //   leafletElement.addTo(map);
-      // },
       didType: _.debounce(function (e) {
-          console.log('debounce is running');
+          // console.log('debounce is running');
           if (this.addressAutocompleteEnabled) {
-            console.log('debounce is running, e:', e, 'this:', this);
+            // console.log('debounce is running, e:', e, 'this:', this);
             if (e.key === "ArrowDown") {
               document.getElementById('address-candidate-list-0').focus();
               return;
