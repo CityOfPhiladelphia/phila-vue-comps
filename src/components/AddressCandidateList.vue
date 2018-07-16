@@ -23,10 +23,10 @@
   export default {
     computed: {
       candidates() {
-        return this.$store.state.map.candidates;
+        return this.$store.state.candidates;
       },
       shouldShowAddressCandidateList() {
-        return this.$store.state.map.shouldShowAddressCandidateList;
+        return this.$store.state.shouldShowAddressCandidateList;
       },
       activeTopic() {
         return this.$store.state.activeTopic;
@@ -94,6 +94,7 @@
 <style scoped>
 
 .list-group {
+  display: inline-block;
   height: 300px;
   width: 250px;
   overflow: auto;
@@ -101,6 +102,7 @@
 }
 
 .list-group-full {
+  display: inline-block;
   height: 300px;
   width: 197px;
   overflow: auto;
@@ -108,6 +110,7 @@
 }
 
 .list-group-mobile {
+  display: inline-block;
   height: 300px;
   width: 250px;
   overflow: auto;
@@ -115,6 +118,7 @@
 }
 
 .list-group-mobile-full {
+  display: inline-block;
   height: 300px;
   width: 197px;
   overflow: auto;

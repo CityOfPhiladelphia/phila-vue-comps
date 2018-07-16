@@ -43,7 +43,7 @@
             val = getter(state, item);
           } else {
             val = getter(state);
-            console.log('state:', state, 'val:', val);
+            // console.log('state:', state, 'val:', val);
           }
         } else {
           val = valOrGetter;
