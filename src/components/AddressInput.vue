@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  // import _ from 'lodash';
+  import _ from 'lodash';
   import debounce from 'lodash.debounce';
   import axios from 'axios';
 
@@ -92,7 +92,7 @@
       },
     },
     methods: {
-      didType: debounce(function (e) {
+      didType: _.debounce(function (e) {
           // console.log('debounce is running');
           if (this.addressAutocompleteEnabled) {
             // console.log('debounce is running, e:', e, 'this:', this);
