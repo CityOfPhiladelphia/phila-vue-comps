@@ -165,7 +165,7 @@
       for (let index=0; index < filters.length; index++) {
         defaultFilterSelections['filter-' + index] = filters[index].values[0];
       }
-      console.log('in horiz table data, filters:', filters, 'filtersKeys:', filtersKeys, 'defaultFilterSelections:', defaultFilterSelections);
+      // console.log('in horiz table data, filters:', filters, 'filtersKeys:', filtersKeys, 'defaultFilterSelections:', defaultFilterSelections);
       let sortFields;
       if (this.options.sort){
         sortFields = this.options.sort.sortFields || [];
@@ -371,7 +371,7 @@
       },
       // this takes itemsAfterSearch and applies selected filters
       itemsAfterFilters() {
-        console.log('itemsAfterFilters is running, this.filters:', this.filters, 'this.filterSelections:', this.filterSelections);
+        // console.log('itemsAfterFilters is running, this.filters:', this.filters, 'this.filterSelections:', this.filterSelections);
         const itemsAfterSearch = this.itemsAfterSearch;
         const items = this.filterItems(itemsAfterSearch,
                                        this.filters,
@@ -751,7 +751,7 @@
       },
       // this updates the global state that stores filtered table rows
       updateTableFilteredData() {
-        console.log('update table filtered data is running, options:', this.options);
+        // console.log('update table filtered data is running, options:', this.options);
 
         // get table id
         const { tableId } = this.options;

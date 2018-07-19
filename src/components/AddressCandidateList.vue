@@ -4,7 +4,7 @@
   >
     <ul>
       <li v-for="(candidate, i) in candidates">
-        <a :href="'#/' + candidate + '/' + activeTopic"
+        <a :href="createLink(candidate)"
            @click="closeAddressCandidateList(candidate)"
            class="list-group-item"
            tabindex="-1"
@@ -59,6 +59,13 @@
       }
     },
     methods: {
+      createLink(candidate) {
+        if (this.$store.state.activeTopic) {
+          return '#/' + candidate + '/' + this.activeTopic;
+        } else {
+          return '#/' + candidate;
+        }
+      },
       maybeUsedArrow(e) {
         const id = e.target.id;
         const index = parseInt(id.substring(id.lastIndexOf('-') + 1));
@@ -82,8 +89,8 @@
         }
       },
       closeAddressCandidateList(addressCandidate) {
-        // console.log('closeAddressCandidateList, addressCandidate:', addressCandidate);
-        this.$controller.handleSearchFormSubmit(addressCandidate);
+        console.log('AddressCandidateList.vue closeAddressCandidateList is running, addressCandidate:', addressCandidate);
+        // this.$controller.handleSearchFormSubmit(addressCandidate);
         this.$store.commit('setAddressEntered', addressCandidate);
         this.$store.commit('setShouldShowAddressCandidateList', false);
       },

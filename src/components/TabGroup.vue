@@ -34,10 +34,11 @@
   // console.log('in TabGroup.vue script, TopicComponentGroup:', TopicComponentGroup);
 
   export default {
+    name: 'TabGroup',
     mixins: [TopicComponent],
-    // components: {
-    //   TopicComponentGroup
-    // },
+    components: {
+      // TopicComponentGroup
+    },
     beforeCreate() {
       // console.log('tabGroup beforeCreate is running');
       this.$options.components.TopicComponentGroup = TopicComponentGroup;

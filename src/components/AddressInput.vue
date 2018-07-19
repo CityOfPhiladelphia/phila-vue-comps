@@ -33,6 +33,7 @@
 </template>
 
 <script>
+  // import _ from 'lodash';
   import debounce from 'lodash.debounce';
   import axios from 'axios';
 
@@ -91,7 +92,7 @@
       },
     },
     methods: {
-      didType: _.debounce(function (e) {
+      didType: debounce(function (e) {
           // console.log('debounce is running');
           if (this.addressAutocompleteEnabled) {
             // console.log('debounce is running, e:', e, 'this:', this);
@@ -131,6 +132,8 @@
       },
       handleFormX() {
         this.$store.commit('setAddressEntered', '');
+        this.$store.commit('setShouldShowAddressCandidateList', false);
+        this.$store.commit('setCandidates', []);
       },
       handleSearchFormSubmit() {
         let value;

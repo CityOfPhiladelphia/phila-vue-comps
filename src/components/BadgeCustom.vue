@@ -13,6 +13,7 @@
   import TopicComponentGroup from './TopicComponentGroup.vue';
 
   export default {
+    name: 'BadgeCustom',
     mixins: [TopicComponent],
     beforeCreate() {
       this.$options.components.TopicComponentGroup = TopicComponentGroup;
