@@ -9,3 +9,6 @@ phila-vue-comps is a library of components that can be used in js apps.
 
 ### Horizontal Table
 ![](https://s3.amazonaws.com/mapboard-images/TopicPanel/horizontalTable_2.JPG)
+
+## Usage
+Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki) for usage documentation.
