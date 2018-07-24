@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- :compFilterData="filterData" -->
     <component v-for="(comp, compIndex) in topicComponents"
                :is="comp.type"
                class="topic-component"
@@ -26,6 +25,7 @@
   import TabGroup from './TabGroup.vue';
   import HorizontalTableGroup from './HorizontalTableGroup.vue';
   import BadgeCustom from './BadgeCustom.vue';
+  import TopicSet from './TopicSet.vue';
   // console.log('in TopicComponentGroup.vue script, BadgeCustom:', BadgeCustom, 'Badge:', Badge, 'TabGroup:', TabGroup, 'Callout:', Callout, 'CollectionSummary:', CollectionSummary, 'HorizontalTable:', HorizontalTable);
 
   export default {
@@ -40,17 +40,13 @@
       VerticalTable,
       OverlayToggleGroup,
       List,
-      // TabGroup,
       HorizontalTableGroup,
-      // BadgeCustom,
     },
     beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');
       this.$options.components.TabGroup = TabGroup;
       this.$options.components.BadgeCustom = BadgeCustom;
-    },
-    created() {
-      // console.log('TopicComponentGroup.vue created is running, Badge:', Badge, 'topicComponents:', this.$props.topicComponents);
+      this.$options.components.TopicSet = TopicSet;
     },
     data() {
       return {

@@ -14,6 +14,7 @@ import OverlayToggleGroup from './components/OverlayToggleGroup.vue';
 import TabGroup from './components/TabGroup.vue';
 import VerticalTable from './components/VerticalTable.vue';
 import Topic from './components/Topic.vue';
+import TopicSet from './components/TopicSet.vue';
 import TopicComponent from './components/TopicComponent.vue';
 import TopicComponentGroup from './components/TopicComponentGroup.vue';
 
@@ -37,6 +38,7 @@ exports.OverlayToggleGroup = OverlayToggleGroup;
 exports.TabGroup = TabGroup;
 exports.VerticalTable = VerticalTable;
 exports.Topic = Topic;
+exports.TopicSet = TopicSet;
 exports.TopicComponent = TopicComponent;
 exports.TopicComponentGroup = TopicComponentGroup;
 

@@ -40,9 +40,11 @@
   import TopicComponentGroup from './TopicComponentGroup.vue';
 
   export default {
+    name: 'Topic',
     props: ['topicKey'],
-    components: {
-      TopicComponentGroup
+    components: {},
+    beforeCreate() {
+      this.$options.components.TopicComponentGroup = TopicComponentGroup;
     },
     computed: {
       // returns the full config object for the topic
