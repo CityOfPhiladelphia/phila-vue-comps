@@ -9,7 +9,7 @@ phila-vue-comps is a library of components that can be used in vue-js apps.
 
 * in an html file, use the CDN:
 
-    `<script src="//unpkg.com/@cityofphiladelphia/phila-vue-datafetch@0.0.8/dist/phila-vue-datafetch.js"></script>`
+    `<script src="//unpkg.com/@cityofphiladelphia/phila-vue-comps@0.0.9/dist/phila-vue-comps.js"></script>`
 
 ## Examples:
 
