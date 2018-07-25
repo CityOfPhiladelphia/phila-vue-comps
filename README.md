@@ -1,8 +1,8 @@
 # phila-vue-comps
 
-phila-vue-comps is a library of components that can be used in vue-js apps.
+phila-vue-comps is a library of Vue components that can be used in apps which use Vue.js.  It includes many data-presentation components such as [Vertical Tables](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki/Vertical-Table) or [Horizontal Tables](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki/Horizontal-Table), etc.
 
-## To Use
+## To Include The Components In Your App
 * in a bundled app, use npm:
 
     `npm install phila-vue-comps`
@@ -11,7 +11,7 @@ phila-vue-comps is a library of components that can be used in vue-js apps.
 
     `<script src="//unpkg.com/@cityofphiladelphia/phila-vue-comps@0.0.9/dist/phila-vue-comps.js"></script>`
 
-## Examples:
+## Examples
 
 ### Badge-Custom
 ![](https://s3.amazonaws.com/mapboard-images/TopicPanel/BadgeCustom.JPG)
