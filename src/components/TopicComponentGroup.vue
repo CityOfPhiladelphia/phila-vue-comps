@@ -15,12 +15,15 @@
   import generateUniqueId from '../util/unique-id';
 
   import Badge from './Badge.vue';
+  import ButtonComp from './ButtonComp.vue';
   import Callout from './Callout.vue';
   import CollectionSummary from './CollectionSummary.vue';
+  import Division from './Division.vue';
   import HorizontalTable from './HorizontalTable.vue';
   import Image_ from './Image.vue';
   import VerticalTable from './VerticalTable.vue';
   import OverlayToggleGroup from './OverlayToggleGroup.vue';
+  import Paragraph from './Paragraph.vue';
   import List from './List.vue';
   import TabGroup from './TabGroup.vue';
   import HorizontalTableGroup from './HorizontalTableGroup.vue';
@@ -33,12 +36,15 @@
     props: ['topicComponents', 'item', 'filterData'],
     components: {
       Badge,
+      ButtonComp,
       Callout,
       CollectionSummary,
+      Division,
       HorizontalTable,
       Image_,
       VerticalTable,
       OverlayToggleGroup,
+      Paragraph,
       List,
       HorizontalTableGroup,
     },
@@ -66,6 +72,6 @@
 
 <style scoped>
   .topic-component {
-    margin-bottom: 10px !important;
+    /* margin-bottom: 10px !important; */
   }
 </style>

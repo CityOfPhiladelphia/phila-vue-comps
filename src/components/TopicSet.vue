@@ -9,11 +9,25 @@
 
 <script>
   import Topic from './Topic.vue';
+  import TopicComponent from './TopicComponent.vue';
 
   export default {
+    mixins: [TopicComponent],
     name: 'TopicSet',
     components: {
       Topic,
     },
+    mounted() {
+      if (this.$store.state.activeTopic === null) {
+        this.setDefaultTopicActive();
+      }
+    },
+    methods: {
+      setDefaultTopicActive() {
+        if (this.$props.options.defaultTopic) {
+          this.$store.state.activeTopic = this.$props.options.defaultTopic;
+        }
+      }
+    }
   };
 </script>

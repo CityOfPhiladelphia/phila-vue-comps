@@ -92,5 +92,6 @@
   .table-container {
     /*this was too much padding for the parcel table, taking out for now*/
     /*padding-top: 1rem;*/
+    margin-bottom: 10px !important;
   }
 </style>

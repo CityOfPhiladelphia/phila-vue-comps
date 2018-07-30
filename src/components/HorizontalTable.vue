@@ -1,12 +1,12 @@
 <template>
-  <div class="mb-horizontal-table">
+  <div class="pvc-horizontal-table">
     <!-- <button v-if="shouldShowButton"
     >
       Text
     </button> -->
     <div v-if="shouldShowTable">
       <!-- controls -->
-      <div class="mb-horizontal-table-controls"
+      <div class="pvc-horizontal-table-controls"
            v-if="shouldShowFilters !== false"
       >
         <div v-if="!!options.filters"
@@ -18,14 +18,14 @@
                 :id="'filter-' + index"
                 class="inline-block"
           >
-            <div class="vertically-centered mb-select-text">{{ filter.label }}</div>
+            <div class="vertically-centered pvc-select-text">{{ filter.label }}</div>
             <select @change="handleFilterValueChange"
-                    class="mb-select"
+                    class="pvc-select"
             >
               <optgroup>
                 <option v-for="filterValue in filter.values"
                         :value="slugifyFilterValue(filterValue)"
-                        class="mb-select-option"
+                        class="pvc-select-option"
                 >
                   {{ filterValue.label }}
                 </option>
@@ -38,14 +38,14 @@
         <div v-if="!!options.sort && !!options.sort.select"
              class="vertically-centered"
         >
-          <div class="vertically-centered mb-select-text">Sort by</div>
+          <div class="vertically-centered pvc-select-text">Sort by</div>
           <select @change="handleSortValueChange"
-                  class="mb-select"
+                  class="pvc-select"
           >
             <optgroup>
               <option v-for="sortField in sortFields"
                       :value="sortField"
-                      class="mb-select-option"
+                      class="pvc-select-option"
               >
                 {{ sortField }}
               </option>
@@ -57,7 +57,7 @@
         <div v-if="filterByTextFields"
              class="vertically-centered"
         >
-          <div class="mb-select-text inline-block">
+          <div class="pvc-select-text inline-block">
             {{ options.filterByText.label }}
           </div>
           <form @submit.prevent="handleFilterFormX"
@@ -67,16 +67,16 @@
                    id="theInput"
                    @keyup="handleFilterFormKeyup"
             />
-            <button class="mb-search-control-button"
+            <button class="pvc-search-control-button"
                     v-if="this.searchText != ''"
             >
               <i class="fa fa-times fa-lg"></i>
             </button>
           </form>
         </div>
-      </div> <!-- end of mb-horizontal-table-controls block -->
+      </div> <!-- end of pvc-horizontal-table-controls block -->
 
-      <div :class="{ 'mb-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
+      <div :class="{ 'pvc-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
         <div v-if="slots.title">
           <h4 style="display:inline-block">
             {{ evaluateSlot(slots.title) }} {{ countText }}
@@ -84,7 +84,7 @@
           <h5 style="display:inline-block; color: gray">
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
-          <a class="button mb-download-data-button"
+          <a class="button pvc-download-data-button"
                   v-if="this.shouldShowDownloadButton"
                   @click="this.exportTableToCSV"
           >
@@ -298,9 +298,9 @@
       // REVIEW what does this do? can this be simplified?
       inputClass() {
         if (this.searchText === '') {
-          return 'mb-search-control-input';
+          return 'pvc-search-control-input';
         } else {
-          return 'mb-search-control-input-full';
+          return 'pvc-search-control-input-full';
         }
       },
       filters() {
@@ -776,34 +776,38 @@
     vertical-align: middle;
   }
 
-  .mb-horizontal-table-controls {
+  .pvc-horizontal-table {
+    margin-bottom: 10px !important;
+  }
+
+  .pvc-horizontal-table-controls {
     text-align: center;
     vertical-align: middle;
     margin-bottom: 10px;
   }
 
   /* dropdown filters */
-  .mb-select-text {
+  .pvc-select-text {
     font-size: 16px;
     padding-right: 5px;
     padding-left: 5px;
   }
 
-  .mb-select {
+  .pvc-select {
     width: auto;
     height: 40px;
     vertical-align: middle;
     /*padding-right: 20px;*/
   }
 
-  .mb-select-option {
+  .pvc-select-option {
     display: inline-block;
     padding-right: 100px;
     margin-right: 100px;
   }
 
   /* input filters using text */
-  .mb-search-control-input {
+  .pvc-search-control-input {
     height: 40px !important;
     line-height: 48px;
     padding: 8px;
@@ -812,8 +816,8 @@
     /*margin-left: 10px;*/
   }
 
-  /*REVIEW this repeats a lot of .mb-search-control-input. can it be refactored?*/
-  .mb-search-control-input-full {
+  /*REVIEW this repeats a lot of .pvc-search-control-input. can it be refactored?*/
+  .pvc-search-control-input-full {
     height: 40px !important;
     line-height: 48px;
     padding: 8px;
@@ -821,14 +825,14 @@
     width: 260px;
   }
 
-  .mb-search-control-button {
+  .pvc-search-control-button {
     width: 40px;
     background: #ccc;
     line-height: 40px;
     float: right;
   }
 
-  .mb-download-data-button {
+  .pvc-download-data-button {
     float: right;
     vertical-align: baseline;
     display: inline-block;
@@ -840,7 +844,7 @@
     clear: both;
   }
 
-  .mb-horizontal-table-body {
+  .pvc-horizontal-table-body {
     padding-top: 1rem;
     padding-bottom: 0.35rem;
   }
