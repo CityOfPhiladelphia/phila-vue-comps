@@ -1,6 +1,8 @@
 <template>
 
-  <p v-html="this.message" />
+  <p v-html="this.message"
+     :style="this.style"
+  />
 
 </template>
 
@@ -25,6 +27,11 @@
         }
         return textWithTags;
       },
+      style() {
+        if (this.$props.options) {
+          return this.$props.options.style || '';
+        }
+      }
     }
   };
 </script>

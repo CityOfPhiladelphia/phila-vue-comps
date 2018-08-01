@@ -1,28 +1,28 @@
 <template>
-  <div :class="this.containerClass">
+  <div :class="'pvc-search-control-container ' + this.containerClass"
+       :style="this.containerStyle"
+  >
     <form @submit.prevent="handleSearchFormSubmit"
           autocomplete="off"
           id="search-form"
           class="pvc-search-control-form"
     >
-      <!-- <div class="form-group"> -->
-        <input :class="this.inputClass"
-               id="pvc-search-control-input"
-               placeholder="Search for an Address"
-               :value="this.addressEntered"
-               tabindex="0"
-               @keyup="didType"
-        />
-      <!-- </div> -->
+      <input :class="'pvc-search-control-input ' + this.inputClass"
+             id="pvc-search-control-input"
+             :style="this.inputStyle"
+             :placeholder="this.$props.placeholder"
+             :value="this.addressEntered"
+             tabindex="0"
+             @keyup="didType"
+      />
     </form>
-    <button :class="this.buttonClass"
+    <button :class="'pvc-search-control-button ' + this.buttonClass"
             v-if="this.addressAutocompleteEnabled && this.addressEntered != '' && this.addressEntered != null"
             @click="handleFormX"
     >
       <i class="fa fa-times fa-lg"></i>
     </button>
-    <button :class="this.buttonClass"
-            name="pvc-search-control-button"
+    <button :class="'pvc-search-control-button ' + this.buttonClass"
             tabindex="-1"
             @click="this.handleSearchFormSubmit"
     >
@@ -38,50 +38,77 @@
   import axios from 'axios';
 
   export default {
+    props: [
+      'widthFromConfig',
+      'position',
+      'placeholder',
+    ],
+    data() {
+      const data = {
+        containerStyle: {
+          'width': '305px',
+          'float': this.position,
+        },
+        inputStyle: {
+          'width': '250px',
+        }
+      }
+      return data;
+    },
+    created() {
+      window.addEventListener('resize', this.handleWindowResize);
+      this.handleWindowResize();
+    },
+    mounted() {
+      this.containerStyle.float = this.$props.position;
+    },
+    watch: {
+      addressEntered(nextValue) {
+        this.handleWindowResize();
+      }
+    },
     computed: {
       addressEntered() {
         return this.$store.state.addressEntered;
       },
-      containerClass() {
-        if (this.isMobileOrTablet) {
-          return 'pvc-search-control-container-mobile';
+      position() {
+        return this.$props.position;
+      },
+      inputWidth() {
+        if (this.addressAutocompleteEnabled) {
+          if (this.addressEntered === '' || this.addressEntered === null) {
+            return this.$props.widthFromConfig - 55;
+          } else {
+            return this.$props.widthFromConfig - 108;
+          }
         } else {
-          return 'pvc-search-control-container';
+          return this.$props.widthFromConfig - 55;
         }
       },
       inputClass() {
         if (this.isMobileOrTablet) {
-          if (this.addressAutocompleteEnabled) {
-            if (this.addressEntered === '' || this.addressEntered === null) {
-              return 'pvc-search-control-input-mobile';
-            } else {
-              return 'pvc-search-control-input-mobile-full';
-            }
-          } else {
-            return 'pvc-search-control-input-mobile';
-          }
+          return 'pvc-input-mobile';
         } else {
-          if (this.addressAutocompleteEnabled) {
-            if (this.addressEntered === '' || this.addressEntered === null) {
-              return 'pvc-search-control-input';
-            } else {
-              return 'pvc-search-control-input-full';
-            }
-          } else {
-            return 'pvc-search-control-input';
-          }
+          return 'pvc-input-non-mobile';
+        }
+      },
+      containerClass() {
+        if (this.isMobileOrTablet) {
+          return 'pvc-container-mobile';
+        } else {
+          return 'pvc-container-non-mobile';
         }
       },
       buttonClass() {
         if (this.isMobileOrTablet) {
-          return 'pvc-search-control-button-mobile'
+          return 'pvc-button-mobile'
         } else {
-          return 'pvc-search-control-button'
+          return 'pvc-button-non-mobile'
         }
       },
       addressAutocompleteEnabled() {
         // TODO this is temporarily disabled
-        if (this.$config.addressAutocomplete.enabled === true) {
+        if (this.$config.addressInput.autocompleteEnabled === true) {
           return true;
         } else {
           return false;
@@ -146,6 +173,26 @@
         this.$controller.handleSearchFormSubmit(value);
         this.$store.commit('setAddressEntered', value);
       },
+      handleWindowResize() {
+        const addressEntered = this.addressEntered;
+        console.log('AddressInput.vue handleWindowResize is running', $(window).width(), 'addressEntered:', addressEntered);
+        if ($(window).width() >= 750) {
+          this.containerStyle.width = this.$props.widthFromConfig + 'px'
+          if (addressEntered === '' || addressEntered === null) {
+            this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px'
+          } else {
+            this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px'
+          }
+        } else {
+          this.containerStyle.width = this.$props.widthFromConfig - 200 + 'px'
+          if (addressEntered === '' || addressEntered === null) {
+            this.inputStyle.width = this.$props.widthFromConfig - 255 + 'px'
+          } else {
+            this.inputStyle.width = this.$props.widthFromConfig - 308 + 'px'
+          }
+          // this.inputStyle.width = this.$props.widthFromConfig - 255 + 'px'
+        }
+      }
     }
   };
 </script>
@@ -156,41 +203,27 @@
   display: inline-block;
 }
 
-.pvc-search-control-button {
-  display: inline-block;
-  color: #fff;
-  width: 50px;
-  background: #2176d2;
-  line-height: 48px;
-  padding: 0px;
-}
-
-.pvc-search-control-button-mobile {
-  display: inline-block;
-  color: #fff;
-  width: 38px;
-  height: 38px;
-  background: #2176d2;
-  line-height: 38px;
-  padding: 0px;
-  padding-top: 1px;
-}
+/* Container */
 
 .pvc-search-control-container {
-  height: 48px;
+  display: inline-block;
+  /* position: absolute; */
   border-radius: 2px;
   box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   width: 305px;
 }
 
-.pvc-search-control-container-mobile {
-  height: 38px;
-  border-radius: 2px;
-  box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
-  margin-bottom: 10px;
-  width: 305px;
+.pvc-container-non-mobile {
+  height: 48px;
 }
+
+.pvc-container-mobile {
+  height: 38px;
+}
+
+
+/* Input */
 
 .pvc-search-control-input {
   display: inline-block;
@@ -201,60 +234,35 @@
   width: 250px;
 }
 
-.pvc-search-control-input-full {
-  border: 0;
-  padding: 15px;
-  font-family: 'Montserrat', 'Tahoma', sans-serif;
-  font-size: 16px;
-  width: 197px;
+.pvc-input-non-mobile {
+  height: 48px;
 }
 
-.pvc-search-control-input-mobile {
+.pvc-input-mobile {
+  height: 38px;
+}
+
+
+/* Button */
+
+.pvc-search-control-button {
   display: inline-block;
-  border: 0;
-  padding: 15px;
-  font-family: 'Montserrat', 'Tahoma', sans-serif;
-  font-size: 16px;
-  width: 250px;
+  color: #fff;
+  background: #2176d2;
+  padding: 0px;
+  width: 50px;
+}
+
+.pvc-button-non-mobile {
+  height: 48px;
+  line-height: 48px;
+}
+
+.pvc-button-mobile {
   height: 38px;
+  line-height: 38px;
+  padding-top: 1px;
 }
 
-.pvc-search-control-input-mobile-full {
-  border: 0;
-  padding: 15px;
-  font-family: 'Montserrat', 'Tahoma', sans-serif;
-  font-size: 16px;
-  width: 209px;
-  height: 38px;
-}
-
-/*small*/
-@media screen and (max-width: 39.9375em) {
-
-  .pvc-search-control-container {
-    width: 255px;
-  }
-
-  .pvc-search-control-container-mobile {
-    width: 255px;
-  }
-
-  .pvc-search-control-input {
-    width: 200px;
-  }
-
-  .pvc-search-control-input-mobile {
-    width: 200px;
-  }
-
-  .pvc-search-control-input-full {
-    width: 147px;
-  }
-
-  .pvc-search-control-input-mobile-full {
-    width: 158px;
-  }
-
-}
 
 </style>

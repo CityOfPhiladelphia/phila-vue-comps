@@ -1,7 +1,9 @@
 <template>
   <div :class="this.listGroupClass"
        v-show="this.shouldShowAddressCandidateList"
+       :style="this.listStyle"
   >
+  <!-- :style="'width: ' + this.inputWidth + 'px;'" -->
     <ul>
       <li v-for="(candidate, i) in candidates">
         <a :href="createLink(candidate)"
@@ -21,7 +23,39 @@
 <script>
 
   export default {
+    data() {
+      const data = {
+        listStyle: {
+          'width': '250px'
+        }
+      }
+      return data;
+    },
+    created() {
+      window.addEventListener('resize', this.handleWindowResize);
+      this.handleWindowResize();
+    },
+    watch: {
+      addressEntered(nextValue) {
+        this.handleWindowResize();
+      }
+    },
+    props: [
+      'widthFromConfig',
+    ],
     computed: {
+      inputWidth() {
+        return this.$props.widthFromConfig - 55;
+        // if (this.addressAutocompleteEnabled) {
+        //   if (this.addressEntered === '' || this.addressEntered === null) {
+        //     return this.$props.widthFromConfig - 55;
+        //   } else {
+        //     return this.$props.widthFromConfig - 108;
+        //   }
+        // } else {
+        //   return this.$props.widthFromConfig - 55;
+        // }
+      },
       candidates() {
         return this.$store.state.candidates;
       },
@@ -33,6 +67,14 @@
       },
       isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
+      },
+      addressAutocompleteEnabled() {
+        // TODO this is temporarily disabled
+        if (this.$config.addressInput.autocompleteEnabled === true) {
+          return true;
+        } else {
+          return false;
+        }
       },
       listGroupClass() {
         if (this.isMobileOrTablet) {
@@ -94,8 +136,16 @@
         this.$store.commit('setAddressEntered', addressCandidate);
         this.$store.commit('setShouldShowAddressCandidateList', false);
       },
+      handleWindowResize(addressEntered) {
+        if ($(window).width() >= 750) {
+          this.listStyle.width = this.$props.widthFromConfig - 55 + 'px';
+        } else {
+          this.listStyle.width = this.$props.widthFromConfig - 255 + 'px';
+        }
+      }
     }
   };
+
 </script>
 
 <style scoped>
@@ -108,15 +158,15 @@
   margin-top: 1px !important;
 }
 
-.list-group-full {
+/* .list-group-full {
   display: inline-block;
   height: 300px;
   width: 197px;
   overflow: auto;
   margin-top: 1px !important;
-}
+} */
 
-.list-group-mobile {
+/* .list-group-mobile {
   display: inline-block;
   height: 300px;
   width: 250px;
@@ -130,7 +180,7 @@
   width: 197px;
   overflow: auto;
   margin-top: 1px !important;
-}
+} */
 
 ul {
   list-style-type: none;
