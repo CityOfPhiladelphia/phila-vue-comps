@@ -19,6 +19,7 @@
   import Callout from './Callout.vue';
   import CollectionSummary from './CollectionSummary.vue';
   import Division from './Division.vue';
+  import ePayForm from './ePayForm.vue';
   import HorizontalTable from './HorizontalTable.vue';
   import Image_ from './Image.vue';
   import VerticalTable from './VerticalTable.vue';
@@ -28,6 +29,7 @@
   import TabGroup from './TabGroup.vue';
   import HorizontalTableGroup from './HorizontalTableGroup.vue';
   import BadgeCustom from './BadgeCustom.vue';
+  import Topic from './Topic.vue';
   import TopicSet from './TopicSet.vue';
   // console.log('in TopicComponentGroup.vue script, BadgeCustom:', BadgeCustom, 'Badge:', Badge, 'TabGroup:', TabGroup, 'Callout:', Callout, 'CollectionSummary:', CollectionSummary, 'HorizontalTable:', HorizontalTable);
 
@@ -40,6 +42,7 @@
       Callout,
       CollectionSummary,
       Division,
+      ePayForm,
       HorizontalTable,
       Image_,
       VerticalTable,
@@ -52,6 +55,7 @@
       // console.log('TopicComponentGroup beforeCreate is running');
       this.$options.components.TabGroup = TabGroup;
       this.$options.components.BadgeCustom = BadgeCustom;
+      this.$options.components.Topic = Topic;
       this.$options.components.TopicSet = TopicSet;
     },
     data() {

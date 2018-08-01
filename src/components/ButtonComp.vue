@@ -2,6 +2,7 @@
   <a href="#"
      :class="'button ' + this.class"
      :style="this.style"
+     @click.prevent="evaluateSlot(slots.buttonAction)"
   >
     {{ message }}
   </a>
@@ -14,13 +15,19 @@
     mixins: [TopicComponent],
     computed: {
       message() {
-        return this.evaluateSlot(this.$props.slots.text);
+        if (this.$props.slots) {
+          return this.evaluateSlot(this.$props.slots.text);
+        }
       },
       class() {
-        return this.$props.options.class || '';
+        if (this.$props.options) {
+          return this.$props.options.class || '';
+        }
       },
       style() {
-        return this.$props.options.style || '';
+        if (this.$props.options) {
+          return this.$props.options.style || '';
+        }
       }
     }
   };
