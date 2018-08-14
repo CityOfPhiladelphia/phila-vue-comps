@@ -40,14 +40,12 @@
   export default {
     props: [
       'widthFromConfig',
-      'position',
       'placeholder',
     ],
     data() {
       const data = {
         containerStyle: {
           'width': '305px',
-          'float': this.position,
         },
         inputStyle: {
           'width': '250px',
@@ -59,9 +57,6 @@
       window.addEventListener('resize', this.handleWindowResize);
       this.handleWindowResize();
     },
-    mounted() {
-      this.containerStyle.float = this.$props.position;
-    },
     watch: {
       addressEntered(nextValue) {
         this.handleWindowResize();
@@ -70,9 +65,6 @@
     computed: {
       addressEntered() {
         return this.$store.state.addressEntered;
-      },
-      position() {
-        return this.$props.position;
       },
       inputWidth() {
         if (this.addressAutocompleteEnabled) {
@@ -175,22 +167,28 @@
       },
       handleWindowResize() {
         const addressEntered = this.addressEntered;
-        console.log('AddressInput.vue handleWindowResize is running', $(window).width(), 'addressEntered:', addressEntered);
-        if ($(window).width() >= 750) {
-          this.containerStyle.width = this.$props.widthFromConfig + 'px'
+        // console.log('AddressInput.vue handleWindowResize is running', $(window).width(), 'addressEntered:', addressEntered);
+        if ($(window).width() >= 850) {
+          this.containerStyle.width = this.$props.widthFromConfig + 'px';
           if (addressEntered === '' || addressEntered === null) {
-            this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px'
+            this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
           } else {
-            this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px'
+            this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
+          }
+        } else if ($(window).width() >= 750) {
+          this.containerStyle.width = this.$props.widthFromConfig - 100 + 'px';
+          if (addressEntered === '' || addressEntered === null) {
+            this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';
+          } else {
+            this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
           }
         } else {
-          this.containerStyle.width = this.$props.widthFromConfig - 200 + 'px'
+          this.containerStyle.width = '300px';
           if (addressEntered === '' || addressEntered === null) {
-            this.inputStyle.width = this.$props.widthFromConfig - 255 + 'px'
+            this.inputStyle.width = '245px';
           } else {
-            this.inputStyle.width = this.$props.widthFromConfig - 308 + 'px'
+            this.inputStyle.width = '55px';
           }
-          // this.inputStyle.width = this.$props.widthFromConfig - 255 + 'px'
         }
       }
     }
@@ -207,10 +205,8 @@
 
 .pvc-search-control-container {
   display: inline-block;
-  /* position: absolute; */
   border-radius: 2px;
   box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
-  /* margin-bottom: 10px; */
   width: 305px;
 }
 
