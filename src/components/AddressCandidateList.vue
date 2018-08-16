@@ -46,18 +46,15 @@
     computed: {
       inputWidth() {
         return this.$props.widthFromConfig - 55;
-        // if (this.addressAutocompleteEnabled) {
-        //   if (this.addressEntered === '' || this.addressEntered === null) {
-        //     return this.$props.widthFromConfig - 55;
-        //   } else {
-        //     return this.$props.widthFromConfig - 108;
-        //   }
-        // } else {
-        //   return this.$props.widthFromConfig - 55;
-        // }
       },
       candidates() {
-        return this.$store.state.candidates;
+        const autocompleteMax = this.$config.addressInput.autocompleteMax
+        if (!autocompleteMax) {
+          return this.$store.state.candidates;
+        } else {
+          let candidates = this.$store.state.candidates.slice(0, autocompleteMax);
+          return candidates;
+        }
       },
       shouldShowAddressCandidateList() {
         return this.$store.state.shouldShowAddressCandidateList;
@@ -137,10 +134,12 @@
         this.$store.commit('setShouldShowAddressCandidateList', false);
       },
       handleWindowResize(addressEntered) {
-        if ($(window).width() >= 750) {
+        if ($(window).width() >= 850) {
           this.listStyle.width = this.$props.widthFromConfig - 55 + 'px';
+        } else if ($(window).width() >= 750) {
+          this.listStyle.width = this.$props.widthFromConfig - 155 + 'px';
         } else {
-          this.listStyle.width = this.$props.widthFromConfig - 255 + 'px';
+          this.listStyle.width = '248px';
         }
       }
     }

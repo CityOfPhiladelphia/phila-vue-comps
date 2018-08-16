@@ -1,11 +1,13 @@
 <template>
-  <div class="callout">
-    <p v-if="this.message"
-       v-html="this.message"
-    />
-    <topic-component-group :topic-components="this.components"
-                           v-if="this.components"
-    />
+  <div class='wrapper grid-y'>
+    <div class="callout columns small-24">
+      <p v-if="this.message"
+         v-html="this.message"
+      />
+      <topic-component-group :topic-components="this.components"
+                             v-if="this.components"
+      />
+    </div>
   </div>
 </template>
 
@@ -40,8 +42,13 @@
 
 <style scoped>
 
+.wrapper {
+
+}
+
 .callout {
-  position: inherit;
+  /* position: inherit; */
+  height: auto;
 }
 
 </style>

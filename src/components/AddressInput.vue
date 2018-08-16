@@ -187,7 +187,7 @@
           if (addressEntered === '' || addressEntered === null) {
             this.inputStyle.width = '245px';
           } else {
-            this.inputStyle.width = '55px';
+            this.inputStyle.width = '192px';
           }
         }
       }
