@@ -122,7 +122,7 @@
       background-color: white;
       display: inline-block;
       z-index: 500;
-      opacity: 0.6;
+      opacity: 0.7;
       /* border-left-style: solid; */
       /* box-shadow: 2px 2px 7px grey; */
     }
