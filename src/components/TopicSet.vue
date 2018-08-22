@@ -18,7 +18,7 @@
       Topic,
     },
     mounted() {
-      if (this.$store.state.activeTopic === null) {
+      if (this.$store.state.activeTopic === null || this.$store.state.activeTopic === '') {
         this.setDefaultTopicActive();
       }
     },
