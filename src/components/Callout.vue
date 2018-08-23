@@ -20,10 +20,12 @@
     mixins: [TopicComponent],
     computed: {
       calloutClass() {
-        if (this.$props.options.class) {
-          return this.$props.options.class;
-        } else {
-          return 'columns small-24';
+        if (this.$props.options) {
+          if (this.$props.options.class) {
+            return this.$props.options.class;
+          } else {
+            return 'columns small-24';
+          }
         }
       },
       message() {
