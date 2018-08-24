@@ -10,7 +10,7 @@
       <input :class="'pvc-search-control-input ' + this.inputClass"
              id="pvc-search-control-input"
              :style="this.inputStyle"
-             :placeholder="this.$props.placeholder"
+             :placeholder="this.$props.placeholder || 'Search the map'"
              :value="this.addressEntered"
              tabindex="0"
              @keyup="didType"
@@ -100,8 +100,12 @@
       },
       addressAutocompleteEnabled() {
         // TODO this is temporarily disabled
-        if (this.$config.addressInput.autocompleteEnabled === true) {
-          return true;
+        if (this.$config.addressInput) {
+          if (this.$config.addressInput.autocompleteEnabled === true) {
+            return true;
+          } else {
+            return false;
+          }
         } else {
           return false;
         }
