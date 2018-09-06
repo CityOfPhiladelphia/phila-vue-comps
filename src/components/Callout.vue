@@ -41,6 +41,7 @@
 <style scoped>
 
 .callout {
+  margin-top: 1rem;
   position: inherit;
 }
 

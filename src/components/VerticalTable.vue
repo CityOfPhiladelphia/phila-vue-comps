@@ -49,15 +49,15 @@
         }
       },
       externalLinkAction() {
-        return this.options.externalLink.action || 'See more';
+        return this.options.externalLink.action || 'See more at ';
       },
       externalLinkText() {
         const externalLinkConf = this.options.externalLink;
         const actionFn = externalLinkConf.action;
         const actionText = actionFn(this.externalLinkCount);
-        const name = externalLinkConf.name;
+        const name = externalLinkConf.name || '';
 
-        return `${actionText} at ${name}`;
+        return `${actionText} ${name}`;
       },
       externalLinkHref() {
         return this.evaluateSlot(this.options.externalLink.href);
