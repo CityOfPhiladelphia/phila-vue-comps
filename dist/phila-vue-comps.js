@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('leaflet')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'leaflet'], factory) :
-  (factory((global.philaVueComps = {}),global._,global.lodash_debounce,global.axios,global.moment,global.escapeHtml,global.L));
-}(this, (function (exports,_,lodash_debounce,axios,moment,escapeHtml,L) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('leaflet'), require('esri-leaflet-legend')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'leaflet', 'esri-leaflet-legend'], factory) :
+  (factory((global.philaVueComps = {}),global._,global.lodash_debounce,global.axios,global.moment,global.escapeHtml,global.L,global.testLegend));
+}(this, (function (exports,_,lodash_debounce,axios,moment,escapeHtml,L,testLegend) { 'use strict';
 
   _ = _ && _.hasOwnProperty('default') ? _['default'] : _;
   lodash_debounce = lodash_debounce && lodash_debounce.hasOwnProperty('default') ? lodash_debounce['default'] : lodash_debounce;
@@ -10,6 +10,7 @@
   moment = moment && moment.hasOwnProperty('default') ? moment['default'] : moment;
   escapeHtml = escapeHtml && escapeHtml.hasOwnProperty('default') ? escapeHtml['default'] : escapeHtml;
   L = L && L.hasOwnProperty('default') ? L['default'] : L;
+  testLegend = testLegend && testLegend.hasOwnProperty('default') ? testLegend['default'] : testLegend;
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .list-group[data-v-557d70bd] { display: inline-block; height: 300px; width: 250px; overflow: auto; margin-top: 1px !important; } /* .list-group-full { display: inline-block; height: 300px; width: 197px; overflow: auto; margin-top: 1px !important; } */ /* .list-group-mobile { display: inline-block; height: 300px; width: 250px; overflow: auto; margin-top: 1px !important; } .list-group-mobile-full { display: inline-block; height: 300px; width: 197px; overflow: auto; margin-top: 1px !important; } */ ul[data-v-557d70bd] { list-style-type: none; margin-left: 0px; } .list-group-item[data-v-557d70bd] { /* width: 237px; */ display: block; border-radius: 2px; box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02); border: 2; background-color: white; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; font-family: 'Montserrat', 'Tahoma', sans-serif; font-size: 14px; font-weight: normal; } .list-group-item[data-v-557d70bd]:hover { background-color: #ffefa2; font-weight: bold; } /*small*/ @media screen and (max-width: 39.9375em) { .list-group[data-v-557d70bd] { width: 200px; } .list-group-mobile[data-v-557d70bd] { width: 200px; } .list-group-full[data-v-557d70bd] { width: 147px; } .list-group-mobile-full[data-v-557d70bd] { width: 158px; } } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
@@ -2446,6 +2447,7 @@
   };
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .legend { margin-left: 10px; } ul { list-style: none; margin-left: 0px; } ul ul { list-style: none; margin-left: 0px; } li { list-style: none; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+  console.log('testLegend:', testLegend);
 
   var LegendBox = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"legend",domProps:{"innerHTML":_vm._s(this.legendHtml)}})])},staticRenderFns: [],
     props: ['layer',
