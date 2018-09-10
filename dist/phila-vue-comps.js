@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('leaflet'), require('esri-leaflet-legend')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'leaflet', 'esri-leaflet-legend'], factory) :
-  (factory((global.philaVueComps = {}),global._,global.lodash_debounce,global.axios,global.moment,global.escapeHtml,global.L,global.testLegend));
-}(this, (function (exports,_,lodash_debounce,axios,moment,escapeHtml,L,testLegend) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('leaflet')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'leaflet'], factory) :
+  (factory((global.philaVueComps = {}),global._,global.lodash_debounce,global.axios,global.moment,global.escapeHtml,global.L));
+}(this, (function (exports,_,lodash_debounce,axios,moment,escapeHtml,L) { 'use strict';
 
   _ = _ && _.hasOwnProperty('default') ? _['default'] : _;
   lodash_debounce = lodash_debounce && lodash_debounce.hasOwnProperty('default') ? lodash_debounce['default'] : lodash_debounce;
@@ -2446,7 +2446,6 @@
   };
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .legend { margin-left: 10px; } ul { list-style: none; margin-left: 0px; } ul ul { list-style: none; margin-left: 0px; } li { list-style: none; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
-  console.log('testLegend:', testLegend);
 
   var LegendBox = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"legend",domProps:{"innerHTML":_vm._s(this.legendHtml)}})])},staticRenderFns: [],
     props: ['layer',
