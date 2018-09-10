@@ -9,6 +9,8 @@
 <script>
   import TopicComponent from './TopicComponent.vue';
   import L from 'leaflet';
+  import testLegend from 'esri-leaflet-legend';
+  console.log('testLegend:', testLegend);
 
   export default {
     props: ['layer',

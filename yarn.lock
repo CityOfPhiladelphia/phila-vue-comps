@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@esri/arcgis-to-geojson-utils@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@esri/arcgis-to-geojson-utils/-/arcgis-to-geojson-utils-1.3.0.tgz#79ab65bf3e40c039dbdebceff4b3b0ec088b189c"
+
 "@types/acorn@^4.0.3":
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/@types/acorn/-/acorn-4.0.3.tgz#d1f3e738dde52536f9aad3d3380d14e448820afd"
@@ -776,6 +780,21 @@ esprima@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
 
+"esri-leaflet-legend@https://github.com/ajrothwell/esri-leaflet-legend#2fca1eed2eda8b951ed21fe05350b79101e604a7":
+  version "2.0.1"
+  resolved "https://github.com/ajrothwell/esri-leaflet-legend#2fca1eed2eda8b951ed21fe05350b79101e604a7"
+  dependencies:
+    esri-leaflet "^2.0.6"
+    leaflet "~1.0.2"
+
+esri-leaflet@^2.0.6:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/esri-leaflet/-/esri-leaflet-2.2.3.tgz#858d9b84641d121d9115753db45aeffb67ad72e8"
+  dependencies:
+    "@esri/arcgis-to-geojson-utils" "^1.3.0"
+    leaflet-virtual-grid "^1.0.7"
+    tiny-binary-search "^1.0.3"
+
 estree-walker@^0.5.1, estree-walker@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.5.2.tgz#d3850be7529c9580d815600b53126515e146dd39"
@@ -1436,9 +1455,23 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet-virtual-grid@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/leaflet-virtual-grid/-/leaflet-virtual-grid-1.0.7.tgz#0dbb0dacd506b6e6d291314da5022d348729f8ad"
+  dependencies:
+    leaflet "^1.0.0"
+
+leaflet@^1.0.0:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.3.4.tgz#7f006ea5832603b53d7269ef5c595fd773060a40"
+
 leaflet@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.3.1.tgz#86f336d2fb0e2d0ff446677049a5dc34cf0ea60e"
+
+leaflet@~1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.3.tgz#1f401b98b45c8192134c6c8d69686253805007c8"
 
 less@^2.7.2:
   version "2.7.3"
@@ -2794,6 +2827,10 @@ tar@^2.0.0:
 time-zone@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/time-zone/-/time-zone-1.0.0.tgz#99c5bf55958966af6d06d83bdf3800dc82faec5d"
+
+tiny-binary-search@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-binary-search/-/tiny-binary-search-1.0.3.tgz#9d52e3d16dd1171eb74486caf704ba08c0c62186"
 
 to-fast-properties@^1.0.3:
   version "1.0.3"
