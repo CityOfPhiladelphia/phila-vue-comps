@@ -1,3 +1,5 @@
+console.log('test');
+
 import AddressCandidateList from './components/AddressCandidateList.vue';
 import AddressInput from './components/AddressInput.vue';
 import AnyHeader from './components/AnyHeader.vue';
