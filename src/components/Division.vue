@@ -21,7 +21,7 @@
       },
       style() {
         return this.$props.options.style || '';
-      }
+      },
     },
     components: {},
     beforeCreate() {
@@ -31,5 +31,6 @@
 </script>
 
 <style scoped>
+
 
 </style>

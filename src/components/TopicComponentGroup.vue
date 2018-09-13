@@ -14,6 +14,7 @@
 <script>
   import generateUniqueId from '../util/unique-id';
 
+  import AnyHeader from './AnyHeader.vue';
   import Badge from './Badge.vue';
   import ButtonComp from './ButtonComp.vue';
   import Callout from './Callout.vue';
@@ -25,6 +26,7 @@
   import VerticalTable from './VerticalTable.vue';
   import OverlayToggleGroup from './OverlayToggleGroup.vue';
   import Paragraph from './Paragraph.vue';
+  import SpanComp from './SpanComp.vue';
   import List from './List.vue';
   import TabGroup from './TabGroup.vue';
   import HorizontalTableGroup from './HorizontalTableGroup.vue';
@@ -48,6 +50,7 @@
       VerticalTable,
       OverlayToggleGroup,
       Paragraph,
+      SpanComp,
       List,
       HorizontalTableGroup,
     },
@@ -57,6 +60,7 @@
       this.$options.components.BadgeCustom = BadgeCustom;
       this.$options.components.Topic = Topic;
       this.$options.components.TopicSet = TopicSet;
+      this.$options.components.AnyHeader = AnyHeader;
     },
     data() {
       return {

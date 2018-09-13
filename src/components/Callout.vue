@@ -1,11 +1,14 @@
 <template>
-  <div class="callout">
-    <p v-if="this.message"
-       v-html="this.message"
-    />
-    <topic-component-group :topic-components="this.components"
-                           v-if="this.components"
-    />
+  <div class='wrapper grid-y'>
+    <!-- <div class="callout columns small-24"> -->
+    <div :class="'callout ' + this.calloutClass">
+      <p v-if="this.message"
+         v-html="this.message"
+      />
+      <topic-component-group :topic-components="this.components"
+                             v-if="this.components"
+      />
+    </div>
   </div>
 </template>
 
@@ -16,6 +19,15 @@
   export default {
     mixins: [TopicComponent],
     computed: {
+      calloutClass() {
+        if (this.$props.options) {
+          if (this.$props.options.class) {
+            return this.$props.options.class;
+          } else {
+            return 'columns small-24';
+          }
+        }
+      },
       message() {
         if (this.$props.slots) {
           return this.evaluateSlot(this.$props.slots.text) || '';
@@ -40,9 +52,14 @@
 
 <style scoped>
 
+.wrapper {
+
+}
+
 .callout {
   margin-top: 1rem;
   position: inherit;
+  height: auto;
 }
 
 </style>
