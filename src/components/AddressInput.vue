@@ -17,9 +17,10 @@
       />
     </form>
     <button :class="'pvc-search-control-button ' + this.buttonClass"
-            v-if="this.addressAutocompleteEnabled && this.addressEntered != '' && this.addressEntered != null"
+            v-if="this.addressEntered != '' && this.addressEntered != null"
             @click="handleFormX"
     >
+    <!-- v-if="this.addressAutocompleteEnabled && this.addressEntered != '' && this.addressEntered != null" -->
       <i class="fa fa-times fa-lg"></i>
     </button>
     <button :class="'pvc-search-control-button ' + this.buttonClass"
@@ -67,15 +68,15 @@
         return this.$store.state.addressEntered;
       },
       inputWidth() {
-        if (this.addressAutocompleteEnabled) {
+        // if (this.addressAutocompleteEnabled) {
           if (this.addressEntered === '' || this.addressEntered === null) {
             return this.$props.widthFromConfig - 55;
           } else {
             return this.$props.widthFromConfig - 108;
           }
-        } else {
-          return this.$props.widthFromConfig - 55;
-        }
+        // } else {
+        //   return this.$props.widthFromConfig - 55;
+        // }
       },
       inputClass() {
         if (this.isMobileOrTablet) {
@@ -117,15 +118,18 @@
     methods: {
       didType: _.debounce(function (e) {
           // console.log('debounce is running');
+          const { value } = e.target;
+          this.$store.commit('setAddressEntered', value);
+
           if (this.addressAutocompleteEnabled) {
             // console.log('debounce is running, e:', e, 'this:', this);
             if (e.key === "ArrowDown") {
               document.getElementById('address-candidate-list-0').focus();
               return;
             }
-            const { value } = e.target;
+            // const { value } = e.target;
             this.getCandidates(value);
-            this.$store.commit('setAddressEntered', value);
+            // this.$store.commit('setAddressEntered', value);
             if (e.key !== "Enter") {
               console.log('AddressInput.vue didType is running, e.key !== "Enter"');
               this.$store.commit('setShouldShowAddressCandidateList', true);
