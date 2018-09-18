@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-panel-topics-greeting">
+  <!-- <div class="mb-panel-topics-greeting"> -->
     <div class="columns medium-20 medium-centered">
 
       <address-input v-if="this.shouldShowAddressInput" />
@@ -19,7 +19,7 @@
                  :key="'greeting'"
       />
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
