@@ -41,7 +41,9 @@ export default {
   }
 
   .pl-alert-close-button {
-    float: right;
+    position: fixed;
+    right: 40px;
+    /* float: right; */
     cursor: pointer;
   }
 
