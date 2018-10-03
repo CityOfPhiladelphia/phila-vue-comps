@@ -816,10 +816,63 @@
     },
   };
 
+  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .popover-link { border-bottom: 1px dotted; font-weight: bold; color: #444; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+  var PopoverLink = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('a',{staticClass:"popover-link",on:{"click":_vm.didClickPopoverLink}},[_vm._v(" "+_vm._s(_vm.value)+" ")])])},staticRenderFns: [],
+    mixins: [TopicComponent],
+    props: [
+      'field' ],
+    computed: {
+      fieldOrSlots: function fieldOrSlots() {
+        var fieldOrSlots;
+        if (this.$props.field) {
+          fieldOrSlots = 'field';
+        } else if (this.$props.slots) {
+          fieldOrSlots = 'slots';
+        }
+        return fieldOrSlots;
+      },
+      value: function value() {
+        var fieldOrSlots = this.fieldOrSlots;
+        var value = this.$props[fieldOrSlots].value;
+        var transforms = this.$props[fieldOrSlots].transforms || [];
+        var nullValue = this.$props[fieldOrSlots].nullValue || '';
+        return this.evaluateSlot(value, transforms, nullValue);
+      },
+      popoverValue: function popoverValue() {
+        var fieldOrSlots = this.fieldOrSlots;
+        var value = this.value;
+        var popoverTransforms = this.$props[fieldOrSlots].popoverTransforms || [];
+        var popoverNullValue = this.$props[fieldOrSlots].popoverNullValue || '';
+        return this.evaluateSlot(value, popoverTransforms, popoverNullValue);
+      },
+      popoverPreText: function popoverPreText() {
+        var fieldOrSlots = this.fieldOrSlots;
+        var popoverPreText = this.$props[fieldOrSlots].popoverPreText || '';
+        return this.evaluateSlot(popoverPreText);
+      },
+      popoverPostText: function popoverPostText() {
+        var fieldOrSlots = this.fieldOrSlots;
+        var popoverPostText = this.$props[fieldOrSlots].popoverPostText || '';
+        return this.evaluateSlot(popoverPostText);
+      },
+      popoverText: function popoverText() {
+        return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
+      },
+    },
+    methods: {
+      didClickPopoverLink: function didClickPopoverLink(e) {
+        this.$store.commit('setPopover', this.popoverText);
+      },
+    },
+  };
+
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .active[data-v-36d2e900] { background: #F3D661; } td[data-v-36d2e900] { font-size: 15px; text-align: left; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.value, field.transforms, field.nullValue))}})}))},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
+  var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{attrs:{"item":_vm.item}},[(field.popoverLink)?_c('popover-link',{attrs:{"field":field,"item":_vm.item}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1)}))},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
     mixins: [TopicComponent],
+    components: {
+      PopoverLink: PopoverLink,
+    },
     props: ['fields', 'hasOverlay', 'tableId'],
     computed: {
       activeFeature: function activeFeature() {
@@ -2263,6 +2316,7 @@
       SpanComp: SpanComp,
       List: List,
       HorizontalTableGroup: HorizontalTableGroup,
+      PopoverLink: PopoverLink,
     },
     beforeCreate: function beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');
@@ -2460,6 +2514,27 @@
         return ("\n        <p>\n          We couldn't find\n          " + (input ? '<strong>' + input + '</strong>' : 'that address') + ".\n          Are you sure everything was spelled correctly?\n        </p>\n        <p>\n          Here are some examples of things you can search for:\n        </p>\n        <ul>\n          <li>1234 Market St</li>\n          <li>1001 Pine Street #201</li>\n          <li>12th & Market</li>\n        </ul>\n      ");
       }
     }
+  };
+
+  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pl-alert { position: fixed; bottom: 0; height: 300px; width: 100%; background: rgba(68, 68, 68, 0.95); color: #fff; z-index: 10000; font-size: 1.25em; margin: 0 auto; padding: 1em; overflow-y: auto; } .pl-alert-body { width: 50%; margin: 0 auto; } .pl-alert-close-button { position: fixed; right: 40px; /* float: right; */ cursor: pointer; } .pl-alert a { color: inherit; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+
+
+
+
+
+
+
+
+
+
+
+  var Popover = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pl-alert"},[_c('span',{staticClass:"pl-alert-close-button",on:{"click":_vm.close}},[_c('i',{staticClass:"fa fa-times-circle fa-2x"})]),_vm._v(" "),_c('div',{staticClass:"pl-alert-body"},[_c('span',{domProps:{"innerHTML":_vm._s(_vm.html)}})])])},staticRenderFns: [],
+    props: ['html'],
+    methods: {
+      close: function close() {
+        this.$store.commit('setPopover', '');
+      },
+    },
   };
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .legend { margin-left: 10px; } ul { list-style: none; margin-left: 0px; } ul ul { list-style: none; margin-left: 0px; } li { list-style: none; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
@@ -2837,6 +2912,8 @@
   exports.TopicSet = TopicSet;
   exports.TopicComponent = TopicComponent;
   exports.TopicComponentGroup = TopicComponentGroup;
+  exports.Popover = Popover;
+  exports.PopoverLink = PopoverLink;
 
   exports.Checkbox = Checkbox;
   exports.LegendBox = LegendBox;

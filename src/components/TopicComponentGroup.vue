@@ -33,6 +33,7 @@
   import BadgeCustom from './BadgeCustom.vue';
   import Topic from './Topic.vue';
   import TopicSet from './TopicSet.vue';
+  import PopoverLink from './PopoverLink.vue';
   // console.log('in TopicComponentGroup.vue script, BadgeCustom:', BadgeCustom, 'Badge:', Badge, 'TabGroup:', TabGroup, 'Callout:', Callout, 'CollectionSummary:', CollectionSummary, 'HorizontalTable:', HorizontalTable);
 
   export default {
@@ -53,6 +54,7 @@
       SpanComp,
       List,
       HorizontalTableGroup,
+      PopoverLink,
     },
     beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');

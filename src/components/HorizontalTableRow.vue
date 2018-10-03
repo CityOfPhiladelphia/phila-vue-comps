@@ -5,16 +5,28 @@
       @mouseout="handleRowMouseout"
   >
     <td v-for="field in fields"
-        v-html="evaluateSlot(field.value, field.transforms, field.nullValue)"
-    />
+        :item='item'
+    >
+      <popover-link v-if="field.popoverLink"
+                    :field='field'
+                    :item='item'
+      />
+      <div v-if="!field.popoverLink"
+           v-html="evaluateSlot(field.value, field.transforms, field.nullValue)"
+      />
+    </td>
   </tr>
 </template>
 
 <script>
   import TopicComponent from './TopicComponent.vue';
+  import PopoverLink from './PopoverLink.vue';
 
   export default {
     mixins: [TopicComponent],
+    components: {
+      PopoverLink,
+    },
     props: ['fields', 'hasOverlay', 'tableId'],
     computed: {
       activeFeature() {

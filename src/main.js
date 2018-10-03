@@ -23,6 +23,8 @@ import Topic from './components/Topic.vue';
 import TopicSet from './components/TopicSet.vue';
 import TopicComponent from './components/TopicComponent.vue';
 import TopicComponentGroup from './components/TopicComponentGroup.vue';
+import Popover from './components/Popover.vue';
+import PopoverLink from './components/PopoverLink.vue';
 
 import Checkbox from './components/Checkbox.vue';
 import LegendBox from './components/LegendBox.vue';
@@ -53,6 +55,8 @@ exports.Topic = Topic;
 exports.TopicSet = TopicSet;
 exports.TopicComponent = TopicComponent;
 exports.TopicComponentGroup = TopicComponentGroup;
+exports.Popover = Popover;
+exports.PopoverLink = PopoverLink;
 
 exports.Checkbox = Checkbox;
 exports.LegendBox = LegendBox;
