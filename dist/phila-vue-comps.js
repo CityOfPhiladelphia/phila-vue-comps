@@ -2887,6 +2887,19 @@
     }
   };
 
+  var initialState = {
+    shouldShowAddressCandidateList: false,
+  };
+
+  var pvmStore = {
+    state: initialState,
+    mutations: {
+      setShouldShowAddressCandidateList: function setShouldShowAddressCandidateList(state, payload) {
+        state.shouldShowAddressCandidateList = payload;
+      },
+    }
+  };
+
   exports.AddressCandidateList = AddressCandidateList;
   exports.AddressInput = AddressInput;
   exports.AnyHeader = AnyHeader;
@@ -2918,6 +2931,8 @@
   exports.Checkbox = Checkbox;
   exports.LegendBox = LegendBox;
   exports.Slider = Slider;
+
+  exports.pvcStore = pvmStore;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
