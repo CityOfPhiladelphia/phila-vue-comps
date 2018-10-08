@@ -65,3 +65,5 @@ exports.LegendBox = LegendBox;
 exports.Slider = Slider;
 
 exports.pvcStore = pvcStore;
+
+export default exports
