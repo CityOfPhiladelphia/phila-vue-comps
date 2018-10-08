@@ -819,44 +819,40 @@
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .popover-link { border-bottom: 1px dotted; font-weight: bold; color: #444; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
   var PopoverLink = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('a',{staticClass:"popover-link",on:{"click":_vm.didClickPopoverLink}},[_vm._v(" "+_vm._s(_vm.value)+" ")])])},staticRenderFns: [],
     mixins: [TopicComponent],
-    props: [
-      'field' ],
     computed: {
-      fieldOrSlots: function fieldOrSlots() {
-        var fieldOrSlots;
-        if (this.$props.field) {
-          fieldOrSlots = 'field';
-        } else if (this.$props.slots) {
-          fieldOrSlots = 'slots';
-        }
-        return fieldOrSlots;
-      },
       value: function value() {
-        var fieldOrSlots = this.fieldOrSlots;
-        var value = this.$props[fieldOrSlots].value;
-        var transforms = this.$props[fieldOrSlots].transforms || [];
-        var nullValue = this.$props[fieldOrSlots].nullValue || '';
+        var value = this.$props.slots.value;
+        var transforms = this.$props.slots.transforms || [];
+        var nullValue = this.$props.slots.nullValue || '';
         return this.evaluateSlot(value, transforms, nullValue);
       },
       popoverValue: function popoverValue() {
-        var fieldOrSlots = this.fieldOrSlots;
         var value = this.value;
-        var popoverTransforms = this.$props[fieldOrSlots].popoverTransforms || [];
-        var popoverNullValue = this.$props[fieldOrSlots].popoverNullValue || '';
+        var popoverTransforms = this.$props.slots.popoverTransforms || [];
+        var popoverNullValue = this.$props.slots.popoverNullValue || '';
         return this.evaluateSlot(value, popoverTransforms, popoverNullValue);
       },
       popoverPreText: function popoverPreText() {
-        var fieldOrSlots = this.fieldOrSlots;
-        var popoverPreText = this.$props[fieldOrSlots].popoverPreText || '';
+        var popoverPreText = this.$props.slots.popoverPreText || '';
         return this.evaluateSlot(popoverPreText);
       },
       popoverPostText: function popoverPostText() {
-        var fieldOrSlots = this.fieldOrSlots;
-        var popoverPostText = this.$props[fieldOrSlots].popoverPostText || '';
+        var popoverPostText = this.$props.slots.popoverPostText || '';
         return this.evaluateSlot(popoverPostText);
       },
+      shouldShowValue: function shouldShowValue() {
+        if (this.$props.slots.shouldShowValue === false) {
+          return false
+        } else {
+          return true;
+        }
+      },
       popoverText: function popoverText() {
-        return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
+        if (this.shouldShowValue === true) {
+          return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
+        } else {
+          return this.popoverPreText + ' ' + this.popoverPostText;
+        }
       },
     },
     methods: {
@@ -868,7 +864,7 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .active[data-v-36d2e900] { background: #F3D661; } td[data-v-36d2e900] { font-size: 15px; text-align: left; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{attrs:{"item":_vm.item}},[(field.popoverLink)?_c('popover-link',{attrs:{"field":field,"item":_vm.item}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1)}))},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
+  var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{attrs:{"item":_vm.item}},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1)}))},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
     mixins: [TopicComponent],
     components: {
       PopoverLink: PopoverLink,
@@ -879,7 +875,11 @@
         return this.$store.state.activeFeature;
       },
       isActive: function isActive() {
-        return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+        if (this.activeFeature) {
+          return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+        } else {
+          return;
+        }
       },
       isMobileOrTablet: function isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
@@ -1039,13 +1039,17 @@
     },
     mounted: function mounted() {
       // console.log('horiz table mounted props slots items', this.$props.slots.items);
-      this.updateTableFilteredData();
+      if (this.$store.state.horizontalTables) {
+        this.updateTableFilteredData();
+      }
     },
     watch: {
       itemsAfterFilters: function itemsAfterFilters(nextItems) {
         // console.log('WATCH items after filters', nextItems);
         // this.$nextTick(() => {
-        this.updateTableFilteredData();
+        if (this.$store.state.horizontalTables) {
+          this.updateTableFilteredData();
+        }
         // })
       }
     },

@@ -211,13 +211,17 @@
     },
     mounted() {
       // console.log('horiz table mounted props slots items', this.$props.slots.items);
-      this.updateTableFilteredData();
+      if (this.$store.state.horizontalTables) {
+        this.updateTableFilteredData();
+      }
     },
     watch: {
       itemsAfterFilters(nextItems) {
         // console.log('WATCH items after filters', nextItems);
         // this.$nextTick(() => {
-        this.updateTableFilteredData();
+        if (this.$store.state.horizontalTables) {
+          this.updateTableFilteredData();
+        }
         // })
       }
     },

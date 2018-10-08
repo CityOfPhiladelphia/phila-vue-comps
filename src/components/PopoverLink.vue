@@ -12,45 +12,40 @@
   import TopicComponent from './TopicComponent.vue';
   export default {
     mixins: [TopicComponent],
-    props: [
-      'field',
-    ],
     computed: {
-      fieldOrSlots() {
-        let fieldOrSlots;
-        if (this.$props.field) {
-          fieldOrSlots = 'field';
-        } else if (this.$props.slots) {
-          fieldOrSlots = 'slots';
-        }
-        return fieldOrSlots;
-      },
       value() {
-        const fieldOrSlots = this.fieldOrSlots;
-        const value = this.$props[fieldOrSlots].value;
-        const transforms = this.$props[fieldOrSlots].transforms || [];
-        const nullValue = this.$props[fieldOrSlots].nullValue || '';
+        const value = this.$props.slots.value;
+        const transforms = this.$props.slots.transforms || [];
+        const nullValue = this.$props.slots.nullValue || '';
         return this.evaluateSlot(value, transforms, nullValue);
       },
       popoverValue() {
-        const fieldOrSlots = this.fieldOrSlots;
         const value = this.value;
-        const popoverTransforms = this.$props[fieldOrSlots].popoverTransforms || [];
-        const popoverNullValue = this.$props[fieldOrSlots].popoverNullValue || '';
+        const popoverTransforms = this.$props.slots.popoverTransforms || [];
+        const popoverNullValue = this.$props.slots.popoverNullValue || '';
         return this.evaluateSlot(value, popoverTransforms, popoverNullValue);
       },
       popoverPreText() {
-        const fieldOrSlots = this.fieldOrSlots;
-        let popoverPreText = this.$props[fieldOrSlots].popoverPreText || '';
+        let popoverPreText = this.$props.slots.popoverPreText || '';
         return this.evaluateSlot(popoverPreText);
       },
       popoverPostText() {
-        const fieldOrSlots = this.fieldOrSlots;
-        let popoverPostText = this.$props[fieldOrSlots].popoverPostText || '';
+        let popoverPostText = this.$props.slots.popoverPostText || '';
         return this.evaluateSlot(popoverPostText);
       },
+      shouldShowValue() {
+        if (this.$props.slots.shouldShowValue === false) {
+          return false
+        } else {
+          return true;
+        }
+      },
       popoverText() {
-        return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
+        if (this.shouldShowValue === true) {
+          return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
+        } else {
+          return this.popoverPreText + ' ' + this.popoverPostText;
+        }
       },
     },
     methods: {
