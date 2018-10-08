@@ -2889,6 +2889,7 @@
 
   var initialState = {
     shouldShowAddressCandidateList: false,
+    popover: '',
   };
 
   var pvmStore = {
@@ -2896,6 +2897,9 @@
     mutations: {
       setShouldShowAddressCandidateList: function setShouldShowAddressCandidateList(state, payload) {
         state.shouldShowAddressCandidateList = payload;
+      },
+      setPopover: function setPopover(state, data) {
+        state.popover = data;
       },
     }
   };

@@ -1,5 +1,6 @@
 const initialState = {
   shouldShowAddressCandidateList: false,
+  popover: '',
 };
 
 const pvmStore = {
@@ -7,6 +8,9 @@ const pvmStore = {
   mutations: {
     setShouldShowAddressCandidateList(state, payload) {
       state.shouldShowAddressCandidateList = payload;
+    },
+    setPopover(state, data) {
+      state.popover = data;
     },
   }
 }
