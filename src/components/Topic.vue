@@ -38,6 +38,9 @@
 
 <script>
   import TopicComponentGroup from './TopicComponentGroup.vue';
+  // import { library } from '@fortawesome/pro-regular-svg-icons'
+  // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 
   export default {
     name: 'Topic',

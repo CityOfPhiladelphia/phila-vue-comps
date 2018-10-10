@@ -16,10 +16,12 @@
     <div class="external-link">
       <a v-if="options && options.externalLink"
          :href="externalLinkHref"
-         class="external external-link"
          target="_blank"
       >
         {{ externalLinkText }}
+        <i class="fa fa-external-link-alt"
+           aria-hidden="true"
+        />
       </a>
     </div>
   </div>
