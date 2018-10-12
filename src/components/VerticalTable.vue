@@ -19,9 +19,7 @@
          target="_blank"
       >
         {{ externalLinkText }}
-        <i class="fa fa-external-link-alt"
-           aria-hidden="true"
-        />
+        <font-awesome-icon icon="external-link" aria-hidden="true" />
       </a>
     </div>
   </div>
