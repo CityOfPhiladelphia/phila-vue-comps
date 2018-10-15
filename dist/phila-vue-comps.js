@@ -472,7 +472,7 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .mb-badge[data-v-d6ffef7a] { /*width: 300px;*/ padding: 0; margin: 0 auto; margin-bottom: inherit; } @media (max-width: 640px) { .mb-badge[data-v-d6ffef7a] { width: 100%; } } /*REVIEW this should use foundation classes*/ @media (min-width: 640px) { .mb-badge[data-v-d6ffef7a] { width: 325px; } } .mb-badge-header[data-v-d6ffef7a] { color: #fff; font-weight: bold; text-align: center; padding-top: 2px; padding-bottom: 2px; } .mb-badge-body[data-v-d6ffef7a] { padding: 12px; } .mb-badge-body > h1[data-v-d6ffef7a] { margin: 0; margin-bottom: 5px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var Badge = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"mb-badge panel center"},[_c('div',{staticClass:"mb-badge-header",style:(_vm.style)},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" ")]),_vm._v(" "),_c('div',{staticClass:"mb-badge-body"},[_c('h1',[_vm._v(_vm._s(_vm.evaluateSlot(_vm.slots.value)))]),_vm._v(" "),_c('strong',[_vm._v(_vm._s(_vm.evaluateSlot(_vm.slots.description)))])])])},staticRenderFns: [],_scopeId: 'data-v-d6ffef7a',
+  var Badge = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"center"},[_c('div',{staticClass:"mb-badge panel"},[_c('div',{staticClass:"mb-badge-header",style:(_vm.style)},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" ")]),_vm._v(" "),_c('div',{staticClass:"mb-badge-body"},[_c('h1',[_vm._v(_vm._s(_vm.evaluateSlot(_vm.slots.value)))]),_vm._v(" "),_c('strong',[_vm._v(_vm._s(_vm.evaluateSlot(_vm.slots.description)))])])]),_vm._v(" "),_c('div',{staticClass:"external-link"},[(_vm.options && _vm.options.externalLink)?_c('a',{staticClass:"external external-link",attrs:{"href":_vm.externalLinkHref,"target":"_blank"}},[_vm._v(" "+_vm._s(_vm.externalLinkText)+" ")]):_vm._e()])])},staticRenderFns: [],_scopeId: 'data-v-d6ffef7a',
     mixins: [TopicComponent],
     computed: {
       style: function style() {
@@ -490,7 +490,19 @@
         }
 
         return { background: titleBackground };
-      }
+      },
+      externalLinkAction: function externalLinkAction() {
+        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
+      },
+      externalLinkText: function externalLinkText() {
+        var externalLinkConf = this.options.externalLink;
+        var actionFn = externalLinkConf.action;
+        var name = this.externalLinkAction || '';
+        return ("" + name);
+      },
+      externalLinkHref: function externalLinkHref() {
+        return this.evaluateSlot(this.options.externalLink.href);
+      },
     }
   };
 
@@ -1640,15 +1652,13 @@
         }
       },
       externalLinkAction: function externalLinkAction() {
-        return this.options.externalLink.action || 'See more at ';
+        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
       },
       externalLinkText: function externalLinkText() {
         var externalLinkConf = this.options.externalLink;
         var actionFn = externalLinkConf.action;
-        var actionText = actionFn(this.externalLinkCount);
-        var name = externalLinkConf.name || '';
-
-        return (actionText + " " + name);
+        var name = this.externalLinkAction || '';
+        return ("" + name);
       },
       externalLinkHref: function externalLinkHref() {
         return this.evaluateSlot(this.options.externalLink.href);
@@ -2371,15 +2381,13 @@
         return { background: titleBackground };
       },
       externalLinkAction: function externalLinkAction() {
-        return this.options.externalLink.action || 'See more at ';
+        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
       },
       externalLinkText: function externalLinkText() {
         var externalLinkConf = this.options.externalLink;
         var actionFn = externalLinkConf.action;
-        var actionText = actionFn(this.externalLinkCount);
-        var name = externalLinkConf.name || '';
-
-        return (actionText + " " + name);
+        var name = this.externalLinkAction || '';
+        return ("" + name);
       },
       externalLinkHref: function externalLinkHref() {
         return this.evaluateSlot(this.options.externalLink.href);
