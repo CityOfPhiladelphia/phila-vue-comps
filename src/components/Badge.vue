@@ -1,12 +1,23 @@
 <template>
   <!-- REVIEW this uses patterns -->
-  <div class="mb-badge panel center">
-    <div class="mb-badge-header" :style="style">
-      {{ evaluateSlot(slots.title) }}
+  <div class="center">
+    <div class="mb-badge panel">
+      <div class="mb-badge-header" :style="style">
+        {{ evaluateSlot(slots.title) }}
+      </div>
+      <div class="mb-badge-body">
+        <h1>{{ evaluateSlot(slots.value) }}</h1>
+        <strong>{{ evaluateSlot(slots.description) }}</strong>
+      </div>
     </div>
-    <div class="mb-badge-body">
-      <h1>{{ evaluateSlot(slots.value) }}</h1>
-      <strong>{{ evaluateSlot(slots.description) }}</strong>
+    <div class="external-link">
+      <a v-if="options && options.externalLink"
+      :href="externalLinkHref"
+      class="external external-link"
+      target="_blank"
+      >
+      {{ externalLinkText }}
+      </a>
     </div>
   </div>
 </template>
@@ -33,7 +44,19 @@
         }
 
         return { background: titleBackground };
-      }
+      },
+      externalLinkAction() {
+        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
+      },
+      externalLinkText() {
+        const externalLinkConf = this.options.externalLink;
+        const actionFn = externalLinkConf.action;
+        const name = this.externalLinkAction || '';
+        return `${name}`;
+      },
+      externalLinkHref() {
+        return this.evaluateSlot(this.options.externalLink.href);
+      },
     }
   };
 </script>
