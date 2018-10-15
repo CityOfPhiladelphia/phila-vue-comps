@@ -70,7 +70,7 @@
             <button class="pvc-search-control-button"
                     v-if="this.searchText != ''"
             >
-              <i class="fa fa-times fa-lg"></i>
+              <font-awesome-icon icon="times" class="fa-lg" />
             </button>
           </form>
         </div>
@@ -128,7 +128,7 @@
       >
         Retrieve {{ this.nextIncrement }} More {{ this.nextIncrement === 1? 'Record' : 'Records' }}
         <span v-show="secondaryStatus === 'waiting'" class="loading">
-          <i class="fa fa-spinner fa-lg spin"></i>
+          <font-awesome-icon icon="spinner" icon="fa-lg" />
         </span>
       </a>
 
@@ -211,13 +211,17 @@
     },
     mounted() {
       // console.log('horiz table mounted props slots items', this.$props.slots.items);
-      this.updateTableFilteredData();
+      if (this.$store.state.horizontalTables) {
+        this.updateTableFilteredData();
+      }
     },
     watch: {
       itemsAfterFilters(nextItems) {
         // console.log('WATCH items after filters', nextItems);
         // this.$nextTick(() => {
-        this.updateTableFilteredData();
+        if (this.$store.state.horizontalTables) {
+          this.updateTableFilteredData();
+        }
         // })
       }
     },

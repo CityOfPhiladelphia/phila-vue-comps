@@ -1,7 +1,7 @@
 <template>
   <div class="pl-alert">
     <span class="pl-alert-close-button" @click="close">
-      <i class="fa fa-times-circle fa-2x"></i>
+      <font-awesome-icon icon="times-circle" class="fa-2x" />
     </span>
     <div class="pl-alert-body">
       <span v-html="html"></span>

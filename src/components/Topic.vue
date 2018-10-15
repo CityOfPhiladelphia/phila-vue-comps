@@ -8,11 +8,9 @@
        :data-topic-key="topicKey"
     >
       <span v-show="status === 'waiting'" class="loading">
-        <i class="fa fa-spinner fa-lg spin"></i>
+        <font-awesome-icon icon="spinner" class="fa-lg spin" />
       </span>
-      <i :class="['fa', 'fa-' + icon, 'topic-header-icon']"
-         aria-hidden="true"
-      />
+      <font-awesome-icon :icon="icon" />
       {{ topic.label }}
     </a>
 

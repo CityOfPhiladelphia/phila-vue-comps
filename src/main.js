@@ -30,6 +30,8 @@ import Checkbox from './components/Checkbox.vue';
 import LegendBox from './components/LegendBox.vue';
 import Slider from './components/Slider.vue';
 
+import pvcStore from './store.js';
+
 exports.AddressCandidateList = AddressCandidateList;
 exports.AddressInput = AddressInput;
 exports.AnyHeader = AnyHeader;
@@ -61,3 +63,7 @@ exports.PopoverLink = PopoverLink;
 exports.Checkbox = Checkbox;
 exports.LegendBox = LegendBox;
 exports.Slider = Slider;
+
+exports.pvcStore = pvcStore;
+
+export default exports

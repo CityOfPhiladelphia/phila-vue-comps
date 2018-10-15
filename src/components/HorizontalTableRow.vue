@@ -8,7 +8,7 @@
         :item='item'
     >
       <popover-link v-if="field.popoverLink"
-                    :field='field'
+                    :slots='field'
                     :item='item'
       />
       <div v-if="!field.popoverLink"
@@ -33,7 +33,11 @@
         return this.$store.state.activeFeature;
       },
       isActive() {
-        return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+        if (this.activeFeature) {
+          return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+        } else {
+          return;
+        }
       },
       isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;

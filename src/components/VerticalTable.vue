@@ -16,10 +16,10 @@
     <div class="external-link">
       <a v-if="options && options.externalLink"
          :href="externalLinkHref"
-         class="external external-link"
          target="_blank"
       >
         {{ externalLinkText }}
+        <font-awesome-icon icon="external-link" aria-hidden="true" />
       </a>
     </div>
   </div>

@@ -21,13 +21,13 @@
             @click="handleFormX"
     >
     <!-- v-if="this.addressAutocompleteEnabled && this.addressEntered != '' && this.addressEntered != null" -->
-      <i class="fa fa-times fa-lg"></i>
+      <font-awesome-icon icon="times" />
     </button>
     <button :class="'pvc-search-control-button ' + this.buttonClass"
             tabindex="-1"
             @click="this.handleSearchFormSubmit"
     >
-      <i class="fa fa-search fa-lg"></i>
+      <font-awesome-icon icon="search" />
     </button>
     <slot name="address-candidates-slot">
   </div>

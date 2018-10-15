@@ -7,8 +7,15 @@
          target="_blank"
          v-if="bennyId"
       >
-        <span><i class="fa fa-info-circle fa-2x"></i></span>
+        <span><font-awesome-icon icon="info-circle" class="fa-2x" /></i></span>
       </a>
+      <!-- <input :id="'checkbox-'+layerName"
+             type="checkbox"
+      > -->
+      <!-- :layerid="layerId"
+      :checked="webMapActiveLayers.includes(layerName)"
+      @click="checkboxToggle"
+      :class="{ disabled: shouldBeDisabled }" -->
       <input :id="'checkbox-'+layerName"
              :class="{ disabled: shouldBeDisabled }"
              type="checkbox"
