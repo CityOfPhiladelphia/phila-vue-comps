@@ -47,15 +47,13 @@
         return { background: titleBackground };
       },
       externalLinkAction() {
-        return this.options.externalLink.action || 'See more at ';
+        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
       },
       externalLinkText() {
         const externalLinkConf = this.options.externalLink;
         const actionFn = externalLinkConf.action;
-        const actionText = actionFn(this.externalLinkCount);
-        const name = externalLinkConf.name || '';
-
-        return `${actionText} ${name}`;
+        const name = this.externalLinkAction || '';
+        return `${name}`;
       },
       externalLinkHref() {
         return this.evaluateSlot(this.options.externalLink.href);
