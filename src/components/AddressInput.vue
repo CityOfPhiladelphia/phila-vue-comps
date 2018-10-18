@@ -34,7 +34,6 @@
 </template>
 
 <script>
-  import _ from 'lodash';
   import debounce from 'lodash.debounce';
   import axios from 'axios';
 
@@ -116,7 +115,7 @@
       },
     },
     methods: {
-      didType: _.debounce(function (e) {
+      didType: debounce(function (e) {
           // console.log('debounce is running');
           const { value } = e.target;
           this.$store.commit('setAddressEntered', value);
@@ -131,7 +130,7 @@
             this.getCandidates(value);
             // this.$store.commit('setAddressEntered', value);
             if (e.key !== "Enter") {
-              console.log('AddressInput.vue didType is running, e.key !== "Enter"');
+              // console.log('AddressInput.vue didType is running, e.key !== "Enter"');
               this.$store.commit('setShouldShowAddressCandidateList', true);
             }
           }

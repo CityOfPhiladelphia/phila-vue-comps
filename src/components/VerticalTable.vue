@@ -13,23 +13,22 @@
         </tr>
       </tbody>
     </table>
-    <div class="external-link">
-      <a v-if="options && options.externalLink"
-         :href="externalLinkHref"
-         target="_blank"
-      >
-        {{ externalLinkText }}
-        <font-awesome-icon icon="external-link" aria-hidden="true" />
-      </a>
-    </div>
+    <external-link v-if="options && options.externalLink"
+                   :options="options.externalLink"
+                   :type="'vertical-table'"
+    />
   </div>
 </template>
 
 <script>
   import TopicComponent from './TopicComponent.vue';
+  import ExternalLink from './ExternalLink.vue';
 
   export default {
     mixins: [TopicComponent],
+    components: {
+      ExternalLink,
+    },
     computed: {
       shouldShowTable() {
         if (this.item) {
@@ -48,18 +47,20 @@
           return true;
         }
       },
-      externalLinkAction() {
-        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
-      },
-      externalLinkText() {
-        const externalLinkConf = this.options.externalLink;
-        const actionFn = externalLinkConf.action;
-        const name = this.externalLinkAction || '';
-        return `${name}`;
-      },
-      externalLinkHref() {
-        return this.evaluateSlot(this.options.externalLink.href);
-      },
+      // externalLinkAction() {
+      //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
+      // },
+      // externalLinkText() {
+      //   const externalLinkConf = this.options.externalLink;
+      //   const actionFn = externalLinkConf.action;
+      //   const actionText = actionFn(this.externalLinkCount);
+      //   const name = externalLinkConf.name || '';
+      //   // const name = this.externalLinkAction || '';
+      //   return `${actionText} ${name}`;
+      // },
+      // externalLinkHref() {
+      //   return this.evaluateSlot(this.options.externalLink.href);
+      // },
     }
   };
 </script>

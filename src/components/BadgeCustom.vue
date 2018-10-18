@@ -7,7 +7,11 @@
       </div>
       <topic-component-group :topic-components="options.components" :item="item" />
     </div>
-    <div class="external-link">
+    <external-link v-if="options && options.externalLink"
+                   :options="options.externalLink"
+                   :type="'badge-custom'"
+    />
+    <!-- <div class="external-link">
       <a v-if="options && options.externalLink"
       :href="externalLinkHref"
       class="external external-link"
@@ -15,17 +19,21 @@
       >
       {{ externalLinkText }}
     </a>
-  </div>
+  </div> -->
   <div>
 </template>
 
 <script>
   import TopicComponent from './TopicComponent.vue';
   import TopicComponentGroup from './TopicComponentGroup.vue';
+  import ExternalLink from './ExternalLink.vue';
 
   export default {
     name: 'BadgeCustom',
     mixins: [TopicComponent],
+    components: {
+      ExternalLink,
+    },
     beforeCreate() {
       this.$options.components.TopicComponentGroup = TopicComponentGroup;
     },
@@ -46,18 +54,18 @@
 
         return { background: titleBackground };
       },
-      externalLinkAction() {
-        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
-      },
-      externalLinkText() {
-        const externalLinkConf = this.options.externalLink;
-        const actionFn = externalLinkConf.action;
-        const name = this.externalLinkAction || '';
-        return `${name}`;
-      },
-      externalLinkHref() {
-        return this.evaluateSlot(this.options.externalLink.href);
-      },
+      // externalLinkAction() {
+      //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
+      // },
+      // externalLinkText() {
+      //   const externalLinkConf = this.options.externalLink;
+      //   const actionFn = externalLinkConf.action;
+      //   const name = this.externalLinkAction || '';
+      //   return `${name}`;
+      // },
+      // externalLinkHref() {
+      //   return this.evaluateSlot(this.options.externalLink.href);
+      // },
     },
   };
 </script>

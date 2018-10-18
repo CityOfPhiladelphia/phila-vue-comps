@@ -32,6 +32,7 @@ export default {
       jquery: '$',
       vue: 'Vue',
       vuex: 'Vuex',
+      "lodash.debounce": "debounce",
     },
     sourcemap: true,
   },

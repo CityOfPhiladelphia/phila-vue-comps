@@ -10,7 +10,11 @@
         <strong>{{ evaluateSlot(slots.description) }}</strong>
       </div>
     </div>
-    <div class="external-link">
+    <external-link v-if="options && options.externalLink"
+                   :options="options.externalLink"
+                   :type="'badge'"
+    />
+    <!-- <div class="external-link">
       <a v-if="options && options.externalLink"
       :href="externalLinkHref"
       class="external external-link"
@@ -18,16 +22,20 @@
       >
       {{ externalLinkText }}
       </a>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
   // console.log('in Badge.vue script');
   import TopicComponent from './TopicComponent.vue';
+  import ExternalLink from './ExternalLink.vue';
 
   export default {
     mixins: [TopicComponent],
+    components: {
+      ExternalLink,
+    },
     computed: {
       style() {
         const titleBackgroundValOrFn = (this.options || {}).titleBackground;
@@ -45,18 +53,18 @@
 
         return { background: titleBackground };
       },
-      externalLinkAction() {
-        return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
-      },
-      externalLinkText() {
-        const externalLinkConf = this.options.externalLink;
-        const actionFn = externalLinkConf.action;
-        const name = this.externalLinkAction || '';
-        return `${name}`;
-      },
-      externalLinkHref() {
-        return this.evaluateSlot(this.options.externalLink.href);
-      },
+      // externalLinkAction() {
+      //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
+      // },
+      // externalLinkText() {
+      //   const externalLinkConf = this.options.externalLink;
+      //   const actionFn = externalLinkConf.action;
+      //   const name = this.externalLinkAction || '';
+      //   return `${name}`;
+      // },
+      // externalLinkHref() {
+      //   return this.evaluateSlot(this.options.externalLink.href);
+      // },
     }
   };
 </script>
