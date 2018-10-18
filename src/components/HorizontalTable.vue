@@ -110,16 +110,22 @@
         </table>
 
         <!-- external link (aka "see more")-->
-        <div class="external-link"
+        <external-link v-if="options.externalLink && shouldShowExternalLink"
+                       :options="options.externalLink"
+                       :count="this.count"
+                       :limit="this.limit"
+                       :type="'horizontal-table'"
+        />
+        <!-- <div class="external-link"
              v-if="options.externalLink && shouldShowExternalLink"
         >
           <a :href="externalLinkHref"
-             class="external"
              target="_blank"
           >
             {{ externalLinkText }}
+            <font-awesome-icon icon="external-link" aria-hidden="true" />
           </a>
-        </div>
+        </div> -->
       </div>
 
       <a class="button center-button"
@@ -139,6 +145,7 @@
 <script>
   import TopicComponent from './TopicComponent.vue';
   import HorizontalTableRow from './HorizontalTableRow.vue';
+  import ExternalLink from './ExternalLink.vue';
   import moment from 'moment';
   // import json2csv from 'json2csv';
   // import fs from 'fs';
@@ -188,7 +195,8 @@
       return initialData;
     },
     components: {
-      HorizontalTableRow
+      HorizontalTableRow,
+      ExternalLink,
     },
     created() {
       // console.log('horiz table created props slots items', this.$props.slots.items);
@@ -429,25 +437,25 @@
           return this.itemsAfterSearch.length > this.limit;
         }
       },
-      externalLinkAction() {
-        return this.options.externalLink.action || 'See more';
-      },
-      externalLinkText() {
-        const externalLinkConf = this.options.externalLink;
-        const actionFn = externalLinkConf.action;
-        const actionText = actionFn(this.externalLinkCount);
-        const name = externalLinkConf.name;
-
-        return `${actionText}`;
-        // return `${actionText} at ${name}`;
-      },
-      externalLinkHref() {
-        return this.evaluateSlot(this.options.externalLink.href);
-      },
-      // the number of items that aren't being shown (e.g. See 54 more...)
-      externalLinkCount() {
-        return this.count - this.limit;
-      },
+      // externalLinkAction() {
+      //   return this.options.externalLink.action || 'See more';
+      // },
+      // externalLinkText() {
+      //   const externalLinkConf = this.options.externalLink;
+      //   const actionFn = externalLinkConf.action;
+      //   const actionText = actionFn(this.externalLinkCount);
+      //   const name = externalLinkConf.name;
+      //
+      //   return `${actionText}`;
+      //   // return `${actionText} at ${name}`;
+      // },
+      // externalLinkHref() {
+      //   return this.evaluateSlot(this.options.externalLink.href);
+      // },
+      // // the number of items that aren't being shown (e.g. See 54 more...)
+      // externalLinkCount() {
+      //   return this.count - this.limit;
+      // },
     },
     methods: {
       exportTableToCSV() {

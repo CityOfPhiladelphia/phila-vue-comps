@@ -21,6 +21,7 @@
   import CollectionSummary from './CollectionSummary.vue';
   import Division from './Division.vue';
   import ePayForm from './ePayForm.vue';
+  import ExternalLink from './ExternalLink.vue';
   import HorizontalTable from './HorizontalTable.vue';
   import Image_ from './Image.vue';
   import VerticalTable from './VerticalTable.vue';
@@ -46,6 +47,7 @@
       CollectionSummary,
       Division,
       ePayForm,
+      ExternalLink,
       HorizontalTable,
       Image_,
       VerticalTable,

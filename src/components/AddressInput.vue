@@ -34,9 +34,11 @@
 </template>
 
 <script>
-  import _ from 'lodash';
+  // import _ from 'lodash';
   import debounce from 'lodash.debounce';
   import axios from 'axios';
+  console.log('_:', _);
+  console.log('debounce:', debounce);
 
   export default {
     props: [
@@ -116,8 +118,9 @@
       },
     },
     methods: {
-      didType: _.debounce(function (e) {
-          // console.log('debounce is running');
+      didType: debounce(function (e) {
+      // didType: _.debounce(function (e) {
+          console.log('debounce is running');
           const { value } = e.target;
           this.$store.commit('setAddressEntered', value);
 
