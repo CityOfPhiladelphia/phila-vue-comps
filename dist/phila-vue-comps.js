@@ -149,9 +149,9 @@
         this.$store.commit('setShouldShowAddressCandidateList', false);
       },
       handleWindowResize: function handleWindowResize(addressEntered) {
-        if ($(window).width() >= 850) {
+        if (window.innerWidth >= 850) {
           this.listStyle.width = this.$props.widthFromConfig - 55 + 'px';
-        } else if ($(window).width() >= 750) {
+        } else if (window.innerWidth >= 750) {
           this.listStyle.width = this.$props.widthFromConfig - 155 + 'px';
         } else {
           this.listStyle.width = '248px';
@@ -292,7 +292,7 @@
         if (this.addressAutocompleteEnabled){
           value = this.$store.state.addressEntered;
         } else {
-          value = $('#pvc-search-control-input').val();
+          value = document.querySelector('#pvm-search-control-input').value;
         }
         // console.log('phila-vue-comps AddressInput.vue, handleSearchFormSubmit is running, value:', value);
         this.$controller.handleSearchFormSubmit(value);
@@ -300,15 +300,15 @@
       },
       handleWindowResize: function handleWindowResize() {
         var addressEntered = this.addressEntered;
-        // console.log('AddressInput.vue handleWindowResize is running', $(window).width(), 'addressEntered:', addressEntered);
-        if ($(window).width() >= 850) {
+        // console.log('AddressInput.vue handleWindowResize is running', window.innerWidth, 'addressEntered:', addressEntered);
+        if (window.innerWidth >= 850) {
           this.containerStyle.width = this.$props.widthFromConfig + 'px';
           if (addressEntered === '' || addressEntered === null) {
             this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
           } else {
             this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
           }
-        } else if ($(window).width() >= 750) {
+        } else if (window.innerWidth >= 750) {
           this.containerStyle.width = this.$props.widthFromConfig - 100 + 'px';
           if (addressEntered === '' || addressEntered === null) {
             this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';
@@ -444,17 +444,15 @@
         return this.$props.slots.additionalTags || [];
       },
       message: function message() {
-        var this$1 = this;
-
         // if there is a transform, it needs this textWithTags section
         var textWithTags = '';
-        for (var i = 0, list = this$1.additionalTags; i < list.length; i += 1) {
+        for (var i = 0, list = this.additionalTags; i < list.length; i += 1) {
           var tag = list[i];
 
           textWithTags = textWithTags + '<' + tag + '>';
         }
         textWithTags = textWithTags + this.evaluateSlot(this.$props.slots.text, this.$props.slots.transforms);
-        for (var i$1 = 0, list$1 = this$1.additionalTags; i$1 < list$1.length; i$1 += 1) {
+        for (var i$1 = 0, list$1 = this.additionalTags; i$1 < list$1.length; i$1 += 1) {
           var tag$1 = list$1[i$1];
 
           textWithTags = textWithTags + '</' + tag$1 + '>';
@@ -1037,7 +1035,7 @@
     'distance',
     'date' ];
 
-  var HorizontalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pvc-horizontal-table"},[(_vm.shouldShowTable)?_c('div',[(_vm.shouldShowFilters !== false)?_c('div',{staticClass:"pvc-horizontal-table-controls"},[(!!_vm.options.filters)?_c('div',{staticClass:"vertically-centered"},_vm._l((_vm.filters),function(filter,index){return _c('div',{staticClass:"inline-block",attrs:{"id":'filter-' + index}},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v(_vm._s(filter.label))]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleFilterValueChange}},[_c('optgroup',_vm._l((filter.values),function(filterValue){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":_vm.slugifyFilterValue(filterValue)}},[_vm._v(" "+_vm._s(filterValue.label)+" ")])}))])])})):_vm._e(),_vm._v(" "),(!!_vm.options.sort && !!_vm.options.sort.select)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v("Sort by")]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleSortValueChange}},[_c('optgroup',_vm._l((_vm.sortFields),function(sortField){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":sortField}},[_vm._v(" "+_vm._s(sortField)+" ")])}))])]):_vm._e(),_vm._v(" "),(_vm.filterByTextFields)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"pvc-select-text inline-block"},[_vm._v(" "+_vm._s(_vm.options.filterByText.label)+" ")]),_vm._v(" "),_c('form',{staticClass:"inline-block filter-by-text-form",on:{"submit":function($event){$event.preventDefault();return _vm.handleFilterFormX($event)}}},[_c('input',{class:this.inputClass,attrs:{"id":"theInput"},on:{"keyup":_vm.handleFilterFormKeyup}}),_vm._v(" "),(this.searchText != '')?_c('button',{staticClass:"pvc-search-control-button"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"times"}})],1):_vm._e()])]):_vm._e()]):_vm._e(),_vm._v(" "),_c('div',{class:{ 'pvc-horizontal-table-body': true, 'no-padding': !_vm.shouldShowFilters }},[(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")]),_vm._v(" "),(this.shouldShowDownloadButton)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e()]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}))]):_vm._e(),_vm._v(" "),_c('tbody',_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId}})}))]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{attrs:{"icon":"spinner","icon":"fa-lg"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
+  var HorizontalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pvc-horizontal-table"},[(_vm.shouldShowTable)?_c('div',[(_vm.shouldShowFilters !== false)?_c('div',{staticClass:"pvc-horizontal-table-controls"},[(!!_vm.options.filters)?_c('div',{staticClass:"vertically-centered"},_vm._l((_vm.filters),function(filter,index){return _c('div',{staticClass:"inline-block",attrs:{"id":'filter-' + index}},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v(_vm._s(filter.label))]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleFilterValueChange}},[_c('optgroup',_vm._l((filter.values),function(filterValue){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":_vm.slugifyFilterValue(filterValue)}},[_vm._v(" "+_vm._s(filterValue.label)+" ")])}))])])})):_vm._e(),_vm._v(" "),(!!_vm.options.sort && !!_vm.options.sort.select)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v("Sort by")]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleSortValueChange}},[_c('optgroup',_vm._l((_vm.sortFields),function(sortField){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":sortField}},[_vm._v(" "+_vm._s(sortField)+" ")])}))])]):_vm._e(),_vm._v(" "),(_vm.filterByTextFields)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"pvc-select-text inline-block"},[_vm._v(" "+_vm._s(_vm.options.filterByText.label)+" ")]),_vm._v(" "),_c('form',{staticClass:"inline-block filter-by-text-form",on:{"submit":function($event){$event.preventDefault();return _vm.handleFilterFormX($event)}}},[_c('input',{class:this.inputClass,attrs:{"id":"theInput"},on:{"keyup":_vm.handleFilterFormKeyup}}),_vm._v(" "),(this.searchText != '')?_c('button',{staticClass:"pvc-search-control-button"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"times"}})],1):_vm._e()])]):_vm._e()]):_vm._e(),_vm._v(" "),_c('div',{class:{ 'pvc-horizontal-table-body': true, 'no-padding': !_vm.shouldShowFilters }},[(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")]),_vm._v(" "),(this.shouldShowDownloadButton)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e()]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}))]):_vm._e(),_vm._v(" "),_c('tbody',_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId}})}))]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"spinner"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
     mixins: [TopicComponent],
     data: function data() {
       var filters = this.options.filters || [];
@@ -1080,18 +1078,16 @@
       ExternalLink: ExternalLink,
     },
     created: function created() {
-      var this$1 = this;
-
       // console.log('horiz table created props slots items', this.$props.slots.items);
       if (this.filters) {
-        for (var i = 0, list = this$1.filters.entries(); i < list.length; i += 1) {
+        for (var i = 0, list = this.filters.entries(); i < list.length; i += 1) {
           var ref = list[i];
           var index = ref[0];
           var filter = ref[1];
 
           var key = "filter-" + index;
           var defaultValue = filter.values[0] || {};
-          this$1.filterSelections[key] = defaultValue;
+          this.filterSelections[key] = defaultValue;
         }
       }
 
@@ -1348,14 +1344,12 @@
     },
     methods: {
       exportTableToCSV: function exportTableToCSV() {
-        var this$1 = this;
-
         // console.log('exportTableToCSV is running');
 
         // const Json2csvParser = require('json2csv').Parser;
 
         var tableData = [];
-        for (var i = 0, list = this$1.items; i < list.length; i += 1) {
+        for (var i = 0, list = this.items; i < list.length; i += 1) {
           // console.log('item:', item);
           var item = list[i];
 
@@ -1787,17 +1781,15 @@
         return this.$props.slots.additionalTags || [];
       },
       message: function message() {
-        var this$1 = this;
-
         // if there is a transform, it needs this textWithTags section
         var textWithTags = '';
-        for (var i = 0, list = this$1.additionalTags; i < list.length; i += 1) {
+        for (var i = 0, list = this.additionalTags; i < list.length; i += 1) {
           var tag = list[i];
 
           textWithTags = textWithTags + '<' + tag + '>';
         }
         textWithTags = textWithTags + this.evaluateSlot(this.$props.slots.text, this.$props.slots.transforms);
-        for (var i$1 = 0, list$1 = this$1.additionalTags; i$1 < list$1.length; i$1 += 1) {
+        for (var i$1 = 0, list$1 = this.additionalTags; i$1 < list$1.length; i$1 += 1) {
           var tag$1 = list$1[i$1];
 
           textWithTags = textWithTags + '</' + tag$1 + '>';
@@ -1821,17 +1813,15 @@
         return this.$props.slots.additionalTags || [];
       },
       message: function message() {
-        var this$1 = this;
-
         // if there is a transform, it needs this textWithTags section
         var textWithTags = '';
-        for (var i = 0, list = this$1.additionalTags; i < list.length; i += 1) {
+        for (var i = 0, list = this.additionalTags; i < list.length; i += 1) {
           var tag = list[i];
 
           textWithTags = textWithTags + '<' + tag + '>';
         }
         textWithTags = textWithTags + this.evaluateSlot(this.$props.slots.text, this.$props.slots.transforms);
-        for (var i$1 = 0, list$1 = this$1.additionalTags; i$1 < list$1.length; i$1 += 1) {
+        for (var i$1 = 0, list$1 = this.additionalTags; i$1 < list$1.length; i$1 += 1) {
           var tag$1 = list$1[i$1];
 
           textWithTags = textWithTags + '</' + tag$1 + '>';
@@ -1878,7 +1868,6 @@
     },
     mounted: function mounted() {
     //   // REVIEW globals. also is this still needed?
-    //   // $(document).foundation();
       this.$data.activeItem = this.activeItemFromState;
       this.$data.activeMapreg = this.activeMapregFromState;
       this.$data.activeAddress = this.activeAddressFromState;
@@ -1993,16 +1982,14 @@
       };
     },
     created: function created() {
-      var this$1 = this;
-
       console.log('horizontalTableGroup created is starting, this.tableGroupData:', this.tableGroupData);
       if (this.options.filters) {
         console.log('horizontalTableGroup created, if this.options.filters is running:', this.options.filters, this.options.filters.entries());
-        for (var i$1 = 0, list$1 = this$1.options.filters; i$1 < list$1.length; i$1 += 1) {
+        for (var i$1 = 0, list$1 = this.options.filters; i$1 < list$1.length; i$1 += 1) {
         // for (let [index, filter] of this.options.filters.entries()) {
           var filter = list$1[i$1];
 
-          console.log('for loop, this.options.filters:', this$1.options.filters[0]);
+          console.log('for loop, this.options.filters:', this.options.filters[0]);
           // let filter = this.options.filters[0]
         // for (let [index, filter] of this.options.filters.entries()) {
           console.log('for loop, filter:', filter);
@@ -2011,18 +1998,18 @@
           console.log('for loop, defaultTableName:', defaultTableName);
 
           // add activeTable to local data
-          this$1.tableGroupData.activeTable = defaultTableName;
+          this.tableGroupData.activeTable = defaultTableName;
           // add activeTableId to local data
           // console.log('for loop, this.options.components:', this.options.components);
-          for (var i = 0, list = this$1.options.tables; i < list.length; i += 1) {
+          for (var i = 0, list = this.options.tables; i < list.length; i += 1) {
             var comp = list[i];
 
             if (comp.options.id === defaultTableName) {
-              this$1.tableGroupData.activeTableId = comp._id;
+              this.tableGroupData.activeTableId = comp._id;
             }
           }
-          console.log('horizontalTableGroup this.tableGroupData:', this$1.tableGroupData);
-          this$1.$store.commit('setHorizontalTableGroupActiveTable', this$1.tableGroupData);
+          console.log('horizontalTableGroup this.tableGroupData:', this.tableGroupData);
+          this.$store.commit('setHorizontalTableGroupActiveTable', this.tableGroupData);
           // this.$store.commit('setHorizontalTableGroupActiveTableId', this.activeTable);
         }
         console.log('horizontalTableGroup created, if this.options.filters is ending');
@@ -2100,8 +2087,6 @@
         return {value: value, unit: unit, direction: direction};
       },
       handleFilterValueChange: function handleFilterValueChange(e) {
-        var this$1 = this;
-
         console.log('handle activeTable value change', e);
         var target = e.target;
         var slug = target.value;
@@ -2113,12 +2098,12 @@
         this.tableGroupData.activeTable = tableName;
 
         // add activeTableId to local data
-        for (var i = 0, list = this$1.options.tables; i < list.length; i += 1) {
+        for (var i = 0, list = this.options.tables; i < list.length; i += 1) {
           var comp = list[i];
 
           console.log('tableName:', tableName, 'comp.options.id:', comp.options.id, 'comp:', comp);
           if (comp.options.id === tableName) {
-            this$1.tableGroupData.activeTableId = comp._id;
+            this.tableGroupData.activeTableId = comp._id;
           }
         }
 
@@ -2206,8 +2191,6 @@
         return should;
       },
       shouldShowTopic: function shouldShowTopic() {
-        var this$1 = this;
-
         if (!this.topic.onlyShowTopicIfDataExists) {
           return true;
         } else {
@@ -2217,19 +2200,19 @@
           for (var i = 0, list = requiredDataSources; i < list.length; i += 1) {
             var requiredDataSource = list[i];
 
-            var dataSource = this$1.topic.onlyShowTopicIfDataExists[requiredDataSource];
+            var dataSource = this.topic.onlyShowTopicIfDataExists[requiredDataSource];
             var pathToDataArray = dataSource.pathToDataArray;
             var minDataLength = dataSource.minDataLength;
             // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
             var dataArray = (void 0);
-            if (!this$1.$store.state.sources[requiredDataSource].data) {
+            if (!this.$store.state.sources[requiredDataSource].data) {
               // if there is no data (yet)
               return false;
             } else {
               if (!pathToDataArray) {
-                dataArray = this$1.$store.state.sources[requiredDataSource].data;
+                dataArray = this.$store.state.sources[requiredDataSource].data;
               } else if (pathToDataArray.length === 1) {
-                dataArray = this$1.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
+                dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
               }
               // TODO - implement system if the path to the data is longer than a single step
               // else {
@@ -2674,8 +2657,6 @@
         var legend = L.esri.legendControl(this.$props.layer, opts);
       },
       createLegend: function createLegend(scale) {
-        var this$1 = this;
-
         var legend = this.$props.legend;
         console.log('METHOD createLegend running', scale, legend);
         var layersHtml = '';
@@ -2690,7 +2671,7 @@
             if (!layerLegendJSON.label) {
               layerLegendJSON.label = '';
             }
-            legendsHtml += L.Util.template(this$1.options.listRowTemplate, layerLegendJSON);
+            legendsHtml += L.Util.template(this.options.listRowTemplate, layerLegendJSON);
           }
           layersHtml += L.Util.template(this.options.layerTemplate, {
             layerName: layer.layerName,
@@ -2708,10 +2689,10 @@
                 var layerLegend$1 = list$1[i$1];
 
                 var layerLegendJSON$1 = JSON.parse(JSON.stringify(layerLegend$1));
-                legendsHtml$1 += L.Util.template(this$1.options.listRowTemplate, layerLegendJSON$1);
+                legendsHtml$1 += L.Util.template(this.options.listRowTemplate, layerLegendJSON$1);
               }
             }
-            layersHtml += L.Util.template(this$1.options.layerTemplate, {
+            layersHtml += L.Util.template(this.options.layerTemplate, {
               layerName: layer$1.layerName,
               legends: legendsHtml$1
             });
@@ -2804,20 +2785,14 @@
       //   this.findCurrentTags(nextInputTagsFilter);
       // },
     },
-    // mounted() {
-    //   // REVIEW globals. also is this still needed?
-    //   $(document).foundation();
-    // },
     computed: {
       matchingTags: function matchingTags() {
-        var this$1 = this;
-
         var matches = [];
         if (this.$props.tags !== null && this.inputTagsFilter !== '') {
-          for (var i = 0, list = this$1.$props.tags; i < list.length; i += 1) {
+          for (var i = 0, list = this.$props.tags; i < list.length; i += 1) {
             var tag = list[i];
 
-            if (tag.toLowerCase().includes(this$1.inputTagsFilter.toLowerCase())) {
+            if (tag.toLowerCase().includes(this.inputTagsFilter.toLowerCase())) {
               matches.push(tag);
             }
           }

@@ -56,7 +56,6 @@
     },
     mounted() {
     //   // REVIEW globals. also is this still needed?
-    //   // $(document).foundation();
       this.$data.activeItem = this.activeItemFromState;
       this.$data.activeMapreg = this.activeMapregFromState;
       this.$data.activeAddress = this.activeAddressFromState;
