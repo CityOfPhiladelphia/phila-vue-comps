@@ -492,8 +492,8 @@
       },
       externalLinkText: function externalLinkText() {
         var name = this.options.name  || '';
-        var preText = this.options.preText;
-        var postText = this.options.postText;
+        // const preText = this.options.preText;
+        // const postText = this.options.postText;
 
         if (this.type === 'vertical-table') {
         // if (this.externalLinkAction) {
