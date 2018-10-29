@@ -15,6 +15,7 @@
     },
     methods: {
       evaluateSlot(valOrGetter, transforms = [], nullValue = '') {
+        // console.log('evaluateSlot is running, valOrGetter:', valOrGetter);
         // check for null val/getter
         if (!valOrGetter) {
           return valOrGetter;
@@ -42,6 +43,7 @@
           if (item) {
             val = getter(state, item);
           } else {
+            // console.log('evaluateSlot, about to get value');
             val = getter(state);
             // console.log('state:', state, 'val:', val);
           }

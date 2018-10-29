@@ -198,6 +198,9 @@
       HorizontalTableRow,
       ExternalLink,
     },
+    // beforeCreate() {
+    //   console.log('horizTable before create, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
+    // },
     created() {
       // console.log('horiz table created props slots items', this.$props.slots.items);
       if (this.filters) {
@@ -234,6 +237,39 @@
       }
     },
     computed: {
+      hasData() {
+        // console.log('horizTable hasData is running, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
+        if (!this.$props.options.dataSources) {
+          return true;
+        } else {
+          const hasData = this.$props.options.dataSources.every(dataSource => {
+            // const targetsFn = this.$config.dataSources[dataSource].targets;
+            const targetsFn = this.$store.state.sources[dataSource].targets;
+            const maybeEmpty = this.isEmpty(targetsFn);
+            // if the data source is configured for targets
+            if (!this.isEmpty(targetsFn)) {
+              const targetsMap = this.$store.state.sources[dataSource].targets;
+              const targets = Object.values(targetsMap);
+
+              // but there are no targets for this address, return false
+              if (targets.length === 0) {
+                return false;
+              }
+
+              // if there are targets for this address, make sure none of them
+              // are "waiting"
+              return targets.every(target => target.status !== 'waiting');
+
+              // if the data source is not configured for targets, just check that
+              // it has data
+            } else {
+              return !!this.$store.state.sources[dataSource].data;
+            }
+          });
+
+          return hasData;
+        }
+      },
       shouldShowFilters() {
         if (typeof this.options.shouldShowFilters === 'undefined') {
           return true;
@@ -329,10 +365,14 @@
         return !!this.options.mapOverlay;
       },
       items() {
-        const itemsSlot = this.slots.items;
-        const items = this.evaluateSlot(itemsSlot) || [];
-        // console.log('horiz table items', items);
-        return items
+        if (this.hasData) {
+          const itemsSlot = this.slots.items;
+          const items = this.evaluateSlot(itemsSlot) || [];
+          // console.log('horiz table items', items);
+          return items
+        } else {
+          return [];
+        }
       },
       filterByTextFields() {
         if (this.options.filterByText) {
@@ -384,12 +424,16 @@
       // this takes itemsAfterSearch and applies selected filters
       itemsAfterFilters() {
         // console.log('itemsAfterFilters is running, this.filters:', this.filters, 'this.filterSelections:', this.filterSelections);
-        const itemsAfterSearch = this.itemsAfterSearch;
-        const items = this.filterItems(itemsAfterSearch,
-                                       this.filters,
-                                       this.filterSelections);
-        // console.log('horiz table itemsAfterFilters', items);
-        return items;
+        if (!this.itemsAfterSearch) {
+          return [];
+        } else {
+          const itemsAfterSearch = this.itemsAfterSearch;
+          const items = this.filterItems(itemsAfterSearch,
+            this.filters,
+            this.filterSelections);
+            // console.log('horiz table itemsAfterFilters', items);
+            return items;
+        }
       },
       itemsAfterSort() {
         const itemsAfterFilters = this.itemsAfterFilters;
@@ -773,7 +817,14 @@
           tableId,
           data: this.itemsAfterFilters
         });
-      }
+      },
+      isEmpty(obj) {
+        for(var key in obj) {
+          if(obj.hasOwnProperty(key))
+            return false;
+        }
+        return true;
+      },
     }
   };
 </script>

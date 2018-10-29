@@ -348,6 +348,7 @@
         if ( transforms === void 0 ) transforms = [];
         if ( nullValue === void 0 ) nullValue = '';
 
+        // console.log('evaluateSlot is running, valOrGetter:', valOrGetter);
         // check for null val/getter
         if (!valOrGetter) {
           return valOrGetter;
@@ -375,6 +376,7 @@
           if (item) {
             val = getter(state, item);
           } else {
+            // console.log('evaluateSlot, about to get value');
             val = getter(state);
             // console.log('state:', state, 'val:', val);
           }
@@ -1077,6 +1079,9 @@
       HorizontalTableRow: HorizontalTableRow,
       ExternalLink: ExternalLink,
     },
+    // beforeCreate() {
+    //   console.log('horizTable before create, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
+    // },
     created: function created() {
       // console.log('horiz table created props slots items', this.$props.slots.items);
       if (this.filters) {
@@ -1117,6 +1122,41 @@
       }
     },
     computed: {
+      hasData: function hasData() {
+        var this$1 = this;
+
+        // console.log('horizTable hasData is running, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
+        if (!this.$props.options.dataSources) {
+          return true;
+        } else {
+          var hasData = this.$props.options.dataSources.every(function (dataSource) {
+            // const targetsFn = this.$config.dataSources[dataSource].targets;
+            var targetsFn = this$1.$store.state.sources[dataSource].targets;
+            var maybeEmpty = this$1.isEmpty(targetsFn);
+            // if the data source is configured for targets
+            if (!this$1.isEmpty(targetsFn)) {
+              var targetsMap = this$1.$store.state.sources[dataSource].targets;
+              var targets = Object.values(targetsMap);
+
+              // but there are no targets for this address, return false
+              if (targets.length === 0) {
+                return false;
+              }
+
+              // if there are targets for this address, make sure none of them
+              // are "waiting"
+              return targets.every(function (target) { return target.status !== 'waiting'; });
+
+              // if the data source is not configured for targets, just check that
+              // it has data
+            } else {
+              return !!this$1.$store.state.sources[dataSource].data;
+            }
+          });
+
+          return hasData;
+        }
+      },
       shouldShowFilters: function shouldShowFilters() {
         if (typeof this.options.shouldShowFilters === 'undefined') {
           return true;
@@ -1212,10 +1252,14 @@
         return !!this.options.mapOverlay;
       },
       items: function items() {
-        var itemsSlot = this.slots.items;
-        var items = this.evaluateSlot(itemsSlot) || [];
-        // console.log('horiz table items', items);
-        return items
+        if (this.hasData) {
+          var itemsSlot = this.slots.items;
+          var items = this.evaluateSlot(itemsSlot) || [];
+          // console.log('horiz table items', items);
+          return items
+        } else {
+          return [];
+        }
       },
       filterByTextFields: function filterByTextFields() {
         if (this.options.filterByText) {
@@ -1269,12 +1313,16 @@
       // this takes itemsAfterSearch and applies selected filters
       itemsAfterFilters: function itemsAfterFilters() {
         // console.log('itemsAfterFilters is running, this.filters:', this.filters, 'this.filterSelections:', this.filterSelections);
-        var itemsAfterSearch = this.itemsAfterSearch;
-        var items = this.filterItems(itemsAfterSearch,
-                                       this.filters,
-                                       this.filterSelections);
-        // console.log('horiz table itemsAfterFilters', items);
-        return items;
+        if (!this.itemsAfterSearch) {
+          return [];
+        } else {
+          var itemsAfterSearch = this.itemsAfterSearch;
+          var items = this.filterItems(itemsAfterSearch,
+            this.filters,
+            this.filterSelections);
+            // console.log('horiz table itemsAfterFilters', items);
+            return items;
+        }
       },
       itemsAfterSort: function itemsAfterSort() {
         var itemsAfterFilters = this.itemsAfterFilters;
@@ -1668,7 +1716,14 @@
           tableId: tableId,
           data: this.itemsAfterFilters
         });
-      }
+      },
+      isEmpty: function isEmpty(obj) {
+        for(var key in obj) {
+          if(obj.hasOwnProperty(key))
+            { return false; }
+        }
+        return true;
+      },
     }
   };
 
@@ -1680,43 +1735,70 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" table[data-v-42075018] { margin: 0; } th[data-v-42075018], td[data-v-42075018] { font-size: 15px; text-align: left; } th[data-v-42075018] { width: 30%; } .external-link[data-v-42075018] { padding-top: 5px; } .table-title[data-v-42075018] { /*too much*/ /*margin-top: 1rem;*/ } .table-container[data-v-42075018] { /*this was too much padding for the parcel table, taking out for now*/ /*padding-top: 1rem;*/ margin-bottom: 10px !important; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var VerticalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.shouldShowTable)?_c('div',{staticClass:"table-container"},[(_vm.slots.title)?_c('h4',{staticClass:"table-title"},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" ")]):_vm._e(),_vm._v(" "),_c('table',[_c('tbody',_vm._l((_vm.slots.fields),function(field){return _c('tr',[_c('th',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.label))}}),_vm._v(" "),_c('td',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.value, field.transforms, _vm.nullValue))}})])}))]),_vm._v(" "),(_vm.options && _vm.options.externalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"type":'vertical-table'}}):_vm._e()],1):_vm._e()},staticRenderFns: [],_scopeId: 'data-v-42075018',
+  var VerticalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.shouldShowTable)?_c('div',{staticClass:"table-container"},[(_vm.slots.title)?_c('h4',{staticClass:"table-title"},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" ")]):_vm._e(),_vm._v(" "),_c('table',[_c('tbody',_vm._l((_vm.slots.fields),function(field){return _c('tr',[_c('th',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.label))}}),_vm._v(" "),(_vm.hasData)?_c('td',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.value, field.transforms, _vm.nullValue))}}):_vm._e(),_vm._v(" "),(!_vm.hasData)?_c('td',{domProps:{"innerHTML":_vm._s('')}}):_vm._e()])}))]),_vm._v(" "),(_vm.options && _vm.options.externalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"type":'vertical-table'}}):_vm._e()],1):_vm._e()},staticRenderFns: [],_scopeId: 'data-v-42075018',
     mixins: [TopicComponent],
     components: {
       ExternalLink: ExternalLink,
     },
     computed: {
       shouldShowTable: function shouldShowTable() {
+        var hasData = this.hasData;
         if (this.item) {
           if (this.item.activeTable) {
             var filterValue = this.item.activeTable;
             var id = this.options.id;
             if (filterValue === id) {
               return true
+              // return hasData;
             } else {
               return false;
             }
           } else {
             return true;
+            // return hasData;
           }
         } else {
           return true;
+          // return hasData;
         }
       },
-      // externalLinkAction() {
-      //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
-      // },
-      // externalLinkText() {
-      //   const externalLinkConf = this.options.externalLink;
-      //   const actionFn = externalLinkConf.action;
-      //   const actionText = actionFn(this.externalLinkCount);
-      //   const name = externalLinkConf.name || '';
-      //   // const name = this.externalLinkAction || '';
-      //   return `${actionText} ${name}`;
-      // },
-      // externalLinkHref() {
-      //   return this.evaluateSlot(this.options.externalLink.href);
-      // },
+      hasData: function hasData() {
+        var this$1 = this;
+
+        // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
+        // console.log('vertTable hasData is running, this.$props.options:', this.$props.options, 'this.$config.dataSources:', this.$config.dataSources);
+
+        // make sure the following is true for all data sources
+        if (!this.$props.options.dataSources) {
+          return true;
+        } else {
+          var hasData = this.$props.options.dataSources.every(function (dataSource) {
+            var targetsFn = this$1.$config.dataSources[dataSource].targets;
+
+            // if the data source is configured for targets
+            if (targetsFn) {
+              var targetsMap = this$1.$store.state.sources[dataSource].targets;
+              var targets = Object.values(targetsMap);
+
+              // but there are no targets for this address, return false
+              if (targets.length === 0) {
+                return false;
+              }
+
+              // if there are targets for this address, make sure none of them
+              // are "waiting"
+              return targets.every(function (target) { return target.status !== 'waiting'; });
+
+            // if the data source is not configured for targets, just check that
+            // it has data
+            } else {
+              return !!this$1.$store.state.sources[dataSource].data;
+            }
+          });
+
+          return hasData;
+        }
+      },
     }
   };
 
