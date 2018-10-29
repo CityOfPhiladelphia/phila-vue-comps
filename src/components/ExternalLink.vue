@@ -35,8 +35,8 @@
       },
       externalLinkText() {
         const name = this.options.name  || '';
-        const preText = this.options.preText;
-        const postText = this.options.postText;
+        // const preText = this.options.preText;
+        // const postText = this.options.postText;
 
         if (this.type === 'vertical-table') {
         // if (this.externalLinkAction) {

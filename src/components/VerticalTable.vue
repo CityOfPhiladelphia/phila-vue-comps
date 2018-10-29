@@ -9,7 +9,12 @@
       <tbody>
         <tr v-for="field in slots.fields">
           <th v-html="evaluateSlot(field.label)" />
-          <td v-html="evaluateSlot(field.value, field.transforms, nullValue)" />
+          <td v-html="evaluateSlot(field.value, field.transforms, nullValue)"
+              v-if="hasData"
+          />
+          <td v-html="''"
+              v-if="!hasData"
+          />
         </tr>
       </tbody>
     </table>
@@ -31,36 +36,61 @@
     },
     computed: {
       shouldShowTable() {
+        const hasData = this.hasData;
         if (this.item) {
           if (this.item.activeTable) {
             const filterValue = this.item.activeTable;
             const id = this.options.id;
             if (filterValue === id) {
               return true
+              // return hasData;
             } else {
               return false;
             }
           } else {
             return true;
+            // return hasData;
           }
         } else {
           return true;
+          // return hasData;
         }
       },
-      // externalLinkAction() {
-      //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
-      // },
-      // externalLinkText() {
-      //   const externalLinkConf = this.options.externalLink;
-      //   const actionFn = externalLinkConf.action;
-      //   const actionText = actionFn(this.externalLinkCount);
-      //   const name = externalLinkConf.name || '';
-      //   // const name = this.externalLinkAction || '';
-      //   return `${actionText} ${name}`;
-      // },
-      // externalLinkHref() {
-      //   return this.evaluateSlot(this.options.externalLink.href);
-      // },
+      hasData() {
+        // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
+        // console.log('vertTable hasData is running, this.$props.options:', this.$props.options, 'this.$config.dataSources:', this.$config.dataSources);
+
+        // make sure the following is true for all data sources
+        if (!this.$props.options.dataSources) {
+          return true;
+        } else {
+          const hasData = this.$props.options.dataSources.every(dataSource => {
+            const targetsFn = this.$config.dataSources[dataSource].targets;
+
+            // if the data source is configured for targets
+            if (targetsFn) {
+              const targetsMap = this.$store.state.sources[dataSource].targets;
+              const targets = Object.values(targetsMap);
+
+              // but there are no targets for this address, return false
+              if (targets.length === 0) {
+                return false;
+              }
+
+              // if there are targets for this address, make sure none of them
+              // are "waiting"
+              return targets.every(target => target.status !== 'waiting');
+
+            // if the data source is not configured for targets, just check that
+            // it has data
+            } else {
+              return !!this.$store.state.sources[dataSource].data;
+            }
+          });
+
+          return hasData;
+        }
+      },
     }
   };
 </script>

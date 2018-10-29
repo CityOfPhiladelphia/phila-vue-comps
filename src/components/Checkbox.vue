@@ -7,7 +7,7 @@
          target="_blank"
          v-if="bennyId"
       >
-        <span><font-awesome-icon icon="info-circle" class="fa-2x" /></i></span>
+        <span><font-awesome-icon icon="info-circle" class="fa-2x" /></span>
       </a>
       <!-- <input :id="'checkbox-'+layerName"
              type="checkbox"
