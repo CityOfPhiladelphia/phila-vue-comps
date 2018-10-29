@@ -138,9 +138,9 @@
         this.$store.commit('setShouldShowAddressCandidateList', false);
       },
       handleWindowResize(addressEntered) {
-        if ($(window).width() >= 850) {
+        if (window.innerWidth >= 850) {
           this.listStyle.width = this.$props.widthFromConfig - 55 + 'px';
-        } else if ($(window).width() >= 750) {
+        } else if (window.innerWidth >= 750) {
           this.listStyle.width = this.$props.widthFromConfig - 155 + 'px';
         } else {
           this.listStyle.width = '248px';

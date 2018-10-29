@@ -166,7 +166,7 @@
         if (this.addressAutocompleteEnabled){
           value = this.$store.state.addressEntered;
         } else {
-          value = $('#pvc-search-control-input').val();
+          value = document.querySelector('#pvm-search-control-input').value;
         }
         // console.log('phila-vue-comps AddressInput.vue, handleSearchFormSubmit is running, value:', value);
         this.$controller.handleSearchFormSubmit(value);
@@ -174,15 +174,15 @@
       },
       handleWindowResize() {
         const addressEntered = this.addressEntered;
-        // console.log('AddressInput.vue handleWindowResize is running', $(window).width(), 'addressEntered:', addressEntered);
-        if ($(window).width() >= 850) {
+        // console.log('AddressInput.vue handleWindowResize is running', window.innerWidth, 'addressEntered:', addressEntered);
+        if (window.innerWidth >= 850) {
           this.containerStyle.width = this.$props.widthFromConfig + 'px';
           if (addressEntered === '' || addressEntered === null) {
             this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
           } else {
             this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
           }
-        } else if ($(window).width() >= 750) {
+        } else if (window.innerWidth >= 750) {
           this.containerStyle.width = this.$props.widthFromConfig - 100 + 'px';
           if (addressEntered === '' || addressEntered === null) {
             this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';

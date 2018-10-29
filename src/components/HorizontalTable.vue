@@ -134,7 +134,7 @@
       >
         Retrieve {{ this.nextIncrement }} More {{ this.nextIncrement === 1? 'Record' : 'Records' }}
         <span v-show="secondaryStatus === 'waiting'" class="loading">
-          <font-awesome-icon icon="spinner" icon="fa-lg" />
+          <font-awesome-icon icon="spinner" class="fa-lg" />
         </span>
       </a>
 

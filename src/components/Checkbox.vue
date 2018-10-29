@@ -106,10 +106,6 @@
       //   this.findCurrentTags(nextInputTagsFilter);
       // },
     },
-    // mounted() {
-    //   // REVIEW globals. also is this still needed?
-    //   $(document).foundation();
-    // },
     computed: {
       matchingTags() {
         let matches = [];
