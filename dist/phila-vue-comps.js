@@ -292,7 +292,13 @@
         if (this.addressAutocompleteEnabled){
           value = this.$store.state.addressEntered;
         } else {
-          value = document.querySelector('#pvm-search-control-input').value;
+          if (document.querySelector('#pvc-search-control-input')) {
+            value = document.querySelector('#pvc-search-control-input').value;
+          } else if (document.querySelector('#pvm-search-control-input')) {
+            value = document.querySelector('#pvm-search-control-input');
+          } else {
+            return;
+          }
         }
         // console.log('phila-vue-comps AddressInput.vue, handleSearchFormSubmit is running, value:', value);
         this.$controller.handleSearchFormSubmit(value);
