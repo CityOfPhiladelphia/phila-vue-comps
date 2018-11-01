@@ -333,6 +333,122 @@
     }
   };
 
+  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pvc-search-control-form[data-v-17bde5b1] { display: inline-block; } /* Container */ .pvc-search-control-container[data-v-17bde5b1] { display: inline-block; border-radius: 2px; box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02); width: 305px; } .pvc-container-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-container-mobile[data-v-17bde5b1] { height: 38px; } /* Input */ .pvc-search-control-input[data-v-17bde5b1] { display: inline-block; border: 0; padding: 15px; font-family: 'Montserrat', 'Tahoma', sans-serif; font-size: 16px; width: 250px; } .pvc-input-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-input-mobile[data-v-17bde5b1] { height: 38px; } /* Button */ .pvc-search-control-button[data-v-17bde5b1] { display: inline-block; color: #fff; background: #2176d2; padding: 0px; width: 50px; } .pvc-button-non-mobile[data-v-17bde5b1] { height: 48px; line-height: 48px; } .pvc-button-mobile[data-v-17bde5b1] { height: 38px; line-height: 38px; padding-top: 1px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+
+  var ConfigurableInput = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:'pvc-search-control-container ' + this.containerClass,style:(this.containerStyle)},[_c('form',{staticClass:"pvc-search-control-form",attrs:{"autocomplete":"off","id":"search-form"},on:{"submit":function($event){$event.preventDefault();return _vm.handleConfigurableInputSubmit($event)}}},[_c('input',{class:'pvc-search-control-input ' + this.inputClass,style:(this.inputStyle),attrs:{"id":"pvc-search-control-input","placeholder":this.$props.placeholder || 'Search',"tabindex":"0"},domProps:{"value":this.configurableInputValueEntered},on:{"keyup":_vm.didType}})]),_vm._v(" "),(this.configurableInputValueEntered != '' && this.configurableInputValueEntered != null)?_c('button',{class:'pvc-search-control-button ' + this.buttonClass,on:{"click":_vm.handleFormX}},[_c('font-awesome-icon',{attrs:{"icon":"times"}})],1):_vm._e(),_vm._v(" "),_c('button',{class:'pvc-search-control-button ' + this.buttonClass,attrs:{"tabindex":"-1"},on:{"click":this.handleConfigurableInputSubmit}},[_c('font-awesome-icon',{attrs:{"icon":"search"}})],1)])},staticRenderFns: [],_scopeId: 'data-v-17bde5b1',
+    props: [
+      'process',
+      'widthFromConfig',
+      'placeholder' ],
+    data: function data() {
+      var data = {
+        containerStyle: {
+          'width': '305px',
+        },
+        inputStyle: {
+          'width': '250px',
+        }
+      };
+      return data;
+    },
+    created: function created() {
+      window.addEventListener('resize', this.handleWindowResize);
+      this.handleWindowResize();
+    },
+    watch: {
+      configurableInputValueEntered: function configurableInputValueEntered(nextValue) {
+        this.handleWindowResize();
+      }
+    },
+    computed: {
+      configurableInputValueEntered: function configurableInputValueEntered() {
+        return this.$store.state.configurableInputValueEntered;
+      },
+      inputWidth: function inputWidth() {
+        if (this.configurableInputValueEntered === '' || this.configurableInputValueEntered === null) {
+          return this.$props.widthFromConfig - 55;
+        } else {
+          return this.$props.widthFromConfig - 108;
+        }
+      },
+      inputClass: function inputClass() {
+        if (this.isMobileOrTablet) {
+          return 'pvc-input-mobile';
+        } else {
+          return 'pvc-input-non-mobile';
+        }
+      },
+      containerClass: function containerClass() {
+        if (this.isMobileOrTablet) {
+          return 'pvc-container-mobile';
+        } else {
+          return 'pvc-container-non-mobile';
+        }
+      },
+      buttonClass: function buttonClass() {
+        if (this.isMobileOrTablet) {
+          return 'pvc-button-mobile'
+        } else {
+          return 'pvc-button-non-mobile'
+        }
+      },
+      isMobileOrTablet: function isMobileOrTablet() {
+        return this.$store.state.isMobileOrTablet;
+      },
+    },
+    methods: {
+      didType: debounce(function (e) {
+          // console.log('debounce is running');
+          var ref = e.target;
+          var value = ref.value;
+          this.$store.commit('setConfigurableInputValueEntered', value);
+        }, 300
+      ),
+      handleFormX: function handleFormX() {
+        this.$store.commit('setConfigurableInputValueEntered', '');
+      },
+      handleConfigurableInputSubmit: function handleConfigurableInputSubmit() {
+        var process = this.$props.process || 'mapboard';
+        var value;
+        if (document.querySelector('#pvc-search-control-input')) {
+          value = document.querySelector('#pvc-search-control-input').value;
+        } else if (document.querySelector('#pvm-search-control-input')) {
+          value = document.querySelector('#pvm-search-control-input').value;
+        } else {
+          return;
+        }
+        this.$controller.handleConfigurableInputSubmit(value, process);
+        this.$store.commit('setConfigurableInputValueEntered', value);
+      },
+      handleWindowResize: function handleWindowResize() {
+        var configurableInputValueEntered = this.configurableInputValueEntered;
+        // console.log('AddressInput.vue handleWindowResize is running', window.innerWidth, 'configurableInputValueEntered:', configurableInputValueEntered);
+        if (window.innerWidth >= 850) {
+          this.containerStyle.width = this.$props.widthFromConfig + 'px';
+          if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
+            this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
+          } else {
+            this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
+          }
+        } else if (window.innerWidth >= 750) {
+          this.containerStyle.width = this.$props.widthFromConfig - 100 + 'px';
+          if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
+            this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';
+          } else {
+            this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
+          }
+        } else {
+          this.containerStyle.width = '300px';
+          if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
+            this.inputStyle.width = '245px';
+          } else {
+            this.inputStyle.width = '192px';
+          }
+        }
+      }
+    }
+  };
+
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=""; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
   var TopicComponent = {
     props: ['slots', 'options', 'item'],
@@ -3027,6 +3143,7 @@
   };
 
   var initialState = {
+    configurableInputValueEntered: '',
     shouldShowAddressCandidateList: false,
     popover: '',
   };
@@ -3034,6 +3151,9 @@
   var pvmStore = {
     state: initialState,
     mutations: {
+      setConfigurableInputValueEntered: function setConfigurableInputValueEntered(state, payload) {
+        state.configurableInputValueEntered = payload;
+      },
       setShouldShowAddressCandidateList: function setShouldShowAddressCandidateList(state, payload) {
         state.shouldShowAddressCandidateList = payload;
       },
@@ -3045,6 +3165,7 @@
 
   exports.AddressCandidateList = AddressCandidateList;
   exports.AddressInput = AddressInput;
+  exports.ConfigurableInput = ConfigurableInput;
   exports.AnyHeader = AnyHeader;
   exports.Badge = Badge;
   exports.BadgeCustom = BadgeCustom;

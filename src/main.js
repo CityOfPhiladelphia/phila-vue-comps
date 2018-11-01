@@ -1,5 +1,6 @@
 import AddressCandidateList from './components/AddressCandidateList.vue';
 import AddressInput from './components/AddressInput.vue';
+import ConfigurableInput from './components/ConfigurableInput.vue';
 import AnyHeader from './components/AnyHeader.vue';
 import Badge from './components/Badge.vue';
 import BadgeCustom from './components/BadgeCustom.vue';
@@ -35,6 +36,7 @@ import pvcStore from './store.js';
 
 exports.AddressCandidateList = AddressCandidateList;
 exports.AddressInput = AddressInput;
+exports.ConfigurableInput = ConfigurableInput;
 exports.AnyHeader = AnyHeader;
 exports.Badge = Badge;
 exports.BadgeCustom = BadgeCustom;
