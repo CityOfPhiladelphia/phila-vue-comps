@@ -1,4 +1,4 @@
-setC<template>
+<template>
   <div :class="'pvc-search-control-container ' + this.containerClass"
        :style="this.containerStyle"
   >
