@@ -1,5 +1,6 @@
 const initialState = {
-  configurableInputValueEntered: '',
+  // configurableInputCategorySelected: '',
+  // configurableInputValueEntered: '',
   shouldShowAddressCandidateList: false,
   popover: '',
 };
@@ -7,9 +8,12 @@ const initialState = {
 const pvmStore = {
   state: initialState,
   mutations: {
-    setConfigurableInputValueEntered(state, payload) {
-      state.configurableInputValueEntered = payload;
-    },
+    // setConfigurableInputCategorySelected(state, payload) {
+    //   state.configurableInputCategorySelected = payload;
+    // },
+    // setConfigurableInputValueEntered(state, payload) {
+    //   state.configurableInputValueEntered = payload;
+    // },
     setShouldShowAddressCandidateList(state, payload) {
       state.shouldShowAddressCandidateList = payload;
     },

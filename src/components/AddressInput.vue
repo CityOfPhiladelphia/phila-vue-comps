@@ -8,7 +8,7 @@
           class="pvc-search-control-form"
     >
       <input :class="'pvc-search-control-input ' + this.inputClass"
-             id="pvc-search-control-input"
+             :id="inputID"
              :style="this.inputStyle"
              :placeholder="this.$props.placeholder || 'Search the map'"
              :value="this.addressEntered"
@@ -36,6 +36,7 @@
 <script>
   import debounce from 'lodash.debounce';
   import axios from 'axios';
+  import generateUniqueId from '../util/unique-id';
 
   export default {
     props: [
@@ -49,7 +50,9 @@
         },
         inputStyle: {
           'width': '250px',
-        }
+        },
+        inputID: generateUniqueId(),
+        addressEntered: null,
       }
       return data;
     },
@@ -63,9 +66,9 @@
       }
     },
     computed: {
-      addressEntered() {
-        return this.$store.state.addressEntered;
-      },
+      // addressEntered() {
+      //   return this.$store.state.addressEntered;
+      // },
       inputWidth() {
         // if (this.addressAutocompleteEnabled) {
           if (this.addressEntered === '' || this.addressEntered === null) {
@@ -118,7 +121,8 @@
       didType: debounce(function (e) {
           // console.log('debounce is running');
           const { value } = e.target;
-          this.$store.commit('setAddressEntered', value);
+          this.$data.addressEntered = value;
+          // this.$store.commit('setAddressEntered', value);
 
           if (this.addressAutocompleteEnabled) {
             // console.log('debounce is running, e:', e, 'this:', this);
@@ -157,26 +161,28 @@
         this.$store.commit('setCandidates', []);
       },
       handleFormX() {
-        this.$store.commit('setAddressEntered', '');
+        this.$data.addressEntered = '';
+        // this.$store.commit('setAddressEntered', '');
         this.$store.commit('setShouldShowAddressCandidateList', false);
         this.$store.commit('setCandidates', []);
       },
       handleSearchFormSubmit() {
         let value;
         if (this.addressAutocompleteEnabled){
-          value = this.$store.state.addressEntered;
+          value = addressEntered
+          // value = this.$store.state.addressEntered;
         } else {
-          if (document.querySelector('#pvc-search-control-input')) {
-            value = document.querySelector('#pvc-search-control-input').value;
-          } else if (document.querySelector('#pvm-search-control-input')) {
-            value = document.querySelector('#pvm-search-control-input')
-          } else {
-            return;
-          }
+          // if (document.querySelector('#' + inputID)) {
+          value = document.querySelector('#' + this.$data.inputID.toString()).value;
+          // } else if (document.querySelector('#pvm-search-control-input')) {
+          //   value = document.querySelector('#pvm-search-control-input')
+          // } else {
+          //   return;
+          // }
         }
         // console.log('phila-vue-comps AddressInput.vue, handleSearchFormSubmit is running, value:', value);
         this.$controller.handleSearchFormSubmit(value);
-        this.$store.commit('setAddressEntered', value);
+        // this.$store.commit('setAddressEntered', value);
       },
       handleWindowResize() {
         const addressEntered = this.addressEntered;

@@ -160,9 +160,13 @@
     }
   };
 
+  function generateUniqueId() {
+    return 'id-' + Math.random().toString(36).substring(7);
+  }
+
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pvc-search-control-form[data-v-6340ff46] { display: inline-block; } /* Container */ .pvc-search-control-container[data-v-6340ff46] { display: inline-block; border-radius: 2px; box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02); width: 305px; } .pvc-container-non-mobile[data-v-6340ff46] { height: 48px; } .pvc-container-mobile[data-v-6340ff46] { height: 38px; } /* Input */ .pvc-search-control-input[data-v-6340ff46] { display: inline-block; border: 0; padding: 15px; font-family: 'Montserrat', 'Tahoma', sans-serif; font-size: 16px; width: 250px; } .pvc-input-non-mobile[data-v-6340ff46] { height: 48px; } .pvc-input-mobile[data-v-6340ff46] { height: 38px; } /* Button */ .pvc-search-control-button[data-v-6340ff46] { display: inline-block; color: #fff; background: #2176d2; padding: 0px; width: 50px; } .pvc-button-non-mobile[data-v-6340ff46] { height: 48px; line-height: 48px; } .pvc-button-mobile[data-v-6340ff46] { height: 38px; line-height: 38px; padding-top: 1px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var AddressInput = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:'pvc-search-control-container ' + this.containerClass,style:(this.containerStyle)},[_c('form',{staticClass:"pvc-search-control-form",attrs:{"autocomplete":"off","id":"search-form"},on:{"submit":function($event){$event.preventDefault();return _vm.handleSearchFormSubmit($event)}}},[_c('input',{class:'pvc-search-control-input ' + this.inputClass,style:(this.inputStyle),attrs:{"id":"pvc-search-control-input","placeholder":this.$props.placeholder || 'Search the map',"tabindex":"0"},domProps:{"value":this.addressEntered},on:{"keyup":_vm.didType}})]),_vm._v(" "),(this.addressEntered != '' && this.addressEntered != null)?_c('button',{class:'pvc-search-control-button ' + this.buttonClass,on:{"click":_vm.handleFormX}},[_c('font-awesome-icon',{attrs:{"icon":"times"}})],1):_vm._e(),_vm._v(" "),_c('button',{class:'pvc-search-control-button ' + this.buttonClass,attrs:{"tabindex":"-1"},on:{"click":this.handleSearchFormSubmit}},[_c('font-awesome-icon',{attrs:{"icon":"search"}})],1),_vm._v(" "),_vm._t("address-candidates-slot")],2)},staticRenderFns: [],_scopeId: 'data-v-6340ff46',
+  var AddressInput = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:'pvc-search-control-container ' + this.containerClass,style:(this.containerStyle)},[_c('form',{staticClass:"pvc-search-control-form",attrs:{"autocomplete":"off","id":"search-form"},on:{"submit":function($event){$event.preventDefault();return _vm.handleSearchFormSubmit($event)}}},[_c('input',{class:'pvc-search-control-input ' + this.inputClass,style:(this.inputStyle),attrs:{"id":_vm.inputID,"placeholder":this.$props.placeholder || 'Search the map',"tabindex":"0"},domProps:{"value":this.addressEntered},on:{"keyup":_vm.didType}})]),_vm._v(" "),(this.addressEntered != '' && this.addressEntered != null)?_c('button',{class:'pvc-search-control-button ' + this.buttonClass,on:{"click":_vm.handleFormX}},[_c('font-awesome-icon',{attrs:{"icon":"times"}})],1):_vm._e(),_vm._v(" "),_c('button',{class:'pvc-search-control-button ' + this.buttonClass,attrs:{"tabindex":"-1"},on:{"click":this.handleSearchFormSubmit}},[_c('font-awesome-icon',{attrs:{"icon":"search"}})],1),_vm._v(" "),_vm._t("address-candidates-slot")],2)},staticRenderFns: [],_scopeId: 'data-v-6340ff46',
     props: [
       'widthFromConfig',
       'placeholder' ],
@@ -173,7 +177,9 @@
         },
         inputStyle: {
           'width': '250px',
-        }
+        },
+        inputID: generateUniqueId(),
+        addressEntered: null,
       };
       return data;
     },
@@ -187,9 +193,9 @@
       }
     },
     computed: {
-      addressEntered: function addressEntered() {
-        return this.$store.state.addressEntered;
-      },
+      // addressEntered() {
+      //   return this.$store.state.addressEntered;
+      // },
       inputWidth: function inputWidth() {
         // if (this.addressAutocompleteEnabled) {
           if (this.addressEntered === '' || this.addressEntered === null) {
@@ -243,7 +249,8 @@
           // console.log('debounce is running');
           var ref = e.target;
           var value = ref.value;
-          this.$store.commit('setAddressEntered', value);
+          this.$data.addressEntered = value;
+          // this.$store.commit('setAddressEntered', value);
 
           if (this.addressAutocompleteEnabled) {
             // console.log('debounce is running, e:', e, 'this:', this);
@@ -283,26 +290,28 @@
         this.$store.commit('setCandidates', []);
       },
       handleFormX: function handleFormX() {
-        this.$store.commit('setAddressEntered', '');
+        this.$data.addressEntered = '';
+        // this.$store.commit('setAddressEntered', '');
         this.$store.commit('setShouldShowAddressCandidateList', false);
         this.$store.commit('setCandidates', []);
       },
       handleSearchFormSubmit: function handleSearchFormSubmit() {
         var value;
         if (this.addressAutocompleteEnabled){
-          value = this.$store.state.addressEntered;
+          value = addressEntered;
+          // value = this.$store.state.addressEntered;
         } else {
-          if (document.querySelector('#pvc-search-control-input')) {
-            value = document.querySelector('#pvc-search-control-input').value;
-          } else if (document.querySelector('#pvm-search-control-input')) {
-            value = document.querySelector('#pvm-search-control-input');
-          } else {
-            return;
-          }
+          // if (document.querySelector('#' + inputID)) {
+          value = document.querySelector('#' + this.$data.inputID.toString()).value;
+          // } else if (document.querySelector('#pvm-search-control-input')) {
+          //   value = document.querySelector('#pvm-search-control-input')
+          // } else {
+          //   return;
+          // }
         }
         // console.log('phila-vue-comps AddressInput.vue, handleSearchFormSubmit is running, value:', value);
         this.$controller.handleSearchFormSubmit(value);
-        this.$store.commit('setAddressEntered', value);
+        // this.$store.commit('setAddressEntered', value);
       },
       handleWindowResize: function handleWindowResize() {
         var addressEntered = this.addressEntered;
@@ -333,9 +342,9 @@
     }
   };
 
-  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pvc-search-control-form[data-v-17bde5b1] { display: inline-block; } /* Container */ .pvc-search-control-container[data-v-17bde5b1] { display: inline-block; border-radius: 2px; box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02); width: 305px; } .pvc-container-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-container-mobile[data-v-17bde5b1] { height: 38px; } /* Input */ .pvc-search-control-input[data-v-17bde5b1] { display: inline-block; border: 0; padding: 15px; font-family: 'Montserrat', 'Tahoma', sans-serif; font-size: 16px; width: 250px; } .pvc-input-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-input-mobile[data-v-17bde5b1] { height: 38px; } /* Button */ .pvc-search-control-button[data-v-17bde5b1] { display: inline-block; color: #fff; background: #2176d2; padding: 0px; width: 50px; } .pvc-button-non-mobile[data-v-17bde5b1] { height: 48px; line-height: 48px; } .pvc-button-mobile[data-v-17bde5b1] { height: 38px; line-height: 38px; padding-top: 1px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pvc-search-control-form[data-v-17bde5b1] { height: 300px; display: inline-block; } /* Container */ .pvc-search-control-container[data-v-17bde5b1] { display: inline-block; border-radius: 2px; box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02); width: 455px; /* width: 305px; */ } .pvc-container-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-container-mobile[data-v-17bde5b1] { height: 38px; } /* Select */ .pvc-search-control-select[data-v-17bde5b1] { display: inline-block; width: 150px; margin-bottom: 0px; } /* Input */ .pvc-search-control-input[data-v-17bde5b1] { display: inline-block; border: 0; padding: 15px; font-family: 'Montserrat', 'Tahoma', sans-serif; font-size: 16px; width: 250px; } .pvc-input-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-input-mobile[data-v-17bde5b1] { height: 38px; } /* Button */ .pvc-search-control-button[data-v-17bde5b1] { display: inline-block; color: #fff; background: #2176d2; padding: 0px; width: 50px; } .pvc-button-non-mobile[data-v-17bde5b1] { height: 48px; line-height: 48px; } .pvc-button-mobile[data-v-17bde5b1] { height: 38px; line-height: 38px; padding-top: 1px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var ConfigurableInput = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:'pvc-search-control-container ' + this.containerClass,style:(this.containerStyle)},[_c('form',{staticClass:"pvc-search-control-form",attrs:{"autocomplete":"off","id":"search-form"},on:{"submit":function($event){$event.preventDefault();return _vm.handleConfigurableInputSubmit($event)}}},[_c('input',{class:'pvc-search-control-input ' + this.inputClass,style:(this.inputStyle),attrs:{"id":"pvc-search-control-input","placeholder":this.$props.placeholder || 'Search',"tabindex":"0"},domProps:{"value":this.configurableInputValueEntered},on:{"keyup":_vm.didType}})]),_vm._v(" "),(this.configurableInputValueEntered != '' && this.configurableInputValueEntered != null)?_c('button',{class:'pvc-search-control-button ' + this.buttonClass,on:{"click":_vm.handleFormX}},[_c('font-awesome-icon',{attrs:{"icon":"times"}})],1):_vm._e(),_vm._v(" "),_c('button',{class:'pvc-search-control-button ' + this.buttonClass,attrs:{"tabindex":"-1"},on:{"click":this.handleConfigurableInputSubmit}},[_c('font-awesome-icon',{attrs:{"icon":"search"}})],1)])},staticRenderFns: [],_scopeId: 'data-v-17bde5b1',
+  var ConfigurableInput = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:'pvc-search-control-container ' + this.containerClass,style:(this.containerStyle)},[_c('form',{staticClass:"pvc-search-control-form",attrs:{"autocomplete":"off","id":"search-form"},on:{"submit":function($event){$event.preventDefault();return _vm.handleConfigurableInputSubmit($event)}}},[_c('select',{staticClass:"pvc-search-control-select",style:(this.selectStyle),attrs:{"id":_vm.selectID}},[_c('option',{attrs:{"value":"address"}},[_vm._v("address")]),_vm._v(" "),_c('option',{attrs:{"value":"owner"}},[_vm._v("owner")])]),_vm._v(" "),_c('input',{class:'pvc-search-control-input ' + this.inputClass,style:(this.inputStyle),attrs:{"id":_vm.inputID,"placeholder":this.$props.placeholder || 'Search',"tabindex":"0"},domProps:{"value":this.configurableInputValueEntered},on:{"keyup":_vm.didType}}),_vm._v(" "),(this.configurableInputValueEntered != '' && this.configurableInputValueEntered != null)?_c('button',{class:'pvc-search-control-button ' + this.buttonClass,on:{"click":_vm.handleFormX}},[_c('font-awesome-icon',{attrs:{"icon":"times"}})],1):_vm._e(),_vm._v(" "),_c('button',{class:'pvc-search-control-button ' + this.buttonClass,attrs:{"tabindex":"-1"},on:{"click":this.handleConfigurableInputSubmit}},[_c('font-awesome-icon',{attrs:{"icon":"search"}})],1)])])},staticRenderFns: [],_scopeId: 'data-v-17bde5b1',
     props: [
       'process',
       'widthFromConfig',
@@ -343,15 +352,25 @@
     data: function data() {
       var data = {
         containerStyle: {
-          'width': '305px',
+          'width': '455px',
+          'height': '48px',
+          // 'width': '305px',
+        },
+        selectStyle: {
+          'width': '150px',
         },
         inputStyle: {
           'width': '250px',
-        }
+        },
+        inputID: generateUniqueId(),
+        configurableInputValueEntered: null,
+        selectID: generateUniqueId(),
+        categorySelected: null,
       };
       return data;
     },
     created: function created() {
+
       window.addEventListener('resize', this.handleWindowResize);
       this.handleWindowResize();
     },
@@ -361,9 +380,6 @@
       }
     },
     computed: {
-      configurableInputValueEntered: function configurableInputValueEntered() {
-        return this.$store.state.configurableInputValueEntered;
-      },
       inputWidth: function inputWidth() {
         if (this.configurableInputValueEntered === '' || this.configurableInputValueEntered === null) {
           return this.$props.widthFromConfig - 55;
@@ -401,15 +417,21 @@
           // console.log('debounce is running');
           var ref = e.target;
           var value = ref.value;
-          this.$store.commit('setConfigurableInputValueEntered', value);
+          this.$data.configurableInputValueEntered = value;
+          // this.$store.commit('setConfigurableInputValueEntered', value);
         }, 300
       ),
       handleFormX: function handleFormX() {
-        this.$store.commit('setConfigurableInputValueEntered', '');
+        this.$data.configurableInputValueEntered = '';
+        // this.$store.commit('setConfigurableInputValueEntered', '');
       },
       handleConfigurableInputSubmit: function handleConfigurableInputSubmit() {
         var process = this.$props.process || 'mapboard';
-        var value;
+        var searchCategory, value;
+        if (document.querySelector('#' + this.$data.selectID)) {
+          var e = document.getElementById(this.$data.selectID);
+          searchCategory = e.options[e.selectedIndex].value;
+        }
         if (document.querySelector('#pvc-search-control-input')) {
           value = document.querySelector('#pvc-search-control-input').value;
         } else if (document.querySelector('#pvm-search-control-input')) {
@@ -417,32 +439,47 @@
         } else {
           return;
         }
-        this.$controller.handleConfigurableInputSubmit(value, process);
-        this.$store.commit('setConfigurableInputValueEntered', value);
+        this.$controller.filterInputSubmit(value, process, searchCategory);
+        this.$data.configurableInputValueEntered = value;
+        this.$data.categorySelected = searchCategory;
       },
       handleWindowResize: function handleWindowResize() {
         var configurableInputValueEntered = this.configurableInputValueEntered;
-        // console.log('AddressInput.vue handleWindowResize is running', window.innerWidth, 'configurableInputValueEntered:', configurableInputValueEntered);
+        var theWidth = window.innerWidth;
+        // console.log('AddressInput.vue handleWindowResize is running', theWidth, 'configurableInputValueEntered:', configurableInputValueEntered);
         if (window.innerWidth >= 850) {
           this.containerStyle.width = this.$props.widthFromConfig + 'px';
+          this.containerStyle.height = '48px';
+          this.selectStyle.width = '150px';
           if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
-            this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
           } else {
-            this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 261 + 'px';
           }
         } else if (window.innerWidth >= 750) {
-          this.containerStyle.width = this.$props.widthFromConfig - 100 + 'px';
+          this.containerStyle.width = this.$props.widthFromConfig - 97 + 'px';
+          this.containerStyle.height = '48px';
+          this.selectStyle.width = '150px';
           if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
-            this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 305 + 'px';
           } else {
-            this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 358 + 'px';
           }
         } else {
-          this.containerStyle.width = '300px';
+          // console.log('theWidth:', theWidth);
+          this.containerStyle.width = theWidth - 30 + 'px';
+          this.containerStyle.height = '92px';
+          this.selectStyle.width = theWidth - 40 + 'px';
           if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
-            this.inputStyle.width = '245px';
+            // this.inputStyle.width = '245px';
+            this.inputStyle.width = theWidth - 95 + 'px';
           } else {
-            this.inputStyle.width = '192px';
+            // this.inputStyle.width = '192px';
+            this.inputStyle.width = theWidth - 148 + 'px';
           }
         }
       }
@@ -482,6 +519,7 @@
         // fn
         if (valOrGetterType === 'function') {
           var state = this.$store.state;
+          var controller = this.$controller;
           var getter = valOrGetter;
 
           // const getterText = String(getter);
@@ -496,7 +534,7 @@
           // from a list of things, e.g. dor parcels), pass the item itself
           // as well when evaluating
           if (item) {
-            val = getter(state, item);
+            val = getter(state, item, controller);
           } else {
             // console.log('evaluateSlot, about to get value');
             val = getter(state);
@@ -681,10 +719,6 @@
       // },
     }
   };
-
-  function generateUniqueId() {
-    return Math.random().toString(36).substring(7);
-  }
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" /*# sourceMappingURL=ButtonComp.vue.map */"; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
@@ -3143,7 +3177,8 @@
   };
 
   var initialState = {
-    configurableInputValueEntered: '',
+    // configurableInputCategorySelected: '',
+    // configurableInputValueEntered: '',
     shouldShowAddressCandidateList: false,
     popover: '',
   };
@@ -3151,9 +3186,12 @@
   var pvmStore = {
     state: initialState,
     mutations: {
-      setConfigurableInputValueEntered: function setConfigurableInputValueEntered(state, payload) {
-        state.configurableInputValueEntered = payload;
-      },
+      // setConfigurableInputCategorySelected(state, payload) {
+      //   state.configurableInputCategorySelected = payload;
+      // },
+      // setConfigurableInputValueEntered(state, payload) {
+      //   state.configurableInputValueEntered = payload;
+      // },
       setShouldShowAddressCandidateList: function setShouldShowAddressCandidateList(state, payload) {
         state.shouldShowAddressCandidateList = payload;
       },

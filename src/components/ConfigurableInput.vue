@@ -4,36 +4,46 @@
   >
     <form @submit.prevent="handleConfigurableInputSubmit"
           autocomplete="off"
-          id="search-form"
           class="pvc-search-control-form"
+          id="search-form"
     >
+      <select class="pvc-search-control-select"
+              :id="selectID"
+              :style="this.selectStyle"
+      >
+      <!-- name="select" -->
+        <option value="address">address</option>
+        <option value="owner">owner</option>
+      </select>
       <input :class="'pvc-search-control-input ' + this.inputClass"
-             id="pvc-search-control-input"
+             :id="inputID"
              :style="this.inputStyle"
              :placeholder="this.$props.placeholder || 'Search'"
              :value="this.configurableInputValueEntered"
              tabindex="0"
              @keyup="didType"
       />
+    <!-- </form> -->
+      <button :class="'pvc-search-control-button ' + this.buttonClass"
+              v-if="this.configurableInputValueEntered != '' && this.configurableInputValueEntered != null"
+              @click="handleFormX"
+      >
+      <font-awesome-icon icon="times" />
+      </button>
+      <button :class="'pvc-search-control-button ' + this.buttonClass"
+              tabindex="-1"
+              @click="this.handleConfigurableInputSubmit"
+      >
+        <font-awesome-icon icon="search" />
+      </button>
     </form>
-    <button :class="'pvc-search-control-button ' + this.buttonClass"
-            v-if="this.configurableInputValueEntered != '' && this.configurableInputValueEntered != null"
-            @click="handleFormX"
-    >
-    <font-awesome-icon icon="times" />
-    </button>
-    <button :class="'pvc-search-control-button ' + this.buttonClass"
-            tabindex="-1"
-            @click="this.handleConfigurableInputSubmit"
-    >
-      <font-awesome-icon icon="search" />
-    </button>
   </div>
 </template>
 
 <script>
   import debounce from 'lodash.debounce';
   import axios from 'axios';
+  import generateUniqueId from '../util/unique-id';
 
   export default {
     props: [
@@ -44,15 +54,25 @@
     data() {
       const data = {
         containerStyle: {
-          'width': '305px',
+          'width': '455px',
+          'height': '48px',
+          // 'width': '305px',
+        },
+        selectStyle: {
+          'width': '150px',
         },
         inputStyle: {
           'width': '250px',
-        }
+        },
+        inputID: generateUniqueId(),
+        configurableInputValueEntered: null,
+        selectID: generateUniqueId(),
+        categorySelected: null,
       }
       return data;
     },
     created() {
+
       window.addEventListener('resize', this.handleWindowResize);
       this.handleWindowResize();
     },
@@ -62,9 +82,6 @@
       }
     },
     computed: {
-      configurableInputValueEntered() {
-        return this.$store.state.configurableInputValueEntered;
-      },
       inputWidth() {
         if (this.configurableInputValueEntered === '' || this.configurableInputValueEntered === null) {
           return this.$props.widthFromConfig - 55;
@@ -101,15 +118,21 @@
       didType: debounce(function (e) {
           // console.log('debounce is running');
           const { value } = e.target;
-          this.$store.commit('setConfigurableInputValueEntered', value);
+          this.$data.configurableInputValueEntered = value;
+          // this.$store.commit('setConfigurableInputValueEntered', value);
         }, 300
       ),
       handleFormX() {
-        this.$store.commit('setConfigurableInputValueEntered', '');
+        this.$data.configurableInputValueEntered = '';
+        // this.$store.commit('setConfigurableInputValueEntered', '');
       },
       handleConfigurableInputSubmit() {
         const process = this.$props.process || 'mapboard';
-        let value;
+        let searchCategory, value;
+        if (document.querySelector('#' + this.$data.selectID)) {
+          const e = document.getElementById(this.$data.selectID);
+          searchCategory = e.options[e.selectedIndex].value;
+        }
         if (document.querySelector('#pvc-search-control-input')) {
           value = document.querySelector('#pvc-search-control-input').value;
         } else if (document.querySelector('#pvm-search-control-input')) {
@@ -117,32 +140,47 @@
         } else {
           return;
         }
-        this.$controller.handleConfigurableInputSubmit(value, process);
-        this.$store.commit('setConfigurableInputValueEntered', value);
+        this.$controller.filterInputSubmit(value, process, searchCategory);
+        this.$data.configurableInputValueEntered = value;
+        this.$data.categorySelected = searchCategory;
       },
       handleWindowResize() {
         const configurableInputValueEntered = this.configurableInputValueEntered;
-        // console.log('AddressInput.vue handleWindowResize is running', window.innerWidth, 'configurableInputValueEntered:', configurableInputValueEntered);
+        const theWidth = window.innerWidth;
+        // console.log('AddressInput.vue handleWindowResize is running', theWidth, 'configurableInputValueEntered:', configurableInputValueEntered);
         if (window.innerWidth >= 850) {
           this.containerStyle.width = this.$props.widthFromConfig + 'px';
+          this.containerStyle.height = '48px';
+          this.selectStyle.width = '150px';
           if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
-            this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 55 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
           } else {
-            this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 108 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 261 + 'px';
           }
         } else if (window.innerWidth >= 750) {
-          this.containerStyle.width = this.$props.widthFromConfig - 100 + 'px';
+          this.containerStyle.width = this.$props.widthFromConfig - 97 + 'px';
+          this.containerStyle.height = '48px';
+          this.selectStyle.width = '150px';
           if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
-            this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 155 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 305 + 'px';
           } else {
-            this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
+            // this.inputStyle.width = this.$props.widthFromConfig - 208 + 'px';
+            this.inputStyle.width = this.$props.widthFromConfig - 358 + 'px';
           }
         } else {
-          this.containerStyle.width = '300px';
+          // console.log('theWidth:', theWidth);
+          this.containerStyle.width = theWidth - 30 + 'px';
+          this.containerStyle.height = '92px';
+          this.selectStyle.width = theWidth - 40 + 'px';
           if (configurableInputValueEntered === '' || configurableInputValueEntered === null) {
-            this.inputStyle.width = '245px';
+            // this.inputStyle.width = '245px';
+            this.inputStyle.width = theWidth - 95 + 'px';
           } else {
-            this.inputStyle.width = '192px';
+            // this.inputStyle.width = '192px';
+            this.inputStyle.width = theWidth - 148 + 'px';
           }
         }
       }
@@ -153,6 +191,7 @@
 <style scoped>
 
 .pvc-search-control-form {
+  height: 300px;
   display: inline-block;
 }
 
@@ -162,7 +201,8 @@
   display: inline-block;
   border-radius: 2px;
   box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
-  width: 305px;
+  width: 455px;
+  /* width: 305px; */
 }
 
 .pvc-container-non-mobile {
@@ -173,6 +213,12 @@
   height: 38px;
 }
 
+/* Select */
+.pvc-search-control-select {
+  display: inline-block;
+  width: 150px;
+  margin-bottom: 0px;
+}
 
 /* Input */
 
