@@ -161,12 +161,14 @@
         this.$store.commit('setCandidates', []);
       },
       handleFormX() {
+        console.log('handleFormX is running');
         this.$data.addressEntered = '';
         // this.$store.commit('setAddressEntered', '');
         this.$store.commit('setShouldShowAddressCandidateList', false);
         this.$store.commit('setCandidates', []);
       },
       handleSearchFormSubmit() {
+        console.log('handleSearchFormSubmit is running');
         let value;
         if (this.addressAutocompleteEnabled){
           value = addressEntered

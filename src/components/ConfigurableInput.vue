@@ -2,10 +2,11 @@
   <div :class="'pvc-search-control-container ' + this.containerClass"
        :style="this.containerStyle"
   >
-    <form @submit.prevent="handleConfigurableInputSubmit"
+    <!-- <form @submit.prevent="handleConfigurableInputSubmit" -->
+    <form @submit.prevent
           autocomplete="off"
-          class="pvc-search-control-form"
           id="search-form"
+          class="pvc-search-control-form"
     >
       <select class="pvc-search-control-select"
               :id="selectID"
@@ -123,6 +124,7 @@
         }, 300
       ),
       handleFormX() {
+        console.log('handleFormX is running');
         this.$data.configurableInputValueEntered = '';
         // this.$store.commit('setConfigurableInputValueEntered', '');
       },

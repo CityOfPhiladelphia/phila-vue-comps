@@ -290,12 +290,14 @@
         this.$store.commit('setCandidates', []);
       },
       handleFormX: function handleFormX() {
+        console.log('handleFormX is running');
         this.$data.addressEntered = '';
         // this.$store.commit('setAddressEntered', '');
         this.$store.commit('setShouldShowAddressCandidateList', false);
         this.$store.commit('setCandidates', []);
       },
       handleSearchFormSubmit: function handleSearchFormSubmit() {
+        console.log('handleSearchFormSubmit is running');
         var value;
         if (this.addressAutocompleteEnabled){
           value = addressEntered;
@@ -344,7 +346,7 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pvc-search-control-form[data-v-17bde5b1] { height: 300px; display: inline-block; } /* Container */ .pvc-search-control-container[data-v-17bde5b1] { display: inline-block; border-radius: 2px; box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02); width: 455px; /* width: 305px; */ } .pvc-container-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-container-mobile[data-v-17bde5b1] { height: 38px; } /* Select */ .pvc-search-control-select[data-v-17bde5b1] { display: inline-block; width: 150px; margin-bottom: 0px; } /* Input */ .pvc-search-control-input[data-v-17bde5b1] { display: inline-block; border: 0; padding: 15px; font-family: 'Montserrat', 'Tahoma', sans-serif; font-size: 16px; width: 250px; } .pvc-input-non-mobile[data-v-17bde5b1] { height: 48px; } .pvc-input-mobile[data-v-17bde5b1] { height: 38px; } /* Button */ .pvc-search-control-button[data-v-17bde5b1] { display: inline-block; color: #fff; background: #2176d2; padding: 0px; width: 50px; } .pvc-button-non-mobile[data-v-17bde5b1] { height: 48px; line-height: 48px; } .pvc-button-mobile[data-v-17bde5b1] { height: 38px; line-height: 38px; padding-top: 1px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var ConfigurableInput = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:'pvc-search-control-container ' + this.containerClass,style:(this.containerStyle)},[_c('form',{staticClass:"pvc-search-control-form",attrs:{"autocomplete":"off","id":"search-form"},on:{"submit":function($event){$event.preventDefault();return _vm.handleConfigurableInputSubmit($event)}}},[_c('select',{staticClass:"pvc-search-control-select",style:(this.selectStyle),attrs:{"id":_vm.selectID}},[_c('option',{attrs:{"value":"address"}},[_vm._v("address")]),_vm._v(" "),_c('option',{attrs:{"value":"owner"}},[_vm._v("owner")])]),_vm._v(" "),_c('input',{class:'pvc-search-control-input ' + this.inputClass,style:(this.inputStyle),attrs:{"id":_vm.inputID,"placeholder":this.$props.placeholder || 'Search',"tabindex":"0"},domProps:{"value":this.configurableInputValueEntered},on:{"keyup":_vm.didType}}),_vm._v(" "),(this.configurableInputValueEntered != '' && this.configurableInputValueEntered != null)?_c('button',{class:'pvc-search-control-button ' + this.buttonClass,on:{"click":_vm.handleFormX}},[_c('font-awesome-icon',{attrs:{"icon":"times"}})],1):_vm._e(),_vm._v(" "),_c('button',{class:'pvc-search-control-button ' + this.buttonClass,attrs:{"tabindex":"-1"},on:{"click":this.handleConfigurableInputSubmit}},[_c('font-awesome-icon',{attrs:{"icon":"search"}})],1)])])},staticRenderFns: [],_scopeId: 'data-v-17bde5b1',
+  var ConfigurableInput = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:'pvc-search-control-container ' + this.containerClass,style:(this.containerStyle)},[_c('form',{staticClass:"pvc-search-control-form",attrs:{"autocomplete":"off","id":"search-form"},on:{"submit":function($event){$event.preventDefault();}}},[_c('select',{staticClass:"pvc-search-control-select",style:(this.selectStyle),attrs:{"id":_vm.selectID}},[_c('option',{attrs:{"value":"address"}},[_vm._v("address")]),_vm._v(" "),_c('option',{attrs:{"value":"owner"}},[_vm._v("owner")])]),_vm._v(" "),_c('input',{class:'pvc-search-control-input ' + this.inputClass,style:(this.inputStyle),attrs:{"id":_vm.inputID,"placeholder":this.$props.placeholder || 'Search',"tabindex":"0"},domProps:{"value":this.configurableInputValueEntered},on:{"keyup":_vm.didType}}),_vm._v(" "),(this.configurableInputValueEntered != '' && this.configurableInputValueEntered != null)?_c('button',{class:'pvc-search-control-button ' + this.buttonClass,on:{"click":_vm.handleFormX}},[_c('font-awesome-icon',{attrs:{"icon":"times"}})],1):_vm._e(),_vm._v(" "),_c('button',{class:'pvc-search-control-button ' + this.buttonClass,attrs:{"tabindex":"-1"},on:{"click":this.handleConfigurableInputSubmit}},[_c('font-awesome-icon',{attrs:{"icon":"search"}})],1)])])},staticRenderFns: [],_scopeId: 'data-v-17bde5b1',
     props: [
       'process',
       'widthFromConfig',
@@ -422,6 +424,7 @@
         }, 300
       ),
       handleFormX: function handleFormX() {
+        console.log('handleFormX is running');
         this.$data.configurableInputValueEntered = '';
         // this.$store.commit('setConfigurableInputValueEntered', '');
       },
