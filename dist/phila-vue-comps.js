@@ -426,19 +426,20 @@
         // this.$store.commit('setConfigurableInputValueEntered', '');
       },
       handleConfigurableInputSubmit: function handleConfigurableInputSubmit() {
+        console.log('handleConfigurableInputSubmit is running');
         var process = this.$props.process || 'mapboard';
         var searchCategory, value;
-        if (document.querySelector('#' + this.$data.selectID)) {
-          var e = document.getElementById(this.$data.selectID);
-          searchCategory = e.options[e.selectedIndex].value;
-        }
-        if (document.querySelector('#pvc-search-control-input')) {
-          value = document.querySelector('#pvc-search-control-input').value;
-        } else if (document.querySelector('#pvm-search-control-input')) {
-          value = document.querySelector('#pvm-search-control-input').value;
-        } else {
-          return;
-        }
+        // if (document.querySelector('#' + this.$data.selectID)) {
+        var e = document.getElementById(this.$data.selectID);
+        searchCategory = e.options[e.selectedIndex].value;
+        // }
+        // if (document.querySelector('#pvc-search-control-input')) {
+        value = document.querySelector('#' + this.$data.inputID).value;
+        // } else if (document.querySelector('#pvm-search-control-input')) {
+        //   value = document.querySelector('#pvm-search-control-input').value;
+        // } else {
+        //   return;
+        // }
         this.$controller.filterInputSubmit(value, process, searchCategory);
         this.$data.configurableInputValueEntered = value;
         this.$data.categorySelected = searchCategory;
