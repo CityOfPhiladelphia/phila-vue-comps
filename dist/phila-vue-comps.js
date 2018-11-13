@@ -826,7 +826,7 @@
     'penalty',
     'other' ];
 
-  var ePayForm = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('form',{attrs:{"action":"https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx","method":"post","target":"_blank"}},[_c('input',{attrs:{"name":"billStmt","type":"hidden"},domProps:{"value":_vm.xmlData}}),_vm._v(" "),_c('input',{directives:[{name:"show",rawName:"v-show",value:(this.shouldShowButton),expression:"this.shouldShowButton"}],staticClass:"button external",attrs:{"type":"submit","value":"Pay Now"}})])},staticRenderFns: [],_scopeId: 'data-v-a7b82852',
+  var ePayForm = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('form',{attrs:{"action":"https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx","method":"post","target":"_blank"}},[_c('input',{attrs:{"name":"billStmt","type":"hidden"},domProps:{"value":_vm.xmlData}}),_vm._v(" "),_c('input',{directives:[{name:"show",rawName:"v-show",value:(this.shouldShowButton),expression:"this.shouldShowButton"}],staticClass:"button external",style:(_vm.buttonStyle),attrs:{"type":"submit"},domProps:{"value":this.$props.slots.text}})])},staticRenderFns: [],_scopeId: 'data-v-a7b82852',
     mixins: [TopicComponent],
     data: function data() {
       var data = {
@@ -840,6 +840,10 @@
           }
         },
         xmlData: {},
+        buttonStyle: 'height: ' + this.$props.options.height + 'px;\
+       width: ' + this.$props.options.width + 'px;\
+       font-size: ' + this.$props.options.fontSize + 'px;\
+       '
       };
       return data;
     },
