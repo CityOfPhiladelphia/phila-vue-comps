@@ -21,6 +21,7 @@ export default {
 </script>
 
 <style>
+
   .pl-alert {
     position: fixed;
     bottom: 0;
@@ -48,6 +49,6 @@ export default {
   }
 
   .pl-alert a {
-    color: inherit;
+    color: #a5c0e4 !important;
   }
 </style>
