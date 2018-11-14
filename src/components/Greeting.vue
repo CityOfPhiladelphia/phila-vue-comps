@@ -5,11 +5,14 @@
       <address-input v-if="this.shouldShowAddressInput" />
       <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput"/>
 
-      <div v-if="!components && !hasError" class="greeting" v-html="initialMessage">
+      <div v-if="!components && !hasError" class="greeting">
+        {{ initialMessage }}
       </div>
 
       <div v-if="!components && hasError" class="greeting greeting-error" v-html="errorMessage">
       </div>
+
+      <topic-component-group :topic-components="options.components" :item="item" />
 
       <component v-if="components"
                  v-for="(topicComp, topicCompIndex) in components"
@@ -19,10 +22,13 @@
                  :key="'greeting'"
       />
     </div>
+    <slot></slot>
   <!-- </div> -->
 </template>
 
 <script>
+  import TopicComponent from './TopicComponent.vue';
+  import TopicComponentGroup from './TopicComponentGroup.vue';
   import Image_ from './Image.vue';
   import AddressInput from './AddressInput.vue';
   import AddressCandidateList from './AddressCandidateList.vue';
@@ -33,7 +39,32 @@
       AddressInput,
       AddressCandidateList,
     },
+    mixins: [TopicComponent],
+    props: {
+      'message': {
+        type: String,
+        default: function() {
+          return 'defaultMessage';
+        }
+
+      },
+    },
+    beforeCreate() {
+      if (this.$options.components) {
+        this.$options.components.TopicComponentGroup = TopicComponentGroup;
+      }
+    },
     computed: {
+      initialMessage() {
+        let greeting;
+        if (this.$config.greeting) {
+          greeting = this.$config.greeting.initialMessage;
+        } else {
+          // greeting = this.options.initialMessage;
+          greeting = this.message;
+        }
+        return greeting;
+      },
       shouldShowAddressInput() {
         if (this.$config.addressInputLocation == 'topics') {
           return true;
@@ -59,10 +90,6 @@
       },
       hasError() {
         return this.$store.state.geocode.status === 'error';
-      },
-      initialMessage() {
-        const greetingConfig = this.$config.greeting || {};
-        return greetingConfig.initialMessage;
       },
       errorMessage() {
         const input = this.$store.state.geocode.input;
