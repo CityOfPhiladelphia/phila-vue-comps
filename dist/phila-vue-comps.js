@@ -763,7 +763,7 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" /*# sourceMappingURL=Division.vue.map */"; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var Division = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:this.class,style:(this.style)},[_c('topic-component-group',{attrs:{"topic-components":this.$props.options.components}})],1)},staticRenderFns: [],_scopeId: 'data-v-031d1786',
+  var Division = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(this.vshowComputed),expression:"this.vshowComputed"}],class:this.class,style:(this.style)},[_c('topic-component-group',{attrs:{"topic-components":this.$props.options.components}})],1)},staticRenderFns: [],_scopeId: 'data-v-031d1786',
     mixins: [TopicComponent],
     computed: {
       message: function message() {
@@ -775,6 +775,20 @@
       style: function style() {
         return this.$props.options.style || '';
       },
+      vshowComputed: function vshowComputed() {
+        if (this.$props.slots) {
+          if (this.evaluateSlot(this.$props.slots.vshowProp) === false) {
+            // console.log('returning vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
+            return false;
+          } else {
+            // console.log('returning true, vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
+            return true;
+          }
+        } else {
+          // console.log('returning true, no props');
+          return true;
+        }
+      }
     },
     components: {},
     beforeCreate: function beforeCreate() {
@@ -1866,7 +1880,7 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" /*# sourceMappingURL=Paragraph.vue.map */"; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var Paragraph = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('p',{style:(this.style),domProps:{"innerHTML":_vm._s(this.message)}})},staticRenderFns: [],_scopeId: 'data-v-bfe356e4',
+  var Paragraph = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('p',{directives:[{name:"show",rawName:"v-show",value:(this.vshowComputed),expression:"this.vshowComputed"}],style:(this.style),domProps:{"innerHTML":_vm._s(this.message)}})},staticRenderFns: [],_scopeId: 'data-v-bfe356e4',
     mixins: [TopicComponent],
     computed: {
       additionalTags: function additionalTags() {
@@ -1891,6 +1905,21 @@
       style: function style() {
         if (this.$props.options) {
           return this.$props.options.style || '';
+        }
+      },
+      vshowComputed: function vshowComputed() {
+        // console.log('vshowProp:', this.$props.slots.vshowProp);
+        if (this.$props.slots) {
+          if (this.evaluateSlot(this.$props.slots.vshowProp) === false) {
+            // console.log('returning vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
+            return false;
+          } else {
+            // console.log('returning true, vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
+            return true;
+          }
+        } else {
+          // console.log('returning true, no props');
+          return true;
         }
       }
     }
@@ -2469,12 +2498,19 @@
       PopoverLink: PopoverLink,
     },
     beforeCreate: function beforeCreate() {
-      // console.log('TopicComponentGroup beforeCreate is running');
+      console.log('TopicComponentGroup beforeCreate is running, this.$config:', this);
       this.$options.components.TabGroup = TabGroup;
       this.$options.components.BadgeCustom = BadgeCustom;
       this.$options.components.Topic = Topic;
       this.$options.components.TopicSet = TopicSet;
       this.$options.components.AnyHeader = AnyHeader;
+      // this.$options.components.propertyCallout = propertyCallout;
+    },
+    created: function created() {
+      console.log('TopicComponentGroup created is running, this.$config:');
+    },
+    mounted: function mounted() {
+      console.log('testetstetestes');
     },
     data: function data() {
       return {
@@ -2486,6 +2522,7 @@
     },
     methods: {
       getCompKey: function getCompKey(compGroupKey, compIndex) {
+        console.log('getCompKey is running');
         return ("topic-comp-" + compGroupKey + "-" + compIndex);
       }
     }
