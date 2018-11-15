@@ -2,6 +2,7 @@
   <div>
     <a class="popover-link"
       @click="didClickPopoverLink"
+      :title="value"
     >
       {{value}}
     </a>
@@ -60,6 +61,7 @@
   .popover-link {
     border-bottom: 1px dotted;
     font-weight: bold;
-    color: #444;
+    /* color: #444; */
+    color: #2176d2;
   }
 </style>
