@@ -2498,19 +2498,12 @@
       PopoverLink: PopoverLink,
     },
     beforeCreate: function beforeCreate() {
-      console.log('TopicComponentGroup beforeCreate is running, this.$config:', this);
+      // console.log('TopicComponentGroup beforeCreate is running');
       this.$options.components.TabGroup = TabGroup;
       this.$options.components.BadgeCustom = BadgeCustom;
       this.$options.components.Topic = Topic;
       this.$options.components.TopicSet = TopicSet;
       this.$options.components.AnyHeader = AnyHeader;
-      // this.$options.components.propertyCallout = propertyCallout;
-    },
-    created: function created() {
-      console.log('TopicComponentGroup created is running, this.$config:');
-    },
-    mounted: function mounted() {
-      console.log('testetstetestes');
     },
     data: function data() {
       return {
@@ -2522,7 +2515,6 @@
     },
     methods: {
       getCompKey: function getCompKey(compGroupKey, compIndex) {
-        console.log('getCompKey is running');
         return ("topic-comp-" + compGroupKey + "-" + compIndex);
       }
     }
@@ -3102,6 +3094,7 @@
   exports.CollectionSummary = CollectionSummary;
   exports.Division = Division;
   exports.ExternalLink = ExternalLink;
+  exports.ePayForm = ePayForm;
   exports.FullScreenTopicsToggleTab = fullScreenTopicsToggleTab;
   exports.Greeting = Greeting;
   exports.HorizontalTable = HorizontalTable;
