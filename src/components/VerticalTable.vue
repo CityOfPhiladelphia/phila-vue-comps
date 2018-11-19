@@ -8,7 +8,9 @@
     <table>
       <tbody>
         <tr v-for="field in slots.fields">
-          <th v-html="evaluateSlot(field.label)" />
+          <th v-html="evaluateSlot(field.label)"
+              :style="styles.th || ''"
+          />
           <td v-html="evaluateSlot(field.value, field.transforms, nullValue)"
               v-if="hasData"
           />
@@ -35,6 +37,13 @@
       ExternalLink,
     },
     computed: {
+      styles() {
+        if (this.$props.options.styles) {
+          return this.$props.options.styles;
+        } else {
+          return '';
+        }
+      },
       shouldShowTable() {
         const hasData = this.hasData;
         if (this.item) {
