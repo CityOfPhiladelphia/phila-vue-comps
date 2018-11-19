@@ -7,13 +7,26 @@
     <td v-for="field in fields"
         :item='item'
     >
-      <popover-link v-if="field.popoverLink"
-                    :slots='field'
-                    :item='item'
-      />
-      <div v-if="!field.popoverLink"
-           v-html="evaluateSlot(field.value, field.transforms, field.nullValue)"
-      />
+      <b v-show="shouldBeBold">
+        <popover-link v-if="field.popoverLink"
+                      :slots='field'
+                      :item='item'
+        />
+        <div v-if="!field.popoverLink"
+             v-html="evaluateSlot(field.value, field.transforms, field.nullValue)"
+        />
+      </b>
+
+      <div v-show="!shouldBeBold">
+        <popover-link v-if="field.popoverLink"
+                      :slots='field'
+                      :item='item'
+        />
+        <div v-if="!field.popoverLink"
+             v-html="evaluateSlot(field.value, field.transforms, field.nullValue)"
+        />
+      </div>
+
     </td>
   </tr>
 </template>
@@ -27,7 +40,7 @@
     components: {
       PopoverLink,
     },
-    props: ['fields', 'hasOverlay', 'tableId'],
+    props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold'],
     computed: {
       activeFeature() {
         return this.$store.state.activeFeature;
