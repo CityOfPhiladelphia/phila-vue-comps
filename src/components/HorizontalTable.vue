@@ -111,6 +111,7 @@
                                   :item="this.itemsLimitedSummed"
                                   :fields="fields"
                                   :tableId="options.tableId"
+                                  :totalRowField="this.totalRowField"
 
             />
           </tbody>

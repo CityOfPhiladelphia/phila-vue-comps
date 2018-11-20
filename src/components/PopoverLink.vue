@@ -1,10 +1,11 @@
 <template>
   <div>
+    {{ evaluateFieldLabel() }}
     <a class="popover-link"
       @click="didClickPopoverLink"
       :title="value"
     >
-      {{value}}
+      {{ value }}
     </a>
   </div>
 </template>
@@ -13,6 +14,17 @@
   import TopicComponent from './TopicComponent.vue';
   export default {
     mixins: [TopicComponent],
+    props: ['fieldLabel'],
+    data() {
+      const data = {
+        showFieldLabel: false
+      };
+      return data;
+    },
+    created() {
+      window.addEventListener('resize', this.handleWindowResize);
+      this.handleWindowResize();
+    },
     computed: {
       value() {
         const value = this.$props.slots.value;
@@ -53,6 +65,20 @@
       didClickPopoverLink(e) {
         this.$store.commit('setPopover', this.popoverText);
       },
+      handleWindowResize() {
+        if (window.innerWidth >= 750) {
+          this.showFieldLabel = false;
+        } else {
+          this.showFieldLabel = true;
+        }
+      },
+      evaluateFieldLabel() {
+        if (this.showFieldLabel) {
+          return this.$props.fieldLabel + ': ';
+        } else {
+          return '';
+        }
+      }
     },
   };
 </script>
