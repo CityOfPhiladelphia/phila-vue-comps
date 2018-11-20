@@ -3,7 +3,7 @@
     {{ evaluateFieldLabel() }}
     <a class="popover-link"
       @click="didClickPopoverLink"
-      :title="value"
+      :title="value + ' ' + popoverValue"
     >
       {{ value }}
     </a>
