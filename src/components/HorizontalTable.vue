@@ -105,6 +105,7 @@
                                   :key="item._featureId"
                                   :hasOverlay="hasOverlay"
                                   :tableId="options.tableId"
+                                  :options="options"
             />
           </tbody>
         </table>
