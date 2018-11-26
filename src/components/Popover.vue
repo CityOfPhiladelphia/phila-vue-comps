@@ -24,6 +24,7 @@ export default {
 
   .pl-alert {
     position: fixed;
+    right: 0;
     bottom: 0;
     height: 300px;
     width: 100%;
