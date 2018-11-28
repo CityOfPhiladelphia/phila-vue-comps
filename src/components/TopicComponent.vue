@@ -1,6 +1,20 @@
 <script>
   export default {
-    props: ['slots', 'options', 'item'],
+    // props: ['slots', 'options', 'item'],
+    props: {
+      'slots': {
+        type: Object,
+        default: function() { return {} }
+      },
+      'options': {
+        type: Object,
+        default: function() { return {} }
+      },
+      'item': {
+        type: Object,
+        default: function() { return {} }
+      },
+    },
     beforeCreate() {
       // console.log('TopicComponent.vue beforeCreate is running, this:', this);
     },

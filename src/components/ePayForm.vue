@@ -9,8 +9,9 @@
   >
   <input type="submit"
          class="button external"
-         value="Pay Now"
+         :value="this.$props.slots.text"
          v-show="this.shouldShowButton"
+         :style="buttonStyle"
   >
   </form>
 </template>
@@ -40,6 +41,10 @@
           }
         },
         xmlData: {},
+        buttonStyle: 'height: ' + this.$props.options.height + 'px;\
+         width: ' + this.$props.options.width + 'px;\
+         font-size: ' + this.$props.options.fontSize + 'px;\
+         '
       }
       return data;
     },

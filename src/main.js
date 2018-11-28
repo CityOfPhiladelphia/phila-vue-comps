@@ -1,3 +1,11 @@
+/*     .__    .__.__
+______ |  |__ |__|  | _____            ___  ____ __   ____             ____  ____   _____ ______  ______
+\____ \|  |  \|  |  | \__  \    ______ \  \/ /  |  \_/ __ \   ______ _/ ___\/  _ \ /     \\____ \/  ___/
+|  |_> >   Y  \  |  |__/ __ \_ /_____/  \   /|  |  /\  ___/  /_____/ \  \__(  <_> )  Y Y  \  |_> >___ \
+|   __/|___|  /__|____(____  /           \_/ |____/  \___  >          \___  >____/|__|_|  /   __/____  >
+|__|        \/             \/                            \/               \/            \/|__|       \/
+*/
+
 import AddressCandidateList from './components/AddressCandidateList.vue';
 import AddressInput from './components/AddressInput.vue';
 import ConfigurableInput from './components/ConfigurableInput.vue';
