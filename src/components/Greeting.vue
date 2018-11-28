@@ -1,29 +1,28 @@
 <template>
-  <!-- <div class="mb-panel-topics-greeting"> -->
-    <div class="columns medium-20 medium-centered">
+  <div class="columns medium-20 medium-centered"
+       :style="greetingStyle"
+  >
 
-      <address-input v-if="this.shouldShowAddressInput" />
-      <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput"/>
+    <address-input v-if="this.shouldShowAddressInput" />
+    <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput"/>
 
-      <div v-if="!components && !hasError" class="greeting">
-        {{ initialMessage }}
-      </div>
-
-      <div v-if="!components && hasError" class="greeting greeting-error" v-html="errorMessage">
-      </div>
-
-      <topic-component-group :topic-components="options.components" :item="item" />
-
-      <component v-if="components"
-                 v-for="(topicComp, topicCompIndex) in components"
-                 :is="topicComp.type"
-                 class="topic-comp"
-                 :slots="topicComp.slots"
-                 :key="'greeting'"
-      />
+    <div v-if="!components && !hasError" class="greeting">
+      {{ initialMessage }}
     </div>
-    <slot></slot>
-  <!-- </div> -->
+
+    <div v-if="!components && hasError" class="greeting greeting-error" v-html="errorMessage">
+    </div>
+
+    <topic-component-group :topic-components="options.components" :item="item" />
+
+    <component v-if="components"
+               v-for="(topicComp, topicCompIndex) in components"
+               class="topic-comp"
+               :is="topicComp.type"
+               :slots="topicComp.slots"
+               :key="'greeting'"
+    />
+  </div>
 </template>
 
 <script>
@@ -40,13 +39,18 @@
       AddressCandidateList,
     },
     mixins: [TopicComponent],
+    data() {
+      let data = {
+        greetingStyle: this.$props.options.style || {}
+      }
+      return data;
+    },
     props: {
       'message': {
         type: String,
         default: function() {
           return 'defaultMessage';
         }
-
       },
     },
     beforeCreate() {

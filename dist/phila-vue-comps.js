@@ -492,7 +492,21 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=""; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
   var TopicComponent = {
-    props: ['slots', 'options', 'item'],
+    // props: ['slots', 'options', 'item'],
+    props: {
+      'slots': {
+        type: Object,
+        default: function() { return {} }
+      },
+      'options': {
+        type: Object,
+        default: function() { return {} }
+      },
+      'item': {
+        type: Object,
+        default: function() { return {} }
+      },
+    },
     beforeCreate: function beforeCreate() {
       // console.log('TopicComponent.vue beforeCreate is running, this:', this);
     },
@@ -988,7 +1002,7 @@
     'penalty',
     'other' ];
 
-  var ePayForm = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('form',{attrs:{"action":"https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx","method":"post","target":"_blank"}},[_c('input',{attrs:{"name":"billStmt","type":"hidden"},domProps:{"value":_vm.xmlData}}),_vm._v(" "),_c('input',{directives:[{name:"show",rawName:"v-show",value:(this.shouldShowButton),expression:"this.shouldShowButton"}],staticClass:"button external",attrs:{"type":"submit","value":"Pay Now"}})])},staticRenderFns: [],_scopeId: 'data-v-a7b82852',
+  var ePayForm = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('form',{attrs:{"action":"https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx","method":"post","target":"_blank"}},[_c('input',{attrs:{"name":"billStmt","type":"hidden"},domProps:{"value":_vm.xmlData}}),_vm._v(" "),_c('input',{directives:[{name:"show",rawName:"v-show",value:(this.shouldShowButton),expression:"this.shouldShowButton"}],staticClass:"button external",style:(_vm.buttonStyle),attrs:{"type":"submit"},domProps:{"value":this.$props.slots.text}})])},staticRenderFns: [],_scopeId: 'data-v-a7b82852',
     mixins: [TopicComponent],
     data: function data() {
       var data = {
@@ -1002,6 +1016,10 @@
           }
         },
         xmlData: {},
+        buttonStyle: 'height: ' + this.$props.options.height + 'px;\
+       width: ' + this.$props.options.width + 'px;\
+       font-size: ' + this.$props.options.fontSize + 'px;\
+       '
       };
       return data;
     },
@@ -2864,13 +2882,43 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .mb-panel-topics-greeting[data-v-2d681dc9] { padding-top: 20px; } .greeting[data-v-2d681dc9] { font-size: 20px; color: #444; padding: 14px; } .greeting-error[data-v-2d681dc9] { border-left-color: #ff0000; } /*medium*/ @media screen and (min-width: 750px) { .mb-panel-topics-greeting[data-v-2d681dc9] { /*make this scroll on medium screens*/ /*REVIEW this is a little hacky. the 120px shouldn't be hard-coded.*/ height: calc(100vh - 120px); overflow: auto; } } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var Greeting = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"columns medium-20 medium-centered"},[(this.shouldShowAddressInput)?_c('address-input'):_vm._e(),_vm._v(" "),(this.addressAutocompleteEnabled && this.shouldShowAddressInput)?_c('address-candidate-list'):_vm._e(),_vm._v(" "),(!_vm.components && !_vm.hasError)?_c('div',{staticClass:"greeting",domProps:{"innerHTML":_vm._s(_vm.initialMessage)}}):_vm._e(),_vm._v(" "),(!_vm.components && _vm.hasError)?_c('div',{staticClass:"greeting greeting-error",domProps:{"innerHTML":_vm._s(_vm.errorMessage)}}):_vm._e(),_vm._v(" "),_vm._l((_vm.components),function(topicComp,topicCompIndex){return (_vm.components)?_c(topicComp.type,{key:'greeting',tag:"component",staticClass:"topic-comp",attrs:{"slots":topicComp.slots}}):_vm._e()})],2)},staticRenderFns: [],_scopeId: 'data-v-2d681dc9',
+  var Greeting = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"columns medium-20 medium-centered",style:(_vm.greetingStyle)},[(this.shouldShowAddressInput)?_c('address-input'):_vm._e(),_vm._v(" "),(this.addressAutocompleteEnabled && this.shouldShowAddressInput)?_c('address-candidate-list'):_vm._e(),_vm._v(" "),(!_vm.components && !_vm.hasError)?_c('div',{staticClass:"greeting"},[_vm._v(" "+_vm._s(_vm.initialMessage)+" ")]):_vm._e(),_vm._v(" "),(!_vm.components && _vm.hasError)?_c('div',{staticClass:"greeting greeting-error",domProps:{"innerHTML":_vm._s(_vm.errorMessage)}}):_vm._e(),_vm._v(" "),_c('topic-component-group',{attrs:{"topic-components":_vm.options.components,"item":_vm.item}}),_vm._v(" "),_vm._l((_vm.components),function(topicComp,topicCompIndex){return (_vm.components)?_c(topicComp.type,{key:'greeting',tag:"component",staticClass:"topic-comp",attrs:{"slots":topicComp.slots}}):_vm._e()})],2)},staticRenderFns: [],_scopeId: 'data-v-2d681dc9',
     components: {
       Image_: Image_,
       AddressInput: AddressInput,
       AddressCandidateList: AddressCandidateList,
     },
+    mixins: [TopicComponent],
+    data: function data() {
+      var data = {
+        greetingStyle: this.$props.options.style || {}
+      };
+      return data;
+    },
+    props: {
+      'message': {
+        type: String,
+        default: function() {
+          return 'defaultMessage';
+        }
+      },
+    },
+    beforeCreate: function beforeCreate() {
+      if (this.$options.components) {
+        this.$options.components.TopicComponentGroup = TopicComponentGroup;
+      }
+    },
     computed: {
+      initialMessage: function initialMessage() {
+        var greeting;
+        if (this.$config.greeting) {
+          greeting = this.$config.greeting.initialMessage;
+        } else {
+          // greeting = this.options.initialMessage;
+          greeting = this.message;
+        }
+        return greeting;
+      },
       shouldShowAddressInput: function shouldShowAddressInput() {
         if (this.$config.addressInputLocation == 'topics') {
           return true;
@@ -2897,10 +2945,6 @@
       hasError: function hasError() {
         return this.$store.state.geocode.status === 'error';
       },
-      initialMessage: function initialMessage() {
-        var greetingConfig = this.$config.greeting || {};
-        return greetingConfig.initialMessage;
-      },
       errorMessage: function errorMessage() {
         var input = this.$store.state.geocode.input;
         return ("\n        <p>\n          We couldn't find\n          " + (input ? '<strong>' + input + '</strong>' : 'that address') + ".\n          Are you sure everything was spelled correctly?\n        </p>\n        <p>\n          Here are some examples of things you can search for:\n        </p>\n        <ul>\n          <li>1234 Market St</li>\n          <li>1001 Pine Street #201</li>\n          <li>12th & Market</li>\n        </ul>\n      ");
@@ -2908,7 +2952,7 @@
     }
   };
 
-  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pl-alert { position: fixed; bottom: 0; height: 300px; width: 100%; background: rgba(68, 68, 68, 0.95); color: #fff; z-index: 10000; font-size: 1.25em; margin: 0 auto; padding: 1em; overflow-y: auto; } .pl-alert-body { width: 50%; margin: 0 auto; } .pl-alert-close-button { position: fixed; right: 40px; /* float: right; */ cursor: pointer; } .pl-alert a { color: inherit; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pl-alert { position: fixed; bottom: 0; height: 300px; width: 100%; background: rgba(68, 68, 68, 0.95); color: #fff; z-index: 10000; font-size: 1.25em; margin: 0 auto; padding: 1em; overflow-y: auto; } .pl-alert-body { width: 50%; margin: 0 auto; } .pl-alert-close-button { position: fixed; right: 40px; /* float: right; */ cursor: pointer; } .pl-alert a { color: #a5c0e4 !important; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
 
 
@@ -3295,6 +3339,14 @@
       },
     }
   };
+
+  /*     .__    .__.__
+  ______ |  |__ |__|  | _____            ___  ____ __   ____             ____  ____   _____ ______  ______
+  \____ \|  |  \|  |  | \__  \    ______ \  \/ /  |  \_/ __ \   ______ _/ ___\/  _ \ /     \\____ \/  ___/
+  |  |_> >   Y  \  |  |__/ __ \_ /_____/  \   /|  |  /\  ___/  /_____/ \  \__(  <_> )  Y Y  \  |_> >___ \
+  |   __/|___|  /__|____(____  /           \_/ |____/  \___  >          \___  >____/|__|_|  /   __/____  >
+  |__|        \/             \/                            \/               \/            \/|__|       \/
+  */
 
   exports.AddressCandidateList = AddressCandidateList;
   exports.AddressInput = AddressInput;
