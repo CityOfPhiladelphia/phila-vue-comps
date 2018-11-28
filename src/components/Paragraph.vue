@@ -2,6 +2,7 @@
 
   <p v-html="this.message"
      :style="this.style"
+     v-show="this.vshowComputed"
   />
 
 </template>
@@ -30,6 +31,21 @@
       style() {
         if (this.$props.options) {
           return this.$props.options.style || '';
+        }
+      },
+      vshowComputed() {
+        // console.log('vshowProp:', this.$props.slots.vshowProp);
+        if (this.$props.slots) {
+          if (this.evaluateSlot(this.$props.slots.vshowProp) === false) {
+            // console.log('returning vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
+            return false;
+          } else {
+            // console.log('returning true, vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
+            return true;
+          }
+        } else {
+          // console.log('returning true, no props');
+          return true;
         }
       }
     }

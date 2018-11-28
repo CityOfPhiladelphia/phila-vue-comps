@@ -7,13 +7,29 @@
     <td v-for="field in fields"
         :item='item'
     >
-      <popover-link v-if="field.popoverLink"
-                    :slots='field'
-                    :item='item'
-      />
-      <div v-if="!field.popoverLink"
-           v-html="evaluateSlot(field.value, field.transforms, field.nullValue)"
-      />
+      <b v-show="shouldBeBold">
+        <popover-link v-if="field.popoverLink"
+                      :slots='field'
+                      :item='item'
+                      :fieldLabel="field.label"
+        />
+        <div v-if="!field.popoverLink"
+             v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+        />
+      </b>
+
+      <!-- Total Row -->
+      <div v-show="!shouldBeBold">
+        <popover-link v-if="field.popoverLink"
+                      :slots='field'
+                      :item='item'
+                      :fieldLabel="field.label"
+        />
+        <div v-if="!field.popoverLink"
+             v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+        />
+      </div>
+
     </td>
   </tr>
 </template>
@@ -27,7 +43,17 @@
     components: {
       PopoverLink,
     },
-    props: ['fields', 'hasOverlay', 'tableId'],
+    props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField'],
+    data() {
+      const data = {
+        showFieldLabel: false
+      };
+      return data;
+    },
+    created() {
+      window.addEventListener('resize', this.handleWindowResize);
+      this.handleWindowResize();
+    },
     computed: {
       activeFeature() {
         return this.$store.state.activeFeature;
@@ -119,6 +145,21 @@
       },
       featuresMatch(a, b) {
         return a.featureId === b.featureId && a.tableId === b.tableId;
+      },
+      handleWindowResize() {
+        if (window.innerWidth >= 750) {
+          this.showFieldLabel = false;
+        } else {
+          this.showFieldLabel = true;
+        }
+      },
+      evaluateFieldLabel(label) {
+        // console.log('evaluateFieldLabel, label:', label);
+        if (this.showFieldLabel && this.$props.totalRowField !== label.toLowerCase()) {
+          return label + ': ';
+        } else {
+          return '';
+        }
       }
     }
   };

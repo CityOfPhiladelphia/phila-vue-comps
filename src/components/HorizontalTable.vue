@@ -107,6 +107,14 @@
                                   :tableId="options.tableId"
                                   :options="options"
             />
+            <horizontal-table-row v-if="totalRowEnabled"
+                                  :shouldBeBold="true"
+                                  :item="this.itemsLimitedSummed"
+                                  :fields="fields"
+                                  :tableId="options.tableId"
+                                  :totalRowField="this.totalRowField"
+
+            />
           </tbody>
         </table>
 
@@ -238,6 +246,16 @@
       }
     },
     computed: {
+      totalRowEnabled() {
+        if (this.$props.options.totalRow) {
+          return this.$props.options.totalRow.enabled || false;
+        }
+      },
+      totalRowField() {
+        if (this.$props.options.totalRow) {
+          return this.$props.options.totalRow.totalField || '';
+        }
+      },
       hasData() {
         // console.log('horizTable hasData is running, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
         if (!this.$props.options.dataSources) {
@@ -458,6 +476,23 @@
         } else {
           return this.itemsAfterSort;
         }
+      },
+      itemsLimitedSummed() {
+        let summed = {};
+        for (let key of Object.keys(this.itemsLimited[0])) {
+          if (typeof this.itemsLimited[0][key] === 'number') {
+            summed[key] = 0
+          }
+          if (this.totalRowField) {
+            summed[this.totalRowField] = 'Total'
+          }
+          for (let item of this.itemsLimited) {
+            if (typeof summed[key] === 'number') {
+              summed[key] = summed[key] + item[key]
+            }
+          }
+        }
+        return summed;
       },
       count() {
         if (this.$props.options.useApiCount) {
