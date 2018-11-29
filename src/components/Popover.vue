@@ -1,23 +1,56 @@
 <template>
-  <div class="pl-alert">
+  <div class="pl-alert"
+       :style="plAlertStyle"
+  >
     <span class="pl-alert-close-button" @click="close">
       <font-awesome-icon icon="times-circle" class="fa-2x" />
     </span>
     <div class="pl-alert-body">
-      <span v-html="html"></span>
+      <span v-html="this.value"></span>
+      <topic-component-group :topic-components="options.components" :item="item" />
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  props: ['html'],
-  methods: {
-    close() {
-      this.$store.commit('setPopover', '');
+  import TopicComponent from './TopicComponent.vue';
+  import TopicComponentGroup from './TopicComponentGroup.vue';
+  export default {
+    mixins: [TopicComponent],
+    data() {
+      const data = {
+        plAlertStyle: {
+          'height': '300px'
+        }
+      };
+      return data;
     },
-  },
-};
+    beforeCreate() {
+      this.$options.components.TopicComponentGroup = TopicComponentGroup;
+    },
+    created() {
+      // console.log('this.$props.options.height:', this.$props.options.height);
+      if (this.$props.options.height) {
+        this.plAlertStyle.height = this.$props.options.height;
+      }
+    },
+    computed: {
+      value() {
+        if (this.$props.slots.text) {
+          return this.$props.slots.text;
+        } else {
+          return '';
+        }
+      }
+    },
+    methods: {
+      close() {
+        this.$store.commit('setPopoverOpen', false);
+        this.$store.commit('setPopoverOptions', {});
+        this.$store.commit('setPopoverText', '');
+      },
+    },
+  };
 </script>
 
 <style>
@@ -26,7 +59,8 @@ export default {
     position: fixed;
     right: 0;
     bottom: 0;
-    height: 300px;
+    /* height: 100%; */
+    /* height: 300px; */
     width: 100%;
     background: rgba(68, 68, 68, 0.95);
     color: #fff;
@@ -52,4 +86,5 @@ export default {
   .pl-alert a {
     color: #a5c0e4 !important;
   }
+
 </style>

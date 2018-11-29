@@ -13,6 +13,12 @@
 
 <script>
   export default {
+    props: {
+      elementContainer: {
+        type: String,
+        default: 'topic-panel-container'
+      }
+    },
     data() {
       return {
         'divHeight': 0,
@@ -28,16 +34,24 @@
         return this.$store.state.fullScreenMapEnabled;
       },
       fullScreenTopicsEnabled() {
-        return this.$store.state.fullScreenTopicsEnabled;
+        return this.$store.state.fullScreenTopicsEnabled || true;
       },
       isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
       },
       cyclomediaActive() {
-        return this.$store.state.cyclomedia.active;
+        if (this.$store.state.cyclomedia) {
+          return this.$store.state.cyclomedia.active;
+        } else {
+          return null;
+        }
       },
       pictometryActive() {
-        return this.$store.state.pictometry.active;
+        if (this.$store.state.pictometry) {
+          return this.$store.state.pictometry.active;
+        } else {
+          return null;
+        }
       },
       picOrCycloActive() {
         if (this.cyclomediaActive || this.pictometryActive) {
@@ -65,7 +79,7 @@
       setDivHeight() {
         let el;
         if (this.fullScreenTopicsEnabled) {
-          el = document.getElementById('topic-panel-container');
+          el = document.getElementById(this.$props.elementContainer);
         } else {
           el = document.getElementById('map-tag');
         }

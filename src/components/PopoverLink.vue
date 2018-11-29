@@ -63,7 +63,8 @@
     },
     methods: {
       didClickPopoverLink(e) {
-        this.$store.commit('setPopover', this.popoverText);
+        this.$store.commit('setPopoverOpen', true);
+        this.$store.commit('setPopoverText', this.popoverText);
       },
       handleWindowResize() {
         if (window.innerWidth >= 750) {

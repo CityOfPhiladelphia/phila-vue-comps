@@ -1134,7 +1134,8 @@
     },
     methods: {
       didClickPopoverLink: function didClickPopoverLink(e) {
-        this.$store.commit('setPopover', this.popoverText);
+        this.$store.commit('setPopoverOpen', true);
+        this.$store.commit('setPopoverText', this.popoverText);
       },
       handleWindowResize: function handleWindowResize() {
         if (window.innerWidth >= 750) {
@@ -2739,6 +2740,44 @@
     }
   };
 
+  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pl-alert { position: fixed; right: 0; bottom: 0; /* height: 100%; */ /* height: 300px; */ width: 100%; background: rgba(68, 68, 68, 0.95); color: #fff; z-index: 10000; font-size: 1.25em; margin: 0 auto; padding: 1em; overflow-y: auto; } .pl-alert-body { width: 50%; margin: 0 auto; } .pl-alert-close-button { position: fixed; right: 40px; /* float: right; */ cursor: pointer; } .pl-alert a { color: #a5c0e4 !important; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+  var Popover = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pl-alert",style:(_vm.plAlertStyle)},[_c('span',{staticClass:"pl-alert-close-button",on:{"click":_vm.close}},[_c('font-awesome-icon',{staticClass:"fa-2x",attrs:{"icon":"times-circle"}})],1),_vm._v(" "),_c('div',{staticClass:"pl-alert-body"},[_c('span',{domProps:{"innerHTML":_vm._s(this.value)}}),_vm._v(" "),_c('topic-component-group',{attrs:{"topic-components":_vm.options.components,"item":_vm.item}})],1)])},staticRenderFns: [],
+    mixins: [TopicComponent],
+    data: function data() {
+      var data = {
+        plAlertStyle: {
+          'height': '300px'
+        }
+      };
+      return data;
+    },
+    beforeCreate: function beforeCreate() {
+      this.$options.components.TopicComponentGroup = TopicComponentGroup;
+    },
+    created: function created() {
+      // console.log('this.$props.options.height:', this.$props.options.height);
+      if (this.$props.options.height) {
+        this.plAlertStyle.height = this.$props.options.height;
+      }
+    },
+    computed: {
+      value: function value() {
+        if (this.$props.slots.text) {
+          return this.$props.slots.text;
+        } else {
+          return '';
+        }
+      }
+    },
+    methods: {
+      close: function close() {
+        this.$store.commit('setPopoverOpen', false);
+        this.$store.commit('setPopoverOptions', {});
+        this.$store.commit('setPopoverText', '');
+      },
+    },
+  };
+
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .topic-component[data-v-6c6d5231] { /* margin-bottom: 10px !important; */ } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
   // console.log('in TopicComponentGroup.vue script, BadgeCustom:', BadgeCustom, 'Badge:', Badge, 'TabGroup:', TabGroup, 'Callout:', Callout, 'CollectionSummary:', CollectionSummary, 'HorizontalTable:', HorizontalTable);
 
@@ -2762,6 +2801,7 @@
       List: List,
       HorizontalTableGroup: HorizontalTableGroup,
       PopoverLink: PopoverLink,
+      Popover: Popover,
     },
     beforeCreate: function beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');
@@ -2844,6 +2884,12 @@
 
 
   var fullScreenTopicsToggleTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!this.isMobileOrTablet)?_c('div',{staticClass:"toggle-tab",style:({ top: _vm.buttonPosition }),attrs:{"id":"toggle-tab"},on:{"click":_vm.handleFullScreenTopicsToggleButtonClick}},[_c('span',{staticClass:"align-span"},[_c('font-awesome-icon',{staticClass:"fa-2x",attrs:{"icon":this.currentIcon}})],1)]):_vm._e()},staticRenderFns: [],_scopeId: 'data-v-c0f28abc',
+    props: {
+      elementContainer: {
+        type: String,
+        default: 'topic-panel-container'
+      }
+    },
     data: function data() {
       return {
         'divHeight': 0,
@@ -2859,16 +2905,24 @@
         return this.$store.state.fullScreenMapEnabled;
       },
       fullScreenTopicsEnabled: function fullScreenTopicsEnabled() {
-        return this.$store.state.fullScreenTopicsEnabled;
+        return this.$store.state.fullScreenTopicsEnabled || true;
       },
       isMobileOrTablet: function isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
       },
       cyclomediaActive: function cyclomediaActive() {
-        return this.$store.state.cyclomedia.active;
+        if (this.$store.state.cyclomedia) {
+          return this.$store.state.cyclomedia.active;
+        } else {
+          return null;
+        }
       },
       pictometryActive: function pictometryActive() {
-        return this.$store.state.pictometry.active;
+        if (this.$store.state.pictometry) {
+          return this.$store.state.pictometry.active;
+        } else {
+          return null;
+        }
       },
       picOrCycloActive: function picOrCycloActive() {
         if (this.cyclomediaActive || this.pictometryActive) {
@@ -2898,7 +2952,7 @@
       setDivHeight: function setDivHeight() {
         var el;
         if (this.fullScreenTopicsEnabled) {
-          el = document.getElementById('topic-panel-container');
+          el = document.getElementById(this.$props.elementContainer);
         } else {
           el = document.getElementById('map-tag');
         }
@@ -2999,7 +3053,7 @@
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .mb-panel-topics-greeting[data-v-2d681dc9] { padding-top: 20px; } .greeting[data-v-2d681dc9] { font-size: 20px; color: #444; padding: 14px; } .greeting-error[data-v-2d681dc9] { border-left-color: #ff0000; } /*medium*/ @media screen and (min-width: 750px) { .mb-panel-topics-greeting[data-v-2d681dc9] { /*make this scroll on medium screens*/ /*REVIEW this is a little hacky. the 120px shouldn't be hard-coded.*/ height: calc(100vh - 120px); overflow: auto; } } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-  var Greeting = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"columns medium-20 medium-centered",style:(_vm.greetingStyle)},[(this.shouldShowAddressInput)?_c('address-input'):_vm._e(),_vm._v(" "),(this.addressAutocompleteEnabled && this.shouldShowAddressInput)?_c('address-candidate-list'):_vm._e(),_vm._v(" "),(!_vm.components && !_vm.hasError)?_c('div',{staticClass:"greeting"},[_vm._v(" "+_vm._s(_vm.initialMessage)+" ")]):_vm._e(),_vm._v(" "),(!_vm.components && _vm.hasError)?_c('div',{staticClass:"greeting greeting-error",domProps:{"innerHTML":_vm._s(_vm.errorMessage)}}):_vm._e(),_vm._v(" "),_c('topic-component-group',{attrs:{"topic-components":_vm.options.components,"item":_vm.item}}),_vm._v(" "),_vm._l((_vm.components),function(topicComp,topicCompIndex){return (_vm.components)?_c(topicComp.type,{key:'greeting',tag:"component",staticClass:"topic-comp",attrs:{"slots":topicComp.slots}}):_vm._e()})],2)},staticRenderFns: [],_scopeId: 'data-v-2d681dc9',
+  var Greeting = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"columns medium-20 medium-centered",style:(_vm.greetingStyle)},[(this.shouldShowAddressInput)?_c('address-input'):_vm._e(),_vm._v(" "),(this.addressAutocompleteEnabled && this.shouldShowAddressInput)?_c('address-candidate-list'):_vm._e(),_vm._v(" "),(!_vm.components && !_vm.hasError)?_c('div',{staticClass:"greeting",domProps:{"innerHTML":_vm._s(_vm.message)}}):_vm._e(),_vm._v(" "),(!_vm.components && _vm.hasError)?_c('div',{staticClass:"greeting greeting-error",domProps:{"innerHTML":_vm._s(_vm.errorMessage)}}):_vm._e(),_vm._v(" "),_c('topic-component-group',{attrs:{"topic-components":_vm.options.components,"item":_vm.item}}),_vm._v(" "),_vm._l((_vm.components),function(topicComp,topicCompIndex){return (_vm.components)?_c(topicComp.type,{key:'greeting',tag:"component",staticClass:"topic-comp",attrs:{"slots":topicComp.slots}}):_vm._e()})],2)},staticRenderFns: [],_scopeId: 'data-v-2d681dc9',
     components: {
       Image_: Image_,
       AddressInput: AddressInput,
@@ -3026,16 +3080,6 @@
       }
     },
     computed: {
-      initialMessage: function initialMessage() {
-        var greeting;
-        if (this.$config.greeting) {
-          greeting = this.$config.greeting.initialMessage;
-        } else {
-          // greeting = this.options.initialMessage;
-          greeting = this.message;
-        }
-        return greeting;
-      },
       shouldShowAddressInput: function shouldShowAddressInput() {
         if (this.$config.addressInputLocation == 'topics') {
           return true;
@@ -3067,27 +3111,6 @@
         return ("\n        <p>\n          We couldn't find\n          " + (input ? '<strong>' + input + '</strong>' : 'that address') + ".\n          Are you sure everything was spelled correctly?\n        </p>\n        <p>\n          Here are some examples of things you can search for:\n        </p>\n        <ul>\n          <li>1234 Market St</li>\n          <li>1001 Pine Street #201</li>\n          <li>12th & Market</li>\n        </ul>\n      ");
       }
     }
-  };
-
-  (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pl-alert { position: fixed; right: 0; bottom: 0; height: 300px; width: 100%; background: rgba(68, 68, 68, 0.95); color: #fff; z-index: 10000; font-size: 1.25em; margin: 0 auto; padding: 1em; overflow-y: auto; } .pl-alert-body { width: 50%; margin: 0 auto; } .pl-alert-close-button { position: fixed; right: 40px; /* float: right; */ cursor: pointer; } .pl-alert a { color: #a5c0e4 !important; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
-
-
-
-
-
-
-
-
-
-
-
-  var Popover = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pl-alert"},[_c('span',{staticClass:"pl-alert-close-button",on:{"click":_vm.close}},[_c('font-awesome-icon',{staticClass:"fa-2x",attrs:{"icon":"times-circle"}})],1),_vm._v(" "),_c('div',{staticClass:"pl-alert-body"},[_c('span',{domProps:{"innerHTML":_vm._s(_vm.html)}})])])},staticRenderFns: [],
-    props: ['html'],
-    methods: {
-      close: function close() {
-        this.$store.commit('setPopover', '');
-      },
-    },
   };
 
   (function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .legend { margin-left: 10px; } ul { list-style: none; margin-left: 0px; } ul ul { list-style: none; margin-left: 0px; } li { list-style: none; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
@@ -3436,7 +3459,12 @@
     // configurableInputCategorySelected: '',
     // configurableInputValueEntered: '',
     shouldShowAddressCandidateList: false,
-    popover: '',
+    popover: {
+      open: false,
+      text: '',
+      options: {},
+    },
+    fullScreenTopicsEnabled: false,
   };
 
   var pvmStore = {
@@ -3451,8 +3479,17 @@
       setShouldShowAddressCandidateList: function setShouldShowAddressCandidateList(state, payload) {
         state.shouldShowAddressCandidateList = payload;
       },
-      setPopover: function setPopover(state, data) {
-        state.popover = data;
+      setPopoverOpen: function setPopoverOpen(state, payload) {
+        state.popover.open = payload;
+      },
+      setPopoverText: function setPopoverText(state, payload) {
+        state.popover.text = payload;
+      },
+      setPopoverOptions: function setPopoverOptions(state, payload) {
+        state.popover.options = payload;
+      },
+      setFullScreenTopicsEnabled: function setFullScreenTopicsEnabled(state, payload) {
+        state.fullScreenTopicsEnabled = payload;
       },
     }
   };

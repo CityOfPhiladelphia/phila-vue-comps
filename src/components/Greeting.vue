@@ -6,8 +6,8 @@
     <address-input v-if="this.shouldShowAddressInput" />
     <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput"/>
 
-    <div v-if="!components && !hasError" class="greeting">
-      {{ initialMessage }}
+    <div v-if="!components && !hasError" class="greeting" v-html="message">
+      <!-- {{ this.$props.message }} -->
     </div>
 
     <div v-if="!components && hasError" class="greeting greeting-error" v-html="errorMessage">
@@ -59,16 +59,6 @@
       }
     },
     computed: {
-      initialMessage() {
-        let greeting;
-        if (this.$config.greeting) {
-          greeting = this.$config.greeting.initialMessage;
-        } else {
-          // greeting = this.options.initialMessage;
-          greeting = this.message;
-        }
-        return greeting;
-      },
       shouldShowAddressInput() {
         if (this.$config.addressInputLocation == 'topics') {
           return true;
