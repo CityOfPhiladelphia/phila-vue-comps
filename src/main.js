@@ -8,8 +8,12 @@ ______ |  |__ |__|  | _____            ___  ____ __   ____             ____  ___
 
 // Font Awesome Icons
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch, faTimes, faCaretLeft, faCaretRight } from '@fortawesome/pro-solid-svg-icons';
-library.add(faSearch, faTimes, faCaretLeft, faCaretRight);
+import { faExternalLink } from '@fortawesome/pro-solid-svg-icons/faExternalLink';
+import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
+import { faCaretLeft } from '@fortawesome/pro-solid-svg-icons/faCaretLeft';
+import { faCaretRight } from '@fortawesome/pro-solid-svg-icons/faCaretRight';
+library.add(faExternalLink, faSearch, faTimes, faCaretLeft, faCaretRight);
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import AddressCandidateList from './components/AddressCandidateList.vue';
