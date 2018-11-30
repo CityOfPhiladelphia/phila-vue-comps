@@ -32,6 +32,7 @@ export default {
       vue: 'Vue',
       vuex: 'Vuex',
       "lodash.debounce": "debounce",
+      '@fortawesome/vue-fontawesome':'vueFontAwesome',
     },
     sourcemap: true,
   },

@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('leaflet')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'leaflet'], factory) :
-  (factory((global.philaVueComps = {}),global.debounce,global.axios,global.moment,global.escapeHtml,global.L));
-}(this, (function (exports,debounce,axios,moment,escapeHtml,L) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('leaflet'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/pro-solid-svg-icons'), require('@fortawesome/vue-fontawesome')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'leaflet', '@fortawesome/fontawesome-svg-core', '@fortawesome/pro-solid-svg-icons', '@fortawesome/vue-fontawesome'], factory) :
+  (factory((global.philaVueComps = {}),global.debounce,global.axios,global.moment,global.escapeHtml,global.L,global.fontawesomeSvgCore,global.proSolidSvgIcons,global.vueFontAwesome));
+}(this, (function (exports,debounce,axios,moment,escapeHtml,L,fontawesomeSvgCore,proSolidSvgIcons,vueFontawesome) { 'use strict';
 
   debounce = debounce && debounce.hasOwnProperty('default') ? debounce['default'] : debounce;
   axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
@@ -2905,7 +2905,8 @@
         return this.$store.state.fullScreenMapEnabled;
       },
       fullScreenTopicsEnabled: function fullScreenTopicsEnabled() {
-        return this.$store.state.fullScreenTopicsEnabled || true;
+        console.log('this.$store.state.fullScreenTopicsEnabled:', this.$store.state.fullScreenTopicsEnabled);
+        return this.$store.state.fullScreenTopicsEnabled;// || true;
       },
       isMobileOrTablet: function isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
@@ -3501,6 +3502,7 @@
   |   __/|___|  /__|____(____  /           \_/ |____/  \___  >          \___  >____/|__|_|  /   __/____  >
   |__|        \/             \/                            \/               \/            \/|__|       \/
   */
+  fontawesomeSvgCore.library.add(proSolidSvgIcons.faSearch, proSolidSvgIcons.faTimes, proSolidSvgIcons.faCaretLeft, proSolidSvgIcons.faCaretRight);
 
   exports.AddressCandidateList = AddressCandidateList;
   exports.AddressInput = AddressInput;

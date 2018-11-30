@@ -6,6 +6,12 @@ ______ |  |__ |__|  | _____            ___  ____ __   ____             ____  ___
 |__|        \/             \/                            \/               \/            \/|__|       \/
 */
 
+// Font Awesome Icons
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch, faTimes, faCaretLeft, faCaretRight } from '@fortawesome/pro-solid-svg-icons';
+library.add(faSearch, faTimes, faCaretLeft, faCaretRight);
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 import AddressCandidateList from './components/AddressCandidateList.vue';
 import AddressInput from './components/AddressInput.vue';
 import ConfigurableInput from './components/ConfigurableInput.vue';

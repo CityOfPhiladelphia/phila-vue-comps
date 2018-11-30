@@ -34,7 +34,8 @@
         return this.$store.state.fullScreenMapEnabled;
       },
       fullScreenTopicsEnabled() {
-        return this.$store.state.fullScreenTopicsEnabled || true;
+        console.log('this.$store.state.fullScreenTopicsEnabled:', this.$store.state.fullScreenTopicsEnabled);
+        return this.$store.state.fullScreenTopicsEnabled;// || true;
       },
       isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
