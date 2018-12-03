@@ -72,8 +72,11 @@
   }
 
   .pl-alert-body {
-    width: 50%;
-    margin: 0 auto;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0 auto;
+    margin-top: 50px;
   }
 
   .pl-alert-close-button {
