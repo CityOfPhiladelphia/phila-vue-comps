@@ -7,11 +7,17 @@
        v-if="shouldShowHeader"
        :data-topic-key="topicKey"
     >
+      <div class='topic-header-content'>
+        <font-awesome-icon :icon="icon" />
+        <div class='topic-header-label-holder'>
+          {{ topic.label }}
+        </div>
+      </div>
+      <!-- <div class="loading"> -->
       <span v-show="status === 'waiting'" class="loading">
         <font-awesome-icon icon="spinner" class="fa-lg spin" />
       </span>
-      <font-awesome-icon :icon="icon" />
-      {{ topic.label }}
+      <!-- </div> -->
     </a>
 
     <!-- success -->
@@ -249,11 +255,16 @@
     display: block;
     font-size: 18px;
     font-weight: normal;
-    height: 70px;
-    line-height: 45px;
+    min-height: 70px;
+    line-height: 25px;
     padding: 10px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .topic-header:hover {
@@ -261,18 +272,24 @@
     color: inherit;
   }
 
+  .topic-header-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   .topic-header-icon {
     padding-left: 10px;
     padding-right: 10px;
   }
 
+  .topic-header-label-holder {
+    margin-left: 15px;
+  }
+
   .topic-body {
     padding: 5px;
     margin-bottom: 10px;
-  }
-
-  .loading {
-    float: right;
   }
 
   .topic-body-enter-active, .topic-body-leave-active {
