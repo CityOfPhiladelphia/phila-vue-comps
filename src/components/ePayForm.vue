@@ -1,5 +1,6 @@
 <template>
-  <form action="https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx"
+  <!-- <form action="https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx" -->
+  <form :action="actionAddress"
         method="post"
         target="_blank"
   >
@@ -44,7 +45,8 @@
         buttonStyle: 'height: ' + this.$props.options.height + 'px;\
          width: ' + this.$props.options.width + 'px;\
          font-size: ' + this.$props.options.fontSize + 'px;\
-         '
+         ',
+        actionAddress: this.$props.options.actionAddress || 'https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx'
       }
       return data;
     },
