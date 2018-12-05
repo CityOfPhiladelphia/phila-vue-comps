@@ -29,7 +29,7 @@ import CollectionSummary from './components/CollectionSummary.vue';
 import Division from './components/Division.vue';
 import ExternalLink from './components/ExternalLink.vue';
 import EPayForm from './components/ePayForm.vue';
-import fullScreenTopicsToggleTab from './components/FullScreenTopicsToggleTab.vue';
+import FullScreenTopicsToggleTab from './components/FullScreenTopicsToggleTab.vue';
 import FullScreenTopicsToggleTabVertical from './components/FullScreenTopicsToggleTabVertical.vue';
 import Greeting from './components/Greeting.vue';
 import HorizontalTable from './components/HorizontalTable.vue';
@@ -54,7 +54,6 @@ import LegendBox from './components/LegendBox.vue';
 import Slider from './components/Slider.vue';
 
 import pvcStore from './store.js';
-console.log('pvcStore:', pvcStore);
 
 // exports.AddressCandidateList = AddressCandidateList;
 // exports.AddressInput = AddressInput;
@@ -97,6 +96,38 @@ console.log('pvcStore:', pvcStore);
 // export default exports;
 export {
   pvcStore,
-  VerticalTable,
+  AddressCandidateList,
+  AddressInput,
+  ConfigurableInput,
+  AnyHeader,
+  Badge,
+  BadgeCustom,
+  ButtonComp,
+  Callout,
+  CollectionSummary,
+  Division,
+  ExternalLink,
+  EPayForm,
+  FullScreenTopicsToggleTab,
+  FullScreenTopicsToggleTabVertical,
+  Greeting,
   HorizontalTable,
+  HorizontalTableGroup,
+  HorizontalTableRow,
+  Image,
+  List,
+  OverlayToggleGroup,
+  Paragraph,
+  SpanComp,
+  TabGroup,
+  VerticalTable,
+  Topic,
+  TopicSet,
+  TopicComponent,
+  TopicComponentGroup,
+  Popover,
+  PopoverLink,
+  Checkbox,
+  LegendBox,
+  Slider
 }
