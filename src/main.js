@@ -54,43 +54,48 @@ import LegendBox from './components/LegendBox.vue';
 import Slider from './components/Slider.vue';
 
 import pvcStore from './store.js';
+console.log('pvcStore:', pvcStore);
 
-exports.AddressCandidateList = AddressCandidateList;
-exports.AddressInput = AddressInput;
-exports.ConfigurableInput = ConfigurableInput;
-exports.AnyHeader = AnyHeader;
-exports.Badge = Badge;
-exports.BadgeCustom = BadgeCustom;
-exports.ButtonComp = ButtonComp;
-exports.Callout = Callout;
-exports.CollectionSummary = CollectionSummary;
-exports.Division = Division;
-exports.ExternalLink = ExternalLink;
-exports.ePayForm = EPayForm;
-exports.FullScreenTopicsToggleTab = fullScreenTopicsToggleTab;
-exports.FullScreenTopicsToggleTabVertical =  FullScreenTopicsToggleTabVertical;
-exports.Greeting = Greeting;
-exports.HorizontalTable = HorizontalTable;
-exports.HorizontalTableGroup = HorizontalTableGroup;
-exports.HorizontalTableRow = HorizontalTableRow;
-exports.Image = Image;
-exports.List = List;
-exports.OverlayToggleGroup = OverlayToggleGroup;
-exports.Paragraph = Paragraph;
-exports.SpanComp = SpanComp;
-exports.TabGroup = TabGroup;
-exports.VerticalTable = VerticalTable;
-exports.Topic = Topic;
-exports.TopicSet = TopicSet;
-exports.TopicComponent = TopicComponent;
-exports.TopicComponentGroup = TopicComponentGroup;
-exports.Popover = Popover;
-exports.PopoverLink = PopoverLink;
+// exports.AddressCandidateList = AddressCandidateList;
+// exports.AddressInput = AddressInput;
+// exports.ConfigurableInput = ConfigurableInput;
+// exports.AnyHeader = AnyHeader;
+// exports.Badge = Badge;
+// exports.BadgeCustom = BadgeCustom;
+// exports.ButtonComp = ButtonComp;
+// exports.Callout = Callout;
+// exports.CollectionSummary = CollectionSummary;
+// exports.Division = Division;
+// exports.ExternalLink = ExternalLink;
+// exports.ePayForm = EPayForm;
+// exports.FullScreenTopicsToggleTab = fullScreenTopicsToggleTab;
+// exports.FullScreenTopicsToggleTabVertical =  FullScreenTopicsToggleTabVertical;
+// exports.Greeting = Greeting;
+// exports.HorizontalTable = HorizontalTable;
+// exports.HorizontalTableGroup = HorizontalTableGroup;
+// exports.HorizontalTableRow = HorizontalTableRow;
+// exports.Image = Image;
+// exports.List = List;
+// exports.OverlayToggleGroup = OverlayToggleGroup;
+// exports.Paragraph = Paragraph;
+// exports.SpanComp = SpanComp;
+// exports.TabGroup = TabGroup;
+// exports.VerticalTable = VerticalTable;
+// exports.Topic = Topic;
+// exports.TopicSet = TopicSet;
+// exports.TopicComponent = TopicComponent;
+// exports.TopicComponentGroup = TopicComponentGroup;
+// exports.Popover = Popover;
+// exports.PopoverLink = PopoverLink;
+//
+// exports.Checkbox = Checkbox;
+// exports.LegendBox = LegendBox;
+// exports.Slider = Slider;
+//
+// exports.pvcStore = pvcStore;
 
-exports.Checkbox = Checkbox;
-exports.LegendBox = LegendBox;
-exports.Slider = Slider;
-
-exports.pvcStore = pvcStore;
-
-export default exports
+// export default exports;
+export {
+  pvcStore,
+  VerticalTable,
+}
