@@ -799,10 +799,933 @@
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" /*# sourceMappingURL=ePayForm.vue.map */"; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .popover-link { border-bottom: 1px dotted; font-weight: bold; /* color: #444; */ color: #2176d2; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+	var PopoverLink = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._v(" "+_vm._s(_vm.evaluateFieldLabel())+" "),_c('a',{staticClass:"popover-link",attrs:{"title":_vm.value + ' ' + _vm.popoverValue},on:{"click":_vm.didClickPopoverLink}},[_vm._v(" "+_vm._s(_vm.value)+" ")])])},staticRenderFns: [],
+	  mixins: [TopicComponent],
+	  props: ['fieldLabel'],
+	  data: function data() {
+	    var data = {
+	      showFieldLabel: false
+	    };
+	    return data;
+	  },
+	  created: function created() {
+	    window.addEventListener('resize', this.handleWindowResize);
+	    this.handleWindowResize();
+	  },
+	  computed: {
+	    value: function value() {
+	      var value = this.$props.slots.value;
+	      var transforms = this.$props.slots.transforms || [];
+	      var nullValue = this.$props.slots.nullValue || '';
+	      return this.evaluateSlot(value, transforms, nullValue);
+	    },
+	    popoverValue: function popoverValue() {
+	      var value = this.value;
+	      var popoverTransforms = this.$props.slots.popoverTransforms || [];
+	      var popoverNullValue = this.$props.slots.popoverNullValue || '';
+	      return this.evaluateSlot(value, popoverTransforms, popoverNullValue);
+	    },
+	    popoverPreText: function popoverPreText() {
+	      var popoverPreText = this.$props.slots.popoverPreText || '';
+	      return this.evaluateSlot(popoverPreText);
+	    },
+	    popoverPostText: function popoverPostText() {
+	      var popoverPostText = this.$props.slots.popoverPostText || '';
+	      return this.evaluateSlot(popoverPostText);
+	    },
+	    shouldShowValue: function shouldShowValue() {
+	      if (this.$props.slots.shouldShowValue === false) {
+	        return false
+	      } else {
+	        return true;
+	      }
+	    },
+	    popoverText: function popoverText() {
+	      if (this.shouldShowValue === true) {
+	        return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
+	      } else {
+	        return this.popoverPreText + ' ' + this.popoverPostText;
+	      }
+	    },
+	  },
+	  methods: {
+	    didClickPopoverLink: function didClickPopoverLink(e) {
+	      this.$store.commit('setPopoverOpen', true);
+	      this.$store.commit('setPopoverText', this.popoverText);
+	    },
+	    handleWindowResize: function handleWindowResize() {
+	      if (window.innerWidth >= 750) {
+	        this.showFieldLabel = false;
+	      } else {
+	        this.showFieldLabel = true;
+	      }
+	    },
+	    evaluateFieldLabel: function evaluateFieldLabel() {
+	      if (this.showFieldLabel) {
+	        return this.$props.fieldLabel + ': ';
+	      } else {
+	        return '';
+	      }
+	    }
+	  },
+	};
 
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .active[data-v-36d2e900] { background: #F3D661; } td[data-v-36d2e900] { font-size: 15px; text-align: left; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
+	var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{attrs:{"item":_vm.item}},[_c('b',{directives:[{name:"show",rawName:"v-show",value:(_vm.shouldBeBold),expression:"shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(!_vm.shouldBeBold),expression:"!shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1)])}))},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
+	  mixins: [TopicComponent],
+	  components: {
+	    PopoverLink: PopoverLink,
+	  },
+	  props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField'],
+	  data: function data() {
+	    var data = {
+	      showFieldLabel: false
+	    };
+	    return data;
+	  },
+	  created: function created() {
+	    window.addEventListener('resize', this.handleWindowResize);
+	    this.handleWindowResize();
+	  },
+	  computed: {
+	    activeFeature: function activeFeature() {
+	      return this.$store.state.activeFeature;
+	    },
+	    isActive: function isActive() {
+	      if (this.activeFeature) {
+	        return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+	      } else {
+	        return;
+	      }
+	    },
+	    isMobileOrTablet: function isMobileOrTablet() {
+	      return this.$store.state.isMobileOrTablet;
+	    },
+	  },
+	  watch: {
+	    isActive: function isActive(value) {
+	      if (value === true) {
+	        var el = this.$el;
+	        var visible = this.isElementInViewport(el);
+	        // console.log('horizontaltablerow WATCH isActive is firing, el:', el, 'visible:', visible);
+
+	        // console.log('visible?', visible ? 'YES' : 'NO');
+
+	        if (!visible) {
+	          el.scrollIntoView();
+	        }
+	      }
+	    }
+	  },
+	  methods: {
+	    handleRowMouseover: function handleRowMouseover(e) {
+	      // console.log('handleRowMouseover is starting');
+	      if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
+	        // console.log('handleRowMouseover actions are running');
+	        if (!this.hasOverlay) { return; }
+
+	        var featureId = this.item._featureId;
+	        var tableId = this.tableId;
+	        this.$store.commit('setActiveFeature', { featureId: featureId, tableId: tableId });
+	      }
+	    },
+	    handleRowClick: function handleRowClick(e) {
+	      // console.log('handleRowClick is starting');
+	      if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
+	        console.log('handleRowClick actions are running');
+	        if (!this.hasOverlay) { return; }
+
+	        var featureId = this.item._featureId;
+	        var tableId = this.tableId;
+	        this.$store.commit('setActiveFeature', { featureId: featureId, tableId: tableId });
+	      }
+	    },
+	    handleRowMouseout: function handleRowMouseout(e) {
+	      // console.log('handleRowMouseout is starting');
+	      // if(!this.isMobileOrTablet) {
+	        // console.log('handleRowMouseout actions are running');
+	        if(!this.$props.options.mouseOverDisabled) {
+	          if (!this.hasOverlay) { return; }
+	          this.$store.commit('setActiveFeature', null);
+	        }
+	      // }
+	    },
+	    // REVIEW there's very similar code in the controller. if these can be
+	    // the same thing, make it into a util.
+	    isElementInViewport: function isElementInViewport(el) {
+	      var rect = el.getBoundingClientRect();
+
+	      // console.log('bounding box', rect);
+
+	      var visibility = {
+	        // TODO the 108 below is account for the combined height of the
+	        // app header and address header. this is not a good long-term
+	        // solution - instead, use the `bottom` value of the address header's
+	        // bounding rect. however, this should only fire on small devices,
+	        // which would require again hard-coding screen breakpoints from
+	        // standards or some other magic, which might not a huge
+	        // improvement in terms of decoupling logic and presentation. hmm.
+	        top: rect.top >= 108,
+	        left: rect.left >= 0,
+	        bottom: rect.bottom <= (window.innerHeight || document.documentElement.clientHeight),
+	        right: rect.right <= (window.innerWidth || document.documentElement.clientWidth),
+	      };
+
+	      // console.log('visibility', visibility);
+
+	      // return if all sides are visible
+	      return Object.values(visibility).every(function (val) { return val; });
+	    },
+	    featuresMatch: function featuresMatch(a, b) {
+	      return a.featureId === b.featureId && a.tableId === b.tableId;
+	    },
+	    handleWindowResize: function handleWindowResize() {
+	      if (window.innerWidth >= 750) {
+	        this.showFieldLabel = false;
+	      } else {
+	        this.showFieldLabel = true;
+	      }
+	    },
+	    evaluateFieldLabel: function evaluateFieldLabel(label) {
+	      // console.log('evaluateFieldLabel, label:', label);
+	      if (this.showFieldLabel && this.$props.totalRowField !== label.toLowerCase()) {
+	        return label + ': ';
+	      } else {
+	        return '';
+	      }
+	    }
+	  }
+	};
+
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .inline-block[data-v-6dbe65ac] { display: inline-block; } .vertically-centered[data-v-6dbe65ac] { display: inline-block; vertical-align: middle; } .pvc-horizontal-table[data-v-6dbe65ac] { margin-bottom: 10px !important; } .pvc-horizontal-table-controls[data-v-6dbe65ac] { text-align: center; vertical-align: middle; margin-bottom: 10px; } /* dropdown filters */ .pvc-select-text[data-v-6dbe65ac] { font-size: 16px; padding-right: 5px; padding-left: 5px; } .pvc-select[data-v-6dbe65ac] { width: auto; height: 40px; vertical-align: middle; /*padding-right: 20px;*/ } .pvc-select-option[data-v-6dbe65ac] { display: inline-block; padding-right: 100px; margin-right: 100px; } /* input filters using text */ .pvc-search-control-input[data-v-6dbe65ac] { height: 40px !important; line-height: 48px; padding: 8px; font-size: 16px; width: 300px; /*margin-left: 10px;*/ } /*REVIEW this repeats a lot of .pvc-search-control-input. can it be refactored?*/ .pvc-search-control-input-full[data-v-6dbe65ac] { height: 40px !important; line-height: 48px; padding: 8px; font-size: 16px; width: 260px; } .pvc-search-control-button[data-v-6dbe65ac] { width: 40px; background: #ccc; line-height: 40px; float: right; } .pvc-download-data-button[data-v-6dbe65ac] { float: right; vertical-align: baseline; display: inline-block; } .group[data-v-6dbe65ac]:after { content: \"\"; display: table; clear: both; } .pvc-horizontal-table-body[data-v-6dbe65ac] { padding-top: 1rem; padding-bottom: 0.35rem; } .no-padding[data-v-6dbe65ac] { padding-top: 0; padding-bottom: 0; } .center-button[data-v-6dbe65ac] { display: flex; align-items: center; justify-content: center; } .loading[data-v-6dbe65ac] { float: right; } .filter-by-text-form[data-v-6dbe65ac] { border: 2px solid #0f4d90; } table[data-v-6dbe65ac] { /* table-layout: fixed; */ margin: 0; } .external-link[data-v-6dbe65ac] { padding-top: 5px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+	// import json2csv from 'json2csv';
+	// import fs from 'fs';
+
+	var DEFAULT_SORT_FIELDS = [
+	  'distance',
+	  'date' ];
+
+	var HorizontalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pvc-horizontal-table"},[(_vm.shouldShowTable)?_c('div',[(_vm.shouldShowFilters !== false)?_c('div',{staticClass:"pvc-horizontal-table-controls"},[(!!_vm.options.filters)?_c('div',{staticClass:"vertically-centered"},_vm._l((_vm.filters),function(filter,index){return _c('div',{staticClass:"inline-block",attrs:{"id":'filter-' + index}},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v(_vm._s(filter.label))]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleFilterValueChange}},[_c('optgroup',_vm._l((filter.values),function(filterValue){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":_vm.slugifyFilterValue(filterValue)}},[_vm._v(" "+_vm._s(filterValue.label)+" ")])}))])])})):_vm._e(),_vm._v(" "),(!!_vm.options.sort && !!_vm.options.sort.select)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v("Sort by")]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleSortValueChange}},[_c('optgroup',_vm._l((_vm.sortFields),function(sortField){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":sortField}},[_vm._v(" "+_vm._s(sortField)+" ")])}))])]):_vm._e(),_vm._v(" "),(_vm.filterByTextFields)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"pvc-select-text inline-block"},[_vm._v(" "+_vm._s(_vm.options.filterByText.label)+" ")]),_vm._v(" "),_c('form',{staticClass:"inline-block filter-by-text-form",on:{"submit":function($event){$event.preventDefault();return _vm.handleFilterFormX($event)}}},[_c('input',{class:this.inputClass,attrs:{"id":"theInput"},on:{"keyup":_vm.handleFilterFormKeyup}}),_vm._v(" "),(this.searchText != '')?_c('button',{staticClass:"pvc-search-control-button"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"times"}})],1):_vm._e()])]):_vm._e()]):_vm._e(),_vm._v(" "),_c('div',{class:{ 'pvc-horizontal-table-body': true, 'no-padding': !_vm.shouldShowFilters }},[(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")]),_vm._v(" "),(this.shouldShowDownloadButton)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e()]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}))]):_vm._e(),_vm._v(" "),_c('tbody',[_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId,"options":_vm.options}})}),_vm._v(" "),(_vm.totalRowEnabled)?_c('horizontal-table-row',{attrs:{"shouldBeBold":true,"item":this.itemsLimitedSummed,"fields":_vm.fields,"tableId":_vm.options.tableId,"totalRowField":this.totalRowField}}):_vm._e()],2)]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"spinner"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
+	  mixins: [TopicComponent],
+	  data: function data() {
+	    var filters = this.options.filters || [];
+	    // console.log('in horiz table data, filters:', filters, 'filtersKeys:', filtersKeys);
+	    // const defaultFilterSelections = Object.keys(filters).reduce((acc, i) =>
+	    //                                 {
+	    //                                   const key = `filter-${i}`;
+	    //                                   console.log('in reduce, i:', i, 'acc:', acc, 'key:', key, 'acc[key]:', acc[key]);
+	    //                                   acc[key] = {};
+	    //                                   return acc;
+	    //                                 }, {});
+	    var defaultFilterSelections = {};
+	    for (var index=0; index < filters.length; index++) {
+	      defaultFilterSelections['filter-' + index] = filters[index].values[0];
+	    }
+	    // console.log('in horiz table data, filters:', filters, 'filtersKeys:', filtersKeys, 'defaultFilterSelections:', defaultFilterSelections);
+	    var sortFields;
+	    if (this.options.sort){
+	      sortFields = this.options.sort.sortFields || [];
+	    }
+	    var sortField;
+	    if (sortFields) {
+	      sortField = sortFields[0];
+	    } else {
+	      sortField = DEFAULT_SORT_FIELDS[0];
+	    }
+	    var highestRowRetrieved = this.options.defaultIncrement;
+
+	    var initialData = {
+	      filterSelections: defaultFilterSelections,
+	      searchText: '',
+	      sortField: sortField,
+	      highestRowRetrieved: highestRowRetrieved
+	    };
+
+	    return initialData;
+	  },
+	  components: {
+	    HorizontalTableRow: HorizontalTableRow,
+	    ExternalLink: ExternalLink,
+	  },
+	  // beforeCreate() {
+	  //   console.log('horizTable before create, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
+	  // },
+	  created: function created() {
+	    // console.log('horiz table created props slots items', this.$props.slots.items);
+	    if (this.filters) {
+	      for (var i = 0, list = this.filters.entries(); i < list.length; i += 1) {
+	        var ref = list[i];
+	        var index = ref[0];
+	        var filter = ref[1];
+
+	        var key = "filter-" + index;
+	        var defaultValue = filter.values[0] || {};
+	        this.filterSelections[key] = defaultValue;
+	      }
+	    }
+
+	    // put row data in state once on load
+	    // const data = this.itemsAfterSearch;
+	    // const tableId = this.options.tableId;
+
+	    // this.$store.commit('setHorizontalTableFilteredData', {
+	    //   tableId,
+	    //   data
+	    // });
+	  },
+	  mounted: function mounted() {
+	    // console.log('horiz table mounted props slots items', this.$props.slots.items);
+	    if (this.$store.state.horizontalTables) {
+	      this.updateTableFilteredData();
+	    }
+	  },
+	  watch: {
+	    itemsAfterFilters: function itemsAfterFilters(nextItems) {
+	      // console.log('WATCH items after filters', nextItems);
+	      // this.$nextTick(() => {
+	      if (this.$store.state.horizontalTables) {
+	        this.updateTableFilteredData();
+	      }
+	      // })
+	    }
+	  },
+	  computed: {
+	    totalRowEnabled: function totalRowEnabled() {
+	      if (this.$props.options.totalRow) {
+	        return this.$props.options.totalRow.enabled || false;
+	      }
+	    },
+	    totalRowField: function totalRowField() {
+	      if (this.$props.options.totalRow) {
+	        return this.$props.options.totalRow.totalField || '';
+	      }
+	    },
+	    hasData: function hasData() {
+	      var this$1 = this;
+
+	      // console.log('horizTable hasData is running, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
+	      if (!this.$props.options.dataSources) {
+	        return true;
+	      } else {
+	        var hasData = this.$props.options.dataSources.every(function (dataSource) {
+	          // const targetsFn = this.$config.dataSources[dataSource].targets;
+	          var targetsFn = this$1.$store.state.sources[dataSource].targets;
+	          var maybeEmpty = this$1.isEmpty(targetsFn);
+	          // if the data source is configured for targets
+	          if (!this$1.isEmpty(targetsFn)) {
+	            var targetsMap = this$1.$store.state.sources[dataSource].targets;
+	            var targets = Object.values(targetsMap);
+
+	            // but there are no targets for this address, return false
+	            if (targets.length === 0) {
+	              return false;
+	            }
+
+	            // if there are targets for this address, make sure none of them
+	            // are "waiting"
+	            return targets.every(function (target) { return target.status !== 'waiting'; });
+
+	            // if the data source is not configured for targets, just check that
+	            // it has data
+	          } else {
+	            return !!this$1.$store.state.sources[dataSource].data;
+	          }
+	        });
+
+	        return hasData;
+	      }
+	    },
+	    shouldShowFilters: function shouldShowFilters() {
+	      if (typeof this.options.shouldShowFilters === 'undefined') {
+	        return true;
+	      } else {
+	        return this.options.shouldShowFilters;
+	      }
+	    },
+	    shouldShowHeaders: function shouldShowHeaders() {
+	      if (typeof this.options.shouldShowHeaders === 'undefined') {
+	        return true;
+	      } else {
+	        return this.options.shouldShowHeaders;
+	      }
+	    },
+	    shouldShowDownloadButton: function shouldShowDownloadButton() {
+	      var downloadButton = false;
+	      if (this.options.downloadButton) {
+	        downloadButton = this.options.downloadButton;
+	      }
+	      return downloadButton;
+	    },
+	    secondaryStatus: function secondaryStatus() {
+	      return this.$store.state.sources[this.options.id].secondaryStatus;
+	    },
+	    shouldShowTable: function shouldShowTable() {
+	      var result = true;
+
+	      // if the table is in a tab group or table group, it will have an "item" in props
+	      // if (this.item) {
+	      //   // if it is in a table group, the item will contain an "activeTable" for the group
+	      //   if (this.item.activeTable) {
+	      //     const id = this.options.id;
+	      //     if (this.item.activeTable != id) {
+	      //       result = false
+	      //     }
+	      //   }
+	      // }
+	      // if there is no data, and the table should not show at all if it is empty
+	      if (this.$props.options.showOnlyIfData && this.items.length === 0) {
+	        result = false;
+	      }
+
+	      return result;
+	    },
+	    shouldShowRetrieveButton: function shouldShowRetrieveButton() {
+	      return this.highestRowRetrieved < this.count;
+	    },
+	    leftToRetrieve: function leftToRetrieve() {
+	      return this.count - this.highestRowRetrieved;
+	    },
+	    nextIncrement: function nextIncrement() {
+	      if (!this.options.showAllRowsOnFirstClick) {
+	        if (this.leftToRetrieve < this.options.defaultIncrement) {
+	          return this.leftToRetrieve;
+	        } else {
+	          return this.options.defaultIncrement;
+	        }
+	      } else {
+	        return this.leftToRetrieve;
+	      }
+	    },
+	    highestPageRetrieved: function highestPageRetrieved() {
+	      return this.evaluateSlot(this.slots.highestPageRetrieved);
+	    },
+	    pageCount: function pageCount() {
+	      return this.evaluateSlot(this.slots.pageCount);
+	    },
+	    totalSize: function totalSize() {
+	      return this.evaluateSlot(this.slots.totalSize);
+	    },
+	    limit: function limit() {
+	      return this.options.limit;
+	    },
+	    // REVIEW what does this do? can this be simplified?
+	    inputClass: function inputClass() {
+	      if (this.searchText === '') {
+	        return 'pvc-search-control-input';
+	      } else {
+	        return 'pvc-search-control-input-full';
+	      }
+	    },
+	    filters: function filters() {
+	      return this.options.filters;
+	    },
+	    activeFilters: function activeFilters() {
+	      //TODO make this work with not-always-on filters
+	      return this.filters;
+	    },
+	    fields: function fields() {
+	      return this.options.fields;
+	    },
+	    hasOverlay: function hasOverlay() {
+	      return !!this.options.mapOverlay;
+	    },
+	    items: function items() {
+	      if (this.hasData) {
+	        var itemsSlot = this.slots.items;
+	        var items = this.evaluateSlot(itemsSlot) || [];
+	        // console.log('horiz table items', items);
+	        return items
+	      } else {
+	        return [];
+	      }
+	    },
+	    filterByTextFields: function filterByTextFields() {
+	      if (this.options.filterByText) {
+	        return this.options.filterByText.fields;
+	      } else {
+	        return null;
+	      }
+	    },
+	    itemsAfterSearch: function itemsAfterSearch() {
+	      // console.log('itemsAfterSearch is running');
+	      var items = this.items;
+	      var searchText = this.searchText;
+
+	      if (!searchText) {
+	        return items;
+	      }
+
+	      var searchTextLower = searchText.toLowerCase();
+
+	      // get full set of items
+
+	      // if text search is not enabled, return all items
+	      var searchFields = this.filterByTextFields || [];
+	      if (searchFields.length === 0) {
+	        return items;
+	      }
+
+	      // get items that contain the search text in one of their filter fields
+	      var matchingItems = items.filter(function (item) {
+	        var searchVals = searchFields.map(function (filterField) {
+	          var props = item.properties;
+	          var searchVal = props ? props[filterField] : item[filterField];
+	          // console.log('props', props, 'searchVal', searchVal);
+	          return searchVal.toLowerCase();
+	        });
+
+	        var boolean = false;
+	        for (var i = 0, list = searchVals; i < list.length; i += 1) {
+	          // console.log('searchVal', searchVal, 'searchTextLower', searchTextLower);
+	          var searchVal = list[i];
+
+	          if (searchVal.includes(searchTextLower)) {
+	            boolean = true;
+	          }
+	        }
+	        return boolean;
+	      });
+
+	      return matchingItems;
+	    },
+	    // this takes itemsAfterSearch and applies selected filters
+	    itemsAfterFilters: function itemsAfterFilters() {
+	      // console.log('itemsAfterFilters is running, this.filters:', this.filters, 'this.filterSelections:', this.filterSelections);
+	      if (!this.itemsAfterSearch) {
+	        return [];
+	      } else {
+	        var itemsAfterSearch = this.itemsAfterSearch;
+	        var items = this.filterItems(itemsAfterSearch,
+	          this.filters,
+	          this.filterSelections);
+	          // console.log('horiz table itemsAfterFilters', items);
+	          return items;
+	      }
+	    },
+	    itemsAfterSort: function itemsAfterSort() {
+	      var itemsAfterFilters = this.itemsAfterFilters;
+	      var sortOpts = this.options.sort;
+	      return this.sortItems(itemsAfterFilters, sortOpts);
+	    },
+	    sortFields: function sortFields() {
+	      if (this.options.sort.sortFields) {
+	        return this.options.sort.sortFields;
+	      } else {
+	        return DEFAULT_SORT_FIELDS;
+	      }
+	    },
+	    // this takes filtered items and applies the max number of rows
+	    itemsLimited: function itemsLimited() {
+	      // console.log('items limited', this.itemsAfterSort.slice(0, this.limit));
+	      if (this.options.limit) {
+	        return this.itemsAfterSort.slice(0, this.options.limit);
+	      } else if (this.options.defaultIncrement) {
+	        return this.itemsAfterSort.slice(0, this.highestRowRetrieved);
+	      } else {
+	        return this.itemsAfterSort;
+	      }
+	    },
+	    itemsLimitedSummed: function itemsLimitedSummed() {
+	      var summed = {};
+	      for (var i$1 = 0, list$1 = Object.keys(this.itemsLimited[0]); i$1 < list$1.length; i$1 += 1) {
+	        var key = list$1[i$1];
+
+	        if (typeof this.itemsLimited[0][key] === 'number') {
+	          summed[key] = 0;
+	        }
+	        if (this.totalRowField) {
+	          summed[this.totalRowField] = 'Total';
+	        }
+	        for (var i = 0, list = this.itemsLimited; i < list.length; i += 1) {
+	          var item = list[i];
+
+	          if (typeof summed[key] === 'number') {
+	            summed[key] = summed[key] + item[key];
+	          }
+	        }
+	      }
+	      return summed;
+	    },
+	    count: function count() {
+	      if (this.$props.options.useApiCount) {
+	        return this.totalSize;
+	      } else {
+	        return this.itemsAfterFilters.length;
+	      }
+	    },
+	    countText: function countText() {
+	      if (this.$props.options.noCount) {
+	        return '';
+	      } else if (this.highestRowRetrieved < this.count) {
+	        return ("(1 - " + (this.count < this.highestRowRetrieved ? this.count : this.highestRowRetrieved) + " of " + (this.count) + ")");
+	      } else {
+	        return ("(" + (this.count) + ")");
+	      }
+	    },
+	    shouldShowExternalLink: function shouldShowExternalLink() {
+	      if (this.options.externalLink.forceShow) {
+	        return this.options.externalLink.forceShow;
+	      } else {
+	        return this.itemsAfterSearch.length > this.limit;
+	      }
+	    },
+	    // externalLinkAction() {
+	    //   return this.options.externalLink.action || 'See more';
+	    // },
+	    // externalLinkText() {
+	    //   const externalLinkConf = this.options.externalLink;
+	    //   const actionFn = externalLinkConf.action;
+	    //   const actionText = actionFn(this.externalLinkCount);
+	    //   const name = externalLinkConf.name;
+	    //
+	    //   return `${actionText}`;
+	    //   // return `${actionText} at ${name}`;
+	    // },
+	    // externalLinkHref() {
+	    //   return this.evaluateSlot(this.options.externalLink.href);
+	    // },
+	    // // the number of items that aren't being shown (e.g. See 54 more...)
+	    // externalLinkCount() {
+	    //   return this.count - this.limit;
+	    // },
+	  },
+	  methods: {
+	    exportTableToCSV: function exportTableToCSV() {
+	      // console.log('exportTableToCSV is running');
+
+	      // const Json2csvParser = require('json2csv').Parser;
+
+	      var tableData = [];
+	      for (var i = 0, list = this.items; i < list.length; i += 1) {
+	        // console.log('item:', item);
+	        var item = list[i];
+
+	        var object = {
+	          'address': item.properties.ADDRESS,
+	          'distance': item._distance
+	        };
+	        tableData.push(object);
+	      }
+
+	      try {
+	        // const parser = new Json2csvParser(opts);
+	        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+	        data = tableData || null;
+	        if (data == null || !data.length) {
+	            return null;
+	        }
+
+	        columnDelimiter = ',';
+	        lineDelimiter = '\n';
+	        // columnDelimiter = args.columnDelimiter || ',';
+	        // lineDelimiter = args.lineDelimiter || '\n';
+
+	        keys = Object.keys(data[0]);
+
+	        result = '';
+	        result += keys.join(columnDelimiter);
+	        result += lineDelimiter;
+
+	        data.forEach(function(item) {
+	            ctr = 0;
+	            keys.forEach(function(key) {
+	                if (ctr > 0) { result += columnDelimiter; }
+
+	                result += item[key];
+	                ctr++;
+	            });
+	            result += lineDelimiter;
+	        });
+
+	        var csv = result;
+	        // console.log('csv', csv);
+	        // let csv = parser.parse(tableData);
+	        data = null;
+	        var filename;
+	        var link;
+
+	        // filename = 'export.csv';
+	        filename = this.$props.options.downloadFile + '.csv' || 'export.csv';
+
+	        if (!csv.match(/^data:text\/csv/i)) {
+	            csv = 'data:text/csv;charset=utf-8,' + csv;
+	        }
+	        data = encodeURI(csv);
+
+	        link = document.createElement('a');
+	        link.setAttribute('href', data);
+	        link.setAttribute('download', filename);
+	        link.click();
+
+	      } catch (err) {
+	        console.error(err);
+	      }
+
+	    },
+	    showMoreRecords: function showMoreRecords() {
+	      // if there is only 1 page to return (from AIS);
+	      if (!this.pageCount) {
+	        this.compareAndSetHighestRowRetrieved();
+	      // if there are multiple pages to return (from AIS) and there are not enough items in the table state (itemsFiltered) to cover the increment;
+	      } else if (this.itemsAfterFilters.length < this.highestRowRetrieved + this.options.defaultIncrement) {
+	        // if there is another page to return (from AIS)
+	        if (this.pageCount > this.highestPageRetrieved) {
+	          this.getMoreRecords();
+	          this.compareAndSetHighestRowRetrieved();
+	        // if there are no more pages to return (from AIS)
+	        } else {
+	          this.highestRowRetrieved = this.count;
+	        }
+	      // if there are multiple pages to return (from AIS) but there are already enough items in the table state (itemsFiltered) to cover the increment;
+	      } else {
+	        if (!this.options.showAllRowsOnFirstClick) {
+	          this.highestRowRetrieved = this.highestRowRetrieved + this.options.defaultIncrement;
+	        } else {
+	          this.highestRowRetrieved = this.count;
+	        }
+	      }
+	    },
+	    compareAndSetHighestRowRetrieved: function compareAndSetHighestRowRetrieved() {
+	      if (!this.options.showAllRowsOnFirstClick) {
+	        if (this.count < this.highestRowRetrieved + this.options.defaultIncrement) {
+	          this.highestRowRetrieved = this.count;
+	        } else {
+	          this.highestRowRetrieved = this.highestRowRetrieved + this.options.defaultIncrement;
+	        }
+	      } else {
+	        this.highestRowRetrieved = this.count;
+	      }
+	    },
+	    getMoreRecords: function getMoreRecords() {
+	      var dataSource = this.options.id;
+	      var highestPageRetrieved = this.highestPageRetrieved;
+	      this.$controller.getMoreRecords(dataSource, highestPageRetrieved);
+	    },
+	    slugifyFilterValue: function slugifyFilterValue(filterValue) {
+	      var direction = filterValue.direction;
+	      var value = filterValue.value;
+	      var unit = filterValue.unit;
+	      return [direction, value, unit].join('-');
+	    },
+	    deslugifyFilterValue: function deslugifyFilterValue(slug) {
+	      var parts = slug.split('-');
+	      var direction = parts[0];
+	      var value = parts[1];
+	      var unit = parts[2];
+	      return {value: value, unit: unit, direction: direction};
+	    },
+	    handleSortValueChange: function handleSortValueChange(e) {
+	      // console.log('handleSortValueChange running', e);
+
+	      var value = e.target.value;
+	      this.sortField = value;
+	    },
+	    handleFilterValueChange: function handleFilterValueChange(e) {
+	      console.log('handle filter value change', e);
+
+	      var target = e.target;
+	      var slug = target.value;
+
+	      // deslugify filter value
+	      var valueObj = this.deslugifyFilterValue(slug);
+
+	      var parent = target.parentElement;
+	      var parentId = parent.id;
+
+	      // patch and replace filter selections
+	      var prevFilterSelections = this.filterSelections;
+	      var nextFilterSelections = Object.assign({}, prevFilterSelections);
+	      nextFilterSelections[parentId] = valueObj;
+	      this.filterSelections = nextFilterSelections;
+	    },
+	    values: function values(item) {
+	      var fields = this.options.fields;
+	      var sourceFields = fields.map(function (field) { return field.sourceField; });
+	      return sourceFields.map(function (sourceField) { return item[sourceField]; })
+	    },
+	    handleFilterFormKeyup: function handleFilterFormKeyup(e) {
+	      var input = e.target.value;
+	      this.searchText = input;
+	    },
+	    handleFilterFormX: function handleFilterFormX(e) {
+	      e.target[0].value = '';
+	      this.searchText = "";
+	    },
+	    filterItems: function filterItems(items, filters, filterSelections) {
+	      // console.log('typeof items:', typeof items);
+	      // console.log('FILTER ITEMS is running, items:', items, 'filters:', filters, 'filterSelections:', filterSelections);
+	      var itemsFiltered = items.slice();
+
+	      if (filters) {
+	        // console.log('in filterItems, filters:', filters, 'filters.length', filters.length, 'filters.entries():', filters.entries(), 'filters.keys():', filters.keys());
+	        // for (let [index, filter] of filters.entries()) {
+	        var loop = function ( index ) {
+	          var key = 'filter-' + index;
+	          // const key = `filter-${index}`;
+	          var data = filterSelections[key];
+	          // console.log('index:', index, 'key:', key, 'data:', data, 'filters:', filters[index]);
+	          var ref = filters[index];
+	          var type = ref.type;
+	          var getValue = ref.getValue;
+	          var unit = data.unit;
+	          var value = data.value;
+	          var direction = data.direction || 'subtract';
+
+	          // console.log('type:', type);
+
+	          // TODO put these in separate methods
+	          switch(type) {
+	            case 'data':
+	              // console.log('DATA FILTER');
+	              // itemsFiltered = itemsFiltered.filter(item => {
+	              //   const itemValue = getValue(item);
+	              //   console.log('horiz table itemValue:', itemValue);
+	              //   return itemValue;
+	              // });
+	              break;
+	            case 'time':
+	              console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
+	              var min = (void 0), max = (void 0);
+
+	              if (direction === 'subtract') {
+	                max = moment();
+	                min = moment().subtract(value, unit);
+	                // console.log('max:', max, 'min', min);
+	              } else if (direction === 'add') {
+	                min = moment();
+	                max = min.add(value, unit);
+	              } else {
+	                throw ("Invalid time direction: " + direction);
+	              }
+
+	              // console.log('in case time, itemsFiltered:', itemsFiltered);
+	              itemsFiltered = itemsFiltered.filter(function (item) {
+	                var itemValue = getValue(item);
+	                var itemMoment = moment(itemValue);
+	                var isBetween = itemMoment.isBetween(min, max);
+	                // console.log('itemValue:', itemValue, 'itemMoment:', itemMoment, 'min:', min, 'max:', max, 'isBetween:', isBetween);
+	                return isBetween;
+	              });
+	              // console.log('ITEMS FILTERED BY TIME FILTER', itemsFiltered);
+	              break;
+
+	            default:
+	              throw ("Unhandled filter type: " + type);
+	              break;
+	          }
+	        };
+
+	        for (var index=0; index < filters.length; index++) loop( index );
+	      }
+	      return itemsFiltered;
+	    },
+	    // sortItems(items, sortOpts) {
+	    sortItems: function sortItems(items, sortOpts) {
+	      // console.log('sortItems, sortOpts:', sortOpts);
+	      // TODO finish this
+	      // if (Object.keys(this.filterData).length) {
+	      //   console.log('there is filterData', this.filterData);
+	      //   return this.itemsFiltered;
+	      // } else {
+	      //   console.log('there is no filterData');
+	      //   return this.items;
+	      // }
+
+	      // const items = this.itemsFiltered;
+	      // const sortOpts = this.options.sort;
+	      // console.log(sortOpts)
+
+	      // if there's no no sort config, just return the items.
+	      if (!sortOpts) {
+	        // console.log('noSortOpts');
+	        return items;
+	      }
+
+	      // const getValueFn = sortOpts.getValue;
+	      // const order = sortOpts.order;
+
+	      // get sort fn or use this basic one
+	      var sortFn = sortOpts.compare || this.defaultSortFn;
+	      // console.log('sortFn', sortFn);
+	      // console.log('sortFn', sortFn)
+	      return items.sort(sortFn);
+	    },
+	    defaultSortFn: function defaultSortFn(a, b) {
+	      // console.log('defaultSortFn is running, a:', a, 'b:', b);
+	      var sortOpts = this.options.sort;
+	      var getValueFn = sortOpts.getValue;
+	      var sortField = this.sortField;
+	      var order;
+	      if (typeof sortOpts.order === 'function') {
+	        var orderFn = sortOpts.order;
+	        order = orderFn(sortField);
+	      } else {
+	        order = sortOpts.order;
+	      }
+	      console.log('sortField', sortField, 'order', order);
+
+	      var valA = getValueFn(a, sortField);
+	      var valB = getValueFn(b, sortField);
+	      var result;
+
+	      if (valA === null) {
+	        if (order === 'desc') {
+	          result = -1;
+	        } else {
+	          result = 1;
+	        }
+	      } else if (valB === null) {
+	        if (order === 'desc') {
+	          result = 1;
+	        } else {
+	          result = -1;
+	        }
+	      } else if (valA < valB) {
+	        result = -1;
+	      } else if (valB < valA) {
+	        result = 1;
+	      } else {
+	        result = 0;
+	      }
+
+	      // reverse if we have an order and the target order is desc
+	      if (order) {
+	        if (order === 'desc') {
+	          result = result * -1;
+	        } else if (order !== 'asc') {
+	          throw ("Unknown sort order: " + order);
+	        }
+	      }
+
+	      // console.log('compare', valA, 'to', valB, ', result:', result);
+
+	      return result;
+	    },
+	    // this updates the global state that stores filtered table rows
+	    updateTableFilteredData: function updateTableFilteredData() {
+	      // console.log('update table filtered data is running, options:', this.options);
+
+	      // get table id
+	      var ref = this.options;
+	      var tableId = ref.tableId;
+
+	      // update global state
+	      this.$store.commit('setHorizontalTableFilteredData', {
+	        tableId: tableId,
+	        data: this.itemsAfterFilters
+	      });
+	    },
+	    isEmpty: function isEmpty(obj) {
+	      for(var key in obj) {
+	        if(obj.hasOwnProperty(key))
+	          { return false; }
+	      }
+	      return true;
+	    },
+	  }
+	};
 
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" img[data-v-3b8b0c0a] { display: block; margin: 0 auto; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
@@ -967,6 +1890,7 @@
 
 	exports.pvcStore = pvmStore;
 	exports.VerticalTable = VerticalTable;
+	exports.HorizontalTable = HorizontalTable;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
