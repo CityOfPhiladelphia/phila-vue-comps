@@ -98,4 +98,5 @@ console.log('pvcStore:', pvcStore);
 export {
   pvcStore,
   VerticalTable,
+  HorizontalTable,
 }
