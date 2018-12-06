@@ -39,6 +39,7 @@
   import generateUniqueId from '../util/unique-id';
 
   export default {
+    name: 'AddressInput',
     props: [
       'widthFromConfig',
       'placeholder',
