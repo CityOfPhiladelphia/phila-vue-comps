@@ -296,48 +296,49 @@
 
 	var AddressCandidateList = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(this.shouldShowAddressCandidateList),expression:"this.shouldShowAddressCandidateList"}],class:this.listGroupClass,style:(this.listStyle)},[_c('ul',_vm._l((_vm.candidates),function(candidate,i){return _c('li',[_c('a',{staticClass:"list-group-item",attrs:{"href":_vm.createLink(candidate),"tabindex":"-1","id":'address-candidate-list-' + i},on:{"click":function($event){_vm.closeAddressCandidateList(candidate);},"keydown":_vm.maybeUsedArrow}},[_vm._v(" "+_vm._s(candidate)+" ")])])}))])},staticRenderFns: [],_scopeId: 'data-v-557d70bd',
 	  name: 'AddressCandidateList',
-	  data: function data() {
-	    var data = {
+	  data() {
+	    const data = {
 	      listStyle: {
 	        'width': '250px'
 	      }
 	    };
 	    return data;
 	  },
-	  created: function created() {
+	  created() {
 	    window.addEventListener('resize', this.handleWindowResize);
 	    this.handleWindowResize();
 	  },
 	  watch: {
-	    addressEntered: function addressEntered(nextValue) {
+	    addressEntered(nextValue) {
 	      this.handleWindowResize();
 	    }
 	  },
 	  props: [
-	    'widthFromConfig' ],
+	    'widthFromConfig',
+	  ],
 	  computed: {
-	    inputWidth: function inputWidth() {
+	    inputWidth() {
 	      return this.$props.widthFromConfig - 55;
 	    },
-	    candidates: function candidates() {
-	      var autocompleteMax = this.$config.addressInput.autocompleteMax;
+	    candidates() {
+	      const autocompleteMax = this.$config.addressInput.autocompleteMax;
 	      if (!autocompleteMax) {
 	        return this.$store.state.candidates;
 	      } else {
-	        var candidates = this.$store.state.candidates.slice(0, autocompleteMax);
+	        let candidates = this.$store.state.candidates.slice(0, autocompleteMax);
 	        return candidates;
 	      }
 	    },
-	    shouldShowAddressCandidateList: function shouldShowAddressCandidateList() {
+	    shouldShowAddressCandidateList() {
 	      return this.$store.state.shouldShowAddressCandidateList;
 	    },
-	    activeTopic: function activeTopic() {
+	    activeTopic() {
 	      return this.$store.state.activeTopic;
 	    },
-	    isMobileOrTablet: function isMobileOrTablet() {
+	    isMobileOrTablet() {
 	      return this.$store.state.isMobileOrTablet;
 	    },
-	    addressAutocompleteEnabled: function addressAutocompleteEnabled() {
+	    addressAutocompleteEnabled() {
 	      // TODO this is temporarily disabled
 	      if (this.$config.addressInput) {
 	        if (this.$config.addressInput.autocompleteEnabled === true) {
@@ -349,7 +350,7 @@
 	        return false;
 	      }
 	    },
-	    listGroupClass: function listGroupClass() {
+	    listGroupClass() {
 	      if (this.isMobileOrTablet) {
 	        if (this.addressAutocompleteEnabled) {
 	          if (this.addressEntered === '' || this.addressEntered === null) {
@@ -374,22 +375,22 @@
 	    }
 	  },
 	  methods: {
-	    createLink: function createLink(candidate) {
+	    createLink(candidate) {
 	      if (this.$store.state.activeTopic) {
 	        return '#/' + candidate + '/' + this.activeTopic;
 	      } else {
 	        return '#/' + candidate;
 	      }
 	    },
-	    maybeUsedArrow: function maybeUsedArrow(e) {
-	      var id = e.target.id;
-	      var index = parseInt(id.substring(id.lastIndexOf('-') + 1));
-	      var indexUp, indexDown;
+	    maybeUsedArrow(e) {
+	      const id = e.target.id;
+	      const index = parseInt(id.substring(id.lastIndexOf('-') + 1));
+	      let indexUp, indexDown;
 	      if (index < this.candidates.length - 1) {
 	        indexUp = index + 1;
-	      } else { (
+	      } else (
 	        indexUp = index
-	      ); }
+	      );
 	      if (index !== 0) {
 	        indexDown = index - 1;
 	      } else {
@@ -403,13 +404,13 @@
 	        document.getElementById('address-candidate-list-' + indexDown).focus();
 	      }
 	    },
-	    closeAddressCandidateList: function closeAddressCandidateList(addressCandidate) {
+	    closeAddressCandidateList(addressCandidate) {
 	      console.log('AddressCandidateList.vue closeAddressCandidateList is running, addressCandidate:', addressCandidate);
 	      // this.$controller.handleSearchFormSubmit(addressCandidate);
 	      this.$store.commit('setAddressEntered', addressCandidate);
 	      this.$store.commit('setShouldShowAddressCandidateList', false);
 	    },
-	    handleWindowResize: function handleWindowResize(addressEntered) {
+	    handleWindowResize(addressEntered) {
 	      if (window.innerWidth >= 850) {
 	        this.listStyle.width = this.$props.widthFromConfig - 55 + 'px';
 	      } else if (window.innerWidth >= 750) {
@@ -431,9 +432,10 @@
 	  name: 'AddressInput',
 	  props: [
 	    'widthFromConfig',
-	    'placeholder' ],
-	  data: function data() {
-	    var data = {
+	    'placeholder',
+	  ],
+	  data() {
+	    const data = {
 	      containerStyle: {
 	        'width': '305px',
 	      },
@@ -445,12 +447,12 @@
 	    };
 	    return data;
 	  },
-	  created: function created() {
+	  created() {
 	    window.addEventListener('resize', this.handleWindowResize);
 	    this.handleWindowResize();
 	  },
 	  watch: {
-	    addressEntered: function addressEntered(nextValue) {
+	    addressEntered(nextValue) {
 	      this.handleWindowResize();
 	    }
 	  },
@@ -458,7 +460,7 @@
 	    // addressEntered() {
 	    //   return this.$store.state.addressEntered;
 	    // },
-	    inputWidth: function inputWidth() {
+	    inputWidth() {
 	      // if (this.addressAutocompleteEnabled) {
 	        if (this.addressEntered === '' || this.addressEntered === null) {
 	          return this.$props.widthFromConfig - 55;
@@ -469,28 +471,28 @@
 	      //   return this.$props.widthFromConfig - 55;
 	      // }
 	    },
-	    inputClass: function inputClass() {
+	    inputClass() {
 	      if (this.isMobileOrTablet) {
 	        return 'pvc-input-mobile';
 	      } else {
 	        return 'pvc-input-non-mobile';
 	      }
 	    },
-	    containerClass: function containerClass() {
+	    containerClass() {
 	      if (this.isMobileOrTablet) {
 	        return 'pvc-container-mobile';
 	      } else {
 	        return 'pvc-container-non-mobile';
 	      }
 	    },
-	    buttonClass: function buttonClass() {
+	    buttonClass() {
 	      if (this.isMobileOrTablet) {
 	        return 'pvc-button-mobile'
 	      } else {
 	        return 'pvc-button-non-mobile'
 	      }
 	    },
-	    addressAutocompleteEnabled: function addressAutocompleteEnabled() {
+	    addressAutocompleteEnabled() {
 	      // TODO this is temporarily disabled
 	      if (this.$config.addressInput) {
 	        if (this.$config.addressInput.autocompleteEnabled === true) {
@@ -502,15 +504,14 @@
 	        return false;
 	      }
 	    },
-	    isMobileOrTablet: function isMobileOrTablet() {
+	    isMobileOrTablet() {
 	      return this.$store.state.isMobileOrTablet;
 	    },
 	  },
 	  methods: {
 	    didType: debounce(function (e) {
 	        // console.log('debounce is running');
-	        var ref = e.target;
-	        var value = ref.value;
+	        const { value } = e.target;
 	        this.$data.addressEntered = value;
 	        // this.$store.commit('setAddressEntered', value);
 
@@ -530,37 +531,36 @@
 	        }
 	      }, 300
 	    ),
-	    getCandidates: function getCandidates(address) {
+	    getCandidates(address) {
 	      // console.log('getCandidates is running, address:', address);
 	      axios.get('https://cqvfg1pm72.execute-api.us-east-1.amazonaws.com/dev/first-api-test/', {
 	        params: {
-	          address: address,
+	          address,
 	        },
 	      })
 	        .then(this.didGetCandidates)
 	        .catch(this.didGetCandidatesError);
 	    },
-	    didGetCandidates: function didGetCandidates(res) {
-	      var ref = res.data;
-	      var matches = ref.matches;
+	    didGetCandidates(res) {
+	      const { matches } = res.data;
 	      // console.log('matches:', matches, 'matches map:', matches.map(x => x.address));
-	      var matchesArray = matches.map(function (x) { return x.address; });
+	      const matchesArray = matches.map(x => x.address);
 	      this.$store.commit('setCandidates', matchesArray);
 	    },
-	    didGetCandidatesError: function didGetCandidatesError(err) {
+	    didGetCandidatesError(err) {
 	      console.log('error getting candidates', err);
 	      this.$store.commit('setCandidates', []);
 	    },
-	    handleFormX: function handleFormX() {
+	    handleFormX() {
 	      console.log('handleFormX is running');
 	      this.$data.addressEntered = '';
 	      // this.$store.commit('setAddressEntered', '');
 	      this.$store.commit('setShouldShowAddressCandidateList', false);
 	      this.$store.commit('setCandidates', []);
 	    },
-	    handleSearchFormSubmit: function handleSearchFormSubmit() {
+	    handleSearchFormSubmit() {
 	      console.log('handleSearchFormSubmit is running');
-	      var value;
+	      let value;
 	      if (this.addressAutocompleteEnabled){
 	        value = addressEntered;
 	        // value = this.$store.state.addressEntered;
@@ -577,8 +577,8 @@
 	      this.$controller.handleSearchFormSubmit(value);
 	      // this.$store.commit('setAddressEntered', value);
 	    },
-	    handleWindowResize: function handleWindowResize() {
-	      var addressEntered = this.addressEntered;
+	    handleWindowResize() {
+	      const addressEntered = this.addressEntered;
 	      // console.log('AddressInput.vue handleWindowResize is running', window.innerWidth, 'addressEntered:', addressEntered);
 	      if (window.innerWidth >= 850) {
 	        this.containerStyle.width = this.$props.widthFromConfig + 'px';
@@ -612,9 +612,10 @@
 	  props: [
 	    'process',
 	    'widthFromConfig',
-	    'placeholder' ],
-	  data: function data() {
-	    var data = {
+	    'placeholder',
+	  ],
+	  data() {
+	    const data = {
 	      containerStyle: {
 	        'width': '455px',
 	        'height': '48px',
@@ -633,69 +634,68 @@
 	    };
 	    return data;
 	  },
-	  created: function created() {
+	  created() {
 
 	    window.addEventListener('resize', this.handleWindowResize);
 	    this.handleWindowResize();
 	  },
 	  watch: {
-	    configurableInputValueEntered: function configurableInputValueEntered(nextValue) {
+	    configurableInputValueEntered(nextValue) {
 	      this.handleWindowResize();
 	    }
 	  },
 	  computed: {
-	    inputWidth: function inputWidth() {
+	    inputWidth() {
 	      if (this.configurableInputValueEntered === '' || this.configurableInputValueEntered === null) {
 	        return this.$props.widthFromConfig - 55;
 	      } else {
 	        return this.$props.widthFromConfig - 108;
 	      }
 	    },
-	    inputClass: function inputClass() {
+	    inputClass() {
 	      if (this.isMobileOrTablet) {
 	        return 'pvc-input-mobile';
 	      } else {
 	        return 'pvc-input-non-mobile';
 	      }
 	    },
-	    containerClass: function containerClass() {
+	    containerClass() {
 	      if (this.isMobileOrTablet) {
 	        return 'pvc-container-mobile';
 	      } else {
 	        return 'pvc-container-non-mobile';
 	      }
 	    },
-	    buttonClass: function buttonClass() {
+	    buttonClass() {
 	      if (this.isMobileOrTablet) {
 	        return 'pvc-button-mobile'
 	      } else {
 	        return 'pvc-button-non-mobile'
 	      }
 	    },
-	    isMobileOrTablet: function isMobileOrTablet() {
+	    isMobileOrTablet() {
 	      return this.$store.state.isMobileOrTablet;
 	    },
 	  },
 	  methods: {
 	    didType: debounce(function (e) {
 	        // console.log('debounce is running');
-	        var ref = e.target;
-	        var value = ref.value;
+	        const { value } = e.target;
 	        this.$data.configurableInputValueEntered = value;
 	        // this.$store.commit('setConfigurableInputValueEntered', value);
 	      }, 300
 	    ),
-	    handleFormX: function handleFormX() {
+	    handleFormX() {
 	      console.log('handleFormX is running');
 	      this.$data.configurableInputValueEntered = '';
 	      // this.$store.commit('setConfigurableInputValueEntered', '');
 	    },
-	    handleConfigurableInputSubmit: function handleConfigurableInputSubmit() {
+	    handleConfigurableInputSubmit() {
 	      console.log('handleConfigurableInputSubmit is running');
-	      var process = this.$props.process || 'mapboard';
-	      var searchCategory, value;
+	      const process = this.$props.process || 'mapboard';
+	      let searchCategory, value;
 	      // if (document.querySelector('#' + this.$data.selectID)) {
-	      var e = document.getElementById(this.$data.selectID);
+	      const e = document.getElementById(this.$data.selectID);
 	      searchCategory = e.options[e.selectedIndex].value;
 	      // }
 	      // if (document.querySelector('#pvc-search-control-input')) {
@@ -709,9 +709,9 @@
 	      this.$data.configurableInputValueEntered = value;
 	      this.$data.categorySelected = searchCategory;
 	    },
-	    handleWindowResize: function handleWindowResize() {
-	      var configurableInputValueEntered = this.configurableInputValueEntered;
-	      var theWidth = window.innerWidth;
+	    handleWindowResize() {
+	      const configurableInputValueEntered = this.configurableInputValueEntered;
+	      const theWidth = window.innerWidth;
 	      // console.log('AddressInput.vue handleWindowResize is running', theWidth, 'configurableInputValueEntered:', configurableInputValueEntered);
 	      if (window.innerWidth >= 850) {
 	        this.containerStyle.width = this.$props.widthFromConfig + 'px';
@@ -769,45 +769,41 @@
 	      default: function() { return {} }
 	    },
 	  },
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    // console.log('TopicComponent.vue beforeCreate is running, this:', this);
 	  },
-	  created: function created() {
+	  created() {
 	    // console.log('TopicComponent.vue created is running, this.$props.slots:', this.$props.slots);
 	  },
 	  computed: {
-	    nullValue: function nullValue() {
-	      var options = this.options || {};
+	    nullValue() {
+	      const options = this.options || {};
 	      return options.nullValue;
 	    },
 	  },
 	  methods: {
-	    evaluateSlot: function evaluateSlot(valOrGetter, transforms, nullValue) {
-	      var this$1 = this;
-	      if ( transforms === void 0 ) transforms = [];
-	      if ( nullValue === void 0 ) nullValue = '';
-
+	    evaluateSlot(valOrGetter, transforms = [], nullValue = '') {
 	      // console.log('evaluateSlot is running, valOrGetter:', valOrGetter);
 	      // check for null val/getter
 	      if (!valOrGetter) {
 	        return valOrGetter;
 	      }
 
-	      var valOrGetterType = typeof valOrGetter;
-	      var val;
+	      const valOrGetterType = typeof valOrGetter;
+	      let val;
 
 	      // fn
 	      if (valOrGetterType === 'function') {
-	        var state = this.$store.state;
-	        var controller = this.$controller;
-	        var getter = valOrGetter;
+	        const state = this.$store.state;
+	        const controller = this.$controller;
+	        const getter = valOrGetter;
 
 	        // const getterText = String(getter);
 	        // const depsRe = /state(\.\w+)+/g;
 	        // const depsText = getterText.match(depsRe);
 	        // const deps = depsText.map(eval);
 
-	        var item = this.item;
+	        const item = this.item;
 	        // console.log('in evaluateSlot, item:', item);
 
 	        // if this comp is associated with an "item" (generally some object
@@ -832,28 +828,24 @@
 	      }
 
 	      // apply transforms
-	      var loop = function () {
+	      for (let transformKey of transforms) {
 	        // get transform definition from config by name
-	        var transformKey = list[i];
-
-	        var transform = this$1.$config.transforms[transformKey];
+	        const transform = this.$config.transforms[transformKey];
 	        // make object of (relevant) globals by filtering window object
-	        var globals = (void 0);
-	        var globalKeys = transform.globals;
+	        let globals;
+	        const globalKeys = transform.globals;
 	        if (globalKeys) {
 	          globals = Object.keys(window)
-	                        .filter(function (key) { return globalKeys.includes(key); })
-	                        .reduce(function (obj, key) {
+	                        .filter(key => globalKeys.includes(key))
+	                        .reduce((obj, key) => {
 	                            obj[key] = window[key];
 	                            return obj;
 	                        }, {});
 	        }
 	        // run transform
-	        var fn = transform.transform;
+	        const fn = transform.transform;
 	        val = fn(val, globals);
-	      };
-
-	      for (var i = 0, list = transforms; i < list.length; i += 1) loop();
+	      }
 
 	      return val;
 	    },
@@ -880,29 +872,25 @@
 	  name: 'AnyHeader',
 	  mixins: [TopicComponent],
 	  computed: {
-	    headerType: function headerType() {
+	    headerType() {
 	      return this.$props.options.headerType;
 	    },
-	    additionalTags: function additionalTags() {
+	    additionalTags() {
 	      return this.$props.slots.additionalTags || [];
 	    },
-	    message: function message() {
+	    message() {
 	      // if there is a transform, it needs this textWithTags section
-	      var textWithTags = '';
-	      for (var i = 0, list = this.additionalTags; i < list.length; i += 1) {
-	        var tag = list[i];
-
+	      let textWithTags = '';
+	      for (let tag of this.additionalTags) {
 	        textWithTags = textWithTags + '<' + tag + '>';
 	      }
 	      textWithTags = textWithTags + this.evaluateSlot(this.$props.slots.text, this.$props.slots.transforms);
-	      for (var i$1 = 0, list$1 = this.additionalTags; i$1 < list$1.length; i$1 += 1) {
-	        var tag$1 = list$1[i$1];
-
-	        textWithTags = textWithTags + '</' + tag$1 + '>';
+	      for (let tag of this.additionalTags) {
+	        textWithTags = textWithTags + '</' + tag + '>';
 	      }
 	      return textWithTags;
 	    },
-	    style: function style() {
+	    style() {
 	      if (this.$props.options) {
 	        return this.$props.options.style || '';
 	      }
@@ -917,49 +905,49 @@
 	  props: ['count', 'limit', 'type'],
 	  computed: {
 	    // for horizontal tables only
-	    externalLinkCount: function externalLinkCount() {
+	    externalLinkCount() {
 	      return this.count - this.limit;
 	    },
 	    // for horizontal or vertical tables
-	    externalLinkAction: function externalLinkAction() {
-	      var actionFn = this.options.action;
+	    externalLinkAction() {
+	      const actionFn = this.options.action;
 	      if (actionFn) {
 	        return actionFn(this.externalLinkCount) || 'See more at ';
 	      }
 	    },
 	    // for anything else, for getting data from the state
-	    externalLinkDataFromState: function externalLinkDataFromState() {
+	    externalLinkDataFromState() {
 	      // return this.options.externalLink.action || 'See more at ';
-	      var stateData = this.options.data;
+	      const stateData = this.options.data;
 	      return this.evaluateSlot(stateData);
 	    },
-	    externalLinkText: function externalLinkText() {
+	    externalLinkText() {
 	      if (this.options) {
-	        var name = this.options.name  || '';
+	        const name = this.options.name  || '';
 	        // const preText = this.options.preText;
 	        // const postText = this.options.postText;
 
 	        if (this.type === 'vertical-table') {
 	        // if (this.externalLinkAction) {
 	          if (name) {
-	            return ((this.externalLinkAction) + " at " + name);
+	            return `${this.externalLinkAction} at ${name}`;
 	          } else {
-	            return ("" + (this.externalLinkAction));
+	            return `${this.externalLinkAction}`;
 	          }
 	        } else if (this.type === 'horizontal-table') {
 	          // if (name) {
 	          //   return `${this.externalLinkAction} at ${name}`;
 	          // } else {
-	            return ("" + (this.externalLinkAction));
+	            return `${this.externalLinkAction}`;
 	          // }
 	        } else {
-	          return ("" + (this.externalLinkDataFromState))
+	          return `${this.externalLinkDataFromState}`
 	        }
 	      } else {
 	        return null;
 	      }
 	    },
-	    externalLinkHref: function externalLinkHref() {
+	    externalLinkHref() {
 	      if (this.options) {
 	        return this.evaluateSlot(this.options.href);
 	      } else {
@@ -976,12 +964,12 @@
 	  name: 'Badge',
 	  mixins: [TopicComponent],
 	  components: {
-	    ExternalLink: ExternalLink,
+	    ExternalLink,
 	  },
 	  computed: {
-	    style: function style() {
-	      var titleBackgroundValOrFn = (this.options || {}).titleBackground;
-	      var titleBackground;
+	    style() {
+	      const titleBackgroundValOrFn = (this.options || {}).titleBackground;
+	      let titleBackground;
 
 	      if (titleBackgroundValOrFn) {
 	        if (typeof titleBackgroundValOrFn === 'function') {
@@ -1015,17 +1003,17 @@
 	var ButtonComp = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('a',{class:'button ' + this.class,style:(this.style),attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();_vm.evaluateSlot(_vm.slots.buttonAction);}}},[_vm._v(" "+_vm._s(_vm.message)+" ")])},staticRenderFns: [],_scopeId: 'data-v-7ba3a61e',
 	  mixins: [TopicComponent],
 	  computed: {
-	    message: function message() {
+	    message() {
 	      if (this.$props.slots) {
 	        return this.evaluateSlot(this.$props.slots.text);
 	      }
 	    },
-	    class: function class$1() {
+	    class() {
 	      if (this.$props.options) {
 	        return this.$props.options.class || '';
 	      }
 	    },
-	    style: function style() {
+	    style() {
 	      if (this.$props.options) {
 	        return this.$props.options.style || '';
 	      }
@@ -1038,7 +1026,7 @@
 	var Callout = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper grid-y"},[_c('div',{class:'callout ' + this.calloutClass},[(this.message)?_c('p',{domProps:{"innerHTML":_vm._s(this.message)}}):_vm._e(),_vm._v(" "),(this.components)?_c('topic-component-group',{attrs:{"topic-components":this.components}}):_vm._e()],1)])},staticRenderFns: [],_scopeId: 'data-v-3cf74c50',
 	  mixins: [TopicComponent],
 	  computed: {
-	    calloutClass: function calloutClass() {
+	    calloutClass() {
 	      if (this.$props.options) {
 	        if (this.$props.options.class) {
 	          return this.$props.options.class;
@@ -1047,14 +1035,14 @@
 	        }
 	      }
 	    },
-	    message: function message() {
+	    message() {
 	      if (this.$props.slots) {
 	        return this.evaluateSlot(this.$props.slots.text) || '';
 	      } else {
 	        return '';
 	      }
 	    },
-	    components: function components() {
+	    components() {
 	      if (this.$props.options) {
 	        return this.$props.options.components || null;
 	      } else {
@@ -1063,7 +1051,7 @@
 	    },
 	  },
 	  components: {},
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    this.$options.components.TopicComponentGroup = TopicComponentGroup;
 	  }
 	};
@@ -1074,63 +1062,63 @@
 	  mixins: [TopicComponent],
 	  computed: {
 	    // the final stringified output
-	    summary: function summary() {
+	    summary() {
 	      // get value quantity map
-	      var valueQuantities = this.valueQuantities;
+	      const valueQuantities = this.valueQuantities;
 	      // check if plural
-	      var isPlural = this.isPlural(valueQuantities);
+	      const isPlural = this.isPlural(valueQuantities);
 	      // get context renderer
-	      var contextFnKey = 'context' + (isPlural ? 'Plural' : 'Singular');
-	      var contextFn = this[contextFnKey];
+	      const contextFnKey = 'context' + (isPlural ? 'Plural' : 'Singular');
+	      const contextFn = this[contextFnKey];
 	      // get a natural list
-	      var naturalList = this.naturalList;
+	      const naturalList = this.naturalList;
 	      // summarize
-	      var summary = contextFn(naturalList);
+	      const summary = contextFn(naturalList);
 
 	      return summary;
 	    },
-	    contextSingular: function contextSingular() {
-	      var context = this.options.context;
+	    contextSingular() {
+	      const context = this.options.context;
 	      return context.singular || context;
 	    },
-	    contextPlural: function contextPlural() {
-	      var context = this.options.context;
+	    contextPlural() {
+	      const context = this.options.context;
 	      return context.plural || context;
 	    },
-	    descriptorSingular: function descriptorSingular() {
-	      var descriptor = this.options.descriptor;
+	    descriptorSingular() {
+	      const descriptor = this.options.descriptor;
 	      return descriptor.singular || descriptor;
 	    },
-	    descriptorPlural: function descriptorPlural() {
-	      var descriptor = this.options.descriptor;
+	    descriptorPlural() {
+	      const descriptor = this.options.descriptor;
 	      return descriptor.plural || descriptor + 's';
 	    },
 	    // serializes naturalized quantities into a list
 	    // e.g. "1 apple and 2 oranges"
-	    naturalList: function naturalList() {
-	      var valueQuantities = this.valueQuantities;
-	      var items = this.naturalizeQuantities(valueQuantities);
-	      var len = items.length;
+	    naturalList() {
+	      const valueQuantities = this.valueQuantities;
+	      const items = this.naturalizeQuantities(valueQuantities);
+	      const len = items.length;
 	      if (Array.isArray(items) && len > 0) {
 	        if (len === 1) {
 	          return items[0];
 	        } else if (len === 2) {
 	          return items.join(' and ');
 	        }
-	        var leadingItems = items.slice(0, items.length - 1).join(', ');
-	        var lastItem = items[items.length - 1];
-	        return (leadingItems + ", and " + lastItem);
+	        const leadingItems = items.slice(0, items.length - 1).join(', ');
+	        const lastItem = items[items.length - 1];
+	        return `${leadingItems}, and ${lastItem}`;
 	      }
 	      // TODO should this text be an option?
-	      return ("no " + (this.descriptorPlural));
+	      return `no ${this.descriptorPlural}`;
 	    },
-	    valueQuantities: function valueQuantities() {
-	      var items = this.slots.items(this.$store.state);
-	      var getValue = this.options.getValue;
+	    valueQuantities() {
+	      const items = this.slots.items(this.$store.state);
+	      const getValue = this.options.getValue;
 
 	      // make an object of value => quantity
-	      var valueQuantities = items.reduce(function (obj, item) {
-	        var val = getValue(item);
+	      const valueQuantities = items.reduce((obj, item) => {
+	        const val = getValue(item);
 	        obj[val] = obj[val] || 0;
 	        obj[val]++;
 	        return obj;
@@ -1142,13 +1130,11 @@
 	  methods: {
 	    // takes the value of the valueQuantities computed property and returns
 	    // the appropriate grammatical number.
-	    isPlural: function isPlural(valueQuantities) {
-	      if ( valueQuantities === void 0 ) valueQuantities = {};
-
-	      var values = Object.keys(valueQuantities);
+	    isPlural(valueQuantities = {}) {
+	      const values = Object.keys(valueQuantities);
 	      if (values.length === 1) {
-	        var firstValue = values[0];
-	        var quantity = valueQuantities[firstValue];
+	        const firstValue = values[0];
+	        const quantity = valueQuantities[firstValue];
 	        if (quantity === 1) {
 	          return false;
 	        }
@@ -1157,17 +1143,15 @@
 	    },
 	    // takes the value quantity map and converts values to natural language
 	    // quantities (e.g. {apple: 2} => "2 apples")
-	    naturalizeQuantities: function naturalizeQuantities(valueQuantities) {
-	      if ( valueQuantities === void 0 ) valueQuantities = {};
-
+	    naturalizeQuantities(valueQuantities = {}) {
 	      // get some options
-	      var types = this.options.types;
-	      var includeZeroes = this.options.includeZeroes;
+	      const types = this.options.types;
+	      const includeZeroes = this.options.includeZeroes;
 
 	      // convert to natural language and sort per order of types option
-	      var quantities = types.reduce(function (acc, type) {
-	        var value = type.value;
-	        var quantity = valueQuantities[value] || 0;
+	      const quantities = types.reduce((acc, type) => {
+	        const value = type.value;
+	        let quantity = valueQuantities[value] || 0;
 
 	        if (quantity === 0) {
 	          if (!includeZeroes) {
@@ -1177,12 +1161,12 @@
 	          quantity = 'no';
 	        }
 
-	        var labelSingular = type.label;
-	        var labelWithNumber;
+	        const labelSingular = type.label;
+	        let labelWithNumber;
 
 	        // singular
 	        if (quantity !== 1) {
-	          var labelPlural = type.plural || labelSingular + 's';
+	          const labelPlural = type.plural || labelSingular + 's';
 	          labelWithNumber = labelPlural;
 	        // plural
 	        } else {
@@ -1190,7 +1174,7 @@
 	        }
 
 	        // make label and push
-	        var quantityWithLabel = quantity + " " + labelWithNumber;
+	        const quantityWithLabel = `${quantity} ${labelWithNumber}`;
 	        acc.push(quantityWithLabel);
 
 	        return acc;
@@ -1206,16 +1190,16 @@
 	var Division = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(this.vshowComputed),expression:"this.vshowComputed"}],class:this.class,style:(this.style)},[_c('topic-component-group',{attrs:{"topic-components":this.$props.options.components}})],1)},staticRenderFns: [],_scopeId: 'data-v-031d1786',
 	  mixins: [TopicComponent],
 	  computed: {
-	    message: function message() {
+	    message() {
 	      return this.evaluateSlot(this.$props.slots.text)
 	    },
-	    class: function class$1() {
+	    class() {
 	      return this.$props.options.class || '';
 	    },
-	    style: function style() {
+	    style() {
 	      return this.$props.options.style || '';
 	    },
-	    vshowComputed: function vshowComputed() {
+	    vshowComputed() {
 	      if (this.$props.slots) {
 	        if (this.evaluateSlot(this.$props.slots.vshowProp) === false) {
 	          // console.log('returning vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
@@ -1231,7 +1215,7 @@
 	    }
 	  },
 	  components: {},
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    this.$options.components.TopicComponentGroup = TopicComponentGroup;
 	  }
 	};
@@ -1264,26 +1248,69 @@
 	  }
 
 	  // get the current date/time in iso format with timezone
-	  var timestamp = moment().format();
+	  const timestamp = moment().format();
 
 	  // TODO use a json to xml lib instead of forming this string?
-	  var xmlString = "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<BillingStatement xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <ApplicationID>fcd68fd2-e923-4b03-a0e7-a678c2ed612a</ApplicationID>\n  <AccountNumber />\n  <BillNumber>" + (data.balances.accountNum) + "</BillNumber>\n  <StatementNumber />\n  <BillingDate>" + timestamp + "</BillingDate>\n  <DueDate>" + timestamp + "</DueDate>\n  <TotalDue>" + (data.totalDue) + "</TotalDue>\n  <DepartMentId>0</DepartMentId>\n  <Fund>0</Fund>\n  <PaymentDate>0001-01-01T00:00:00</PaymentDate>\n  <Quantity>0</Quantity>\n  <ItemAmount>0</ItemAmount>\n  <TotalAmountdue>0</TotalAmountdue>\n  <PartialPaymentFlag>false</PartialPaymentFlag>\n  <ReceiptpresentFlag>false</ReceiptpresentFlag>\n  <Details>\n    <BillingStatementDetail>\n      <ItemDate>" + timestamp + "</ItemDate>\n      <ItemDescription>Real Estate Tax</ItemDescription>\n      <Charges>" + (data.totalDue) + "</Charges>\n      <Credits>0</Credits>\n    </BillingStatementDetail>\n  </Details>\n  <Customers>\n    <Customer>\n      <FirstName>" + (data.balances.property.ownerName) + "</FirstName>\n      <MiddleName />\n      <LastName />\n      <BillingAddress>\n        <Address>\n          <AddressLine1>" + (data.address.streetAddress) + "</AddressLine1>\n          <City>PHILADELPHIA</City>\n          <State>PA</State>\n          <PostalCode>" + (data.address.zipCode) + "</PostalCode>\n          <Country>US</Country>\n        </Address>\n      </BillingAddress>\n    </Customer>\n  </Customers>\n</BillingStatement>\n  ";
+	  const xmlString = `<?xml version="1.0" encoding="utf-16"?>
+<BillingStatement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ApplicationID>fcd68fd2-e923-4b03-a0e7-a678c2ed612a</ApplicationID>
+  <AccountNumber />
+  <BillNumber>${data.balances.accountNum}</BillNumber>
+  <StatementNumber />
+  <BillingDate>${timestamp}</BillingDate>
+  <DueDate>${timestamp}</DueDate>
+  <TotalDue>${data.totalDue}</TotalDue>
+  <DepartMentId>0</DepartMentId>
+  <Fund>0</Fund>
+  <PaymentDate>0001-01-01T00:00:00</PaymentDate>
+  <Quantity>0</Quantity>
+  <ItemAmount>0</ItemAmount>
+  <TotalAmountdue>0</TotalAmountdue>
+  <PartialPaymentFlag>false</PartialPaymentFlag>
+  <ReceiptpresentFlag>false</ReceiptpresentFlag>
+  <Details>
+    <BillingStatementDetail>
+      <ItemDate>${timestamp}</ItemDate>
+      <ItemDescription>Real Estate Tax</ItemDescription>
+      <Charges>${data.totalDue}</Charges>
+      <Credits>0</Credits>
+    </BillingStatementDetail>
+  </Details>
+  <Customers>
+    <Customer>
+      <FirstName>${data.balances.property.ownerName}</FirstName>
+      <MiddleName />
+      <LastName />
+      <BillingAddress>
+        <Address>
+          <AddressLine1>${data.address.streetAddress}</AddressLine1>
+          <City>PHILADELPHIA</City>
+          <State>PA</State>
+          <PostalCode>${data.address.zipCode}</PostalCode>
+          <Country>US</Country>
+        </Address>
+      </BillingAddress>
+    </Customer>
+  </Customers>
+</BillingStatement>
+  `;
 
 	  return escapeHtml(xmlString);
 	}
 
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" /*# sourceMappingURL=ePayForm.vue.map */"; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-	var BALANCE_PARTS = [
+	const BALANCE_PARTS = [
 	  'principal',
 	  'interest',
 	  'penalty',
-	  'other' ];
+	  'other',
+	];
 
 	var ePayForm = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('form',{attrs:{"action":_vm.actionAddress,"method":"post","target":"_blank"}},[_c('input',{attrs:{"name":"billStmt","type":"hidden"},domProps:{"value":_vm.xmlData}}),_vm._v(" "),_c('input',{directives:[{name:"show",rawName:"v-show",value:(this.shouldShowButton),expression:"this.shouldShowButton"}],staticClass:"button external",style:(_vm.buttonStyle),attrs:{"type":"submit"},domProps:{"value":this.$props.slots.text}})])},staticRenderFns: [],_scopeId: 'data-v-a7b82852',
 	  mixins: [TopicComponent],
-	  data: function data() {
-	    var data = {
+	  data() {
+	    const data = {
 	      parseData: {
 	        'accountNum': this.$store.state.sources.tips.data.data.accountNum,
 	        'totalDue': '',
@@ -1302,28 +1329,28 @@
 	    };
 	    return data;
 	  },
-	  created: function created() {
+	  created() {
 	    this.parseData.totalDue = this.calculateTotalDue();
 	    this.$store.commit('setPropertyBalance', this.parseData.totalDue);
 	    this.xmlData = generateBillingXml(this.parseData);
 	  },
 	  computed: {
-	    message: function message() {
+	    message() {
 	      if (this.$props.slots) {
 	        return this.evaluateSlot(this.$props.slots.text);
 	      }
 	    },
-	    class: function class$1() {
+	    class() {
 	      if (this.$props.options) {
 	        return this.$props.options.class || '';
 	      }
 	    },
-	    style: function style() {
+	    style() {
 	      if (this.$props.options) {
 	        return this.$props.options.style || '';
 	      }
 	    },
-	    shouldShowButton: function shouldShowButton() {
+	    shouldShowButton() {
 	      if (this.parseData.totalDue > 0) {
 	        return true;
 	      } else {
@@ -1332,17 +1359,15 @@
 	    },
 	  },
 	  methods: {
-	    calculateTotalDue: function calculateTotalDue() {
-	      var this$1 = this;
-
-	      return this.parseData.balances.years.reduce(function (acc, year) {
-	        var yearTotal = this$1.calculateTotalForYear(year);
+	    calculateTotalDue() {
+	      return this.parseData.balances.years.reduce((acc, year) => {
+	        const yearTotal = this.calculateTotalForYear(year);
 	        return acc + yearTotal;
 	      }, 0);
 	    },
-	    calculateTotalForYear: function calculateTotalForYear(year) {
-	      var amounts = BALANCE_PARTS.map(function (part) { return year[part]; });
-	      return amounts.reduce(function (acc, amount) { return acc + amount; }, 0);
+	    calculateTotalForYear(year) {
+	      const amounts = BALANCE_PARTS.map(part => year[part]);
+	      return amounts.reduce((acc, amount) => acc + amount, 0);
 	    },
 	  },
 	};
@@ -1351,45 +1376,45 @@
 	var PopoverLink = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._v(" "+_vm._s(_vm.evaluateFieldLabel())+" "),_c('a',{staticClass:"popover-link",attrs:{"title":_vm.value + ' ' + _vm.popoverValue},on:{"click":_vm.didClickPopoverLink}},[_vm._v(" "+_vm._s(_vm.value)+" ")])])},staticRenderFns: [],
 	  mixins: [TopicComponent],
 	  props: ['fieldLabel'],
-	  data: function data() {
-	    var data = {
+	  data() {
+	    const data = {
 	      showFieldLabel: false
 	    };
 	    return data;
 	  },
-	  created: function created() {
+	  created() {
 	    window.addEventListener('resize', this.handleWindowResize);
 	    this.handleWindowResize();
 	  },
 	  computed: {
-	    value: function value() {
-	      var value = this.$props.slots.value;
-	      var transforms = this.$props.slots.transforms || [];
-	      var nullValue = this.$props.slots.nullValue || '';
+	    value() {
+	      const value = this.$props.slots.value;
+	      const transforms = this.$props.slots.transforms || [];
+	      const nullValue = this.$props.slots.nullValue || '';
 	      return this.evaluateSlot(value, transforms, nullValue);
 	    },
-	    popoverValue: function popoverValue() {
-	      var value = this.value;
-	      var popoverTransforms = this.$props.slots.popoverTransforms || [];
-	      var popoverNullValue = this.$props.slots.popoverNullValue || '';
+	    popoverValue() {
+	      const value = this.value;
+	      const popoverTransforms = this.$props.slots.popoverTransforms || [];
+	      const popoverNullValue = this.$props.slots.popoverNullValue || '';
 	      return this.evaluateSlot(value, popoverTransforms, popoverNullValue);
 	    },
-	    popoverPreText: function popoverPreText() {
-	      var popoverPreText = this.$props.slots.popoverPreText || '';
+	    popoverPreText() {
+	      let popoverPreText = this.$props.slots.popoverPreText || '';
 	      return this.evaluateSlot(popoverPreText);
 	    },
-	    popoverPostText: function popoverPostText() {
-	      var popoverPostText = this.$props.slots.popoverPostText || '';
+	    popoverPostText() {
+	      let popoverPostText = this.$props.slots.popoverPostText || '';
 	      return this.evaluateSlot(popoverPostText);
 	    },
-	    shouldShowValue: function shouldShowValue() {
+	    shouldShowValue() {
 	      if (this.$props.slots.shouldShowValue === false) {
 	        return false
 	      } else {
 	        return true;
 	      }
 	    },
-	    popoverText: function popoverText() {
+	    popoverText() {
 	      if (this.shouldShowValue === true) {
 	        return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
 	      } else {
@@ -1398,18 +1423,18 @@
 	    },
 	  },
 	  methods: {
-	    didClickPopoverLink: function didClickPopoverLink(e) {
+	    didClickPopoverLink(e) {
 	      this.$store.commit('setPopoverOpen', true);
 	      this.$store.commit('setPopoverText', this.popoverText);
 	    },
-	    handleWindowResize: function handleWindowResize() {
+	    handleWindowResize() {
 	      if (window.innerWidth >= 750) {
 	        this.showFieldLabel = false;
 	      } else {
 	        this.showFieldLabel = true;
 	      }
 	    },
-	    evaluateFieldLabel: function evaluateFieldLabel() {
+	    evaluateFieldLabel() {
 	      if (this.showFieldLabel) {
 	        return this.$props.fieldLabel + ': ';
 	      } else {
@@ -1424,39 +1449,39 @@
 	var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{attrs:{"item":_vm.item}},[_c('b',{directives:[{name:"show",rawName:"v-show",value:(_vm.shouldBeBold),expression:"shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(!_vm.shouldBeBold),expression:"!shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1)])}))},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
 	  mixins: [TopicComponent],
 	  components: {
-	    PopoverLink: PopoverLink,
+	    PopoverLink,
 	  },
 	  props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField'],
-	  data: function data() {
-	    var data = {
+	  data() {
+	    const data = {
 	      showFieldLabel: false
 	    };
 	    return data;
 	  },
-	  created: function created() {
+	  created() {
 	    window.addEventListener('resize', this.handleWindowResize);
 	    this.handleWindowResize();
 	  },
 	  computed: {
-	    activeFeature: function activeFeature() {
+	    activeFeature() {
 	      return this.$store.state.activeFeature;
 	    },
-	    isActive: function isActive() {
+	    isActive() {
 	      if (this.activeFeature) {
 	        return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
 	      } else {
 	        return;
 	      }
 	    },
-	    isMobileOrTablet: function isMobileOrTablet() {
+	    isMobileOrTablet() {
 	      return this.$store.state.isMobileOrTablet;
 	    },
 	  },
 	  watch: {
-	    isActive: function isActive(value) {
+	    isActive(value) {
 	      if (value === true) {
-	        var el = this.$el;
-	        var visible = this.isElementInViewport(el);
+	        const el = this.$el;
+	        const visible = this.isElementInViewport(el);
 	        // console.log('horizontaltablerow WATCH isActive is firing, el:', el, 'visible:', visible);
 
 	        // console.log('visible?', visible ? 'YES' : 'NO');
@@ -1468,46 +1493,46 @@
 	    }
 	  },
 	  methods: {
-	    handleRowMouseover: function handleRowMouseover(e) {
+	    handleRowMouseover(e) {
 	      // console.log('handleRowMouseover is starting');
 	      if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
 	        // console.log('handleRowMouseover actions are running');
-	        if (!this.hasOverlay) { return; }
+	        if (!this.hasOverlay) return;
 
-	        var featureId = this.item._featureId;
-	        var tableId = this.tableId;
-	        this.$store.commit('setActiveFeature', { featureId: featureId, tableId: tableId });
+	        const featureId = this.item._featureId;
+	        const tableId = this.tableId;
+	        this.$store.commit('setActiveFeature', { featureId, tableId });
 	      }
 	    },
-	    handleRowClick: function handleRowClick(e) {
+	    handleRowClick(e) {
 	      // console.log('handleRowClick is starting');
 	      if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
 	        console.log('handleRowClick actions are running');
-	        if (!this.hasOverlay) { return; }
+	        if (!this.hasOverlay) return;
 
-	        var featureId = this.item._featureId;
-	        var tableId = this.tableId;
-	        this.$store.commit('setActiveFeature', { featureId: featureId, tableId: tableId });
+	        const featureId = this.item._featureId;
+	        const tableId = this.tableId;
+	        this.$store.commit('setActiveFeature', { featureId, tableId });
 	      }
 	    },
-	    handleRowMouseout: function handleRowMouseout(e) {
+	    handleRowMouseout(e) {
 	      // console.log('handleRowMouseout is starting');
 	      // if(!this.isMobileOrTablet) {
 	        // console.log('handleRowMouseout actions are running');
 	        if(!this.$props.options.mouseOverDisabled) {
-	          if (!this.hasOverlay) { return; }
+	          if (!this.hasOverlay) return;
 	          this.$store.commit('setActiveFeature', null);
 	        }
 	      // }
 	    },
 	    // REVIEW there's very similar code in the controller. if these can be
 	    // the same thing, make it into a util.
-	    isElementInViewport: function isElementInViewport(el) {
-	      var rect = el.getBoundingClientRect();
+	    isElementInViewport(el) {
+	      const rect = el.getBoundingClientRect();
 
 	      // console.log('bounding box', rect);
 
-	      var visibility = {
+	      const visibility = {
 	        // TODO the 108 below is account for the combined height of the
 	        // app header and address header. this is not a good long-term
 	        // solution - instead, use the `bottom` value of the address header's
@@ -1524,19 +1549,19 @@
 	      // console.log('visibility', visibility);
 
 	      // return if all sides are visible
-	      return Object.values(visibility).every(function (val) { return val; });
+	      return Object.values(visibility).every(val => val);
 	    },
-	    featuresMatch: function featuresMatch(a, b) {
+	    featuresMatch(a, b) {
 	      return a.featureId === b.featureId && a.tableId === b.tableId;
 	    },
-	    handleWindowResize: function handleWindowResize() {
+	    handleWindowResize() {
 	      if (window.innerWidth >= 750) {
 	        this.showFieldLabel = false;
 	      } else {
 	        this.showFieldLabel = true;
 	      }
 	    },
-	    evaluateFieldLabel: function evaluateFieldLabel(label) {
+	    evaluateFieldLabel(label) {
 	      // console.log('evaluateFieldLabel, label:', label);
 	      if (this.showFieldLabel && this.$props.totalRowField !== label.toLowerCase()) {
 	        return label + ': ';
@@ -1551,14 +1576,15 @@
 	// import json2csv from 'json2csv';
 	// import fs from 'fs';
 
-	var DEFAULT_SORT_FIELDS = [
+	const DEFAULT_SORT_FIELDS = [
 	  'distance',
-	  'date' ];
+	  'date',
+	];
 
 	var HorizontalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pvc-horizontal-table"},[(_vm.shouldShowTable)?_c('div',[(_vm.shouldShowFilters !== false)?_c('div',{staticClass:"pvc-horizontal-table-controls"},[(!!_vm.options.filters)?_c('div',{staticClass:"vertically-centered"},_vm._l((_vm.filters),function(filter,index){return _c('div',{staticClass:"inline-block",attrs:{"id":'filter-' + index}},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v(_vm._s(filter.label))]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleFilterValueChange}},[_c('optgroup',_vm._l((filter.values),function(filterValue){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":_vm.slugifyFilterValue(filterValue)}},[_vm._v(" "+_vm._s(filterValue.label)+" ")])}))])])})):_vm._e(),_vm._v(" "),(!!_vm.options.sort && !!_vm.options.sort.select)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v("Sort by")]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleSortValueChange}},[_c('optgroup',_vm._l((_vm.sortFields),function(sortField){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":sortField}},[_vm._v(" "+_vm._s(sortField)+" ")])}))])]):_vm._e(),_vm._v(" "),(_vm.filterByTextFields)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"pvc-select-text inline-block"},[_vm._v(" "+_vm._s(_vm.options.filterByText.label)+" ")]),_vm._v(" "),_c('form',{staticClass:"inline-block filter-by-text-form",on:{"submit":function($event){$event.preventDefault();return _vm.handleFilterFormX($event)}}},[_c('input',{class:this.inputClass,attrs:{"id":"theInput"},on:{"keyup":_vm.handleFilterFormKeyup}}),_vm._v(" "),(this.searchText != '')?_c('button',{staticClass:"pvc-search-control-button"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"times"}})],1):_vm._e()])]):_vm._e()]):_vm._e(),_vm._v(" "),_c('div',{class:{ 'pvc-horizontal-table-body': true, 'no-padding': !_vm.shouldShowFilters }},[(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")]),_vm._v(" "),(this.shouldShowDownloadButton)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e()]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}))]):_vm._e(),_vm._v(" "),_c('tbody',[_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId,"options":_vm.options}})}),_vm._v(" "),(_vm.totalRowEnabled)?_c('horizontal-table-row',{attrs:{"shouldBeBold":true,"item":this.itemsLimitedSummed,"fields":_vm.fields,"tableId":_vm.options.tableId,"totalRowField":this.totalRowField}}):_vm._e()],2)]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"spinner"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
 	  mixins: [TopicComponent],
-	  data: function data() {
-	    var filters = this.options.filters || [];
+	  data() {
+	    const filters = this.options.filters || [];
 	    // console.log('in horiz table data, filters:', filters, 'filtersKeys:', filtersKeys);
 	    // const defaultFilterSelections = Object.keys(filters).reduce((acc, i) =>
 	    //                                 {
@@ -1567,49 +1593,45 @@
 	    //                                   acc[key] = {};
 	    //                                   return acc;
 	    //                                 }, {});
-	    var defaultFilterSelections = {};
-	    for (var index=0; index < filters.length; index++) {
+	    let defaultFilterSelections = {};
+	    for (let index=0; index < filters.length; index++) {
 	      defaultFilterSelections['filter-' + index] = filters[index].values[0];
 	    }
 	    // console.log('in horiz table data, filters:', filters, 'filtersKeys:', filtersKeys, 'defaultFilterSelections:', defaultFilterSelections);
-	    var sortFields;
+	    let sortFields;
 	    if (this.options.sort){
 	      sortFields = this.options.sort.sortFields || [];
 	    }
-	    var sortField;
+	    let sortField;
 	    if (sortFields) {
 	      sortField = sortFields[0];
 	    } else {
 	      sortField = DEFAULT_SORT_FIELDS[0];
 	    }
-	    var highestRowRetrieved = this.options.defaultIncrement;
+	    const highestRowRetrieved = this.options.defaultIncrement;
 
-	    var initialData = {
+	    const initialData = {
 	      filterSelections: defaultFilterSelections,
 	      searchText: '',
-	      sortField: sortField,
-	      highestRowRetrieved: highestRowRetrieved
+	      sortField,
+	      highestRowRetrieved
 	    };
 
 	    return initialData;
 	  },
 	  components: {
-	    HorizontalTableRow: HorizontalTableRow,
-	    ExternalLink: ExternalLink,
+	    HorizontalTableRow,
+	    ExternalLink,
 	  },
 	  // beforeCreate() {
 	  //   console.log('horizTable before create, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
 	  // },
-	  created: function created() {
+	  created() {
 	    // console.log('horiz table created props slots items', this.$props.slots.items);
 	    if (this.filters) {
-	      for (var i = 0, list = this.filters.entries(); i < list.length; i += 1) {
-	        var ref = list[i];
-	        var index = ref[0];
-	        var filter = ref[1];
-
-	        var key = "filter-" + index;
-	        var defaultValue = filter.values[0] || {};
+	      for (let [index, filter] of this.filters.entries()) {
+	        const key = `filter-${index}`;
+	        const defaultValue = filter.values[0] || {};
 	        this.filterSelections[key] = defaultValue;
 	      }
 	    }
@@ -1623,14 +1645,14 @@
 	    //   data
 	    // });
 	  },
-	  mounted: function mounted() {
+	  mounted() {
 	    // console.log('horiz table mounted props slots items', this.$props.slots.items);
 	    if (this.$store.state.horizontalTables) {
 	      this.updateTableFilteredData();
 	    }
 	  },
 	  watch: {
-	    itemsAfterFilters: function itemsAfterFilters(nextItems) {
+	    itemsAfterFilters(nextItems) {
 	      // console.log('WATCH items after filters', nextItems);
 	      // this.$nextTick(() => {
 	      if (this.$store.state.horizontalTables) {
@@ -1640,31 +1662,29 @@
 	    }
 	  },
 	  computed: {
-	    totalRowEnabled: function totalRowEnabled() {
+	    totalRowEnabled() {
 	      if (this.$props.options.totalRow) {
 	        return this.$props.options.totalRow.enabled || false;
 	      }
 	    },
-	    totalRowField: function totalRowField() {
+	    totalRowField() {
 	      if (this.$props.options.totalRow) {
 	        return this.$props.options.totalRow.totalField || '';
 	      }
 	    },
-	    hasData: function hasData() {
-	      var this$1 = this;
-
+	    hasData() {
 	      // console.log('horizTable hasData is running, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
 	      if (!this.$props.options.dataSources) {
 	        return true;
 	      } else {
-	        var hasData = this.$props.options.dataSources.every(function (dataSource) {
+	        const hasData = this.$props.options.dataSources.every(dataSource => {
 	          // const targetsFn = this.$config.dataSources[dataSource].targets;
-	          var targetsFn = this$1.$store.state.sources[dataSource].targets;
-	          var maybeEmpty = this$1.isEmpty(targetsFn);
+	          const targetsFn = this.$store.state.sources[dataSource].targets;
+	          const maybeEmpty = this.isEmpty(targetsFn);
 	          // if the data source is configured for targets
-	          if (!this$1.isEmpty(targetsFn)) {
-	            var targetsMap = this$1.$store.state.sources[dataSource].targets;
-	            var targets = Object.values(targetsMap);
+	          if (!this.isEmpty(targetsFn)) {
+	            const targetsMap = this.$store.state.sources[dataSource].targets;
+	            const targets = Object.values(targetsMap);
 
 	            // but there are no targets for this address, return false
 	            if (targets.length === 0) {
@@ -1673,44 +1693,44 @@
 
 	            // if there are targets for this address, make sure none of them
 	            // are "waiting"
-	            return targets.every(function (target) { return target.status !== 'waiting'; });
+	            return targets.every(target => target.status !== 'waiting');
 
 	            // if the data source is not configured for targets, just check that
 	            // it has data
 	          } else {
-	            return !!this$1.$store.state.sources[dataSource].data;
+	            return !!this.$store.state.sources[dataSource].data;
 	          }
 	        });
 
 	        return hasData;
 	      }
 	    },
-	    shouldShowFilters: function shouldShowFilters() {
+	    shouldShowFilters() {
 	      if (typeof this.options.shouldShowFilters === 'undefined') {
 	        return true;
 	      } else {
 	        return this.options.shouldShowFilters;
 	      }
 	    },
-	    shouldShowHeaders: function shouldShowHeaders() {
+	    shouldShowHeaders() {
 	      if (typeof this.options.shouldShowHeaders === 'undefined') {
 	        return true;
 	      } else {
 	        return this.options.shouldShowHeaders;
 	      }
 	    },
-	    shouldShowDownloadButton: function shouldShowDownloadButton() {
-	      var downloadButton = false;
+	    shouldShowDownloadButton() {
+	      let downloadButton = false;
 	      if (this.options.downloadButton) {
 	        downloadButton = this.options.downloadButton;
 	      }
 	      return downloadButton;
 	    },
-	    secondaryStatus: function secondaryStatus() {
+	    secondaryStatus() {
 	      return this.$store.state.sources[this.options.id].secondaryStatus;
 	    },
-	    shouldShowTable: function shouldShowTable() {
-	      var result = true;
+	    shouldShowTable() {
+	      let result = true;
 
 	      // if the table is in a tab group or table group, it will have an "item" in props
 	      // if (this.item) {
@@ -1729,13 +1749,13 @@
 
 	      return result;
 	    },
-	    shouldShowRetrieveButton: function shouldShowRetrieveButton() {
+	    shouldShowRetrieveButton() {
 	      return this.highestRowRetrieved < this.count;
 	    },
-	    leftToRetrieve: function leftToRetrieve() {
+	    leftToRetrieve() {
 	      return this.count - this.highestRowRetrieved;
 	    },
-	    nextIncrement: function nextIncrement() {
+	    nextIncrement() {
 	      if (!this.options.showAllRowsOnFirstClick) {
 	        if (this.leftToRetrieve < this.options.defaultIncrement) {
 	          return this.leftToRetrieve;
@@ -1746,89 +1766,87 @@
 	        return this.leftToRetrieve;
 	      }
 	    },
-	    highestPageRetrieved: function highestPageRetrieved() {
+	    highestPageRetrieved() {
 	      return this.evaluateSlot(this.slots.highestPageRetrieved);
 	    },
-	    pageCount: function pageCount() {
+	    pageCount() {
 	      return this.evaluateSlot(this.slots.pageCount);
 	    },
-	    totalSize: function totalSize() {
+	    totalSize() {
 	      return this.evaluateSlot(this.slots.totalSize);
 	    },
-	    limit: function limit() {
+	    limit() {
 	      return this.options.limit;
 	    },
 	    // REVIEW what does this do? can this be simplified?
-	    inputClass: function inputClass() {
+	    inputClass() {
 	      if (this.searchText === '') {
 	        return 'pvc-search-control-input';
 	      } else {
 	        return 'pvc-search-control-input-full';
 	      }
 	    },
-	    filters: function filters() {
+	    filters() {
 	      return this.options.filters;
 	    },
-	    activeFilters: function activeFilters() {
+	    activeFilters() {
 	      //TODO make this work with not-always-on filters
 	      return this.filters;
 	    },
-	    fields: function fields() {
+	    fields() {
 	      return this.options.fields;
 	    },
-	    hasOverlay: function hasOverlay() {
+	    hasOverlay() {
 	      return !!this.options.mapOverlay;
 	    },
-	    items: function items() {
+	    items() {
 	      if (this.hasData) {
-	        var itemsSlot = this.slots.items;
-	        var items = this.evaluateSlot(itemsSlot) || [];
+	        const itemsSlot = this.slots.items;
+	        const items = this.evaluateSlot(itemsSlot) || [];
 	        // console.log('horiz table items', items);
 	        return items
 	      } else {
 	        return [];
 	      }
 	    },
-	    filterByTextFields: function filterByTextFields() {
+	    filterByTextFields() {
 	      if (this.options.filterByText) {
 	        return this.options.filterByText.fields;
 	      } else {
 	        return null;
 	      }
 	    },
-	    itemsAfterSearch: function itemsAfterSearch() {
+	    itemsAfterSearch() {
 	      // console.log('itemsAfterSearch is running');
-	      var items = this.items;
-	      var searchText = this.searchText;
+	      const items = this.items;
+	      const searchText = this.searchText;
 
 	      if (!searchText) {
 	        return items;
 	      }
 
-	      var searchTextLower = searchText.toLowerCase();
+	      const searchTextLower = searchText.toLowerCase();
 
 	      // get full set of items
 
 	      // if text search is not enabled, return all items
-	      var searchFields = this.filterByTextFields || [];
+	      const searchFields = this.filterByTextFields || [];
 	      if (searchFields.length === 0) {
 	        return items;
 	      }
 
 	      // get items that contain the search text in one of their filter fields
-	      var matchingItems = items.filter(function (item) {
-	        var searchVals = searchFields.map(function (filterField) {
-	          var props = item.properties;
-	          var searchVal = props ? props[filterField] : item[filterField];
+	      const matchingItems = items.filter(item => {
+	        const searchVals = searchFields.map(filterField => {
+	          const props = item.properties;
+	          const searchVal = props ? props[filterField] : item[filterField];
 	          // console.log('props', props, 'searchVal', searchVal);
 	          return searchVal.toLowerCase();
 	        });
 
-	        var boolean = false;
-	        for (var i = 0, list = searchVals; i < list.length; i += 1) {
+	        let boolean = false;
+	        for (let searchVal of searchVals) {
 	          // console.log('searchVal', searchVal, 'searchTextLower', searchTextLower);
-	          var searchVal = list[i];
-
 	          if (searchVal.includes(searchTextLower)) {
 	            boolean = true;
 	          }
@@ -1839,25 +1857,25 @@
 	      return matchingItems;
 	    },
 	    // this takes itemsAfterSearch and applies selected filters
-	    itemsAfterFilters: function itemsAfterFilters() {
+	    itemsAfterFilters() {
 	      // console.log('itemsAfterFilters is running, this.filters:', this.filters, 'this.filterSelections:', this.filterSelections);
 	      if (!this.itemsAfterSearch) {
 	        return [];
 	      } else {
-	        var itemsAfterSearch = this.itemsAfterSearch;
-	        var items = this.filterItems(itemsAfterSearch,
+	        const itemsAfterSearch = this.itemsAfterSearch;
+	        const items = this.filterItems(itemsAfterSearch,
 	          this.filters,
 	          this.filterSelections);
 	          // console.log('horiz table itemsAfterFilters', items);
 	          return items;
 	      }
 	    },
-	    itemsAfterSort: function itemsAfterSort() {
-	      var itemsAfterFilters = this.itemsAfterFilters;
-	      var sortOpts = this.options.sort;
+	    itemsAfterSort() {
+	      const itemsAfterFilters = this.itemsAfterFilters;
+	      const sortOpts = this.options.sort;
 	      return this.sortItems(itemsAfterFilters, sortOpts);
 	    },
-	    sortFields: function sortFields() {
+	    sortFields() {
 	      if (this.options.sort.sortFields) {
 	        return this.options.sort.sortFields;
 	      } else {
@@ -1865,7 +1883,7 @@
 	      }
 	    },
 	    // this takes filtered items and applies the max number of rows
-	    itemsLimited: function itemsLimited() {
+	    itemsLimited() {
 	      // console.log('items limited', this.itemsAfterSort.slice(0, this.limit));
 	      if (this.options.limit) {
 	        return this.itemsAfterSort.slice(0, this.options.limit);
@@ -1875,20 +1893,16 @@
 	        return this.itemsAfterSort;
 	      }
 	    },
-	    itemsLimitedSummed: function itemsLimitedSummed() {
-	      var summed = {};
-	      for (var i$1 = 0, list$1 = Object.keys(this.itemsLimited[0]); i$1 < list$1.length; i$1 += 1) {
-	        var key = list$1[i$1];
-
+	    itemsLimitedSummed() {
+	      let summed = {};
+	      for (let key of Object.keys(this.itemsLimited[0])) {
 	        if (typeof this.itemsLimited[0][key] === 'number') {
 	          summed[key] = 0;
 	        }
 	        if (this.totalRowField) {
 	          summed[this.totalRowField] = 'Total';
 	        }
-	        for (var i = 0, list = this.itemsLimited; i < list.length; i += 1) {
-	          var item = list[i];
-
+	        for (let item of this.itemsLimited) {
 	          if (typeof summed[key] === 'number') {
 	            summed[key] = summed[key] + item[key];
 	          }
@@ -1896,23 +1910,23 @@
 	      }
 	      return summed;
 	    },
-	    count: function count() {
+	    count() {
 	      if (this.$props.options.useApiCount) {
 	        return this.totalSize;
 	      } else {
 	        return this.itemsAfterFilters.length;
 	      }
 	    },
-	    countText: function countText() {
+	    countText() {
 	      if (this.$props.options.noCount) {
 	        return '';
 	      } else if (this.highestRowRetrieved < this.count) {
-	        return ("(1 - " + (this.count < this.highestRowRetrieved ? this.count : this.highestRowRetrieved) + " of " + (this.count) + ")");
+	        return `(1 - ${ this.count < this.highestRowRetrieved ? this.count : this.highestRowRetrieved } of ${this.count})`;
 	      } else {
-	        return ("(" + (this.count) + ")");
+	        return `(${this.count})`;
 	      }
 	    },
-	    shouldShowExternalLink: function shouldShowExternalLink() {
+	    shouldShowExternalLink() {
 	      if (this.options.externalLink.forceShow) {
 	        return this.options.externalLink.forceShow;
 	      } else {
@@ -1940,17 +1954,15 @@
 	    // },
 	  },
 	  methods: {
-	    exportTableToCSV: function exportTableToCSV() {
+	    exportTableToCSV() {
 	      // console.log('exportTableToCSV is running');
 
 	      // const Json2csvParser = require('json2csv').Parser;
 
-	      var tableData = [];
-	      for (var i = 0, list = this.items; i < list.length; i += 1) {
+	      const tableData = [];
+	      for (let item of this.items) {
 	        // console.log('item:', item);
-	        var item = list[i];
-
-	        var object = {
+	        let object = {
 	          'address': item.properties.ADDRESS,
 	          'distance': item._distance
 	        };
@@ -1980,7 +1992,7 @@
 	        data.forEach(function(item) {
 	            ctr = 0;
 	            keys.forEach(function(key) {
-	                if (ctr > 0) { result += columnDelimiter; }
+	                if (ctr > 0) result += columnDelimiter;
 
 	                result += item[key];
 	                ctr++;
@@ -1988,12 +2000,12 @@
 	            result += lineDelimiter;
 	        });
 
-	        var csv = result;
+	        let csv = result;
 	        // console.log('csv', csv);
 	        // let csv = parser.parse(tableData);
 	        data = null;
-	        var filename;
-	        var link;
+	        let filename;
+	        let link;
 
 	        // filename = 'export.csv';
 	        filename = this.$props.options.downloadFile + '.csv' || 'export.csv';
@@ -2013,7 +2025,7 @@
 	      }
 
 	    },
-	    showMoreRecords: function showMoreRecords() {
+	    showMoreRecords() {
 	      // if there is only 1 page to return (from AIS);
 	      if (!this.pageCount) {
 	        this.compareAndSetHighestRowRetrieved();
@@ -2036,7 +2048,7 @@
 	        }
 	      }
 	    },
-	    compareAndSetHighestRowRetrieved: function compareAndSetHighestRowRetrieved() {
+	    compareAndSetHighestRowRetrieved() {
 	      if (!this.options.showAllRowsOnFirstClick) {
 	        if (this.count < this.highestRowRetrieved + this.options.defaultIncrement) {
 	          this.highestRowRetrieved = this.count;
@@ -2047,80 +2059,73 @@
 	        this.highestRowRetrieved = this.count;
 	      }
 	    },
-	    getMoreRecords: function getMoreRecords() {
-	      var dataSource = this.options.id;
-	      var highestPageRetrieved = this.highestPageRetrieved;
+	    getMoreRecords() {
+	      const dataSource = this.options.id;
+	      const highestPageRetrieved = this.highestPageRetrieved;
 	      this.$controller.getMoreRecords(dataSource, highestPageRetrieved);
 	    },
-	    slugifyFilterValue: function slugifyFilterValue(filterValue) {
-	      var direction = filterValue.direction;
-	      var value = filterValue.value;
-	      var unit = filterValue.unit;
+	    slugifyFilterValue(filterValue) {
+	      const { direction, value, unit } = filterValue;
 	      return [direction, value, unit].join('-');
 	    },
-	    deslugifyFilterValue: function deslugifyFilterValue(slug) {
-	      var parts = slug.split('-');
-	      var direction = parts[0];
-	      var value = parts[1];
-	      var unit = parts[2];
-	      return {value: value, unit: unit, direction: direction};
+	    deslugifyFilterValue(slug) {
+	      const parts = slug.split('-');
+	      const [direction, value, unit] = parts;
+	      return {value, unit, direction};
 	    },
-	    handleSortValueChange: function handleSortValueChange(e) {
+	    handleSortValueChange(e) {
 	      // console.log('handleSortValueChange running', e);
 
-	      var value = e.target.value;
+	      const value = e.target.value;
 	      this.sortField = value;
 	    },
-	    handleFilterValueChange: function handleFilterValueChange(e) {
+	    handleFilterValueChange(e) {
 	      console.log('handle filter value change', e);
 
-	      var target = e.target;
-	      var slug = target.value;
+	      const target = e.target;
+	      const slug = target.value;
 
 	      // deslugify filter value
-	      var valueObj = this.deslugifyFilterValue(slug);
+	      const valueObj = this.deslugifyFilterValue(slug);
 
-	      var parent = target.parentElement;
-	      var parentId = parent.id;
+	      const parent = target.parentElement;
+	      const parentId = parent.id;
 
 	      // patch and replace filter selections
-	      var prevFilterSelections = this.filterSelections;
-	      var nextFilterSelections = Object.assign({}, prevFilterSelections);
+	      const prevFilterSelections = this.filterSelections;
+	      const nextFilterSelections = Object.assign({}, prevFilterSelections);
 	      nextFilterSelections[parentId] = valueObj;
 	      this.filterSelections = nextFilterSelections;
 	    },
-	    values: function values(item) {
-	      var fields = this.options.fields;
-	      var sourceFields = fields.map(function (field) { return field.sourceField; });
-	      return sourceFields.map(function (sourceField) { return item[sourceField]; })
+	    values(item) {
+	      const fields = this.options.fields;
+	      const sourceFields = fields.map(field => field.sourceField);
+	      return sourceFields.map(sourceField => item[sourceField])
 	    },
-	    handleFilterFormKeyup: function handleFilterFormKeyup(e) {
-	      var input = e.target.value;
+	    handleFilterFormKeyup(e) {
+	      const input = e.target.value;
 	      this.searchText = input;
 	    },
-	    handleFilterFormX: function handleFilterFormX(e) {
+	    handleFilterFormX(e) {
 	      e.target[0].value = '';
 	      this.searchText = "";
 	    },
-	    filterItems: function filterItems(items, filters, filterSelections) {
+	    filterItems(items, filters, filterSelections) {
 	      // console.log('typeof items:', typeof items);
 	      // console.log('FILTER ITEMS is running, items:', items, 'filters:', filters, 'filterSelections:', filterSelections);
-	      var itemsFiltered = items.slice();
+	      let itemsFiltered = items.slice();
 
 	      if (filters) {
 	        // console.log('in filterItems, filters:', filters, 'filters.length', filters.length, 'filters.entries():', filters.entries(), 'filters.keys():', filters.keys());
 	        // for (let [index, filter] of filters.entries()) {
-	        var loop = function ( index ) {
-	          var key = 'filter-' + index;
+	        for (let index=0; index < filters.length; index++) {
+	          const key = 'filter-' + index;
 	          // const key = `filter-${index}`;
-	          var data = filterSelections[key];
+	          const data = filterSelections[key];
 	          // console.log('index:', index, 'key:', key, 'data:', data, 'filters:', filters[index]);
-	          var ref = filters[index];
-	          var type = ref.type;
-	          var getValue = ref.getValue;
-	          var unit = data.unit;
-	          var value = data.value;
-	          var direction = data.direction || 'subtract';
+	          const {type, getValue} = filters[index];
+	          const {unit, value} = data;
+	          const direction = data.direction || 'subtract';
 
 	          // console.log('type:', type);
 
@@ -2136,7 +2141,7 @@
 	              break;
 	            case 'time':
 	              console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
-	              var min = (void 0), max = (void 0);
+	              let min, max;
 
 	              if (direction === 'subtract') {
 	                max = moment();
@@ -2146,14 +2151,14 @@
 	                min = moment();
 	                max = min.add(value, unit);
 	              } else {
-	                throw ("Invalid time direction: " + direction);
+	                throw `Invalid time direction: ${direction}`;
 	              }
 
 	              // console.log('in case time, itemsFiltered:', itemsFiltered);
-	              itemsFiltered = itemsFiltered.filter(function (item) {
-	                var itemValue = getValue(item);
-	                var itemMoment = moment(itemValue);
-	                var isBetween = itemMoment.isBetween(min, max);
+	              itemsFiltered = itemsFiltered.filter(item => {
+	                const itemValue = getValue(item);
+	                const itemMoment = moment(itemValue);
+	                const isBetween = itemMoment.isBetween(min, max);
 	                // console.log('itemValue:', itemValue, 'itemMoment:', itemMoment, 'min:', min, 'max:', max, 'isBetween:', isBetween);
 	                return isBetween;
 	              });
@@ -2161,17 +2166,15 @@
 	              break;
 
 	            default:
-	              throw ("Unhandled filter type: " + type);
+	              throw `Unhandled filter type: ${type}`;
 	              break;
 	          }
-	        };
-
-	        for (var index=0; index < filters.length; index++) loop( index );
+	        }
 	      }
 	      return itemsFiltered;
 	    },
 	    // sortItems(items, sortOpts) {
-	    sortItems: function sortItems(items, sortOpts) {
+	    sortItems(items, sortOpts) {
 	      // console.log('sortItems, sortOpts:', sortOpts);
 	      // TODO finish this
 	      // if (Object.keys(this.filterData).length) {
@@ -2196,28 +2199,28 @@
 	      // const order = sortOpts.order;
 
 	      // get sort fn or use this basic one
-	      var sortFn = sortOpts.compare || this.defaultSortFn;
+	      const sortFn = sortOpts.compare || this.defaultSortFn;
 	      // console.log('sortFn', sortFn);
 	      // console.log('sortFn', sortFn)
 	      return items.sort(sortFn);
 	    },
-	    defaultSortFn: function defaultSortFn(a, b) {
+	    defaultSortFn(a, b) {
 	      // console.log('defaultSortFn is running, a:', a, 'b:', b);
-	      var sortOpts = this.options.sort;
-	      var getValueFn = sortOpts.getValue;
-	      var sortField = this.sortField;
-	      var order;
+	      const sortOpts = this.options.sort;
+	      const getValueFn = sortOpts.getValue;
+	      const sortField = this.sortField;
+	      let order;
 	      if (typeof sortOpts.order === 'function') {
-	        var orderFn = sortOpts.order;
+	        const orderFn = sortOpts.order;
 	        order = orderFn(sortField);
 	      } else {
 	        order = sortOpts.order;
 	      }
 	      console.log('sortField', sortField, 'order', order);
 
-	      var valA = getValueFn(a, sortField);
-	      var valB = getValueFn(b, sortField);
-	      var result;
+	      const valA = getValueFn(a, sortField);
+	      const valB = getValueFn(b, sortField);
+	      let result;
 
 	      if (valA === null) {
 	        if (order === 'desc') {
@@ -2244,7 +2247,7 @@
 	        if (order === 'desc') {
 	          result = result * -1;
 	        } else if (order !== 'asc') {
-	          throw ("Unknown sort order: " + order);
+	          throw `Unknown sort order: ${order}`;
 	        }
 	      }
 
@@ -2253,23 +2256,22 @@
 	      return result;
 	    },
 	    // this updates the global state that stores filtered table rows
-	    updateTableFilteredData: function updateTableFilteredData() {
+	    updateTableFilteredData() {
 	      // console.log('update table filtered data is running, options:', this.options);
 
 	      // get table id
-	      var ref = this.options;
-	      var tableId = ref.tableId;
+	      const { tableId } = this.options;
 
 	      // update global state
 	      this.$store.commit('setHorizontalTableFilteredData', {
-	        tableId: tableId,
+	        tableId,
 	        data: this.itemsAfterFilters
 	      });
 	    },
-	    isEmpty: function isEmpty(obj) {
+	    isEmpty(obj) {
 	      for(var key in obj) {
 	        if(obj.hasOwnProperty(key))
-	          { return false; }
+	          return false;
 	      }
 	      return true;
 	    },
@@ -2287,22 +2289,22 @@
 	var VerticalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.shouldShowTable)?_c('div',{staticClass:"table-container"},[(_vm.slots.title)?_c('h4',{staticClass:"table-title"},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" ")]):_vm._e(),_vm._v(" "),_c('table',[_c('tbody',_vm._l((_vm.slots.fields),function(field){return _c('tr',[_c('th',{style:(_vm.styles.th || ''),domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.label))}}),_vm._v(" "),(_vm.hasData)?_c('td',{domProps:{"innerHTML":_vm._s(_vm.evaluateSlot(field.value, field.transforms, _vm.nullValue))}}):_vm._e(),_vm._v(" "),(!_vm.hasData)?_c('td',{domProps:{"innerHTML":_vm._s('')}}):_vm._e()])}))]),_vm._v(" "),(_vm.options && _vm.options.externalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"type":'vertical-table'}}):_vm._e()],1):_vm._e()},staticRenderFns: [],_scopeId: 'data-v-42075018',
 	  mixins: [TopicComponent],
 	  components: {
-	    ExternalLink: ExternalLink,
+	    ExternalLink,
 	  },
 	  computed: {
-	    styles: function styles() {
+	    styles() {
 	      if (this.$props.options.styles) {
 	        return this.$props.options.styles;
 	      } else {
 	        return '';
 	      }
 	    },
-	    shouldShowTable: function shouldShowTable() {
-	      var hasData = this.hasData;
+	    shouldShowTable() {
+	      const hasData = this.hasData;
 	      if (this.item) {
 	        if (this.item.activeTable) {
-	          var filterValue = this.item.activeTable;
-	          var id = this.options.id;
+	          const filterValue = this.item.activeTable;
+	          const id = this.options.id;
 	          if (filterValue === id) {
 	            return true
 	            // return hasData;
@@ -2318,9 +2320,7 @@
 	        // return hasData;
 	      }
 	    },
-	    hasData: function hasData() {
-	      var this$1 = this;
-
+	    hasData() {
 	      // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
 	      // console.log('vertTable hasData is running, this.$props.options:', this.$props.options, 'this.$config.dataSources:', this.$config.dataSources);
 
@@ -2328,13 +2328,13 @@
 	      if (!this.$props.options.dataSources) {
 	        return true;
 	      } else {
-	        var hasData = this.$props.options.dataSources.every(function (dataSource) {
-	          var targetsFn = this$1.$config.dataSources[dataSource].targets;
+	        const hasData = this.$props.options.dataSources.every(dataSource => {
+	          const targetsFn = this.$config.dataSources[dataSource].targets;
 
 	          // if the data source is configured for targets
 	          if (targetsFn) {
-	            var targetsMap = this$1.$store.state.sources[dataSource].targets;
-	            var targets = Object.values(targetsMap);
+	            const targetsMap = this.$store.state.sources[dataSource].targets;
+	            const targets = Object.values(targetsMap);
 
 	            // but there are no targets for this address, return false
 	            if (targets.length === 0) {
@@ -2343,12 +2343,12 @@
 
 	            // if there are targets for this address, make sure none of them
 	            // are "waiting"
-	            return targets.every(function (target) { return target.status !== 'waiting'; });
+	            return targets.every(target => target.status !== 'waiting');
 
 	          // if the data source is not configured for targets, just check that
 	          // it has data
 	          } else {
-	            return !!this$1.$store.state.sources[dataSource].data;
+	            return !!this.$store.state.sources[dataSource].data;
 	          }
 	        });
 
@@ -2362,30 +2362,30 @@
 
 	var OverlayToggleGroup = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.items.length)?_c('div',[_c('div',{staticClass:"container"},[(_vm.slots.title)?_c('h4',[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" ")]):_vm._e(),_vm._v(" "),_vm._l((_vm.items),function(item){return _c('a',{staticClass:"button overlay-toggle",class:{'active': _vm.isActive(item), 'mouseover': _vm.isMousedover(item)},attrs:{"href":"#","data-key":_vm.keyForItem(item)},on:{"click":_vm.handleClick,"mouseover":function($event){_vm.handleMouseover(_vm.keyForItem(item));},"mouseout":_vm.handleMouseout}},[_vm._v(" "+_vm._s(_vm.keyForItem(item))+" ")])})],2)]):_vm._e()},staticRenderFns: [],_scopeId: 'data-v-15b137ab',
 	  mixins: [TopicComponent],
-	  data: function data() {
+	  data() {
 	    return {
 	      mouseover: null
 	    }
 	  },
 	  computed: {
-	    items: function items() {
+	    items() {
 	      return this.evaluateSlot(this.slots.items);
 	    },
 	  },
 	  methods: {
-	    isActive: function isActive(item) {
-	      var imageOverlay = this.$store.state.map.imageOverlay;
-	      var itemKey = this.keyForItem(item);
+	    isActive(item) {
+	      const imageOverlay = this.$store.state.map.imageOverlay;
+	      const itemKey = this.keyForItem(item);
 	      return imageOverlay === itemKey;
 	    },
-	    keyForItem: function keyForItem(item) {
-	      var getKeyFn = this.options.getKey;
+	    keyForItem(item) {
+	      const getKeyFn = this.options.getKey;
 	      return getKeyFn(item);
 	    },
-	    handleClick: function handleClick(e) {
+	    handleClick(e) {
 	      e.preventDefault();
-	      var prevImageOverlay = this.$store.state.map.imageOverlay;
-	      var nextImageOverlay = e.target.getAttribute('data-key');
+	      const prevImageOverlay = this.$store.state.map.imageOverlay;
+	      const nextImageOverlay = e.target.getAttribute('data-key');
 	      // console.log(nextImageOverlay);
 	      if (prevImageOverlay === nextImageOverlay) {
 	        this.$store.commit('setImageOverlay', null);
@@ -2393,14 +2393,14 @@
 	        this.$store.commit('setImageOverlay', nextImageOverlay);
 	      }
 	    },
-	    handleMouseover: function handleMouseover(key) {
+	    handleMouseover(key) {
 	      this.mouseover = key;
 	    },
-	    handleMouseout: function handleMouseout() {
+	    handleMouseout() {
 	      this.mouseover = null;
 	    },
-	    isMousedover: function isMousedover(item) {
-	      var itemKey = this.keyForItem(item);
+	    isMousedover(item) {
+	      const itemKey = this.keyForItem(item);
 	      if (itemKey === this.mouseover) {
 	        return true;
 	      } else {
@@ -2415,31 +2415,27 @@
 	var Paragraph = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('p',{directives:[{name:"show",rawName:"v-show",value:(this.vshowComputed),expression:"this.vshowComputed"}],style:(this.style),domProps:{"innerHTML":_vm._s(this.message)}})},staticRenderFns: [],_scopeId: 'data-v-bfe356e4',
 	  mixins: [TopicComponent],
 	  computed: {
-	    additionalTags: function additionalTags() {
+	    additionalTags() {
 	      return this.$props.slots.additionalTags || [];
 	    },
-	    message: function message() {
+	    message() {
 	      // if there is a transform, it needs this textWithTags section
-	      var textWithTags = '';
-	      for (var i = 0, list = this.additionalTags; i < list.length; i += 1) {
-	        var tag = list[i];
-
+	      let textWithTags = '';
+	      for (let tag of this.additionalTags) {
 	        textWithTags = textWithTags + '<' + tag + '>';
 	      }
 	      textWithTags = textWithTags + this.evaluateSlot(this.$props.slots.text, this.$props.slots.transforms);
-	      for (var i$1 = 0, list$1 = this.additionalTags; i$1 < list$1.length; i$1 += 1) {
-	        var tag$1 = list$1[i$1];
-
-	        textWithTags = textWithTags + '</' + tag$1 + '>';
+	      for (let tag of this.additionalTags) {
+	        textWithTags = textWithTags + '</' + tag + '>';
 	      }
 	      return textWithTags;
 	    },
-	    style: function style() {
+	    style() {
 	      if (this.$props.options) {
 	        return this.$props.options.style || '';
 	      }
 	    },
-	    vshowComputed: function vshowComputed() {
+	    vshowComputed() {
 	      // console.log('vshowProp:', this.$props.slots.vshowProp);
 	      if (this.$props.slots) {
 	        if (this.evaluateSlot(this.$props.slots.vshowProp) === false) {
@@ -2462,26 +2458,22 @@
 	var SpanComp = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{style:(this.style),domProps:{"innerHTML":_vm._s(this.message)}})},staticRenderFns: [],_scopeId: 'data-v-1f4a6309',
 	  mixins: [TopicComponent],
 	  computed: {
-	    additionalTags: function additionalTags() {
+	    additionalTags() {
 	      return this.$props.slots.additionalTags || [];
 	    },
-	    message: function message() {
+	    message() {
 	      // if there is a transform, it needs this textWithTags section
-	      var textWithTags = '';
-	      for (var i = 0, list = this.additionalTags; i < list.length; i += 1) {
-	        var tag = list[i];
-
+	      let textWithTags = '';
+	      for (let tag of this.additionalTags) {
 	        textWithTags = textWithTags + '<' + tag + '>';
 	      }
 	      textWithTags = textWithTags + this.evaluateSlot(this.$props.slots.text, this.$props.slots.transforms);
-	      for (var i$1 = 0, list$1 = this.additionalTags; i$1 < list$1.length; i$1 += 1) {
-	        var tag$1 = list$1[i$1];
-
-	        textWithTags = textWithTags + '</' + tag$1 + '>';
+	      for (let tag of this.additionalTags) {
+	        textWithTags = textWithTags + '</' + tag + '>';
 	      }
 	      return textWithTags;
 	    },
-	    style: function style() {
+	    style() {
 	      if (this.$props.options) {
 	        return this.$props.options.style || '';
 	      }
@@ -2504,22 +2496,22 @@
 	  components: {
 	    // TopicComponentGroup
 	  },
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    // console.log('tabGroup beforeCreate is running');
 	    this.$options.components.TopicComponentGroup = TopicComponentGroup;
 	  },
 	  // some internal state for things local enough that they shouldn't be in
 	  // vuex if we can avoid it.
-	  data: function data() {
+	  data() {
 	    // computed props aren't accessible here, so evaluate slot separately
-	    var items = this.evaluateSlot(this.slots.items);
+	    const items = this.evaluateSlot(this.slots.items);
 	    return {
 	      activeItem: this.activeItemFromState,// || this.keyForItem(items[0]),
 	      activeMapreg: this.activeMapregFromState,// || this.titleForItem(items[0]),
 	      activeAddress: this.activeAddressFromState,// || this.addressForItem(items[0])
 	    };
 	  },
-	  mounted: function mounted() {
+	  mounted() {
 	  //   // REVIEW globals. also is this still needed?
 	    this.$data.activeItem = this.activeItemFromState;
 	    this.$data.activeMapreg = this.activeMapregFromState;
@@ -2527,50 +2519,50 @@
 	  },
 	  // props: [],
 	  computed: {
-	    items: function items() {
-	      var items = this.evaluateSlot(this.slots.items);
+	    items() {
+	      const items = this.evaluateSlot(this.slots.items);
 
 	      // sort
-	      var sortFn = this.options.sort;
-	      var itemsSorted = items;
+	      const sortFn = this.options.sort;
+	      let itemsSorted = items;
 	      if (sortFn) {
 	        itemsSorted = sortFn(items);
 	      }
 
 	      return itemsSorted;
 	    },
-	    comps: function comps() {
+	    comps() {
 	      return this.options.components;
 	    },
-	    activeItemFromState: function activeItemFromState() {
+	    activeItemFromState() {
 	      return this.$store.state.parcels.dor.activeParcel;
 	    },
-	    activeMapregFromState: function activeMapregFromState() {
+	    activeMapregFromState() {
 	      return this.$store.state.parcels.dor.activeMapreg;
 	    },
-	    activeAddressFromState: function activeAddressFromState() {
+	    activeAddressFromState() {
 	      return this.$store.state.parcels.dor.activeAddress;
 	    }
 	  },
 	  watch: {
 	    // when items change, update the activeItem
-	    items: function items(items$1) {
-	      var nextFirstItem = items$1[0];
-	      var nextActiveKey = this.keyForItem(nextFirstItem);
+	    items(items) {
+	      const nextFirstItem = items[0];
+	      const nextActiveKey = this.keyForItem(nextFirstItem);
 	      this.activeItem = nextActiveKey;
-	      var nextMapreg = this.titleForItem(nextFirstItem);
+	      const nextMapreg = this.titleForItem(nextFirstItem);
 	      this.activeMapreg = nextMapreg;
-	      var nextAddress = this.addressForItem(nextFirstItem);
+	      const nextAddress = this.addressForItem(nextFirstItem);
 	      this.activeAddress = nextAddress;
 	    }
 	  },
 	  methods: {
-	    clickedItem: function clickedItem(item) {
+	    clickedItem(item) {
 	      this.$data.activeItem = this.keyForItem(item);
 	      this.$data.activeMapreg = this.titleForItem(item);
 	      this.$data.activeAddress = this.addressForItem(item);
 
-	      var payload = {
+	      const payload = {
 	        parcelLayer: 'dor',
 	        activeParcel: this.$data.activeItem,
 	        activeMapreg: this.$data.activeMapreg,
@@ -2579,29 +2571,29 @@
 	      this.$store.commit('setActiveParcel', payload);
 	      // this.$store.commit('setActiveDorParcel', this.$data.activeItem);
 	    },
-	    keyForItem: function keyForItem(item) {
+	    keyForItem(item) {
 	      try {
 	        return this.options.getKey(item);
 	      } catch (e) {
 	        return null;
 	      }
 	    },
-	    titleForItem: function titleForItem(item) {
+	    titleForItem(item) {
 	      try {
 	        return this.options.getTitle(item);
 	      } catch (e) {
 	        return null;
 	      }
 	    },
-	    addressForItem: function addressForItem(item) {
+	    addressForItem(item) {
 	      try {
 	        return this.options.getAddress(item);
 	      } catch (e) {
 	        return null;
 	      }
 	    },
-	    itemIsActive: function itemIsActive(item) {
-	      var isActive = (this.activeItem === this.keyForItem(item));
+	    itemIsActive(item) {
+	      const isActive = (this.activeItem === this.keyForItem(item));
 	      return isActive;
 	    }
 	  }
@@ -2614,13 +2606,13 @@
 	  // name: 'HorizontalTableGroup',
 	  mixins: [TopicComponent],
 	  components: {
-	    HorizontalTable: HorizontalTable,
+	    HorizontalTable,
 	    // TopicComponentGroup
 	  },
 	  // some internal state for things local enough that they shouldn't be in
 	  // vuex if we can avoid it.
-	  data: function data() {
-	    var tableGroupData = {
+	  data() {
+	    const tableGroupData = {
 	      'tableGroupId': this.options.horizontalTableGroupId,
 	      'activeTable': null,
 	      'activeTableId': null,
@@ -2631,32 +2623,28 @@
 	    //   activeTableId: null,
 	    // };
 	    return {
-	      tableGroupData: tableGroupData
+	      tableGroupData
 	    };
 	  },
-	  created: function created() {
+	  created() {
 	    console.log('horizontalTableGroup created is starting, this.tableGroupData:', this.tableGroupData);
 	    if (this.options.filters) {
 	      console.log('horizontalTableGroup created, if this.options.filters is running:', this.options.filters, this.options.filters.entries());
-	      for (var i$1 = 0, list$1 = this.options.filters; i$1 < list$1.length; i$1 += 1) {
+	      for (let filter of this.options.filters) {
 	      // for (let [index, filter] of this.options.filters.entries()) {
-	        var filter = list$1[i$1];
-
 	        console.log('for loop, this.options.filters:', this.options.filters[0]);
 	        // let filter = this.options.filters[0]
 	      // for (let [index, filter] of this.options.filters.entries()) {
 	        console.log('for loop, filter:', filter);
 	        // console.log('for loop, index:', index, 'filter:', filter);
-	        var defaultTableName = filter.values[0].value || {};
+	        const defaultTableName = filter.values[0].value || {};
 	        console.log('for loop, defaultTableName:', defaultTableName);
 
 	        // add activeTable to local data
 	        this.tableGroupData.activeTable = defaultTableName;
 	        // add activeTableId to local data
 	        // console.log('for loop, this.options.components:', this.options.components);
-	        for (var i = 0, list = this.options.tables; i < list.length; i += 1) {
-	          var comp = list[i];
-
+	        for (let comp of this.options.tables) {
 	          if (comp.options.id === defaultTableName) {
 	            this.tableGroupData.activeTableId = comp._id;
 	          }
@@ -2669,7 +2657,7 @@
 	    }
 	    if (this.options.alternate) {
 	      console.log('horizontalTableGroup created, if this.options.alternate - mainTable', this.options.alternate.mainTable, this.altMainTable, 'dependentTable', this.options.alternate.dependentTable, this.altDepTable);
-	      var sources = this.$store.state.sources;
+	      const sources = this.$store.state.sources;
 	      // console.log('Tablegroup source check dep', sources[this.altDepTable.dataSource].data);
 	      // console.log('Tablegroup source check main', sources[this.altMainTable.dataSource].data);
 	      if (sources[this.altDepTable.dataSource].data && !sources[this.altMainTable.dataSource].data) {
@@ -2690,14 +2678,14 @@
 	    }
 	  },
 	  computed: {
-	    altMainTable: function altMainTable() {
+	    altMainTable() {
 	      if (this.options.alternate) {
 	        return this.options.alternate.mainTable;
 	      } else {
 	        return null
 	      }
 	    },
-	    altDepTable: function altDepTable() {
+	    altDepTable() {
 	      if (this.options.alternate) {
 	        return this.options.alternate.dependentTable;
 	      } else {
@@ -2706,8 +2694,8 @@
 	    },
 	  },
 	  methods: {
-	    shouldShowTable: function shouldShowTable(id) {
-	      var result = true;
+	    shouldShowTable(id) {
+	      let result = true;
 
 	      // if the table is in a tab group or table group, it will have an "item" in props
 	      // if (this.item) {
@@ -2726,34 +2714,28 @@
 
 	      return result;
 	    },
-	    slugifyFilterValue: function slugifyFilterValue(filterValue) {
-	      var direction = filterValue.direction;
-	      var value = filterValue.value;
-	      var unit = filterValue.unit;
+	    slugifyFilterValue(filterValue) {
+	      const { direction, value, unit } = filterValue;
 	      return [direction, value, unit].join('-');
 	    },
-	    deslugifyFilterValue: function deslugifyFilterValue(slug) {
-	      var parts = slug.split('-');
-	      var direction = parts[0];
-	      var value = parts[1];
-	      var unit = parts[2];
-	      return {value: value, unit: unit, direction: direction};
+	    deslugifyFilterValue(slug) {
+	      const parts = slug.split('-');
+	      const [direction, value, unit] = parts;
+	      return {value, unit, direction};
 	    },
-	    handleFilterValueChange: function handleFilterValueChange(e) {
+	    handleFilterValueChange(e) {
 	      console.log('handle activeTable value change', e);
-	      var target = e.target;
-	      var slug = target.value;
+	      const target = e.target;
+	      const slug = target.value;
 	      // deslugify filter value
-	      var valueObj = this.deslugifyFilterValue(slug);
-	      var tableName = valueObj.value;
+	      const valueObj = this.deslugifyFilterValue(slug);
+	      const tableName = valueObj.value;
 
 	      // add activeTable to local data
 	      this.tableGroupData.activeTable = tableName;
 
 	      // add activeTableId to local data
-	      for (var i = 0, list = this.options.tables; i < list.length; i += 1) {
-	        var comp = list[i];
-
+	      for (let comp of this.options.tables) {
 	        console.log('tableName:', tableName, 'comp.options.id:', comp.options.id, 'comp:', comp);
 	        if (comp.options.id === tableName) {
 	          this.tableGroupData.activeTableId = comp._id;
@@ -2773,51 +2755,47 @@
 	  name: 'Topic',
 	  props: ['topicKey'],
 	  components: {},
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    this.$options.components.TopicComponentGroup = TopicComponentGroup;
 	  },
 	  computed: {
 	    // returns the full config object for the topic
-	    topic: function topic() {
-	      var this$1 = this;
-
-	      var topicKey = this.$props.topicKey;
-	      var topicsFiltered = this.$config.topics.filter(function (topic) {
-	        return topic.key === this$1.$props.topicKey;
+	    topic() {
+	      const topicKey = this.$props.topicKey;
+	      const topicsFiltered = this.$config.topics.filter((topic) => {
+	        return topic.key === this.$props.topicKey;
 	      });
 	      if (topicsFiltered.length !== 1) {
-	        throw ("Could not get single config object for topic '" + topicKey + "'.");
+	        throw `Could not get single config object for topic '${topicKey}'.`;
 	      }
-	      var config = topicsFiltered[0];
+	      const config = topicsFiltered[0];
 	      return config;
 	    },
-	    icon: function icon() {
+	    icon() {
 	      return this.topic.icon;
 	    },
-	    isActive: function isActive() {
-	      var key = this.topic.key;
-	      var activeTopic = this.$store.state.activeTopic;
+	    isActive() {
+	      const key = this.topic.key;
+	      const activeTopic = this.$store.state.activeTopic;
 	      return activeTopic === key;
 	    },
-	    shouldShowHeader: function shouldShowHeader() {
+	    shouldShowHeader() {
 	      return this.$config.topics.length > 1;
 	    },
-	    dataSources: function dataSources() {
+	    dataSources() {
 	      return this.topic.dataSources || [];
 	    },
-	    hasData: function hasData() {
-	      var this$1 = this;
-
+	    hasData() {
 	      // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
 
 	      // make sure the following is true for all data sources
-	      var hasData = this.dataSources.every(function (dataSource) {
-	        var targetsFn = this$1.$config.dataSources[dataSource].targets;
+	      const hasData = this.dataSources.every(dataSource => {
+	        const targetsFn = this.$config.dataSources[dataSource].targets;
 
 	        // if the data source is configured for targets
 	        if (targetsFn) {
-	          var targetsMap = this$1.$store.state.sources[dataSource].targets;
-	          var targets = Object.values(targetsMap);
+	          const targetsMap = this.$store.state.sources[dataSource].targets;
+	          const targets = Object.values(targetsMap);
 
 	          // but there are no targets for this address, return false
 	          if (targets.length === 0) {
@@ -2826,38 +2804,36 @@
 
 	          // if there are targets for this address, make sure none of them
 	          // are "waiting"
-	          return targets.every(function (target) { return target.status !== 'waiting'; });
+	          return targets.every(target => target.status !== 'waiting');
 
 	        // if the data source is not configured for targets, just check that
 	        // it has data
 	        } else {
-	          return !!this$1.$store.state.sources[dataSource].data;
+	          return !!this.$store.state.sources[dataSource].data;
 	        }
 	      });
 
 	      return hasData;
 	    },
-	    shouldShowBody: function shouldShowBody() {
-	      var succeeded = this.status === 'success';
-	      var hasData = this.hasData;
-	      var should = succeeded && hasData && this.isActive;
+	    shouldShowBody() {
+	      const succeeded = this.status === 'success';
+	      const hasData = this.hasData;
+	      const should = succeeded && hasData && this.isActive;
 	      return should;
 	    },
-	    shouldShowTopic: function shouldShowTopic() {
+	    shouldShowTopic() {
 	      if (!this.topic.onlyShowTopicIfDataExists) {
 	        return true;
 	      } else {
-	        var result = true;
-	        var requiredDataSources = Object.keys(this.topic.onlyShowTopicIfDataExists);
+	        let result = true;
+	        const requiredDataSources = Object.keys(this.topic.onlyShowTopicIfDataExists);
 	        // console.log('requiredDataSources', requiredDataSources);
-	        for (var i = 0, list = requiredDataSources; i < list.length; i += 1) {
-	          var requiredDataSource = list[i];
-
-	          var dataSource = this.topic.onlyShowTopicIfDataExists[requiredDataSource];
-	          var pathToDataArray = dataSource.pathToDataArray;
-	          var minDataLength = dataSource.minDataLength;
+	        for (let requiredDataSource of requiredDataSources) {
+	          const dataSource = this.topic.onlyShowTopicIfDataExists[requiredDataSource];
+	          const pathToDataArray = dataSource.pathToDataArray;
+	          const minDataLength = dataSource.minDataLength;
 	          // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
-	          var dataArray = (void 0);
+	          let dataArray;
 	          if (!this.$store.state.sources[requiredDataSource].data) {
 	            // if there is no data (yet)
 	            return false;
@@ -2879,8 +2855,8 @@
 	        return result;
 	      }
 	    },
-	    shouldShowError: function shouldShowError() {
-	      var shouldShowError = (
+	    shouldShowError() {
+	      const shouldShowError = (
 	        // topic must be active and
 	        this.isActive && (
 	          // there either has to be an error or
@@ -2892,7 +2868,7 @@
 	      shouldShowError && console.log('BINGO BINGO BINGO:', this.topicKey, 'shouldShowError:', shouldShowError, 'status:', this.status, 'hasData:', this.hasData);
 	      return shouldShowError;
 	    },
-	    errorMessage: function errorMessage() {
+	    errorMessage() {
 	      if (this.topic.errorMessage) {
 	        return this.topic.errorMessage(this.$store.state);
 	      } else {
@@ -2902,25 +2878,23 @@
 	    // REVIEW this is getting cached and not updating when the deps update
 	    status: {
 	      cache: false,
-	      get: function get() {
-	        var this$1 = this;
-
+	      get() {
 	        // get the status of each source
-	        var dataSources = this.topic.dataSources || [];
+	        const dataSources = this.topic.dataSources || [];
 
 	        // if no sources, return success
 	        if (dataSources.length === 0) {
 	          return 'success';
 	        }
 
-	        var topicStatus;
-	        var sourceStatuses = dataSources.map(function (dataSource) {
-	          var targetsFn = this$1.$config.dataSources[dataSource].targets;
+	        let topicStatus;
+	        const sourceStatuses = dataSources.map(dataSource => {
+	          const targetsFn = this.$config.dataSources[dataSource].targets;
 
 	          // if the data source is configured for targets
 	          if (targetsFn) {
-	            var targetsMap = this$1.$store.state.sources[dataSource].targets;
-	            var targets = Object.values(targetsMap);
+	            const targetsMap = this.$store.state.sources[dataSource].targets;
+	            const targets = Object.values(targetsMap);
 
 	            // but there are no targets for this address, return false
 	            if (targets.length === 0) {
@@ -2929,25 +2903,21 @@
 
 	            // if there are targets for this address, make sure none of them
 	            // are "waiting"
-	            return targets.map(function (target) {
+	            return targets.map(target => {
 	              return target.status
 	            });
 
 	          // if the data source is not configured for targets, just check that
 	          // it has data
 	          } else {
-	            return [this$1.$store.state.sources[dataSource].status];
+	            return [this.$store.state.sources[dataSource].status];
 	          }
 	        });
 
-	        var flatArray = [];
-	        for (var i$1 = 0, list$1 = sourceStatuses; i$1 < list$1.length; i$1 += 1) {
-	          var sourceStatus = list$1[i$1];
-
+	        let flatArray = [];
+	        for (let sourceStatus of sourceStatuses) {
 	          if (sourceStatus) {
-	            for (var i = 0, list = sourceStatus; i < list.length; i += 1) {
-	              var sourceStatusValue = list[i];
-
+	            for (let sourceStatusValue of sourceStatus) {
 	              flatArray.push(sourceStatusValue);
 	            }
 	          }
@@ -2965,13 +2935,13 @@
 	    },
 	  },
 	  methods: {
-	    configForBasemap: function configForBasemap(key) {
+	    configForBasemap(key) {
 	      return this.$config.map.basemaps[key];
 	    },
 
-	    handleTopicHeaderClick: function handleTopicHeaderClick(e) {
-	      var topic = this.$props.topicKey;
-	      var nextTopic;
+	    handleTopicHeaderClick(e) {
+	      const topic = this.$props.topicKey;
+	      let nextTopic;
 
 	      if (topic !== this.$store.state.activeTopic) {
 	        nextTopic = topic;
@@ -2989,15 +2959,15 @@
 	  mixins: [TopicComponent],
 	  name: 'TopicSet',
 	  components: {
-	    Topic: Topic,
+	    Topic,
 	  },
-	  mounted: function mounted() {
+	  mounted() {
 	    if (this.$store.state.activeTopic === null || this.$store.state.activeTopic === '') {
 	      this.setDefaultTopicActive();
 	    }
 	  },
 	  methods: {
-	    setDefaultTopicActive: function setDefaultTopicActive() {
+	    setDefaultTopicActive() {
 	      if (this.$props.options.defaultTopic) {
 	        this.$store.state.activeTopic = this.$props.options.defaultTopic;
 	      }
@@ -3008,25 +2978,25 @@
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .pl-alert { position: fixed; right: 0; bottom: 0; /* height: 100%; */ /* height: 300px; */ width: 100%; background: rgba(68, 68, 68, 0.95); color: #fff; z-index: 10000; font-size: 1.25em; margin: 0 auto; padding: 1em; overflow-y: auto; } .pl-alert-body { width: 75%; margin-left: auto; margin-right: auto; margin-bottom: 0 auto; margin-top: 50px; } .pl-alert-close-button { position: fixed; right: 40px; /* float: right; */ cursor: pointer; } .pl-alert a { color: #a5c0e4 !important; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 	var Popover = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pl-alert",style:(_vm.plAlertStyle)},[_c('span',{staticClass:"pl-alert-close-button",on:{"click":_vm.close}},[_c('font-awesome-icon',{staticClass:"fa-2x",attrs:{"icon":"times-circle"}})],1),_vm._v(" "),_c('div',{staticClass:"pl-alert-body"},[_c('span',{domProps:{"innerHTML":_vm._s(this.value)}}),_vm._v(" "),_c('topic-component-group',{attrs:{"topic-components":_vm.options.components,"item":_vm.item}})],1)])},staticRenderFns: [],
 	  mixins: [TopicComponent],
-	  data: function data() {
-	    var data = {
+	  data() {
+	    const data = {
 	      plAlertStyle: {
 	        'height': '300px'
 	      }
 	    };
 	    return data;
 	  },
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    this.$options.components.TopicComponentGroup = TopicComponentGroup;
 	  },
-	  created: function created() {
+	  created() {
 	    // console.log('this.$props.options.height:', this.$props.options.height);
 	    if (this.$props.options.height) {
 	      this.plAlertStyle.height = this.$props.options.height;
 	    }
 	  },
 	  computed: {
-	    value: function value() {
+	    value() {
 	      if (this.$props.slots.text) {
 	        return this.$props.slots.text;
 	      } else {
@@ -3035,7 +3005,7 @@
 	    }
 	  },
 	  methods: {
-	    close: function close() {
+	    close() {
 	      this.$store.commit('setPopoverOpen', false);
 	      this.$store.commit('setPopoverOptions', {});
 	      this.$store.commit('setPopoverText', '');
@@ -3050,25 +3020,25 @@
 	  name: 'TopicComponentGroup',
 	  props: ['topicComponents', 'item', 'filterData'],
 	  components: {
-	    Badge: Badge,
-	    ButtonComp: ButtonComp,
-	    Callout: Callout,
-	    CollectionSummary: CollectionSummary,
-	    Division: Division,
-	    ePayForm: ePayForm,
-	    ExternalLink: ExternalLink,
-	    HorizontalTable: HorizontalTable,
-	    Image_: Image_,
-	    VerticalTable: VerticalTable,
-	    OverlayToggleGroup: OverlayToggleGroup,
-	    Paragraph: Paragraph,
-	    SpanComp: SpanComp,
-	    List: List,
-	    HorizontalTableGroup: HorizontalTableGroup,
-	    PopoverLink: PopoverLink,
-	    Popover: Popover,
+	    Badge,
+	    ButtonComp,
+	    Callout,
+	    CollectionSummary,
+	    Division,
+	    ePayForm,
+	    ExternalLink,
+	    HorizontalTable,
+	    Image_,
+	    VerticalTable,
+	    OverlayToggleGroup,
+	    Paragraph,
+	    SpanComp,
+	    List,
+	    HorizontalTableGroup,
+	    PopoverLink,
+	    Popover,
 	  },
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    // console.log('TopicComponentGroup beforeCreate is running');
 	    this.$options.components.TabGroup = TabGroup;
 	    this.$options.components.BadgeCustom = BadgeCustom;
@@ -3076,7 +3046,7 @@
 	    this.$options.components.TopicSet = TopicSet;
 	    this.$options.components.AnyHeader = AnyHeader;
 	  },
-	  data: function data() {
+	  data() {
 	    return {
 	      // generate a (basically) unique id for the group. the go-to npm packages
 	      // for uuid generation aren't available as umd builds on unpkg and
@@ -3085,8 +3055,8 @@
 	    };
 	  },
 	  methods: {
-	    getCompKey: function getCompKey(compGroupKey, compIndex) {
-	      return ("topic-comp-" + compGroupKey + "-" + compIndex);
+	    getCompKey(compGroupKey, compIndex) {
+	      return `topic-comp-${compGroupKey}-${compIndex}`;
 	    }
 	  }
 	};
@@ -3097,15 +3067,15 @@
 	  name: 'BadgeCustom',
 	  mixins: [TopicComponent],
 	  components: {
-	    ExternalLink: ExternalLink,
+	    ExternalLink,
 	  },
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    this.$options.components.TopicComponentGroup = TopicComponentGroup;
 	  },
 	  computed: {
-	    style: function style() {
-	      var titleBackgroundValOrFn = (this.options || {}).titleBackground;
-	      var titleBackground;
+	    style() {
+	      const titleBackgroundValOrFn = (this.options || {}).titleBackground;
+	      let titleBackground;
 
 	      if (titleBackgroundValOrFn) {
 	        if (typeof titleBackgroundValOrFn === 'function') {
@@ -3155,49 +3125,49 @@
 	      default: 'topic-panel-container'
 	    }
 	  },
-	  data: function data() {
+	  data() {
 	    return {
 	      'divHeight': 0,
 	      'buttonPosition': 0,
 	    }
 	  },
-	  mounted: function mounted() {
+	  mounted() {
 	    window.addEventListener('resize', this.setDivHeight);
 	    this.setDivHeight();
 	  },
 	  computed: {
-	    fullScreenMapEnabled: function fullScreenMapEnabled() {
+	    fullScreenMapEnabled() {
 	      return this.$store.state.fullScreenMapEnabled;
 	    },
-	    fullScreenTopicsEnabled: function fullScreenTopicsEnabled() {
+	    fullScreenTopicsEnabled() {
 	      console.log('this.$store.state.fullScreenTopicsEnabled:', this.$store.state.fullScreenTopicsEnabled);
 	      return this.$store.state.fullScreenTopicsEnabled;// || true;
 	    },
-	    isMobileOrTablet: function isMobileOrTablet() {
+	    isMobileOrTablet() {
 	      return this.$store.state.isMobileOrTablet;
 	    },
-	    cyclomediaActive: function cyclomediaActive() {
+	    cyclomediaActive() {
 	      if (this.$store.state.cyclomedia) {
 	        return this.$store.state.cyclomedia.active;
 	      } else {
 	        return null;
 	      }
 	    },
-	    pictometryActive: function pictometryActive() {
+	    pictometryActive() {
 	      if (this.$store.state.pictometry) {
 	        return this.$store.state.pictometry.active;
 	      } else {
 	        return null;
 	      }
 	    },
-	    picOrCycloActive: function picOrCycloActive() {
+	    picOrCycloActive() {
 	      if (this.cyclomediaActive || this.pictometryActive) {
 	        return true;
 	      } else {
 	        return false;
 	      }
 	    },
-	    currentIcon: function currentIcon() {
+	    currentIcon() {
 	      if (this.fullScreenTopicsEnabled) {
 	        return 'caret-left';
 	      } else {
@@ -3206,31 +3176,29 @@
 	    }
 	  },
 	  watch: {
-	    picOrCycloActive: function picOrCycloActive() {
-	      var this$1 = this;
-
-	      this.$nextTick(function () {
-	        this$1.setDivHeight();
+	    picOrCycloActive() {
+	      this.$nextTick(() => {
+	        this.setDivHeight();
 	      });
 	    }
 	  },
 	  methods: {
-	    setDivHeight: function setDivHeight() {
-	      var el;
+	    setDivHeight() {
+	      let el;
 	      if (this.fullScreenTopicsEnabled) {
 	        el = document.getElementById(this.$props.elementContainer);
 	      } else {
 	        el = document.getElementById('map-tag');
 	      }
-	      var mapDivStyle = window.getComputedStyle(el);
-	      var mapDivHeight = parseFloat(mapDivStyle.getPropertyValue('height').replace('px', ''));
+	      const mapDivStyle = window.getComputedStyle(el);
+	      const mapDivHeight = parseFloat(mapDivStyle.getPropertyValue('height').replace('px', ''));
 	      // console.log('FullScreenTopicsToggleTab setDivHeight is running, el:', el, 'mapDivHeight:', mapDivHeight);
 
 	      this.buttonPosition = (mapDivHeight-48)/2 + 'px';
 	    },
-	    handleFullScreenTopicsToggleButtonClick: function handleFullScreenTopicsToggleButtonClick(e) {
-	      var prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
-	      var nextFullScreenTopicsEnabled = !prevFullScreenTopicsEnabled;
+	    handleFullScreenTopicsToggleButtonClick(e) {
+	      const prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
+	      const nextFullScreenTopicsEnabled = !prevFullScreenTopicsEnabled;
 	      this.$store.commit('setFullScreenTopicsEnabled', nextFullScreenTopicsEnabled);
 	    },
 	  }
@@ -3251,40 +3219,40 @@
 
 
 	var FullScreenTopicsToggleTabVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!this.isMobileOrTablet)?_c('div',{staticClass:"toggle-tab",style:({ left: _vm.buttonPosition }),attrs:{"id":"toggle-tab"},on:{"click":_vm.handleFullScreenTopicsToggleButtonClick}},[_c('span',{staticClass:"align-span"},[_c('font-awesome-icon',{staticClass:"fa-2x",attrs:{"icon":this.currentIcon}})],1)]):_vm._e()},staticRenderFns: [],_scopeId: 'data-v-25262138',
-	  data: function data() {
+	  data() {
 	    return {
 	      'divWidth': 0,
 	      'buttonPosition': 0,
 	    }
 	  },
-	  mounted: function mounted() {
+	  mounted() {
 	    window.addEventListener('resize', this.setDivWidth);
 	    this.setDivWidth();
 	  },
 	  computed: {
-	    fullScreenMapEnabled: function fullScreenMapEnabled() {
+	    fullScreenMapEnabled() {
 	      return this.$store.state.fullScreenMapEnabled;
 	    },
-	    fullScreenTopicsEnabled: function fullScreenTopicsEnabled() {
+	    fullScreenTopicsEnabled() {
 	      return this.$store.state.fullScreenTopicsEnabled;
 	    },
-	    isMobileOrTablet: function isMobileOrTablet() {
+	    isMobileOrTablet() {
 	      return this.$store.state.isMobileOrTablet;
 	    },
-	    cyclomediaActive: function cyclomediaActive() {
+	    cyclomediaActive() {
 	      return this.$store.state.cyclomedia.active;
 	    },
-	    pictometryActive: function pictometryActive() {
+	    pictometryActive() {
 	      return this.$store.state.pictometry.active;
 	    },
-	    picOrCycloActive: function picOrCycloActive() {
+	    picOrCycloActive() {
 	      if (this.cyclomediaActive || this.pictometryActive) {
 	        return true;
 	      } else {
 	        return false;
 	      }
 	    },
-	    currentIcon: function currentIcon() {
+	    currentIcon() {
 	      if (this.fullScreenTopicsEnabled) {
 	        return 'caret-down'
 	      } else {
@@ -3293,25 +3261,25 @@
 	    }
 	  },
 	  watch: {
-	    fullScreenMapEnabled: function fullScreenMapEnabled() {
+	    fullScreenMapEnabled() {
 	      this.setDivWidth();
 	    }
 	  },
 	  methods: {
-	    setDivWidth: function setDivWidth() {
-	      var el;
+	    setDivWidth() {
+	      let el;
 	      if (this.fullScreenTopicsEnabled) {
 	        el = document.getElementById('topic-panel-container');
 	      } else {
 	        el = document.getElementById('map-tag');
 	      }
-	      var mapDivStyle = window.getComputedStyle(el);
-	      var mapDivWidth = parseFloat(mapDivStyle.getPropertyValue('width').replace('px', ''));
+	      const mapDivStyle = window.getComputedStyle(el);
+	      const mapDivWidth = parseFloat(mapDivStyle.getPropertyValue('width').replace('px', ''));
 	      this.buttonPosition = (mapDivWidth-48)/2 + 'px';
 	    },
-	    handleFullScreenTopicsToggleButtonClick: function handleFullScreenTopicsToggleButtonClick(e) {
-	      var prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
-	      var nextFullScreenTopicsEnabled = !prevFullScreenTopicsEnabled;
+	    handleFullScreenTopicsToggleButtonClick(e) {
+	      const prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
+	      const nextFullScreenTopicsEnabled = !prevFullScreenTopicsEnabled;
 	      this.$store.commit('setFullScreenTopicsEnabled', nextFullScreenTopicsEnabled);
 	    },
 	  }
@@ -3321,13 +3289,13 @@
 
 	var Greeting = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"columns medium-20 medium-centered",style:(_vm.greetingStyle)},[(this.shouldShowAddressInput)?_c('address-input'):_vm._e(),_vm._v(" "),(this.addressAutocompleteEnabled && this.shouldShowAddressInput)?_c('address-candidate-list'):_vm._e(),_vm._v(" "),(!_vm.components && !_vm.hasError)?_c('div',{staticClass:"greeting",domProps:{"innerHTML":_vm._s(_vm.message)}}):_vm._e(),_vm._v(" "),(!_vm.components && _vm.hasError)?_c('div',{staticClass:"greeting greeting-error",domProps:{"innerHTML":_vm._s(_vm.errorMessage)}}):_vm._e(),_vm._v(" "),_c('topic-component-group',{attrs:{"topic-components":_vm.options.components,"item":_vm.item}}),_vm._v(" "),_vm._l((_vm.components),function(topicComp,topicCompIndex){return (_vm.components)?_c(topicComp.type,{key:'greeting',tag:"component",staticClass:"topic-comp",attrs:{"slots":topicComp.slots}}):_vm._e()})],2)},staticRenderFns: [],_scopeId: 'data-v-2d681dc9',
 	  components: {
-	    Image_: Image_,
-	    AddressInput: AddressInput,
-	    AddressCandidateList: AddressCandidateList,
+	    Image_,
+	    AddressInput,
+	    AddressCandidateList,
 	  },
 	  mixins: [TopicComponent],
-	  data: function data() {
-	    var data = {
+	  data() {
+	    let data = {
 	      greetingStyle: this.$props.options.style || {}
 	    };
 	    return data;
@@ -3340,20 +3308,20 @@
 	      }
 	    },
 	  },
-	  beforeCreate: function beforeCreate() {
+	  beforeCreate() {
 	    if (this.$options.components) {
 	      this.$options.components.TopicComponentGroup = TopicComponentGroup;
 	    }
 	  },
 	  computed: {
-	    shouldShowAddressInput: function shouldShowAddressInput() {
+	    shouldShowAddressInput() {
 	      if (this.$config.addressInputLocation == 'topics') {
 	        return true;
 	      } else {
 	        return false;
 	      }
 	    },
-	    addressAutocompleteEnabled: function addressAutocompleteEnabled() {
+	    addressAutocompleteEnabled() {
 	      // TODO tidy up the code
 	      if (this.$config.addressInput) {
 	        if (this.$config.addressInput.autocompleteEnabled === true) {
@@ -3365,16 +3333,30 @@
 	        return false;
 	      }
 	    },
-	    components: function components() {
-	      var greetingConfig = this.$config.greeting || {};
+	    components() {
+	      const greetingConfig = this.$config.greeting || {};
 	      return greetingConfig.components;
 	    },
-	    hasError: function hasError() {
+	    hasError() {
 	      return this.$store.state.geocode.status === 'error';
 	    },
-	    errorMessage: function errorMessage() {
-	      var input = this.$store.state.geocode.input;
-	      return ("\n        <p>\n          We couldn't find\n          " + (input ? '<strong>' + input + '</strong>' : 'that address') + ".\n          Are you sure everything was spelled correctly?\n        </p>\n        <p>\n          Here are some examples of things you can search for:\n        </p>\n        <ul>\n          <li>1234 Market St</li>\n          <li>1001 Pine Street #201</li>\n          <li>12th & Market</li>\n        </ul>\n      ");
+	    errorMessage() {
+	      const input = this.$store.state.geocode.input;
+	      return `
+        <p>
+          We couldn't find
+          ${input ? '<strong>' + input + '</strong>' : 'that address'}.
+          Are you sure everything was spelled correctly?
+        </p>
+        <p>
+          Here are some examples of things you can search for:
+        </p>
+        <ul>
+          <li>1234 Market St</li>
+          <li>1001 Pine Street #201</li>
+          <li>12th & Market</li>
+        </ul>
+      `;
 	    }
 	  }
 	};
@@ -3390,7 +3372,7 @@
 	          'legend',
 	          'scales'
 	  ],
-	  data: function data() {
+	  data() {
 	    return {
 	      legendHtml: '',
 	      options: {
@@ -3404,52 +3386,50 @@
 	      },
 	    }
 	  },
-	  created: function created() {
+	  created() {
 	    this.initialize();
 	  },
 	  watch: {
-	    scale: function scale(nextScale) {
+	    scale(nextScale) {
 	      this.createLegend(nextScale);
 	    },
-	    legend: function legend() {
+	    legend() {
 	      console.log('watch legend fired');
 	      this.createLegend(this.scale);
 	    }
 	  },
 	  computed: {
-	    scale: function scale() {
-	      var zoom = this.$store.state.map.zoom;
-	      var zoomPlus = zoom + 1;
-	      var scale = this.$props.scales[zoomPlus];
+	    scale() {
+	      const zoom = this.$store.state.map.zoom;
+	      const zoomPlus = zoom + 1;
+	      const scale = this.$props.scales[zoomPlus];
 	      return scale;
 	    },
 	  },
 	  methods: {
-	    initialize: function initialize() {
-	      var drawingInfo;
+	    initialize() {
+	      let drawingInfo;
 	      if (this.$props.layerDefinition) {
 	        drawingInfo = this.$props.layerDefinition.drawingInfo;
 	      }
-	      var opts = {
+	      const opts = {
 	        layerName: this.$props.layerName,
 	        layerId: this.$props.layerId,
 	        store: this.$store,
-	        drawingInfo: drawingInfo
+	        drawingInfo
 	      };
 	      console.log('LegendBox initialize is running:', this.$props.layer, opts);
-	      var legend = L.esri.legendControl(this.$props.layer, opts);
+	      const legend = L.esri.legendControl(this.$props.layer, opts);
 	    },
-	    createLegend: function createLegend(scale) {
-	      var legend = this.$props.legend;
+	    createLegend(scale) {
+	      const legend = this.$props.legend;
 	      console.log('METHOD createLegend running', scale, legend);
-	      var layersHtml = '';
+	      let layersHtml = '';
 	      if (legend.layers.length === 1) {
-	        var layer = legend.layers[0];
-	        var legendsHtml = '';
-	        for (var i = 0, list = layer.legend; i < list.length; i += 1) {
-	          var layerLegend = list[i];
-
-	          var layerLegendJSON = JSON.parse(JSON.stringify(layerLegend));
+	        const layer = legend.layers[0];
+	        let legendsHtml = '';
+	        for (let layerLegend of layer.legend) {
+	          const layerLegendJSON = JSON.parse(JSON.stringify(layerLegend));
 	          // console.log('layerLegendJSON', layerLegendJSON);
 	          if (!layerLegendJSON.label) {
 	            layerLegendJSON.label = '';
@@ -3461,28 +3441,24 @@
 	          legends: legendsHtml
 	        });
 	      } else {
-	        for (var i$2 = 0, list$2 = legend.layers; i$2 < list$2.length; i$2 += 1) {
+	        for (let layer of legend.layers) {
 	          // console.log('max:', layer.maxScale, 'scale:', scale, 'min:', layer.minScale);
-	          var layer$1 = list$2[i$2];
-
-	          var legendsHtml$1 = '';
-	          if (parseFloat(scale) > parseFloat(layer$1.maxScale) && parseFloat(scale) < parseFloat(layer$1.minScale)) {
+	          let legendsHtml = '';
+	          if (parseFloat(scale) > parseFloat(layer.maxScale) && parseFloat(scale) < parseFloat(layer.minScale)) {
 	            // console.log('correct!', layer.layerId);
-	            for (var i$1 = 0, list$1 = layer$1.legend; i$1 < list$1.length; i$1 += 1) {
-	              var layerLegend$1 = list$1[i$1];
-
-	              var layerLegendJSON$1 = JSON.parse(JSON.stringify(layerLegend$1));
-	              legendsHtml$1 += L.Util.template(this.options.listRowTemplate, layerLegendJSON$1);
+	            for (let layerLegend of layer.legend) {
+	              const layerLegendJSON = JSON.parse(JSON.stringify(layerLegend));
+	              legendsHtml += L.Util.template(this.options.listRowTemplate, layerLegendJSON);
 	            }
 	          }
 	          layersHtml += L.Util.template(this.options.layerTemplate, {
-	            layerName: layer$1.layerName,
-	            legends: legendsHtml$1
+	            layerName: layer.layerName,
+	            legends: legendsHtml
 	          });
 	        }
 	      }
 
-	      var legendHtml = L.Util.template(this.options.listTemplate, {
+	      const legendHtml = L.Util.template(this.options.listTemplate, {
 	        layers: layersHtml
 	      });
 
@@ -3500,14 +3476,14 @@
 	          'layerId',
 	          'opacity'
 	  ],
-	  data: function data() {
+	  data() {
 	    return {
 	      opa: this.$props.opacity * 100
 	    }
 	  },
 	  watch: {
-	    opa: function opa(nextOpacity) {
-	      var payload = {
+	    opa(nextOpacity) {
+	      const payload = {
 	                        layerName: this.$props.layerName,
 	                        opa: nextOpacity/100
 	                      };
@@ -3515,7 +3491,7 @@
 	      this.$store.commit('setWebMapLayersOpacity', payload);
 	    }
 	  },
-	  created: function created() {
+	  created() {
 	    // this.initialize();
 	  },
 	  computed: {
@@ -3530,8 +3506,8 @@
 
 	var Checkbox = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"div-row"},[(_vm.bennyId)?_c('a',{attrs:{"href":'http://metadata.phila.gov/#home/representationdetails/' + this.bennyId,"target":"_blank"}},[_c('span',[_c('font-awesome-icon',{staticClass:"fa-2x",attrs:{"icon":"info-circle"}})],1)]):_vm._e(),_vm._v(" "),_c('input',{class:{ disabled: _vm.shouldBeDisabled },attrs:{"id":'checkbox-'+_vm.layerName,"type":"checkbox","layerid":_vm.layerId},domProps:{"checked":_vm.webMapActiveLayers.includes(_vm.layerName)},on:{"click":_vm.checkboxToggle}}),_vm._v(" "),_c('label',{class:{ disabled: _vm.shouldBeDisabled, 'label-text': true },attrs:{"for":'checkbox-'+_vm.layerName}},[_c('div',{staticClass:"layer-name"},[_vm._v(_vm._s(_vm.layerName))]),_vm._v(" "),(_vm.matchingTags.length > 0)?_c('div',{staticClass:"tag-title"},[_vm._v(" Matching Tags: ")]):_vm._e(),_vm._v(" "),_vm._l((_vm.matchingTags),function(matchingTag){return (_vm.matchingTags.length > 0)?_c('div',{staticClass:"tag-holder"},[_vm._v(" "+_vm._s(matchingTag)+" ")]):_vm._e()})],2)]),_vm._v(" "),(this.$store.state.map.webMapActiveLayers.includes(_vm.layerName))?_c('legend-box',{attrs:{"layer":_vm.layer,"layerName":_vm.layerName,"layerId":_vm.layerId,"layerDefinition":_vm.layerDefinition,"legend":_vm.legend,"scales":this.$config.map.scales}}):_vm._e(),_vm._v(" "),(this.$store.state.map.webMapActiveLayers.includes(_vm.layerName))?_c('slider',{attrs:{"layer":_vm.layer,"layerName":_vm.layerName,"layerId":_vm.layerId,"opacity":_vm.opacity}}):_vm._e()],1)},staticRenderFns: [],_scopeId: 'data-v-02d0375a',
 	  components: {
-	    LegendBox: LegendBox,
-	    Slider: Slider
+	    LegendBox,
+	    Slider
 	  },
 	  props: ['layer',
 	          'layerName',
@@ -3542,21 +3518,21 @@
 	          'legend',
 	          'tags'
 	  ],
-	  data: function data() {
+	  data() {
 	    return {
 	      opa: this.$props.opacity * 100
 	    }
 	  },
 	  watch: {
-	    opa: function opa(nextOpacity) {
-	      var payload = {
+	    opa(nextOpacity) {
+	      const payload = {
 	                        layerName: this.$props.layerName,
 	                        opa: nextOpacity/100
 	                      };
 	      // console.log('OPACITY CHANGED', payload);
 	      this.$store.commit('setWebMapLayersOpacity', payload);
 	    },
-	    shouldBeDisabled: function shouldBeDisabled(nextShouldBeDisabled) {
+	    shouldBeDisabled(nextShouldBeDisabled) {
 	      // console.log('watch shouldBeDisabled is firing:', this.$props.layerName, nextShouldBeDisabled);
 	      if (this.webMapActiveLayers.includes(this.$props.layerName) && nextShouldBeDisabled === true) {
 	        this.removeFromWebMapDisplayedLayers();
@@ -3569,12 +3545,10 @@
 	    // },
 	  },
 	  computed: {
-	    matchingTags: function matchingTags() {
-	      var matches = [];
+	    matchingTags() {
+	      let matches = [];
 	      if (this.$props.tags !== null && this.inputTagsFilter !== '') {
-	        for (var i = 0, list = this.$props.tags; i < list.length; i += 1) {
-	          var tag = list[i];
-
+	        for (let tag of this.$props.tags) {
 	          if (tag.toLowerCase().includes(this.inputTagsFilter.toLowerCase())) {
 	            matches.push(tag);
 	          }
@@ -3582,14 +3556,14 @@
 	      }
 	      return matches;
 	    },
-	    inputTagsFilter: function inputTagsFilter() {
+	    inputTagsFilter() {
 	      return this.$store.state.layers.inputTagsFilter;
 	    },
-	    scale: function scale() {
+	    scale() {
 	      return this.$store.state.map.scale;
 	    },
-	    shouldBeDisabled: function shouldBeDisabled() {
-	      var def = this.$props.layerDefinition;
+	    shouldBeDisabled() {
+	      const def = this.$props.layerDefinition;
 	      if (def) {
 	        if (def.minScale) {
 	          if (this.scale > def.minScale) {
@@ -3602,34 +3576,34 @@
 	        return false;
 	      }
 	    },
-	    layerUrls: function layerUrls() {
+	    layerUrls() {
 	      return this.$store.state.layers.layerUrls;
 	    },
-	    bennyEndpoints: function bennyEndpoints() {
+	    bennyEndpoints() {
 	      return this.$store.state.bennyEndpoints;
 	    },
-	    url: function url() {
+	    url() {
 	      return this.layerUrls[this.$props.layerName];
 	    },
-	    bennyId: function bennyId() {
+	    bennyId() {
 	      if (Object.keys(this.bennyEndpoints).length > 0) {
-	        var id = this.bennyEndpoints[this.url];
+	        const id = this.bennyEndpoints[this.url];
 	        // const id = this.bennyEndpoints[this.url]['Metadata'];
 	        return id;
 	      } else {
 	        return ' ';
 	      }
 	    },
-	    webMapUrlLayer: function webMapUrlLayer() {
+	    webMapUrlLayer() {
 	      return this.$store.state.map.webMapUrlLayer;
 	    },
-	    webMapActiveLayers: function webMapActiveLayers() {
+	    webMapActiveLayers() {
 	      return this.$store.state.map.webMapActiveLayers;
 	    },
-	    webMapDisplayedLayers: function webMapDisplayedLayers() {
+	    webMapDisplayedLayers() {
 	      return this.$store.state.map.webMapDisplayedLayers;
 	    },
-	    webMapGeoJson: function webMapGeoJson() {
+	    webMapGeoJson() {
 	      return this.$store.state.map.webMapGeoJson;
 	    }
 	  },
@@ -3637,7 +3611,7 @@
 	    // findCurrentTags(inputTagsFilter) {
 	    //
 	    // },
-	    trim: function trim(s) {
+	    trim(s) {
 	      return ( s || '' ).replace( /^\s+|\s+$/g, '' );
 	    },
 	    // getGeoJson(layer) {
@@ -3662,13 +3636,13 @@
 	    //   obj[layer] = response;
 	    //   this.$store.commit('setWebMapGeoJson', obj);
 	    // },
-	    checkboxToggle: function checkboxToggle(e) {
+	    checkboxToggle(e) {
 	      console.log('checkboxToggle', e.target, e.target.id, e.target.checked);
-	      var urlLayer = this.webMapUrlLayer;
-	      var activeLayers = this.webMapActiveLayers;
-	      var displayedLayers = this.webMapDisplayedLayers;
+	      const urlLayer = this.webMapUrlLayer;
+	      const activeLayers = this.webMapActiveLayers;
+	      const displayedLayers = this.webMapDisplayedLayers;
 	      // const splitArray = e.target.id.split('-').splice(0, 1);
-	      var targetReplace = e.target.id.replace('checkbox-', '');
+	      const targetReplace = e.target.id.replace('checkbox-', '');
 	      if (e.target.checked) {
 	        console.log('target checked, targetReplace:', targetReplace);
 	        activeLayers.push(targetReplace);
@@ -3684,12 +3658,12 @@
 	        // }
 	      } else {
 	        console.log('target not checked');
-	        var activeIndex = activeLayers.indexOf(targetReplace);
+	        const activeIndex = activeLayers.indexOf(targetReplace);
 	        // const activeIndex = activeLayers.indexOf(e.target.id.split('-')[1]);
 	        if (activeIndex >= 0) {
 	          activeLayers.splice(activeIndex, 1);
 	        }
-	        var displayedIndex = displayedLayers.indexOf(targetReplace);
+	        const displayedIndex = displayedLayers.indexOf(targetReplace);
 	        // const displayedIndex = displayedLayers.indexOf(e.target.id.split('-')[1]);
 	        if (displayedIndex >= 0) {
 	          displayedLayers.splice(displayedIndex, 1);
@@ -3703,25 +3677,25 @@
 	      this.$store.commit('setWebMapActiveLayers', activeLayers);
 	      this.$store.commit('setWebMapDisplayedLayers', displayedLayers);
 	    },
-	    removeFromWebMapDisplayedLayers: function removeFromWebMapDisplayedLayers() {
-	      var displayedLayers = this.webMapDisplayedLayers;
-	      var index = displayedLayers.indexOf(this.$props.layerName);
+	    removeFromWebMapDisplayedLayers() {
+	      const displayedLayers = this.webMapDisplayedLayers;
+	      const index = displayedLayers.indexOf(this.$props.layerName);
 	      // console.log('layer', this.$props.layerName, 'is active, but now should not be displayed, index:', index);
 	      if (index >= 0) {
 	        displayedLayers.splice(index, 1);
 	      }
 	      this.$store.commit('setWebMapDisplayedLayers', displayedLayers);
 	    },
-	    addToWebMapDisplayedLayers: function addToWebMapDisplayedLayers() {
+	    addToWebMapDisplayedLayers() {
 	      // console.log('layer', this.$props.layerName, 'is active, and now should be displayed');
-	      var displayedLayers = this.webMapDisplayedLayers;
+	      const displayedLayers = this.webMapDisplayedLayers;
 	      displayedLayers.push(this.$props.layerName);
 	      this.$store.commit('setWebMapDisplayedLayers', displayedLayers);
 	    }
 	  }
 	};
 
-	var initialState = {
+	const initialState = {
 	  // configurableInputCategorySelected: '',
 	  // configurableInputValueEntered: '',
 	  shouldShowAddressCandidateList: false,
@@ -3733,7 +3707,7 @@
 	  fullScreenTopicsEnabled: false,
 	};
 
-	var pvmStore = {
+	const pvmStore = {
 	  state: initialState,
 	  mutations: {
 	    // setConfigurableInputCategorySelected(state, payload) {
@@ -3742,19 +3716,19 @@
 	    // setConfigurableInputValueEntered(state, payload) {
 	    //   state.configurableInputValueEntered = payload;
 	    // },
-	    setShouldShowAddressCandidateList: function setShouldShowAddressCandidateList(state, payload) {
+	    setShouldShowAddressCandidateList(state, payload) {
 	      state.shouldShowAddressCandidateList = payload;
 	    },
-	    setPopoverOpen: function setPopoverOpen(state, payload) {
+	    setPopoverOpen(state, payload) {
 	      state.popover.open = payload;
 	    },
-	    setPopoverText: function setPopoverText(state, payload) {
+	    setPopoverText(state, payload) {
 	      state.popover.text = payload;
 	    },
-	    setPopoverOptions: function setPopoverOptions(state, payload) {
+	    setPopoverOptions(state, payload) {
 	      state.popover.options = payload;
 	    },
-	    setFullScreenTopicsEnabled: function setFullScreenTopicsEnabled(state, payload) {
+	    setFullScreenTopicsEnabled(state, payload) {
 	      state.fullScreenTopicsEnabled = payload;
 	    },
 	  }
