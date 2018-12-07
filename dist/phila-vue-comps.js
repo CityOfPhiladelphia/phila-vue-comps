@@ -1240,17 +1240,15 @@
 	*/
 
 	function generateBillingXml (data) {
-	  console.log('generate billing xml', data);
+	  console.log('generate billing xml', data); // if data object is empty, return empty string
 
-	  // if data object is empty, return empty string
 	  if (Object.keys(data).length < 1) {
 	    return '';
-	  }
+	  } // get the current date/time in iso format with timezone
 
-	  // get the current date/time in iso format with timezone
-	  const timestamp = moment().format();
 
-	  // TODO use a json to xml lib instead of forming this string?
+	  const timestamp = moment().format(); // TODO use a json to xml lib instead of forming this string?
+
 	  const xmlString = `<?xml version="1.0" encoding="utf-16"?>
 <BillingStatement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ApplicationID>fcd68fd2-e923-4b03-a0e7-a678c2ed612a</ApplicationID>
@@ -1294,7 +1292,6 @@
   </Customers>
 </BillingStatement>
   `;
-
 	  return escapeHtml(xmlString);
 	}
 
@@ -3702,11 +3699,10 @@
 	  popover: {
 	    open: false,
 	    text: '',
-	    options: {},
+	    options: {}
 	  },
-	  fullScreenTopicsEnabled: false,
+	  fullScreenTopicsEnabled: false
 	};
-
 	const pvmStore = {
 	  state: initialState,
 	  mutations: {
@@ -3719,18 +3715,23 @@
 	    setShouldShowAddressCandidateList(state, payload) {
 	      state.shouldShowAddressCandidateList = payload;
 	    },
+
 	    setPopoverOpen(state, payload) {
 	      state.popover.open = payload;
 	    },
+
 	    setPopoverText(state, payload) {
 	      state.popover.text = payload;
 	    },
+
 	    setPopoverOptions(state, payload) {
 	      state.popover.options = payload;
 	    },
+
 	    setFullScreenTopicsEnabled(state, payload) {
 	      state.fullScreenTopicsEnabled = payload;
-	    },
+	    }
+
 	  }
 	};
 

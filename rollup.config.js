@@ -1,6 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import vue from 'rollup-plugin-vue';
-// import buble from 'rollup-plugin-buble';
+import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import uglify from 'rollup-plugin-uglify';
 import analyzer from 'rollup-analyzer-plugin';
@@ -54,6 +54,9 @@ export default {
     // transform .vue components
     vue({
       css: true,
+    }),
+    babel({
+      exclude: "node_modules/**",
     }),
     // downgrade es6
     // buble({

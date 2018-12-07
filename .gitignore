@@ -5,3 +5,5 @@ yarn-error.log
 _bin/
 package-lock.json
 .npmrc
+package_safe.json
+rollup.config_safe.js
