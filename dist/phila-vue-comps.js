@@ -1929,25 +1929,40 @@
 	  methods: {
 	    exportTableToCSV() {
 	      // console.log('exportTableToCSV is running');
-
-	      // const Json2csvParser = require('json2csv').Parser;
-
 	      const tableData = [];
 
 	      let fields = [];
+	      let totals = {};
 	      for (let field of this.$props.options.fields) {
 	        fields.push(field.label);
+	        totals[field.label] = 0;
 	      }
 	      for (let item of this.items) {
 	        let object = {};
 	        for (let field of this.$props.options.fields) {
 	          object[field.label] = field['value'](this.$store.state, item);
+	          if (isNaN(field['value'](this.$store.state, item))) {
+	            totals[field.label] = null;
+	          } else {
+	            totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+	          }
+	        }
+	        tableData.push(object);
+	      }
+
+	      if (this.$props.options.totalRow.enabled) {
+	        let object = {};
+	        for (let field of this.$props.options.fields) {
+	          if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+	            object[field.label] = 'Total';
+	          } else {
+	            object[field.label] = totals[field.label];
+	          }
 	        }
 	        tableData.push(object);
 	      }
 
 	      try {
-	        // const parser = new Json2csvParser(opts);
 	        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
 	        data = tableData || null;
