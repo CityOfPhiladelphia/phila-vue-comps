@@ -604,7 +604,12 @@
           let link;
 
           // filename = 'export.csv';
-          filename = this.$props.options.downloadFile + '.csv' || 'export.csv';
+          let fileStart = this.evaluateSlot(this.$props.options.downloadFile);
+          if (fileStart) {
+            filename = this.evaluateSlot(this.$props.options.downloadFile) + '.csv';
+          } else {
+            filename = 'export.csv';
+          }
 
           if (!csv.match(/^data:text\/csv/i)) {
               csv = 'data:text/csv;charset=utf-8,' + csv;
