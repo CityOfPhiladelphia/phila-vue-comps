@@ -88,7 +88,13 @@
                   v-if="this.shouldShowDownloadButton"
                   @click="this.exportTableToCSV"
           >
-            Download Data
+            Download CSV
+          </a>
+          <a class="button pvc-download-data-button"
+                  v-if="this.shouldShowDownloadButton"
+                  @click="this.exportTableToPDF"
+          >
+            Download PDF
           </a>
         </div>
 
@@ -538,6 +544,68 @@
       // },
     },
     methods: {
+      exportTableToPDF() {
+        const tableData = []
+        let fields = [];
+        let totals = {};
+        for (let field of this.$props.options.fields) {
+          fields.push(field.label)
+          totals[field.label] = 0;
+        }
+        for (let item of this.items) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field['value'](this.$store.state, item) === null) {
+              theArray.push('');
+            } else {
+              theArray.push(field['value'](this.$store.state, item)) || '';
+            }
+
+            if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
+            // if (isNaN(field['value'](this.$store.state, item))) {
+              console.log('isnull:', field['value'](this.$store.state, item));
+              totals[field.label] = ''
+            } else {
+              console.log('is not null:', field['value'](this.$store.state, item));
+              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            }
+          }
+          tableData.push(theArray);
+        }
+
+        if (this.$props.options.totalRow.enabled) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+              theArray.push('Total');
+            } else {
+              theArray.push(totals[field.label]);
+            }
+          }
+          tableData.push(theArray);
+        }
+        console.log('tableData:', tableData);
+        var doc = new jsPDF();
+        // var doc = new jsPDF('p', 'pt');
+        let top = 10;
+        for (let introLine of this.$props.options.download.introLines) {
+          doc.text(10, top, this.evaluateSlot(introLine));
+          top = top + 10
+        }
+        doc.autoTable(fields, tableData, {
+          startY: 50
+        });
+
+        let filename;
+        let fileStart = this.evaluateSlot(this.$props.options.download.file);
+        if (fileStart) {
+          filename = this.evaluateSlot(this.$props.options.download.file) + '.pdf';
+        } else {
+          filename = 'export.pdf';
+        }
+        doc.save(filename);
+      },
+
       exportTableToCSV() {
         // console.log('exportTableToCSV is running');
         const tableData = []
@@ -964,6 +1032,9 @@
     float: right;
     vertical-align: baseline;
     display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
   }
 
   .group:after {
