@@ -544,15 +544,25 @@
         // const Json2csvParser = require('json2csv').Parser;
 
         const tableData = []
+        let fields = [];
+        for (let field of this.$props.options.fields) {
+          fields.push(field.label)
+        }
+        console.log('fields:', fields);
         for (let item of this.items) {
           // console.log('item:', item);
-          let object = {
-            'address': item.properties.ADDRESS,
-            'distance': item._distance
+          // let object = {
+          //   'address': item.properties.ADDRESS,
+          //   'distance': item._distance
+          // }
+          let object = {}
+          for (let field of this.$props.options.fields) {
+            object[field.label] = field['value'](this.$store.state, item);
           }
           tableData.push(object);
         }
-        const fields = ['address', 'distance'];
+        console.log('tableData:', tableData);
+        // const fields = ['address', 'distance'];
         const opts = { fields };
 
         try {
