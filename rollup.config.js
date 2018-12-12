@@ -56,7 +56,7 @@ export default {
       css: true,
     }),
     babel({
-      exclude: "node_modules/**",
+      // exclude: "node_modules/**",
     }),
     // downgrade es6
     // buble({

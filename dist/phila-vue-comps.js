@@ -19,7 +19,10 @@
 	}
 
 	var faExternalLink = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, '__esModule', { value: true });
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	var prefix = 'fas';
 	var iconName = 'external-link';
 	var width = 576;
@@ -27,18 +30,11 @@
 	var ligatures = [];
 	var unicode = 'f08e';
 	var svgPathData = 'M448 279.196V464c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h248a24 24 0 0 1 16.97 7.029l16 16C344.09 102.149 333.382 128 312 128H64v320h320V295.196c0-6.365 2.529-12.47 7.029-16.971l16-16C422.148 247.106 448 257.814 448 279.196zM576 37.333C576 16.715 559.285 0 538.667 0H380c-15.464 0-28 12.536-28 28v17.885c0 15.766 13.011 28.424 28.772 27.989l67.203-1.906L199.09 319.09c-9.429 9.363-9.457 24.605-.061 34.001l23.879 23.879c9.396 9.396 24.639 9.369 34.001-.06l247.122-248.885-1.906 67.203c-.434 15.76 12.224 28.772 27.99 28.772H548c15.464 0 28-12.536 28-28V37.333z';
-
 	exports.definition = {
 	  prefix: prefix,
 	  iconName: iconName,
-	  icon: [
-	    width,
-	    height,
-	    ligatures,
-	    unicode,
-	    svgPathData
-	  ]};
-
+	  icon: [width, height, ligatures, unicode, svgPathData]
+	};
 	exports.faExternalLink = exports.definition;
 	exports.prefix = prefix;
 	exports.iconName = iconName;
@@ -61,7 +57,10 @@
 	var faExternalLink_9 = faExternalLink.svgPathData;
 
 	var faSearch = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, '__esModule', { value: true });
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	var prefix = 'fas';
 	var iconName = 'search';
 	var width = 512;
@@ -69,18 +68,11 @@
 	var ligatures = [];
 	var unicode = 'f002';
 	var svgPathData = 'M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z';
-
 	exports.definition = {
 	  prefix: prefix,
 	  iconName: iconName,
-	  icon: [
-	    width,
-	    height,
-	    ligatures,
-	    unicode,
-	    svgPathData
-	  ]};
-
+	  icon: [width, height, ligatures, unicode, svgPathData]
+	};
 	exports.faSearch = exports.definition;
 	exports.prefix = prefix;
 	exports.iconName = iconName;
@@ -103,7 +95,10 @@
 	var faSearch_9 = faSearch.svgPathData;
 
 	var faTimes = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, '__esModule', { value: true });
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	var prefix = 'fas';
 	var iconName = 'times';
 	var width = 352;
@@ -111,18 +106,11 @@
 	var ligatures = [];
 	var unicode = 'f00d';
 	var svgPathData = 'M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z';
-
 	exports.definition = {
 	  prefix: prefix,
 	  iconName: iconName,
-	  icon: [
-	    width,
-	    height,
-	    ligatures,
-	    unicode,
-	    svgPathData
-	  ]};
-
+	  icon: [width, height, ligatures, unicode, svgPathData]
+	};
 	exports.faTimes = exports.definition;
 	exports.prefix = prefix;
 	exports.iconName = iconName;
@@ -145,7 +133,10 @@
 	var faTimes_9 = faTimes.svgPathData;
 
 	var faTimesCircle = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, '__esModule', { value: true });
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	var prefix = 'fas';
 	var iconName = 'times-circle';
 	var width = 512;
@@ -153,18 +144,11 @@
 	var ligatures = [];
 	var unicode = 'f057';
 	var svgPathData = 'M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z';
-
 	exports.definition = {
 	  prefix: prefix,
 	  iconName: iconName,
-	  icon: [
-	    width,
-	    height,
-	    ligatures,
-	    unicode,
-	    svgPathData
-	  ]};
-
+	  icon: [width, height, ligatures, unicode, svgPathData]
+	};
 	exports.faTimesCircle = exports.definition;
 	exports.prefix = prefix;
 	exports.iconName = iconName;
@@ -187,7 +171,10 @@
 	var faTimesCircle_9 = faTimesCircle.svgPathData;
 
 	var faCaretLeft = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, '__esModule', { value: true });
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	var prefix = 'fas';
 	var iconName = 'caret-left';
 	var width = 192;
@@ -195,18 +182,11 @@
 	var ligatures = [];
 	var unicode = 'f0d9';
 	var svgPathData = 'M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z';
-
 	exports.definition = {
 	  prefix: prefix,
 	  iconName: iconName,
-	  icon: [
-	    width,
-	    height,
-	    ligatures,
-	    unicode,
-	    svgPathData
-	  ]};
-
+	  icon: [width, height, ligatures, unicode, svgPathData]
+	};
 	exports.faCaretLeft = exports.definition;
 	exports.prefix = prefix;
 	exports.iconName = iconName;
@@ -229,7 +209,10 @@
 	var faCaretLeft_9 = faCaretLeft.svgPathData;
 
 	var faCaretRight = createCommonjsModule(function (module, exports) {
-	Object.defineProperty(exports, '__esModule', { value: true });
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	var prefix = 'fas';
 	var iconName = 'caret-right';
 	var width = 192;
@@ -237,18 +220,11 @@
 	var ligatures = [];
 	var unicode = 'f0da';
 	var svgPathData = 'M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z';
-
 	exports.definition = {
 	  prefix: prefix,
 	  iconName: iconName,
-	  icon: [
-	    width,
-	    height,
-	    ligatures,
-	    unicode,
-	    svgPathData
-	  ]};
-
+	  icon: [width, height, ligatures, unicode, svgPathData]
+	};
 	exports.faCaretRight = exports.definition;
 	exports.prefix = prefix;
 	exports.iconName = iconName;
