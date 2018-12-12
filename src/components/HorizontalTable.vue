@@ -305,8 +305,8 @@
       },
       shouldShowDownloadButton() {
         let downloadButton = false;
-        if (this.options.downloadButton) {
-          downloadButton = this.options.downloadButton;
+        if (this.options.download.button) {
+          downloadButton = this.options.download.button;
         }
         return downloadButton;
       },
@@ -544,25 +544,18 @@
         // const Json2csvParser = require('json2csv').Parser;
 
         const tableData = []
+
         let fields = [];
         for (let field of this.$props.options.fields) {
           fields.push(field.label)
         }
-        console.log('fields:', fields);
         for (let item of this.items) {
-          // console.log('item:', item);
-          // let object = {
-          //   'address': item.properties.ADDRESS,
-          //   'distance': item._distance
-          // }
           let object = {}
           for (let field of this.$props.options.fields) {
             object[field.label] = field['value'](this.$store.state, item);
           }
           tableData.push(object);
         }
-        console.log('tableData:', tableData);
-        // const fields = ['address', 'distance'];
         const opts = { fields };
 
         try {
@@ -582,6 +575,13 @@
           keys = Object.keys(data[0]);
 
           result = '';
+
+          for (let introLine of this.$props.options.download.introLines) {
+            result += this.evaluateSlot(introLine);
+            result += lineDelimiter;
+          }
+
+          result += lineDelimiter;
           result += keys.join(columnDelimiter);
           result += lineDelimiter;
 
@@ -590,23 +590,22 @@
               keys.forEach(function(key) {
                   if (ctr > 0) result += columnDelimiter;
 
-                  result += item[key];
+                  result += item[key] || '';
                   ctr++;
               });
               result += lineDelimiter;
           });
 
           let csv = result;
-          // console.log('csv', csv);
-          // let csv = parser.parse(tableData);
+
           data = null;
           let filename;
           let link;
 
           // filename = 'export.csv';
-          let fileStart = this.evaluateSlot(this.$props.options.downloadFile);
+          let fileStart = this.evaluateSlot(this.$props.options.download.file);
           if (fileStart) {
-            filename = this.evaluateSlot(this.$props.options.downloadFile) + '.csv';
+            filename = this.evaluateSlot(this.$props.options.download.file) + '.csv';
           } else {
             filename = 'export.csv';
           }
