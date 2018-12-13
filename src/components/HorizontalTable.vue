@@ -84,17 +84,17 @@
           <h5 style="display:inline-block; color: gray">
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
-          <a class="button pvc-download-data-button"
-                  v-if="this.shouldShowDownloadButton"
+          <a class="button pvc-export-data-button"
+                  v-if="this.shouldShowExportCSV"
                   @click="this.exportTableToCSV"
           >
-            Download CSV
+            {{ this.options.export.formatButtons.csv }}
           </a>
-          <a class="button pvc-download-data-button"
-                  v-if="this.shouldShowDownloadButton"
+          <a class="button pvc-export-data-button"
+                  v-if="this.shouldShowExportPDF"
                   @click="this.exportTableToPDF"
           >
-            Download PDF
+            {{ this.options.export.formatButtons.pdf }}
           </a>
         </div>
 
@@ -309,12 +309,21 @@
           return this.options.shouldShowHeaders;
         }
       },
-      shouldShowDownloadButton() {
-        let downloadButton = false;
-        if (this.options.download.button) {
-          downloadButton = this.options.download.button;
+      shouldShowExportPDF() {
+        let shouldExport = false;
+        if (this.options.export.formatButtons) {
+          const keys = Object.keys(this.options.export.formatButtons);
+          shouldExport = keys.includes('pdf');
         }
-        return downloadButton;
+        return shouldExport;
+      },
+      shouldShowExportCSV() {
+        let shouldExport = false;
+        if (this.options.export.formatButtons) {
+          const keys = Object.keys(this.options.export.formatButtons);
+          shouldExport = keys.includes('csv');
+        }
+        return shouldExport;
       },
       secondaryStatus() {
         return this.$store.state.sources[this.options.id].secondaryStatus;
@@ -586,20 +595,21 @@
         }
         console.log('tableData:', tableData);
         var doc = new jsPDF();
+        doc.setFontSize(12);
         // var doc = new jsPDF('p', 'pt');
         let top = 10;
-        for (let introLine of this.$props.options.download.introLines) {
+        for (let introLine of this.$props.options.export.introLines) {
           doc.text(10, top, this.evaluateSlot(introLine));
-          top = top + 10
+          top = top + 6
         }
         doc.autoTable(fields, tableData, {
           startY: 50
         });
 
         let filename;
-        let fileStart = this.evaluateSlot(this.$props.options.download.file);
+        let fileStart = this.evaluateSlot(this.$props.options.export.file);
         if (fileStart) {
-          filename = this.evaluateSlot(this.$props.options.download.file) + '.pdf';
+          filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
         } else {
           filename = 'export.pdf';
         }
@@ -659,7 +669,7 @@
 
           result = '';
 
-          for (let introLine of this.$props.options.download.introLines) {
+          for (let introLine of this.$props.options.export.introLines) {
             result += this.evaluateSlot(introLine);
             result += lineDelimiter;
           }
@@ -686,9 +696,9 @@
           let link;
 
           // filename = 'export.csv';
-          let fileStart = this.evaluateSlot(this.$props.options.download.file);
+          let fileStart = this.evaluateSlot(this.$props.options.export.file);
           if (fileStart) {
-            filename = this.evaluateSlot(this.$props.options.download.file) + '.csv';
+            filename = this.evaluateSlot(this.$props.options.export.file) + '.csv';
           } else {
             filename = 'export.csv';
           }
@@ -1028,7 +1038,7 @@
     float: right;
   }
 
-  .pvc-download-data-button {
+  .pvc-export-data-button {
     float: right;
     vertical-align: baseline;
     display: inline-block;
