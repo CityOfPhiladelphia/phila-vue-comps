@@ -1991,25 +1991,28 @@
 
 	          if (field$2.label.toLowerCase() === this.$props.options.totalRow.totalField) {
 	            theArray$1.push('Total');
+	          } else if (totals[field$2.label] === '') {
+	            theArray$1.push('');
 	          } else {
-	            theArray$1.push(totals[field$2.label]);
+	            theArray$1.push(parseFloat(totals[field$2.label]).toFixed(2));
 	          }
 	        }
 	        tableData.push(theArray$1);
 	      }
 	      console.log('tableData:', tableData);
-	      var doc = new jsPDF();
+	      // var doc = new jsPDF();
+	      var doc = new jsPDF('p', 'pt');
 	      doc.setFontSize(12);
-	      // var doc = new jsPDF('p', 'pt');
-	      var top = 10;
+	      var top = 20;
 	      for (var i$4 = 0, list$4 = this.$props.options.export.introLines; i$4 < list$4.length; i$4 += 1) {
 	        var introLine = list$4[i$4];
 
 	        doc.text(10, top, this.evaluateSlot(introLine));
-	        top = top + 6;
+	        top = top + 12;
 	      }
 	      doc.autoTable(fields, tableData, {
-	        startY: 50
+	        startY: 100,
+	        tableWidth: 'wrap'
 	      });
 
 	      var filename;

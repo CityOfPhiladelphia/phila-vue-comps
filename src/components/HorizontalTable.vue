@@ -588,23 +588,26 @@
           for (let field of this.$props.options.fields) {
             if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
               theArray.push('Total');
+            } else if (totals[field.label] === '') {
+              theArray.push('');
             } else {
-              theArray.push(totals[field.label]);
+              theArray.push(parseFloat(totals[field.label]).toFixed(2));
             }
           }
           tableData.push(theArray);
         }
         console.log('tableData:', tableData);
-        var doc = new jsPDF();
+        // var doc = new jsPDF();
+        var doc = new jsPDF('p', 'pt');
         doc.setFontSize(12);
-        // var doc = new jsPDF('p', 'pt');
-        let top = 10;
+        let top = 20;
         for (let introLine of this.$props.options.export.introLines) {
           doc.text(10, top, this.evaluateSlot(introLine));
-          top = top + 6
+          top = top + 12
         }
         doc.autoTable(fields, tableData, {
-          startY: 50
+          startY: 100,
+          tableWidth: 'wrap'
         });
 
         let filename;
