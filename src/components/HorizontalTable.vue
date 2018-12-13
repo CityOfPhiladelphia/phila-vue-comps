@@ -162,8 +162,9 @@
   import HorizontalTableRow from './HorizontalTableRow.vue';
   import ExternalLink from './ExternalLink.vue';
   import moment from 'moment';
-  // import json2csv from 'json2csv';
-  // import fs from 'fs';
+
+  import jsPDF from 'jspdf';
+  import autotable from 'jspdf-autotable';
 
   const DEFAULT_SORT_FIELDS = [
     'distance',

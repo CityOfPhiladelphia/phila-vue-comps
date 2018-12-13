@@ -1,13 +1,15 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('leaflet'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'leaflet', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
-	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.moment,global.escapeHtml,global.L,global.fontawesomeSvgCore,global.vueFontAwesome));
-}(this, (function (exports,debounce,axios,moment,escapeHtml,L,fontawesomeSvgCore,vueFontawesome) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('leaflet'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'jspdf', 'jspdf-autotable', 'leaflet', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
+	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.moment,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.L,global.fontawesomeSvgCore,global.vueFontAwesome));
+}(this, (function (exports,debounce,axios,moment,escapeHtml,jsPDF,jspdfAutotable,L,fontawesomeSvgCore,vueFontawesome) { 'use strict';
 
 	debounce = debounce && debounce.hasOwnProperty('default') ? debounce['default'] : debounce;
 	axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
 	moment = moment && moment.hasOwnProperty('default') ? moment['default'] : moment;
 	escapeHtml = escapeHtml && escapeHtml.hasOwnProperty('default') ? escapeHtml['default'] : escapeHtml;
+	jsPDF = jsPDF && jsPDF.hasOwnProperty('default') ? jsPDF['default'] : jsPDF;
+	jspdfAutotable = jspdfAutotable && jspdfAutotable.hasOwnProperty('default') ? jspdfAutotable['default'] : jspdfAutotable;
 	L = L && L.hasOwnProperty('default') ? L['default'] : L;
 
 	function unwrapExports (x) {
@@ -1546,8 +1548,6 @@
 	};
 
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .inline-block[data-v-6dbe65ac] { display: inline-block; } .vertically-centered[data-v-6dbe65ac] { display: inline-block; vertical-align: middle; } .pvc-horizontal-table[data-v-6dbe65ac] { margin-bottom: 10px !important; } .pvc-horizontal-table-controls[data-v-6dbe65ac] { text-align: center; vertical-align: middle; margin-bottom: 10px; } /* dropdown filters */ .pvc-select-text[data-v-6dbe65ac] { font-size: 16px; padding-right: 5px; padding-left: 5px; } .pvc-select[data-v-6dbe65ac] { width: auto; height: 40px; vertical-align: middle; /*padding-right: 20px;*/ } .pvc-select-option[data-v-6dbe65ac] { display: inline-block; padding-right: 100px; margin-right: 100px; } /* input filters using text */ .pvc-search-control-input[data-v-6dbe65ac] { height: 40px !important; line-height: 48px; padding: 8px; font-size: 16px; width: 300px; /*margin-left: 10px;*/ } /*REVIEW this repeats a lot of .pvc-search-control-input. can it be refactored?*/ .pvc-search-control-input-full[data-v-6dbe65ac] { height: 40px !important; line-height: 48px; padding: 8px; font-size: 16px; width: 260px; } .pvc-search-control-button[data-v-6dbe65ac] { width: 40px; background: #ccc; line-height: 40px; float: right; } .pvc-export-data-button[data-v-6dbe65ac] { float: right; vertical-align: baseline; display: inline-block; margin-left: 5px; margin-right: 5px; margin-bottom: 5px; } .group[data-v-6dbe65ac]:after { content: \"\"; display: table; clear: both; } .pvc-horizontal-table-body[data-v-6dbe65ac] { padding-top: 1rem; padding-bottom: 0.35rem; } .no-padding[data-v-6dbe65ac] { padding-top: 0; padding-bottom: 0; } .center-button[data-v-6dbe65ac] { display: flex; align-items: center; justify-content: center; } .loading[data-v-6dbe65ac] { float: right; } .filter-by-text-form[data-v-6dbe65ac] { border: 2px solid #0f4d90; } table[data-v-6dbe65ac] { /* table-layout: fixed; */ margin: 0; } .external-link[data-v-6dbe65ac] { padding-top: 5px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
-	// import json2csv from 'json2csv';
-	// import fs from 'fs';
 
 	const DEFAULT_SORT_FIELDS = [
 	  'distance',
