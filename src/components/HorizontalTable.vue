@@ -573,10 +573,10 @@
 
             if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
             // if (isNaN(field['value'](this.$store.state, item))) {
-              console.log('isnull:', field['value'](this.$store.state, item));
+              // console.log('isnull:', field['value'](this.$store.state, item));
               totals[field.label] = ''
             } else {
-              console.log('is not null:', field['value'](this.$store.state, item));
+              // console.log('is not null:', field['value'](this.$store.state, item));
               totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
             }
           }
