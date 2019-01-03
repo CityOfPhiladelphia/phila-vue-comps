@@ -1701,17 +1701,21 @@
 	    },
 	    shouldShowExportPDF: function shouldShowExportPDF() {
 	      var shouldExport = false;
-	      if (this.options.export.formatButtons) {
-	        var keys = Object.keys(this.options.export.formatButtons);
-	        shouldExport = keys.includes('pdf');
+	      if (this.options.export) {
+	        if (this.options.export.formatButtons) {
+	          var keys = Object.keys(this.options.export.formatButtons);
+	          shouldExport = keys.includes('pdf');
+	        }
 	      }
 	      return shouldExport;
 	    },
 	    shouldShowExportCSV: function shouldShowExportCSV() {
 	      var shouldExport = false;
-	      if (this.options.export.formatButtons) {
-	        var keys = Object.keys(this.options.export.formatButtons);
-	        shouldExport = keys.includes('csv');
+	      if (this.options.export) {
+	        if (this.options.export.formatButtons) {
+	          var keys = Object.keys(this.options.export.formatButtons);
+	          shouldExport = keys.includes('csv');
+	        }
 	      }
 	      return shouldExport;
 	    },

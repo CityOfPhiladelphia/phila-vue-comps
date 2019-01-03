@@ -312,17 +312,21 @@
       },
       shouldShowExportPDF() {
         let shouldExport = false;
-        if (this.options.export.formatButtons) {
-          const keys = Object.keys(this.options.export.formatButtons);
-          shouldExport = keys.includes('pdf');
+        if (this.options.export) {
+          if (this.options.export.formatButtons) {
+            const keys = Object.keys(this.options.export.formatButtons);
+            shouldExport = keys.includes('pdf');
+          }
         }
         return shouldExport;
       },
       shouldShowExportCSV() {
         let shouldExport = false;
-        if (this.options.export.formatButtons) {
-          const keys = Object.keys(this.options.export.formatButtons);
-          shouldExport = keys.includes('csv');
+        if (this.options.export) {
+          if (this.options.export.formatButtons) {
+            const keys = Object.keys(this.options.export.formatButtons);
+            shouldExport = keys.includes('csv');
+          }
         }
         return shouldExport;
       },
