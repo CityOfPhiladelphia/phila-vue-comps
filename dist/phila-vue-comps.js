@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('leaflet'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'jspdf', 'jspdf-autotable', 'leaflet', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
-	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.moment,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.L,global.fontawesomeSvgCore,global.vueFontAwesome));
-}(this, (function (exports,debounce,axios,moment,escapeHtml,jsPDF,jspdfAutotable,L,fontawesomeSvgCore,vueFontawesome) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('moment'), require('escape-html'), require('date-fns'), require('jspdf'), require('jspdf-autotable'), require('leaflet'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'moment', 'escape-html', 'date-fns', 'jspdf', 'jspdf-autotable', 'leaflet', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
+	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.moment,global.escapeHtml,global.dateFns,global.jsPDF,global.jspdfAutotable,global.L,global.fontawesomeSvgCore,global.vueFontAwesome));
+}(this, (function (exports,debounce,axios,moment,escapeHtml,dateFns,jsPDF,jspdfAutotable,L,fontawesomeSvgCore,vueFontawesome) { 'use strict';
 
 	debounce = debounce && debounce.hasOwnProperty('default') ? debounce['default'] : debounce;
 	axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
@@ -2268,7 +2268,7 @@
 	              if (direction === 'subtract') {
 	                max = moment();
 	                min = moment().subtract(value, unit);
-	                // console.log('max:', max, 'min', min);
+	                console.log('max:', max, 'min', min);
 	              } else if (direction === 'add') {
 	                min = moment();
 	                max = min.add(value, unit);
@@ -2280,6 +2280,7 @@
 	              itemsFiltered = itemsFiltered.filter(function (item) {
 	                var itemValue = getValue(item);
 	                var itemMoment = moment(itemValue);
+	                console.log('itemMoment:', itemMoment);
 	                var isBetween = itemMoment.isBetween(min, max);
 	                // console.log('itemValue:', itemValue, 'itemMoment:', itemMoment, 'min:', min, 'max:', max, 'isBetween:', isBetween);
 	                return isBetween;
@@ -3894,6 +3895,8 @@
 	|   __/|___|  /__|____(____  /           \_/ |____/  \___  >          \___  >____/|__|_|  /   __/____  >
 	|__|        \/             \/                            \/               \/            \/|__|       \/
 	*/
+
+	console.log('main.js phila-vue-comps');
 	fontawesomeSvgCore.library.add(faExternalLink_2, faSearch_2, faTimes_2, faTimesCircle_2, faCaretLeft_2, faCaretRight_2);
 
 	exports.pvcStore = pvmStore;

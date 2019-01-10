@@ -6,6 +6,8 @@ ______ |  |__ |__|  | _____            ___  ____ __   ____             ____  ___
 |__|        \/             \/                            \/               \/            \/|__|       \/
 */
 
+console.log('main.js phila-vue-comps');
+
 // Font Awesome Icons
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faExternalLink } from '@fortawesome/pro-solid-svg-icons/faExternalLink';

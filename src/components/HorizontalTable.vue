@@ -162,6 +162,8 @@
   import HorizontalTableRow from './HorizontalTableRow.vue';
   import ExternalLink from './ExternalLink.vue';
   import moment from 'moment';
+  import { get_date } from 'date-fns';
+
 
   import jsPDF from 'jspdf';
   import autotable from 'jspdf-autotable';
@@ -847,7 +849,7 @@
                 if (direction === 'subtract') {
                   max = moment();
                   min = moment().subtract(value, unit);
-                  // console.log('max:', max, 'min', min);
+                  console.log('max:', max, 'min', min);
                 } else if (direction === 'add') {
                   min = moment();
                   max = min.add(value, unit);
@@ -859,6 +861,7 @@
                 itemsFiltered = itemsFiltered.filter(item => {
                   const itemValue = getValue(item);
                   const itemMoment = moment(itemValue);
+                  console.log('itemMoment:', itemMoment);
                   const isBetween = itemMoment.isBetween(min, max)
                   // console.log('itemValue:', itemValue, 'itemMoment:', itemMoment, 'min:', min, 'max:', max, 'isBetween:', isBetween);
                   return isBetween;
