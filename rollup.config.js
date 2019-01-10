@@ -28,7 +28,6 @@ export default {
     exports: 'named',
     // map imports to global names for using vue-leaflet-esri in the browser
     globals: {
-      moment: 'moment',
       vue: 'Vue',
       vuex: 'Vuex',
       "lodash.debounce": "debounce",

@@ -51,10 +51,6 @@ import TopicComponentGroup from './components/TopicComponentGroup.vue';
 import Popover from './components/Popover.vue';
 import PopoverLink from './components/PopoverLink.vue';
 
-import Checkbox from './components/Checkbox.vue';
-import LegendBox from './components/LegendBox.vue';
-import Slider from './components/Slider.vue';
-
 import pvcStore from './store.js';
 
 export {
@@ -90,7 +86,4 @@ export {
   TopicComponentGroup,
   Popover,
   PopoverLink,
-  Checkbox,
-  LegendBox,
-  Slider
 }
