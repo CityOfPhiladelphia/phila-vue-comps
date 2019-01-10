@@ -1,13 +1,12 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('date-fns'), require('escape-html'), require('moment'), require('jspdf'), require('jspdf-autotable'), require('leaflet'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'date-fns', 'escape-html', 'moment', 'jspdf', 'jspdf-autotable', 'leaflet', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
-	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.moment,global.jsPDF,global.jspdfAutotable,global.L,global.fontawesomeSvgCore,global.vueFontAwesome));
-}(this, (function (exports,debounce,axios,dateFns,escapeHtml,moment,jsPDF,jspdfAutotable,L,fontawesomeSvgCore,vueFontawesome) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('date-fns'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('leaflet'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'date-fns', 'escape-html', 'jspdf', 'jspdf-autotable', 'leaflet', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
+	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.L,global.fontawesomeSvgCore,global.vueFontAwesome));
+}(this, (function (exports,debounce,axios,dateFns,escapeHtml,jsPDF,jspdfAutotable,L,fontawesomeSvgCore,vueFontawesome) { 'use strict';
 
 	debounce = debounce && debounce.hasOwnProperty('default') ? debounce['default'] : debounce;
 	axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
 	escapeHtml = escapeHtml && escapeHtml.hasOwnProperty('default') ? escapeHtml['default'] : escapeHtml;
-	moment = moment && moment.hasOwnProperty('default') ? moment['default'] : moment;
 	jsPDF = jsPDF && jsPDF.hasOwnProperty('default') ? jsPDF['default'] : jsPDF;
 	jspdfAutotable = jspdfAutotable && jspdfAutotable.hasOwnProperty('default') ? jspdfAutotable['default'] : jspdfAutotable;
 	L = L && L.hasOwnProperty('default') ? L['default'] : L;
@@ -1266,7 +1265,7 @@
 	  }
 
 	  // get the current date/time in iso format with timezone
-	  var timestamp = dateFns.format(new Date(), 'MM-DD-YYYY');
+	  var timestamp = dateFns.format(new Date(), 'YYYY-MM-DDTHH:mm:ssZ');
 
 	  // TODO use a json to xml lib instead of forming this string?
 	  var xmlString = "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<BillingStatement xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <ApplicationID>fcd68fd2-e923-4b03-a0e7-a678c2ed612a</ApplicationID>\n  <AccountNumber />\n  <BillNumber>" + (data.balances.accountNum) + "</BillNumber>\n  <StatementNumber />\n  <BillingDate>" + timestamp + "</BillingDate>\n  <DueDate>" + timestamp + "</DueDate>\n  <TotalDue>" + (data.totalDue) + "</TotalDue>\n  <DepartMentId>0</DepartMentId>\n  <Fund>0</Fund>\n  <PaymentDate>0001-01-01T00:00:00</PaymentDate>\n  <Quantity>0</Quantity>\n  <ItemAmount>0</ItemAmount>\n  <TotalAmountdue>0</TotalAmountdue>\n  <PartialPaymentFlag>false</PartialPaymentFlag>\n  <ReceiptpresentFlag>false</ReceiptpresentFlag>\n  <Details>\n    <BillingStatementDetail>\n      <ItemDate>" + timestamp + "</ItemDate>\n      <ItemDescription>Real Estate Tax</ItemDescription>\n      <Charges>" + (data.totalDue) + "</Charges>\n      <Credits>0</Credits>\n    </BillingStatementDetail>\n  </Details>\n  <Customers>\n    <Customer>\n      <FirstName>" + (data.balances.property.ownerName) + "</FirstName>\n      <MiddleName />\n      <LastName />\n      <BillingAddress>\n        <Address>\n          <AddressLine1>" + (data.address.streetAddress) + "</AddressLine1>\n          <City>PHILADELPHIA</City>\n          <State>PA</State>\n          <PostalCode>" + (data.address.zipCode) + "</PostalCode>\n          <Country>US</Country>\n        </Address>\n      </BillingAddress>\n    </Customer>\n  </Customers>\n</BillingStatement>\n  ";
@@ -2264,14 +2263,39 @@
 	            case 'time':
 	              console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
 	              var min = (void 0), max = (void 0);
+	              var subFn = (void 0), addFn = (void 0);
+
+	              switch (unit) {
+	                case 'hours':
+	                  subFn = dateFns.subHours;
+	                  addFn = dateFns.addHours;
+	                  break;
+	                case 'days':
+	                  subFn = dateFns.subDays;
+	                  addFn = dateFns.addDays;
+	                  break;
+	                case 'weeks':
+	                  subFn = dateFns.subWeeks;
+	                  addFn = dateFns.addWeeks;
+	                  break;
+	                case 'months':
+	                  subFn = dateFns.subMonths;
+	                  addFn = dateFns.addMonths;
+	                  break;
+	                case 'years':
+	                  subFn = dateFns.subYears;
+	                  addFn = dateFns.addYears;
+	                  break;
+	              }
+
 
 	              if (direction === 'subtract') {
-	                max = moment();
-	                min = moment().subtract(value, unit);
+	                max = new Date();
+	                min = subFn(max, value);
 	                console.log('max:', max, 'min', min);
 	              } else if (direction === 'add') {
-	                min = moment();
-	                max = min.add(value, unit);
+	                max = new Date();
+	                min = addFn(max, value);
 	              } else {
 	                throw ("Invalid time direction: " + direction);
 	              }
@@ -2279,10 +2303,8 @@
 	              // console.log('in case time, itemsFiltered:', itemsFiltered);
 	              itemsFiltered = itemsFiltered.filter(function (item) {
 	                var itemValue = getValue(item);
-	                var itemMoment = moment(itemValue);
-	                console.log('itemMoment:', itemMoment);
-	                var isBetween = itemMoment.isBetween(min, max);
-	                // console.log('itemValue:', itemValue, 'itemMoment:', itemMoment, 'min:', min, 'max:', max, 'isBetween:', isBetween);
+	                var isBetween = dateFns.isWithinRange(itemValue, min, max);
+	                console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
 	                return isBetween;
 	              });
 	              // console.log('ITEMS FILTERED BY TIME FILTER', itemsFiltered);

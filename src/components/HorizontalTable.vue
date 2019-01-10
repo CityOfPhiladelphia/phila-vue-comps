@@ -161,8 +161,7 @@
   import TopicComponent from './TopicComponent.vue';
   import HorizontalTableRow from './HorizontalTableRow.vue';
   import ExternalLink from './ExternalLink.vue';
-  import moment from 'moment';
-  import { get_date } from 'date-fns';
+  import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinRange } from 'date-fns';
 
 
   import jsPDF from 'jspdf';
@@ -845,14 +844,40 @@
               case 'time':
                 console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
                 let min, max;
+                let min2, max2;
+                let subFn, addFn
+
+                switch (unit) {
+                  case 'hours':
+                    subFn = subHours;
+                    addFn = addHours;
+                    break;
+                  case 'days':
+                    subFn = subDays;
+                    addFn = addDays;
+                    break;
+                  case 'weeks':
+                    subFn = subWeeks;
+                    addFn = addWeeks;
+                    break;
+                  case 'months':
+                    subFn = subMonths;
+                    addFn = addMonths;
+                    break;
+                  case 'years':
+                    subFn = subYears;
+                    addFn = addYears;
+                    break;
+                }
+
 
                 if (direction === 'subtract') {
-                  max = moment();
-                  min = moment().subtract(value, unit);
+                  max = new Date();
+                  min = subFn(max, value);
                   console.log('max:', max, 'min', min);
                 } else if (direction === 'add') {
-                  min = moment();
-                  max = min.add(value, unit);
+                  max = new Date();
+                  min = addFn(max, value);
                 } else {
                   throw `Invalid time direction: ${direction}`;
                 }
@@ -860,10 +885,8 @@
                 // console.log('in case time, itemsFiltered:', itemsFiltered);
                 itemsFiltered = itemsFiltered.filter(item => {
                   const itemValue = getValue(item);
-                  const itemMoment = moment(itemValue);
-                  console.log('itemMoment:', itemMoment);
-                  const isBetween = itemMoment.isBetween(min, max)
-                  // console.log('itemValue:', itemValue, 'itemMoment:', itemMoment, 'min:', min, 'max:', max, 'isBetween:', isBetween);
+                  const isBetween = isWithinRange(itemValue, min, max)
+                  console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
                   return isBetween;
                 });
                 // console.log('ITEMS FILTERED BY TIME FILTER', itemsFiltered);

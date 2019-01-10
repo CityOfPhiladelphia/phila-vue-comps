@@ -29,7 +29,7 @@ export default function (data) {
   }
 
   // get the current date/time in iso format with timezone
-  const timestamp = format(new Date(), 'MM-DD-YYYY');
+  let timestamp = format(new Date(), 'YYYY-MM-DDTHH:mm:ssZ');
 
   // TODO use a json to xml lib instead of forming this string?
   const xmlString = `<?xml version="1.0" encoding="utf-16"?>
