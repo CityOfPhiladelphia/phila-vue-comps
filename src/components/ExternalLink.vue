@@ -34,29 +34,37 @@
         return this.evaluateSlot(stateData);
       },
       externalLinkText() {
-        const name = this.options.name  || '';
-        // const preText = this.options.preText;
-        // const postText = this.options.postText;
+        if (this.options) {
+          const name = this.options.name  || '';
+          // const preText = this.options.preText;
+          // const postText = this.options.postText;
 
-        if (this.type === 'vertical-table') {
-        // if (this.externalLinkAction) {
-          if (name) {
-            return `${this.externalLinkAction} at ${name}`;
+          if (this.type === 'vertical-table') {
+          // if (this.externalLinkAction) {
+            if (name) {
+              return `${this.externalLinkAction} at ${name}`;
+            } else {
+              return `${this.externalLinkAction}`;
+            }
+          } else if (this.type === 'horizontal-table') {
+            // if (name) {
+            //   return `${this.externalLinkAction} at ${name}`;
+            // } else {
+              return `${this.externalLinkAction}`;
+            // }
           } else {
-            return `${this.externalLinkAction}`;
+            return `${this.externalLinkDataFromState}`
           }
-        } else if (this.type === 'horizontal-table') {
-          // if (name) {
-          //   return `${this.externalLinkAction} at ${name}`;
-          // } else {
-            return `${this.externalLinkAction}`;
-          // }
         } else {
-          return `${this.externalLinkDataFromState}`
+          return null;
         }
       },
       externalLinkHref() {
-        return this.evaluateSlot(this.options.href);
+        if (this.options) {
+          return this.evaluateSlot(this.options.href);
+        } else {
+          return null;
+        }
       },
       // the number of items that aren't being shown (e.g. See 54 more...)
     }

@@ -1,7 +1,7 @@
 <template>
   <div id="toggle-tab"
        class="toggle-tab"
-       :style="{ top: buttonPosition }"
+       :style="{ left: buttonPosition }"
        @click="handleFullScreenTopicsToggleButtonClick"
        v-if="!this.isMobileOrTablet"
   >
@@ -13,46 +13,31 @@
 
 <script>
   export default {
-    props: {
-      elementContainer: {
-        type: String,
-        default: 'topic-panel-container'
-      }
-    },
     data() {
       return {
-        'divHeight': 0,
+        'divWidth': 0,
         'buttonPosition': 0,
       }
     },
     mounted() {
-      window.addEventListener('resize', this.setDivHeight);
-      this.setDivHeight();
+      window.addEventListener('resize', this.setDivWidth);
+      this.setDivWidth();
     },
     computed: {
       fullScreenMapEnabled() {
         return this.$store.state.fullScreenMapEnabled;
       },
       fullScreenTopicsEnabled() {
-        console.log('this.$store.state.fullScreenTopicsEnabled:', this.$store.state.fullScreenTopicsEnabled);
-        return this.$store.state.fullScreenTopicsEnabled;// || true;
+        return this.$store.state.fullScreenTopicsEnabled;
       },
       isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
       },
       cyclomediaActive() {
-        if (this.$store.state.cyclomedia) {
-          return this.$store.state.cyclomedia.active;
-        } else {
-          return null;
-        }
+        return this.$store.state.cyclomedia.active;
       },
       pictometryActive() {
-        if (this.$store.state.pictometry) {
-          return this.$store.state.pictometry.active;
-        } else {
-          return null;
-        }
+        return this.$store.state.pictometry.active;
       },
       picOrCycloActive() {
         if (this.cyclomediaActive || this.pictometryActive) {
@@ -63,32 +48,28 @@
       },
       currentIcon() {
         if (this.fullScreenTopicsEnabled) {
-          return 'caret-left';
+          return 'caret-down'
         } else {
-          return 'caret-right';
+          return 'caret-up'
         }
       }
     },
     watch: {
-      picOrCycloActive() {
-        this.$nextTick(() => {
-          this.setDivHeight();
-        })
+      fullScreenMapEnabled() {
+        this.setDivWidth();
       }
     },
     methods: {
-      setDivHeight() {
+      setDivWidth() {
         let el;
         if (this.fullScreenTopicsEnabled) {
-          el = document.getElementById(this.$props.elementContainer);
+          el = document.getElementById('topic-panel-container');
         } else {
           el = document.getElementById('map-tag');
         }
         const mapDivStyle = window.getComputedStyle(el);
-        const mapDivHeight = parseFloat(mapDivStyle.getPropertyValue('height').replace('px', ''));
-        // console.log('FullScreenTopicsToggleTab setDivHeight is running, el:', el, 'mapDivHeight:', mapDivHeight);
-
-        this.buttonPosition = (mapDivHeight-48)/2 + 'px';
+        const mapDivWidth = parseFloat(mapDivStyle.getPropertyValue('width').replace('px', ''));
+        this.buttonPosition = (mapDivWidth-48)/2 + 'px';
       },
       handleFullScreenTopicsToggleButtonClick(e) {
         const prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
@@ -97,43 +78,29 @@
       },
     }
   };
+
 </script>
 
 <style scoped>
-
-  /* .toggle-tab {
-    position: absolute;
-    left: 0px;
-    border-width: 1.3px;
-    border-color: #CAC9C9;
-    height: 48px;
-    line-height: 58px;
-    width:24px;
-    background-color: white;
-    display: inline-block;
-    z-index: 500; */
-    /* border-left-style: solid; */
-    /* box-shadow: 2px 2px 7px grey; */
-  /* } */
 
   .toggle-tab {
     display: none;
   }
 
   .align-span {
-    margin-left: 6px;
+    margin-left: 14px;
   }
 
   @media screen and (min-width: 46.875em) {
     .toggle-tab {
       position: absolute;
-      right: 0px;
+      top: 0px;
       border-width: 1.3px;
       border-style: solid;
       border-color: #CAC9C9;
-      height: 48px;
-      line-height: 56px;
-      width:24px;
+      height: 24px;
+      line-height: 16px;
+      width:48px;
       background-color: white;
       display: inline-block;
       z-index: 500;

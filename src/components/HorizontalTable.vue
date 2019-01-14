@@ -84,11 +84,17 @@
           <h5 style="display:inline-block; color: gray">
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
-          <a class="button pvc-download-data-button"
-                  v-if="this.shouldShowDownloadButton"
+          <a class="button pvc-export-data-button"
+                  v-if="this.shouldShowExportCSV"
                   @click="this.exportTableToCSV"
           >
-            Download Data
+            {{ this.options.export.formatButtons.csv }}
+          </a>
+          <a class="button pvc-export-data-button"
+                  v-if="this.shouldShowExportPDF"
+                  @click="this.exportTableToPDF"
+          >
+            {{ this.options.export.formatButtons.pdf }}
           </a>
         </div>
 
@@ -105,6 +111,7 @@
                                   :key="item._featureId"
                                   :hasOverlay="hasOverlay"
                                   :tableId="options.tableId"
+                                  :options="options"
             />
             <horizontal-table-row v-if="totalRowEnabled"
                                   :shouldBeBold="true"
@@ -154,9 +161,11 @@
   import TopicComponent from './TopicComponent.vue';
   import HorizontalTableRow from './HorizontalTableRow.vue';
   import ExternalLink from './ExternalLink.vue';
-  import moment from 'moment';
-  // import json2csv from 'json2csv';
-  // import fs from 'fs';
+  import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinRange } from 'date-fns';
+
+
+  import jsPDF from 'jspdf';
+  import autotable from 'jspdf-autotable';
 
   const DEFAULT_SORT_FIELDS = [
     'distance',
@@ -302,12 +311,25 @@
           return this.options.shouldShowHeaders;
         }
       },
-      shouldShowDownloadButton() {
-        let downloadButton = false;
-        if (this.options.downloadButton) {
-          downloadButton = this.options.downloadButton;
+      shouldShowExportPDF() {
+        let shouldExport = false;
+        if (this.options.export) {
+          if (this.options.export.formatButtons) {
+            const keys = Object.keys(this.options.export.formatButtons);
+            shouldExport = keys.includes('pdf');
+          }
         }
-        return downloadButton;
+        return shouldExport;
+      },
+      shouldShowExportCSV() {
+        let shouldExport = false;
+        if (this.options.export) {
+          if (this.options.export.formatButtons) {
+            const keys = Object.keys(this.options.export.formatButtons);
+            shouldExport = keys.includes('csv');
+          }
+        }
+        return shouldExport;
       },
       secondaryStatus() {
         return this.$store.state.sources[this.options.id].secondaryStatus;
@@ -537,25 +559,109 @@
       // },
     },
     methods: {
+      exportTableToPDF() {
+        const tableData = []
+        let fields = [];
+        let totals = {};
+        for (let field of this.$props.options.fields) {
+          fields.push(field.label)
+          totals[field.label] = 0;
+        }
+        for (let item of this.items) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field['value'](this.$store.state, item) === null) {
+              theArray.push('');
+            } else {
+              theArray.push(field['value'](this.$store.state, item)) || '';
+            }
+
+            if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
+            // if (isNaN(field['value'](this.$store.state, item))) {
+              // console.log('isnull:', field['value'](this.$store.state, item));
+              totals[field.label] = ''
+            } else {
+              // console.log('is not null:', field['value'](this.$store.state, item));
+              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            }
+          }
+          tableData.push(theArray);
+        }
+
+        if (this.$props.options.totalRow.enabled) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+              theArray.push('Total');
+            } else if (totals[field.label] === '') {
+              theArray.push('');
+            } else {
+              theArray.push(parseFloat(totals[field.label]).toFixed(2));
+            }
+          }
+          tableData.push(theArray);
+        }
+        console.log('tableData:', tableData);
+        // var doc = new jsPDF();
+        var doc = new jsPDF('p', 'pt');
+        doc.setFontSize(12);
+        let top = 20;
+        for (let introLine of this.$props.options.export.introLines) {
+          doc.text(10, top, this.evaluateSlot(introLine));
+          top = top + 12
+        }
+        doc.autoTable(fields, tableData, {
+          startY: 100,
+          tableWidth: 'wrap'
+        });
+
+        let filename;
+        let fileStart = this.evaluateSlot(this.$props.options.export.file);
+        if (fileStart) {
+          filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
+        } else {
+          filename = 'export.pdf';
+        }
+        doc.save(filename);
+      },
+
       exportTableToCSV() {
         // console.log('exportTableToCSV is running');
-
-        // const Json2csvParser = require('json2csv').Parser;
-
         const tableData = []
+
+        let fields = [];
+        let totals = {};
+        for (let field of this.$props.options.fields) {
+          fields.push(field.label)
+          totals[field.label] = 0;
+        }
         for (let item of this.items) {
-          // console.log('item:', item);
-          let object = {
-            'address': item.properties.ADDRESS,
-            'distance': item._distance
+          let object = {}
+          for (let field of this.$props.options.fields) {
+            object[field.label] = field['value'](this.$store.state, item);
+            if (isNaN(field['value'](this.$store.state, item))) {
+              totals[field.label] = null
+            } else {
+              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            }
           }
           tableData.push(object);
         }
-        const fields = ['address', 'distance'];
+
+        if (this.$props.options.totalRow.enabled) {
+          let object = {}
+          for (let field of this.$props.options.fields) {
+            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+              object[field.label] = 'Total';
+            } else {
+              object[field.label] = totals[field.label];
+            }
+          }
+          tableData.push(object);
+        }
         const opts = { fields };
 
         try {
-          // const parser = new Json2csvParser(opts);
           var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
           data = tableData || null;
@@ -571,6 +677,13 @@
           keys = Object.keys(data[0]);
 
           result = '';
+
+          for (let introLine of this.$props.options.export.introLines) {
+            result += this.evaluateSlot(introLine);
+            result += lineDelimiter;
+          }
+
+          result += lineDelimiter;
           result += keys.join(columnDelimiter);
           result += lineDelimiter;
 
@@ -579,21 +692,25 @@
               keys.forEach(function(key) {
                   if (ctr > 0) result += columnDelimiter;
 
-                  result += item[key];
+                  result += item[key] || '';
                   ctr++;
               });
               result += lineDelimiter;
           });
 
           let csv = result;
-          // console.log('csv', csv);
-          // let csv = parser.parse(tableData);
+
           data = null;
           let filename;
           let link;
 
           // filename = 'export.csv';
-          filename = this.$props.options.downloadFile + '.csv' || 'export.csv';
+          let fileStart = this.evaluateSlot(this.$props.options.export.file);
+          if (fileStart) {
+            filename = this.evaluateSlot(this.$props.options.export.file) + '.csv';
+          } else {
+            filename = 'export.csv';
+          }
 
           if (!csv.match(/^data:text\/csv/i)) {
               csv = 'data:text/csv;charset=utf-8,' + csv;
@@ -727,14 +844,40 @@
               case 'time':
                 console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
                 let min, max;
+                let min2, max2;
+                let subFn, addFn
+
+                switch (unit) {
+                  case 'hours':
+                    subFn = subHours;
+                    addFn = addHours;
+                    break;
+                  case 'days':
+                    subFn = subDays;
+                    addFn = addDays;
+                    break;
+                  case 'weeks':
+                    subFn = subWeeks;
+                    addFn = addWeeks;
+                    break;
+                  case 'months':
+                    subFn = subMonths;
+                    addFn = addMonths;
+                    break;
+                  case 'years':
+                    subFn = subYears;
+                    addFn = addYears;
+                    break;
+                }
+
 
                 if (direction === 'subtract') {
-                  max = moment();
-                  min = moment().subtract(value, unit);
-                  // console.log('max:', max, 'min', min);
+                  max = new Date();
+                  min = subFn(max, value);
+                  console.log('max:', max, 'min', min);
                 } else if (direction === 'add') {
-                  min = moment();
-                  max = min.add(value, unit);
+                  max = new Date();
+                  min = addFn(max, value);
                 } else {
                   throw `Invalid time direction: ${direction}`;
                 }
@@ -742,9 +885,8 @@
                 // console.log('in case time, itemsFiltered:', itemsFiltered);
                 itemsFiltered = itemsFiltered.filter(item => {
                   const itemValue = getValue(item);
-                  const itemMoment = moment(itemValue);
-                  const isBetween = itemMoment.isBetween(min, max)
-                  // console.log('itemValue:', itemValue, 'itemMoment:', itemMoment, 'min:', min, 'max:', max, 'isBetween:', isBetween);
+                  const isBetween = isWithinRange(itemValue, min, max)
+                  console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
                   return isBetween;
                 });
                 // console.log('ITEMS FILTERED BY TIME FILTER', itemsFiltered);
@@ -930,10 +1072,13 @@
     float: right;
   }
 
-  .pvc-download-data-button {
+  .pvc-export-data-button {
     float: right;
     vertical-align: baseline;
     display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
   }
 
   .group:after {

@@ -32,6 +32,7 @@
   import ExternalLink from './ExternalLink.vue';
 
   export default {
+    name: 'Badge',
     mixins: [TopicComponent],
     components: {
       ExternalLink,

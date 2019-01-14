@@ -87,7 +87,7 @@
     methods: {
       handleRowMouseover(e) {
         // console.log('handleRowMouseover is starting');
-        if(!this.isMobileOrTablet) {
+        if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
           // console.log('handleRowMouseover actions are running');
           if (!this.hasOverlay) return;
 
@@ -98,8 +98,8 @@
       },
       handleRowClick(e) {
         // console.log('handleRowClick is starting');
-        if(this.isMobileOrTablet) {
-          // console.log('handleRowClick actions are running');
+        if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
+          console.log('handleRowClick actions are running');
           if (!this.hasOverlay) return;
 
           const featureId = this.item._featureId;
@@ -111,8 +111,10 @@
         // console.log('handleRowMouseout is starting');
         // if(!this.isMobileOrTablet) {
           // console.log('handleRowMouseout actions are running');
-          if (!this.hasOverlay) return;
-          this.$store.commit('setActiveFeature', null);
+          if(!this.$props.options.mouseOverDisabled) {
+            if (!this.hasOverlay) return;
+            this.$store.commit('setActiveFeature', null);
+          }
         // }
       },
       // REVIEW there's very similar code in the controller. if these can be

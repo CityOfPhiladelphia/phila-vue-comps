@@ -1,28 +1,33 @@
 <template>
-  <!-- <div class="mb-panel-topics-greeting"> -->
-    <div class="columns medium-20 medium-centered">
+  <div class="columns medium-20 medium-centered"
+       :style="greetingStyle"
+  >
 
-      <address-input v-if="this.shouldShowAddressInput" />
-      <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput"/>
+    <address-input v-if="this.shouldShowAddressInput" />
+    <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput"/>
 
-      <div v-if="!components && !hasError" class="greeting" v-html="initialMessage">
-      </div>
-
-      <div v-if="!components && hasError" class="greeting greeting-error" v-html="errorMessage">
-      </div>
-
-      <component v-if="components"
-                 v-for="(topicComp, topicCompIndex) in components"
-                 :is="topicComp.type"
-                 class="topic-comp"
-                 :slots="topicComp.slots"
-                 :key="'greeting'"
-      />
+    <div v-if="!components && !hasError" class="greeting" v-html="message">
+      <!-- {{ this.$props.message }} -->
     </div>
-  <!-- </div> -->
+
+    <div v-if="!components && hasError" class="greeting greeting-error" v-html="errorMessage">
+    </div>
+
+    <topic-component-group :topic-components="options.components" :item="item" />
+
+    <component v-if="components"
+               v-for="(topicComp, topicCompIndex) in components"
+               class="topic-comp"
+               :is="topicComp.type"
+               :slots="topicComp.slots"
+               :key="'greeting'"
+    />
+  </div>
 </template>
 
 <script>
+  import TopicComponent from './TopicComponent.vue';
+  import TopicComponentGroup from './TopicComponentGroup.vue';
   import Image_ from './Image.vue';
   import AddressInput from './AddressInput.vue';
   import AddressCandidateList from './AddressCandidateList.vue';
@@ -32,6 +37,26 @@
       Image_,
       AddressInput,
       AddressCandidateList,
+    },
+    mixins: [TopicComponent],
+    data() {
+      let data = {
+        greetingStyle: this.$props.options.style || {}
+      }
+      return data;
+    },
+    props: {
+      'message': {
+        type: String,
+        default: function() {
+          return 'defaultMessage';
+        }
+      },
+    },
+    beforeCreate() {
+      if (this.$options.components) {
+        this.$options.components.TopicComponentGroup = TopicComponentGroup;
+      }
     },
     computed: {
       shouldShowAddressInput() {
@@ -59,10 +84,6 @@
       },
       hasError() {
         return this.$store.state.geocode.status === 'error';
-      },
-      initialMessage() {
-        const greetingConfig = this.$config.greeting || {};
-        return greetingConfig.initialMessage;
       },
       errorMessage() {
         const input = this.$store.state.geocode.input;

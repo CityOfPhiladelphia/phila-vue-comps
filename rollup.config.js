@@ -28,10 +28,16 @@ export default {
     exports: 'named',
     // map imports to global names for using vue-leaflet-esri in the browser
     globals: {
-      moment: 'moment',
+      axios: 'axios',
       vue: 'Vue',
       vuex: 'Vuex',
-      "lodash.debounce": "debounce",
+      'jspdf': 'jsPDF',
+      'jspdf-autotable': 'jspdfAutotable',
+      'date-fns': 'dateFns',
+      'escape-html': 'escapeHtml',
+      'lodash.debounce': 'debounce',
+      '@fortawesome/vue-fontawesome': 'vueFontAwesome',
+      '@fortawesome/fontawesome-svg-core': 'fontawesomeSvgCore'
     },
     sourcemap: true,
   },
@@ -54,6 +60,9 @@ export default {
     vue({
       css: true,
     }),
+    // babel({
+    //   // exclude: "node_modules/**",
+    // }),
     // downgrade es6
     buble({
       transforms: {
