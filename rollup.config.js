@@ -28,10 +28,16 @@ export default {
     exports: 'named',
     // map imports to global names for using vue-leaflet-esri in the browser
     globals: {
+      axios: 'axios',
       vue: 'Vue',
       vuex: 'Vuex',
-      "lodash.debounce": "debounce",
-      '@fortawesome/vue-fontawesome':'vueFontAwesome',
+      'jspdf': 'jsPDF',
+      'jspdf-autotable': 'jspdfAutotable',
+      'date-fns': 'dateFns',
+      'escape-html': 'escapeHtml',
+      'lodash.debounce': 'debounce',
+      '@fortawesome/vue-fontawesome': 'vueFontAwesome',
+      '@fortawesome/fontawesome-svg-core': 'fontawesomeSvgCore'
     },
     sourcemap: true,
   },
