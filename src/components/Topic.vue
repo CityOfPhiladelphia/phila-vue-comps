@@ -113,56 +113,6 @@
         const should = succeeded && hasData && this.isActive;
         return should;
       },
-      showTopicBasedOnOtherData() {
-        const otherDataSources = Object.keys(this.topic.showTopicBasedOnOtherData);
-        let answers = [];
-        for (let otherDataSource of otherDataSources) {
-          const dataSource = this.topic.showTopicBasedOnOtherData[otherDataSource];
-          const dataSourceKeys = Object.keys(dataSource);
-          for (let dataSourceKey of dataSourceKeys) {
-            if (this.$store.state.sources[otherDataSource][dataSourceKey] === dataSource[dataSourceKey]) {
-              answers.push(true);
-            } else {
-              answers.push(false);
-            }
-          }
-        }
-        if (!answers.includes(false)) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      showTopicOnlyIfDataExists() {
-        let result = true;
-        const requiredDataSources = Object.keys(this.topic.showTopicOnlyIfDataExists);
-        // console.log('requiredDataSources', requiredDataSources);
-        for (let requiredDataSource of requiredDataSources) {
-          const dataSource = this.topic.showTopicOnlyIfDataExists[requiredDataSource];
-          const pathToDataArray = dataSource.pathToDataArray;
-          const minDataLength = dataSource.minDataLength;
-          // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
-          let dataArray;
-          if (!this.$store.state.sources[requiredDataSource].data) {
-            // if there is no data (yet)
-            return false;
-          } else {
-            if (!pathToDataArray) {
-              dataArray = this.$store.state.sources[requiredDataSource].data;
-            } else if (pathToDataArray.length === 1) {
-              dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
-            }
-            // TODO - implement system if the path to the data is longer than a single step
-            // else {
-              //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
-              // }
-            if (dataArray.length < minDataLength) {
-              result = false
-            }
-          }
-        }
-        return result;
-      },
       shouldShowTopic() {
         if (!this.topic.showTopicOnlyIfDataExists) {
           return true;
@@ -252,8 +202,73 @@
           return topicStatus;
         }
       },
+      showTopicBasedOnOtherData() {
+        // stop if "showTopicBasedOnOtherData" doesn't exist
+        if (!this.topic.showTopicBasedOnOtherData) {
+          return false;
+        }
+
+        // stop if the required data for this topic does not exist
+        const requiredData = this.topic.showTopicBasedOnOtherData.requiredData;
+        let requiredDataExists = this.checkForData(requiredData);
+        // console.log('requiredDataExists:', requiredDataExists);
+        if (!requiredDataExists) {
+          return false;
+        }
+
+        // continue if the other data does not match the conditions put into the "showTopicBasedOnOtherData" object
+        const otherDataSources = Object.keys(this.topic.showTopicBasedOnOtherData.otherData);
+        let answers = [];
+        for (let otherDataSource of otherDataSources) {
+          const dataSource = this.topic.showTopicBasedOnOtherData.otherData[otherDataSource];
+          const dataSourceKeys = Object.keys(dataSource);
+          for (let dataSourceKey of dataSourceKeys) {
+            if (this.$store.state.sources[otherDataSource][dataSourceKey] === dataSource[dataSourceKey]) {
+              answers.push(true);
+            } else {
+              answers.push(false);
+            }
+          }
+        }
+        if (!answers.includes(false)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      showTopicOnlyIfDataExists() {
+        return this.checkForData(this.topic.showTopicOnlyIfDataExists);
+      },
     },
     methods: {
+      checkForData(requiredData) {
+        const requiredDataSources = Object.keys(requiredData);
+        // console.log('checkForData is running, requiredData:', requiredData, 'requiredDataSources:', requiredDataSources);
+        let result = true;
+        for (let requiredDataSource of requiredDataSources) {
+          const pathToDataArray = requiredData[requiredDataSource].pathToDataArray;
+          const minDataLength = requiredData[requiredDataSource].minDataLength;
+          let dataArray;
+          if (!this.$store.state.sources[requiredDataSource].data) {
+            // if there is no data (yet)
+            return false;
+          } else {
+            if (!pathToDataArray) {
+              dataArray = this.$store.state.sources[requiredDataSource].data;
+            } else if (pathToDataArray.length === 1) {
+              dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
+            }
+            // TODO - implement system if the path to the data is longer than a single step
+            // else {
+              //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
+              // }
+            if (dataArray.length < minDataLength) {
+              result = false
+            }
+          }
+        }
+        return result;
+      },
       configForBasemap(key) {
         return this.$config.map.basemaps[key];
       },

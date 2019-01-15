@@ -2992,62 +2992,6 @@
 	      var should = succeeded && hasData && this.isActive;
 	      return should;
 	    },
-	    showTopicBasedOnOtherData: function showTopicBasedOnOtherData() {
-	      var otherDataSources = Object.keys(this.topic.showTopicBasedOnOtherData);
-	      var answers = [];
-	      for (var i$1 = 0, list$1 = otherDataSources; i$1 < list$1.length; i$1 += 1) {
-	        var otherDataSource = list$1[i$1];
-
-	        var dataSource = this.topic.showTopicBasedOnOtherData[otherDataSource];
-	        var dataSourceKeys = Object.keys(dataSource);
-	        for (var i = 0, list = dataSourceKeys; i < list.length; i += 1) {
-	          var dataSourceKey = list[i];
-
-	          if (this.$store.state.sources[otherDataSource][dataSourceKey] === dataSource[dataSourceKey]) {
-	            answers.push(true);
-	          } else {
-	            answers.push(false);
-	          }
-	        }
-	      }
-	      if (!answers.includes(false)) {
-	        return true;
-	      } else {
-	        return false;
-	      }
-	    },
-	    showTopicOnlyIfDataExists: function showTopicOnlyIfDataExists() {
-	      var result = true;
-	      var requiredDataSources = Object.keys(this.topic.showTopicOnlyIfDataExists);
-	      // console.log('requiredDataSources', requiredDataSources);
-	      for (var i = 0, list = requiredDataSources; i < list.length; i += 1) {
-	        var requiredDataSource = list[i];
-
-	        var dataSource = this.topic.showTopicOnlyIfDataExists[requiredDataSource];
-	        var pathToDataArray = dataSource.pathToDataArray;
-	        var minDataLength = dataSource.minDataLength;
-	        // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
-	        var dataArray = (void 0);
-	        if (!this.$store.state.sources[requiredDataSource].data) {
-	          // if there is no data (yet)
-	          return false;
-	        } else {
-	          if (!pathToDataArray) {
-	            dataArray = this.$store.state.sources[requiredDataSource].data;
-	          } else if (pathToDataArray.length === 1) {
-	            dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
-	          }
-	          // TODO - implement system if the path to the data is longer than a single step
-	          // else {
-	            //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
-	            // }
-	          if (dataArray.length < minDataLength) {
-	            result = false;
-	          }
-	        }
-	      }
-	      return result;
-	    },
 	    shouldShowTopic: function shouldShowTopic() {
 	      if (!this.topic.showTopicOnlyIfDataExists) {
 	        return true;
@@ -3143,8 +3087,79 @@
 	        return topicStatus;
 	      }
 	    },
+	    showTopicBasedOnOtherData: function showTopicBasedOnOtherData() {
+	      // stop if "showTopicBasedOnOtherData" doesn't exist
+	      if (!this.topic.showTopicBasedOnOtherData) {
+	        return false;
+	      }
+
+	      // stop if the required data for this topic does not exist
+	      var requiredData = this.topic.showTopicBasedOnOtherData.requiredData;
+	      var requiredDataExists = this.checkForData(requiredData);
+	      // console.log('requiredDataExists:', requiredDataExists);
+	      if (!requiredDataExists) {
+	        return false;
+	      }
+
+	      // continue if the other data does not match the conditions put into the "showTopicBasedOnOtherData" object
+	      var otherDataSources = Object.keys(this.topic.showTopicBasedOnOtherData.otherData);
+	      var answers = [];
+	      for (var i$1 = 0, list$1 = otherDataSources; i$1 < list$1.length; i$1 += 1) {
+	        var otherDataSource = list$1[i$1];
+
+	        var dataSource = this.topic.showTopicBasedOnOtherData.otherData[otherDataSource];
+	        var dataSourceKeys = Object.keys(dataSource);
+	        for (var i = 0, list = dataSourceKeys; i < list.length; i += 1) {
+	          var dataSourceKey = list[i];
+
+	          if (this.$store.state.sources[otherDataSource][dataSourceKey] === dataSource[dataSourceKey]) {
+	            answers.push(true);
+	          } else {
+	            answers.push(false);
+	          }
+	        }
+	      }
+	      if (!answers.includes(false)) {
+	        return true;
+	      } else {
+	        return false;
+	      }
+	    },
+	    showTopicOnlyIfDataExists: function showTopicOnlyIfDataExists() {
+	      return this.checkForData(this.topic.showTopicOnlyIfDataExists);
+	    },
 	  },
 	  methods: {
+	    checkForData: function checkForData(requiredData) {
+	      var requiredDataSources = Object.keys(requiredData);
+	      // console.log('checkForData is running, requiredData:', requiredData, 'requiredDataSources:', requiredDataSources);
+	      var result = true;
+	      for (var i = 0, list = requiredDataSources; i < list.length; i += 1) {
+	        var requiredDataSource = list[i];
+
+	        var pathToDataArray = requiredData[requiredDataSource].pathToDataArray;
+	        var minDataLength = requiredData[requiredDataSource].minDataLength;
+	        var dataArray = (void 0);
+	        if (!this.$store.state.sources[requiredDataSource].data) {
+	          // if there is no data (yet)
+	          return false;
+	        } else {
+	          if (!pathToDataArray) {
+	            dataArray = this.$store.state.sources[requiredDataSource].data;
+	          } else if (pathToDataArray.length === 1) {
+	            dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
+	          }
+	          // TODO - implement system if the path to the data is longer than a single step
+	          // else {
+	            //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
+	            // }
+	          if (dataArray.length < minDataLength) {
+	            result = false;
+	          }
+	        }
+	      }
+	      return result;
+	    },
 	    configForBasemap: function configForBasemap(key) {
 	      return this.$config.map.basemaps[key];
 	    },
