@@ -113,38 +113,65 @@
         const should = succeeded && hasData && this.isActive;
         return should;
       },
-      shouldShowTopic() {
-        if (!this.topic.onlyShowTopicIfDataExists) {
-          return true;
-        } else {
-          let result = true;
-          const requiredDataSources = Object.keys(this.topic.onlyShowTopicIfDataExists);
-          // console.log('requiredDataSources', requiredDataSources);
-          for (let requiredDataSource of requiredDataSources) {
-            const dataSource = this.topic.onlyShowTopicIfDataExists[requiredDataSource];
-            const pathToDataArray = dataSource.pathToDataArray;
-            const minDataLength = dataSource.minDataLength;
-            // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
-            let dataArray;
-            if (!this.$store.state.sources[requiredDataSource].data) {
-              // if there is no data (yet)
-              return false;
+      showTopicBasedOnOtherData() {
+        const otherDataSources = Object.keys(this.topic.showTopicBasedOnOtherData);
+        let answers = [];
+        for (let otherDataSource of otherDataSources) {
+          const dataSource = this.topic.showTopicBasedOnOtherData[otherDataSource];
+          const dataSourceKeys = Object.keys(dataSource);
+          for (let dataSourceKey of dataSourceKeys) {
+            if (this.$store.state.sources[otherDataSource][dataSourceKey] === dataSource[dataSourceKey]) {
+              answers.push(true);
             } else {
-              if (!pathToDataArray) {
-                dataArray = this.$store.state.sources[requiredDataSource].data;
-              } else if (pathToDataArray.length === 1) {
-                dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
-              }
-              // TODO - implement system if the path to the data is longer than a single step
-              // else {
-                //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
-                // }
-              if (dataArray.length < minDataLength) {
-                result = false
-              }
+              answers.push(false);
             }
           }
-          return result;
+        }
+        if (!answers.includes(false)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      showTopicOnlyIfDataExists() {
+        let result = true;
+        const requiredDataSources = Object.keys(this.topic.showTopicOnlyIfDataExists);
+        // console.log('requiredDataSources', requiredDataSources);
+        for (let requiredDataSource of requiredDataSources) {
+          const dataSource = this.topic.showTopicOnlyIfDataExists[requiredDataSource];
+          const pathToDataArray = dataSource.pathToDataArray;
+          const minDataLength = dataSource.minDataLength;
+          // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
+          let dataArray;
+          if (!this.$store.state.sources[requiredDataSource].data) {
+            // if there is no data (yet)
+            return false;
+          } else {
+            if (!pathToDataArray) {
+              dataArray = this.$store.state.sources[requiredDataSource].data;
+            } else if (pathToDataArray.length === 1) {
+              dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
+            }
+            // TODO - implement system if the path to the data is longer than a single step
+            // else {
+              //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
+              // }
+            if (dataArray.length < minDataLength) {
+              result = false
+            }
+          }
+        }
+        return result;
+      },
+      shouldShowTopic() {
+        if (!this.topic.showTopicOnlyIfDataExists) {
+          return true;
+        // if showTopicOnlyIfDataExists, but you want to overrule that
+        } else if (this.showTopicBasedOnOtherData) {
+          return true;
+        // if showTopicOnlyIfDataExists and it is not overrulled
+        } else {
+          return this.showTopicOnlyIfDataExists;
         }
       },
       shouldShowError() {
