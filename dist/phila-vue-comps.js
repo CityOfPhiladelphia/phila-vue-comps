@@ -2992,40 +2992,71 @@
 	      var should = succeeded && hasData && this.isActive;
 	      return should;
 	    },
-	    shouldShowTopic: function shouldShowTopic() {
-	      if (!this.topic.onlyShowTopicIfDataExists) {
-	        return true;
-	      } else {
-	        var result = true;
-	        var requiredDataSources = Object.keys(this.topic.onlyShowTopicIfDataExists);
-	        // console.log('requiredDataSources', requiredDataSources);
-	        for (var i = 0, list = requiredDataSources; i < list.length; i += 1) {
-	          var requiredDataSource = list[i];
+	    showTopicBasedOnOtherData: function showTopicBasedOnOtherData() {
+	      var otherDataSources = Object.keys(this.topic.showTopicBasedOnOtherData);
+	      var answers = [];
+	      for (var i$1 = 0, list$1 = otherDataSources; i$1 < list$1.length; i$1 += 1) {
+	        var otherDataSource = list$1[i$1];
 
-	          var dataSource = this.topic.onlyShowTopicIfDataExists[requiredDataSource];
-	          var pathToDataArray = dataSource.pathToDataArray;
-	          var minDataLength = dataSource.minDataLength;
-	          // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
-	          var dataArray = (void 0);
-	          if (!this.$store.state.sources[requiredDataSource].data) {
-	            // if there is no data (yet)
-	            return false;
+	        var dataSource = this.topic.showTopicBasedOnOtherData[otherDataSource];
+	        var dataSourceKeys = Object.keys(dataSource);
+	        for (var i = 0, list = dataSourceKeys; i < list.length; i += 1) {
+	          var dataSourceKey = list[i];
+
+	          if (this.$store.state.sources[otherDataSource][dataSourceKey] === dataSource[dataSourceKey]) {
+	            answers.push(true);
 	          } else {
-	            if (!pathToDataArray) {
-	              dataArray = this.$store.state.sources[requiredDataSource].data;
-	            } else if (pathToDataArray.length === 1) {
-	              dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
-	            }
-	            // TODO - implement system if the path to the data is longer than a single step
-	            // else {
-	              //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
-	              // }
-	            if (dataArray.length < minDataLength) {
-	              result = false;
-	            }
+	            answers.push(false);
 	          }
 	        }
-	        return result;
+	      }
+	      if (!answers.includes(false)) {
+	        return true;
+	      } else {
+	        return false;
+	      }
+	    },
+	    showTopicOnlyIfDataExists: function showTopicOnlyIfDataExists() {
+	      var result = true;
+	      var requiredDataSources = Object.keys(this.topic.showTopicOnlyIfDataExists);
+	      // console.log('requiredDataSources', requiredDataSources);
+	      for (var i = 0, list = requiredDataSources; i < list.length; i += 1) {
+	        var requiredDataSource = list[i];
+
+	        var dataSource = this.topic.showTopicOnlyIfDataExists[requiredDataSource];
+	        var pathToDataArray = dataSource.pathToDataArray;
+	        var minDataLength = dataSource.minDataLength;
+	        // console.log('requiredDataSource', requiredDataSource, 'dataSource', dataSource);
+	        var dataArray = (void 0);
+	        if (!this.$store.state.sources[requiredDataSource].data) {
+	          // if there is no data (yet)
+	          return false;
+	        } else {
+	          if (!pathToDataArray) {
+	            dataArray = this.$store.state.sources[requiredDataSource].data;
+	          } else if (pathToDataArray.length === 1) {
+	            dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]];
+	          }
+	          // TODO - implement system if the path to the data is longer than a single step
+	          // else {
+	            //   dataArray = this.$store.state.sources[requiredDataSource].data[pathToDataArray[0]].[pathToDataArray[1]];
+	            // }
+	          if (dataArray.length < minDataLength) {
+	            result = false;
+	          }
+	        }
+	      }
+	      return result;
+	    },
+	    shouldShowTopic: function shouldShowTopic() {
+	      if (!this.topic.showTopicOnlyIfDataExists) {
+	        return true;
+	      // if showTopicOnlyIfDataExists, but you want to overrule that
+	      } else if (this.showTopicBasedOnOtherData) {
+	        return true;
+	      // if showTopicOnlyIfDataExists and it is not overrulled
+	      } else {
+	        return this.showTopicOnlyIfDataExists;
 	      }
 	    },
 	    shouldShowError: function shouldShowError() {
@@ -3574,8 +3605,6 @@
 	|   __/|___|  /__|____(____  /           \_/ |____/  \___  >          \___  >____/|__|_|  /   __/____  >
 	|__|        \/             \/                            \/               \/            \/|__|       \/
 	*/
-
-	console.log('main.js phila-vue-comps');
 	fontawesomeSvgCore.library.add(faExternalLink_2, faSearch_2, faTimes_2, faTimesCircle_2, faCaretLeft_2, faCaretRight_2);
 
 	exports.pvcStore = pvmStore;
