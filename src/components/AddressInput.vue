@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import debounce from 'lodash.debounce';
+  import debounce from 'lodash-es/debounce';
   import axios from 'axios';
   import generateUniqueId from '../util/unique-id';
 
