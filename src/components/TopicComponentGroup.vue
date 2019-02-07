@@ -59,14 +59,19 @@
       HorizontalTableGroup: () => import(/* webpackChunkName: "horizontalTableGroup" */'./HorizontalTableGroup.vue'),
       PopoverLink: () => import(/* webpackChunkName: "popoverLink" */'./PopoverLink.vue'),
       Popover: () => import(/* webpackChunkName: "popover" */'./Popover.vue'),
+      TabGroup: () => import(/* webpackChunkName: "tabGroup" */'./TabGroup.vue'),
+      BadgeCustom: () => import(/* webpackChunkName: "badgeCustom" */'./BadgeCustom.vue'),
+      Topic: () => import(/* webpackChunkName: "topic" */'./Topic.vue'),
+      TopicSet: () => import(/* webpackChunkName: "topicSet" */'./TopicSet.vue'),
+      AnyHeader: () => import(/* webpackChunkName: "anyHeader" */'./AnyHeader.vue'),
     },
     beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');
-      this.$options.components.TabGroup = TabGroup;
-      this.$options.components.BadgeCustom = BadgeCustom;
-      this.$options.components.Topic = Topic;
-      this.$options.components.TopicSet = TopicSet;
-      this.$options.components.AnyHeader = AnyHeader;
+      // this.$options.components.TabGroup = TabGroup;
+      // this.$options.components.BadgeCustom = BadgeCustom;
+      // this.$options.components.Topic = Topic;
+      // this.$options.components.TopicSet = TopicSet;
+      // this.$options.components.AnyHeader = AnyHeader;
     },
     data() {
       return {
