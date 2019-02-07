@@ -14,7 +14,7 @@ export default {
   mode: 'production',
   // mode: env,
   entry: {
-    'phila-vue-comps': ['./src/main.js'],
+    'phila-vue-comps': ['./src/main.js', './src/fa.js'],
     // './src/main.js'
   },
   // entry: {
