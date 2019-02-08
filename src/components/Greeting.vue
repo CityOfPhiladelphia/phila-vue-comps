@@ -26,17 +26,25 @@
 </template>
 
 <script>
+
+  // const TopicComponent = import(/* webpackChunkName: "inGreeting_pvc_TopicComponent" */'./TopicComponent.vue');
+  // const TopicComponentGroup = import(/* webpackChunkName: "inGreeting_pvc_TopicComponent" */'./TopicComponent.vue');
+
   import TopicComponent from './TopicComponent.vue';
-  import TopicComponentGroup from './TopicComponentGroup.vue';
-  import Image_ from './Image.vue';
-  import AddressInput from './AddressInput.vue';
-  import AddressCandidateList from './AddressCandidateList.vue';
+  // import TopicComponentGroup from './TopicComponentGroup.vue';
+  // import Image_ from './Image.vue';
+  // import AddressInput from './AddressInput.vue';
+  // import AddressCandidateList from './AddressCandidateList.vue';
 
   export default {
     components: {
-      Image_,
-      AddressInput,
-      AddressCandidateList,
+      Image_: () => import(/* webpackChunkName: "inGreeting_pvc_Image" */'./Image.vue'),
+      AddressInput: () => import(/* webpackChunkName: "inGreeting_pvc_AddressInput" */'./AddressInput.vue'),
+      AddressCandidateList: () => import(/* webpackChunkName: "inGreeting_pvc_AddressCandidateList" */'./AddressCandidateList.vue'),
+      TopicComponentGroup: () => import(/* webpackChunkName: "inGreeting_pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
+      // Image_,
+      // AddressInput,
+      // AddressCandidateList,
     },
     mixins: [TopicComponent],
     data() {
@@ -53,11 +61,11 @@
         }
       },
     },
-    beforeCreate() {
-      if (this.$options.components) {
-        this.$options.components.TopicComponentGroup = TopicComponentGroup;
-      }
-    },
+    // beforeCreate() {
+    //   if (this.$options.components) {
+    //     this.$options.components.TopicComponentGroup = TopicComponentGroup;
+    //   }
+    // },
     computed: {
       shouldShowAddressInput() {
         if (this.$config.addressInputLocation == 'topics') {
