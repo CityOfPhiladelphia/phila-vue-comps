@@ -159,8 +159,8 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import HorizontalTableRow from './HorizontalTableRow.vue';
-  import ExternalLink from './ExternalLink.vue';
+  // import HorizontalTableRow from './HorizontalTableRow.vue';
+  // import ExternalLink from './ExternalLink.vue';
   import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinRange } from 'date-fns';
 
 
@@ -212,8 +212,10 @@
       return initialData;
     },
     components: {
-      HorizontalTableRow,
-      ExternalLink,
+      // HorizontalTableRow,
+      HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
+      // ExternalLink,
+      ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./externalLink.vue'),
     },
     // beforeCreate() {
     //   console.log('horizTable before create, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
