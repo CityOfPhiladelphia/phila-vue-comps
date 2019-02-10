@@ -215,7 +215,7 @@
       // HorizontalTableRow,
       HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
       // ExternalLink,
-      ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./externalLink.vue'),
+      ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
     },
     // beforeCreate() {
     //   console.log('horizTable before create, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
