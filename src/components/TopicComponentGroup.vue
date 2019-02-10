@@ -24,7 +24,7 @@
       CollectionSummary: () => import(/* webpackChunkName: "tcg_pvc_CollectionSummary" */'./CollectionSummary.vue'),
       Division: () => import(/* webpackChunkName: "tcg_pvc_Division" */'./Division.vue'),
       ePayForm: () => import(/* webpackChunkName: "tcg_pvc_ePayForm" */'./ePayForm.vue'),
-      ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./externalLink.vue'),
+      ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
       HorizontalTable: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTable" */'./HorizontalTable.vue'),
       Image_: () => import(/* webpackChunkName: "tcg_pvc_Image" */'./Image.vue'),
       VerticalTable: () => import(/* webpackChunkName: "tcg_pvc_VerticalTable" */'./VerticalTable.vue'),
