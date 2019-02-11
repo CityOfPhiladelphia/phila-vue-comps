@@ -14,7 +14,7 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import TopicComponentGroup from './TopicComponentGroup.vue'
+  // import TopicComponentGroup from './TopicComponentGroup.vue'
 
   export default {
     mixins: [TopicComponent],
@@ -43,10 +43,12 @@
         }
       },
     },
-    components: {},
-    beforeCreate() {
-      this.$options.components.TopicComponentGroup = TopicComponentGroup;
-    }
+    components: {
+      TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
+    },
+    // beforeCreate() {
+    //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
+    // }
   };
 </script>
 
