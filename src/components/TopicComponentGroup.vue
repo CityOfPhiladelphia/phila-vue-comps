@@ -18,21 +18,21 @@
     name: 'TopicComponentGroup',
     props: ['topicComponents', 'item', 'filterData'],
     components: {
-      Badge: () => import(/* webpackChunkName: "tcg_pvc_Badge" */'./Badge.vue'),
+      Badge: () => import(/* webpackChunkName: "pvc_Badge" */'./Badge.vue'),
       ButtonComp: () => import(/* webpackChunkName: "tcg_pvc_ButtonComp" */'./ButtonComp.vue'),
       Callout: () => import(/* webpackChunkName: "tcg_pvc_Callout" */'./Callout.vue'),
       CollectionSummary: () => import(/* webpackChunkName: "tcg_pvc_CollectionSummary" */'./CollectionSummary.vue'),
       Division: () => import(/* webpackChunkName: "tcg_pvc_Division" */'./Division.vue'),
       ePayForm: () => import(/* webpackChunkName: "tcg_pvc_ePayForm" */'./ePayForm.vue'),
       ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
-      HorizontalTable: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTable" */'./HorizontalTable.vue'),
+      // HorizontalTable: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTable" */'./HorizontalTable.vue'),
       Image_: () => import(/* webpackChunkName: "tcg_pvc_Image" */'./Image.vue'),
       VerticalTable: () => import(/* webpackChunkName: "tcg_pvc_VerticalTable" */'./VerticalTable.vue'),
       OverlayToggleGroup: () => import(/* webpackChunkName: "tcg_pvc_OverlayToggleGroup" */'./OverlayToggleGroup.vue'),
       Paragraph: () => import(/* webpackChunkName: "tcg_pvc_Paragraph" */'./Paragraph.vue'),
       SpanComp: () => import(/* webpackChunkName: "tcg_pvc_SpanComp" */'./SpanComp.vue'),
       List: () => import(/* webpackChunkName: "tcg_pvc_List" */'./List.vue'),
-      HorizontalTableGroup: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTableGroup" */'./HorizontalTableGroup.vue'),
+      // HorizontalTableGroup: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTableGroup" */'./HorizontalTableGroup.vue'),
       PopoverLink: () => import(/* webpackChunkName: "tcg_pvc_PopoverLink" */'./PopoverLink.vue'),
       Popover: () => import(/* webpackChunkName: "tcg_pvc_Popover" */'./Popover.vue'),
       TabGroup: () => import(/* webpackChunkName: "tcg_pvc_TabGroup" */'./TabGroup.vue'),
@@ -56,6 +56,25 @@
         // therefore won't work with the examples. this is good enough :)
         key: generateUniqueId()
       };
+    },
+    computed: {
+      topicComponentTypes() {
+        let compTypes = []
+        for (let comp of this.$data.topicComponents) {
+          compTypes.push(comp.type);
+        }
+        return compTypes;
+      },
+      horizontalTableLoader() {
+        if (this.topicComponentTypes.includes('horizontal-table')) {
+          return () => import(/* webpackChunkName: "pvc_HorizontalTableLoader" */'./HorizontalTable.vue').then(console.log('after HorizontalTable import'));
+        }
+      },
+      horizontalTableGroupLoader() {
+        if (this.topicComponentTypes.includes('horizontal-table-group')) {
+          return () => import(/* webpackChunkName: "pvc_HorizontalTableGroupLoader" */'./HorizontalTableGroup.vue').then(console.log('after HorizontalTableGroup import'));
+        }
+      },
     },
     methods: {
       getCompKey(compGroupKey, compIndex) {
