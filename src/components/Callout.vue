@@ -22,16 +22,16 @@
 
   export default {
     mixins: [TopicComponent],
-    // components: {
-    //   TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
-    // },
+    components: {
+      TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
+    },
     // beforeCreate() {
     //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
     // }
     computed: {
       topicComponentGroupLoader() {
         if (this.components) {
-          return () => import(/* webpackChunkName: "pvc_topicComponentGroupLoader" */'./TopicComponentGroup.vue').then(console.log('after TopicComponentGroupLoader import'));
+          return () => import(/* webpackChunkName: "pvc_topicComponentGroupLoader" */'./TopicComponentGroupLoader.vue').then(console.log('after TopicComponentGroupLoader import'));
         }
       },
       calloutClass() {
