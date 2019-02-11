@@ -5,9 +5,13 @@
       <p v-if="this.message"
          v-html="this.message"
       />
-      <topic-component-group :topic-components="this.components"
-                             v-if="this.components"
+      <component :is="topicComponentGroupLoader"
+                 :topic-components="this.components"
+                 v-if="this.components"
       />
+      <!-- <topic-component-group :topic-components="this.components"
+                             v-if="this.components"
+      /> -->
     </div>
   </div>
 </template>
@@ -18,7 +22,18 @@
 
   export default {
     mixins: [TopicComponent],
+    components: {
+      TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
+    },
+    // beforeCreate() {
+    //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
+    // }
     computed: {
+      topicComponentGroupLoader() {
+        if (this.components) {
+          return () => import(/* webpackChunkName: "pvc_topicComponentGroupLoader" */'./TopicComponentGroupLoader.vue').then(console.log('after TopicComponentGroupLoader import'));
+        }
+      },
       calloutClass() {
         if (this.$props.options) {
           if (this.$props.options.class) {
@@ -42,13 +57,7 @@
           return null;
         }
       },
-    },
-    components: {
-      TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
-    },
-    // beforeCreate() {
-    //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
-    // }
+    }
   };
 </script>
 
