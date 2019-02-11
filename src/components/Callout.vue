@@ -18,6 +18,12 @@
 
   export default {
     mixins: [TopicComponent],
+    components: {
+      TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
+    },
+    // beforeCreate() {
+    //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
+    // }
     computed: {
       calloutClass() {
         if (this.$props.options) {
@@ -41,14 +47,8 @@
         } else {
           return null;
         }
-      },
-    },
-    components: {
-      TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
-    },
-    // beforeCreate() {
-    //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
-    // }
+      }
+    }
   };
 </script>
 
