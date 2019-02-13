@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('date-fns'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/free-solid-svg-icons/faExternalLink'), require('@fortawesome/vue-fontawesome')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'date-fns', 'escape-html', 'jspdf', 'jspdf-autotable', '@fortawesome/fontawesome-svg-core', '@fortawesome/free-solid-svg-icons/faExternalLink', '@fortawesome/vue-fontawesome'], factory) :
-	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.fontawesomeSvgCore,global.faExternalLink,global.vueFontAwesome));
-}(this, (function (exports,debounce,axios,dateFns,escapeHtml,jsPDF,jspdfAutotable,fontawesomeSvgCore,faExternalLink,vueFontawesome) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('date-fns'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'date-fns', 'escape-html', 'jspdf', 'jspdf-autotable', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
+	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.fontawesomeSvgCore,global.vueFontAwesome));
+}(this, (function (exports,debounce,axios,dateFns,escapeHtml,jsPDF,jspdfAutotable,fontawesomeSvgCore,vueFontawesome) { 'use strict';
 
 	debounce = debounce && debounce.hasOwnProperty('default') ? debounce['default'] : debounce;
 	axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
@@ -17,6 +17,48 @@
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
 	}
+
+	var faExternalLinkAlt = createCommonjsModule(function (module, exports) {
+	Object.defineProperty(exports, '__esModule', { value: true });
+	var prefix = 'fas';
+	var iconName = 'external-link-alt';
+	var width = 576;
+	var height = 512;
+	var ligatures = [];
+	var unicode = 'f35d';
+	var svgPathData = 'M576 24v127.984c0 21.461-25.96 31.98-40.971 16.971l-35.707-35.709-243.523 243.523c-9.373 9.373-24.568 9.373-33.941 0l-22.627-22.627c-9.373-9.373-9.373-24.569 0-33.941L442.756 76.676l-35.703-35.705C391.982 25.9 402.656 0 424.024 0H552c13.255 0 24 10.745 24 24zM407.029 270.794l-16 16A23.999 23.999 0 0 0 384 303.765V448H64V128h264a24.003 24.003 0 0 0 16.97-7.029l16-16C376.089 89.851 365.381 64 344 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V287.764c0-21.382-25.852-32.09-40.971-16.97z';
+
+	exports.definition = {
+	  prefix: prefix,
+	  iconName: iconName,
+	  icon: [
+	    width,
+	    height,
+	    ligatures,
+	    unicode,
+	    svgPathData
+	  ]};
+
+	exports.faExternalLinkAlt = exports.definition;
+	exports.prefix = prefix;
+	exports.iconName = iconName;
+	exports.width = width;
+	exports.height = height;
+	exports.ligatures = ligatures;
+	exports.unicode = unicode;
+	exports.svgPathData = svgPathData;
+	});
+
+	unwrapExports(faExternalLinkAlt);
+	var faExternalLinkAlt_1 = faExternalLinkAlt.definition;
+	var faExternalLinkAlt_2 = faExternalLinkAlt.faExternalLinkAlt;
+	var faExternalLinkAlt_3 = faExternalLinkAlt.prefix;
+	var faExternalLinkAlt_4 = faExternalLinkAlt.iconName;
+	var faExternalLinkAlt_5 = faExternalLinkAlt.width;
+	var faExternalLinkAlt_6 = faExternalLinkAlt.height;
+	var faExternalLinkAlt_7 = faExternalLinkAlt.ligatures;
+	var faExternalLinkAlt_8 = faExternalLinkAlt.unicode;
+	var faExternalLinkAlt_9 = faExternalLinkAlt.svgPathData;
 
 	var faSearch = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, '__esModule', { value: true });
@@ -870,7 +912,7 @@
 
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .external-link[data-v-38fcd5f5] { padding-top: 5px; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-	var ExternalLink = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"external-link"},[_c('a',{attrs:{"target":"_blank","href":_vm.externalLinkHref}},[_vm._v(" "+_vm._s(_vm.externalLinkText)+" "),_c('font-awesome-icon',{attrs:{"icon":"external-link","aria-hidden":"true"}})],1)])},staticRenderFns: [],_scopeId: 'data-v-38fcd5f5',
+	var ExternalLink = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"external-link"},[_c('a',{attrs:{"target":"_blank","href":_vm.externalLinkHref}},[_vm._v(" "+_vm._s(_vm.externalLinkText)+" "),_c('font-awesome-icon',{attrs:{"icon":"external-link-alt","aria-hidden":"true"}})],1)])},staticRenderFns: [],_scopeId: 'data-v-38fcd5f5',
 	  mixins: [TopicComponent],
 	  props: ['count', 'limit', 'type'],
 	  computed: {
@@ -3578,7 +3620,7 @@
 	|   __/|___|  /__|____(____  /           \_/ |____/  \___  >          \___  >____/|__|_|  /   __/____  >
 	|__|        \/             \/                            \/               \/            \/|__|       \/
 	*/
-	fontawesomeSvgCore.library.add(faExternalLink.faExternalLink, faSearch_2, faTimes_2, faTimesCircle_2, faCaretLeft_2, faCaretRight_2);
+	fontawesomeSvgCore.library.add(faExternalLinkAlt_2, faSearch_2, faTimes_2, faTimesCircle_2, faCaretLeft_2, faCaretRight_2);
 
 	exports.pvcStore = pvmStore;
 	exports.AddressCandidateList = AddressCandidateList;
