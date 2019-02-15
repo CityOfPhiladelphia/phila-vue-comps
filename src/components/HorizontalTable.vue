@@ -802,7 +802,7 @@
         } else {
           order = sortOpts.order;
         }
-        console.log('sortField', sortField, 'order', order);
+        // console.log('sortField', sortField, 'order', order);
 
         const valA = getValueFn(a, sortField);
         const valB = getValueFn(b, sortField);

@@ -1478,7 +1478,7 @@
 	    handleRowClick: function handleRowClick(e) {
 	      // console.log('handleRowClick is starting');
 	      if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
-	        console.log('handleRowClick actions are running');
+	        // console.log('handleRowClick actions are running');
 	        if (!this.hasOverlay) { return; }
 
 	        var featureId = this.item._featureId;
@@ -2209,7 +2209,7 @@
 	      } else {
 	        order = sortOpts.order;
 	      }
-	      console.log('sortField', sortField, 'order', order);
+	      // console.log('sortField', sortField, 'order', order);
 
 	      var valA = getValueFn(a, sortField);
 	      var valB = getValueFn(b, sortField);

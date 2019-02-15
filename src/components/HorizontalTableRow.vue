@@ -99,7 +99,7 @@
       handleRowClick(e) {
         // console.log('handleRowClick is starting');
         if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
-          console.log('handleRowClick actions are running');
+          // console.log('handleRowClick actions are running');
           if (!this.hasOverlay) return;
 
           const featureId = this.item._featureId;
