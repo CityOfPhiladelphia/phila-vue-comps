@@ -37,7 +37,7 @@ export default {
       'escape-html': 'escapeHtml',
       'lodash.debounce': 'debounce',
       '@fortawesome/vue-fontawesome': 'vueFontAwesome',
-      '@fortawesome/fontawesome-svg-core': 'fontawesomeSvgCore'
+      '@fortawesome/fontawesome-svg-core': 'FontAwesome'
     },
     sourcemap: true,
   },

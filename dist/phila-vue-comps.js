@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('date-fns'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
 	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'date-fns', 'escape-html', 'jspdf', 'jspdf-autotable', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
-	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.fontawesomeSvgCore,global.vueFontAwesome));
+	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.FontAwesome,global.vueFontAwesome));
 }(this, (function (exports,debounce,axios,dateFns,escapeHtml,jsPDF,jspdfAutotable,fontawesomeSvgCore,vueFontawesome) { 'use strict';
 
 	debounce = debounce && debounce.hasOwnProperty('default') ? debounce['default'] : debounce;
