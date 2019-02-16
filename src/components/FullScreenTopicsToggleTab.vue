@@ -13,6 +13,7 @@
 
 <script>
   export default {
+    name: 'FullScreenTopicsToggleTab',
     props: {
       elementContainer: {
         type: String,
@@ -83,7 +84,11 @@
           el = document.getElementById(this.$props.elementContainer);
         } else {
           el = document.getElementById('map-tag');
+          if (el === null) {
+            el = document.getElementById('topic-panel-container');
+          }
         }
+        // console.log('in FullScreenTopicsToggleTab, setDivHeight, el:', el)
         const mapDivStyle = window.getComputedStyle(el);
         const mapDivHeight = parseFloat(mapDivStyle.getPropertyValue('height').replace('px', ''));
         // console.log('FullScreenTopicsToggleTab setDivHeight is running, el:', el, 'mapDivHeight:', mapDivHeight);
