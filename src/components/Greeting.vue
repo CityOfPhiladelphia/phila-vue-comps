@@ -100,6 +100,7 @@
             <li>1234 Market St</li>
             <li>1001 Pine Street #201</li>
             <li>12th & Market</li>
+            <li>883309050 (an OPA number with no hyphens or other characters)</li>
           </ul>
         `;
       }
