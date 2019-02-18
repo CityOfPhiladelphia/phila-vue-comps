@@ -3569,7 +3569,7 @@
 	    },
 	    errorMessage: function errorMessage() {
 	      var input = this.$store.state.geocode.input;
-	      return ("\n        <p>\n          We couldn't find\n          " + (input ? '<strong>' + input + '</strong>' : 'that address') + ".\n          Are you sure everything was spelled correctly?\n        </p>\n        <p>\n          Here are some examples of things you can search for:\n        </p>\n        <ul>\n          <li>1234 Market St</li>\n          <li>1001 Pine Street #201</li>\n          <li>12th & Market</li>\n        </ul>\n      ");
+	      return ("\n        <p>\n          We couldn't find\n          " + (input ? '<strong>' + input + '</strong>' : 'that address') + ".\n          Are you sure everything was spelled correctly?\n        </p>\n        <p>\n          Here are some examples of things you can search for:\n        </p>\n        <ul>\n          <li>1234 Market St</li>\n          <li>1001 Pine Street #201</li>\n          <li>12th & Market</li>\n          <li>883309050 (an OPA number with no hyphens or other characters)</li>\n        </ul>\n      ");
 	    }
 	  }
 	};
