@@ -138,7 +138,7 @@
              target="_blank"
           >
             {{ externalLinkText }}
-            <font-awesome-icon icon="external-link" aria-hidden="true" />
+            <font-awesome-icon icon="external-link-alt" aria-hidden="true" />
           </a>
         </div> -->
       </div>
