@@ -1,7 +1,7 @@
 {
   "name": "@philly/vue-comps",
   "description": "A library of vue components for js apps",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "author": "City of Philadelphia <maps@phila.gov>",
   "scripts": {
     "build": "rollup -c rollup.config.js",
