@@ -2303,7 +2303,7 @@
 	              itemsFiltered = itemsFiltered.filter(function (item) {
 	                var itemValue = getValue(item);
 	                var isBetween = dateFns.isWithinRange(itemValue, min, max);
-	                console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
+	                // console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
 	                return isBetween;
 	              });
 	              // console.log('ITEMS FILTERED BY TIME FILTER', itemsFiltered);
