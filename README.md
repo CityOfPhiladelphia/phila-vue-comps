@@ -1,15 +1,15 @@
-# phila-vue-comps
+# phila-vue-comps ([@philly/vue-comps](https://www.npmjs.com/package/@philly/vue-comps) in [npmjs.com](https://npmjs.com))
 
 phila-vue-comps is a library of Vue components that can be used in apps which use [Vue.js](https://vuejs.org/v2/guide/) and [Vuex](https://vuex.vuejs.org/).  It includes many data-presentation components such as [Vertical Tables](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki/Vertical-Table) or [Horizontal Tables](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki/Horizontal-Table), etc.
 
 ## To Include The Components In Your App
 * in a bundled app, use npm:
 
-    `npm install phila-vue-comps`
+    `npm install @philly/vue-comps`
 
 * in an html file, use the CDN:
 
-    `<script src="//unpkg.com/@cityofphiladelphia/phila-vue-comps@0.0.9/dist/phila-vue-comps.js"></script>`
+    `<script src="//unpkg.com/@philly/vue-comps@1.0.21/dist/phila-vue-comps.js"></script>`
 
 ## Examples
 
