@@ -77,6 +77,12 @@
       </div> <!-- end of pvc-horizontal-table-controls block -->
 
       <div :class="{ 'pvc-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
+        <a class="button pvc-download-data-button"
+            v-if="this.shouldShowDownloadButton"
+            @click="this.exportTableToCSV"
+        >
+          Download Data
+        </a>
         <div v-if="slots.title">
           <h4 style="display:inline-block">
             {{ evaluateSlot(slots.title) }} {{ countText }}
@@ -84,12 +90,6 @@
           <h5 style="display:inline-block; color: gray">
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
-          <a class="button pvc-download-data-button"
-                  v-if="this.shouldShowDownloadButton"
-                  @click="this.exportTableToCSV"
-          >
-            Download Data
-          </a>
         </div>
 
         <table role="grid" class="stack">
@@ -305,7 +305,9 @@
       },
       shouldShowDownloadButton() {
         let downloadButton = false;
+        console.log("this.options.downloadButton", this.options.downloadButton)
         if (this.options.downloadButton) {
+          console.log("this.options.downloadButton", this.options.downloadButton)
           downloadButton = this.options.downloadButton;
         }
         return downloadButton;
@@ -539,21 +541,23 @@
     },
     methods: {
       exportTableToCSV() {
-        // console.log('exportTableToCSV is running');
+        console.log('exportTableToCSV is running');
 
         // const Json2csvParser = require('json2csv').Parser;
 
         const tableData = []
+        console.log("table", this)
         for (let item of this.items) {
-          // console.log('item:', item);
-          let object = {
-            'address': item.properties.ADDRESS,
-            'distance': item._distance
-          }
+          console.log('item:', item);
+          let object = item
           tableData.push(object);
         }
-        const fields = ['address', 'distance'];
+        // const fields = ['address', 'distance'];
+        console.log('tableData:', tableData);
+        const fields = this.fields
+        // const fields = this.fields.map( a => a.label)
         const opts = { fields };
+        console.log("fields", opts, "tableData: ", tableData);
 
         try {
           // const parser = new Json2csvParser(opts);
@@ -570,6 +574,7 @@
           // lineDelimiter = args.lineDelimiter || '\n';
 
           keys = Object.keys(data[0]);
+          console.log("keys: ", keys);
 
           result = '';
           result += keys.join(columnDelimiter);
@@ -593,8 +598,8 @@
           let filename;
           let link;
 
-          // filename = 'export.csv';
-          filename = this.$props.options.downloadFile + '.csv' || 'export.csv';
+          filename = 'export.csv';
+          // filename = 'this.$props.options.downloadFile + '.csv' || 'export.csv'';
 
           if (!csv.match(/^data:text\/csv/i)) {
               csv = 'data:text/csv;charset=utf-8,' + csv;
