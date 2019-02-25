@@ -305,9 +305,7 @@
       },
       shouldShowDownloadButton() {
         let downloadButton = false;
-        console.log("this.options.downloadButton", this.options.downloadButton)
         if (this.options.downloadButton) {
-          console.log("this.options.downloadButton", this.options.downloadButton)
           downloadButton = this.options.downloadButton;
         }
         return downloadButton;
@@ -541,23 +539,20 @@
     },
     methods: {
       exportTableToCSV() {
-        console.log('exportTableToCSV is running');
+        // console.log('exportTableToCSV is running');
 
         // const Json2csvParser = require('json2csv').Parser;
 
         const tableData = []
-        console.log("table", this)
         for (let item of this.items) {
-          console.log('item:', item);
           let object = item
           tableData.push(object);
         }
         // const fields = ['address', 'distance'];
-        console.log('tableData:', tableData);
         const fields = this.fields
         // const fields = this.fields.map( a => a.label)
         const opts = { fields };
-        console.log("fields", opts, "tableData: ", tableData);
+        // console.log("fields", fields, "tableData: ", tableData);
 
         try {
           // const parser = new Json2csvParser(opts);
@@ -573,43 +568,58 @@
           // columnDelimiter = args.columnDelimiter || ',';
           // lineDelimiter = args.lineDelimiter || '\n';
 
-          keys = Object.keys(data[0]);
-          console.log("keys: ", keys);
+          // keys = Object.keys(data[0]);
+          keys = fields.map(a => a.value);
+          let state = this.$store.state
+
+          // console.log(keys.map( key => key(state, item)))
+
 
           result = '';
-          result += keys.join(columnDelimiter);
+          result += fields.map(field => field.label).join(columnDelimiter);
           result += lineDelimiter;
 
-          data.forEach(function(item) {
-              ctr = 0;
-              keys.forEach(function(key) {
-                  if (ctr > 0) result += columnDelimiter;
+          data = data.map( item => (keys.map( key => '"'+key(state, item)+'"')));
 
-                  result += item[key];
-                  ctr++;
-              });
-              result += lineDelimiter;
-          });
+          result += data.map( item => item).join(lineDelimiter);
+          // console.log("result: ", result, "data: ", data)
+
+          // data.forEach(function(item) {
+          //
+          //
+          //
+          //
+          //     ctr = 0;
+          //     keys.forEach(function(key) {
+          //         if (ctr > 0) result += columnDelimiter;
+          //
+          //         result += item[key];
+          //         ctr++;
+          //     });
+          //     result += lineDelimiter;
+          // });
+
 
           let csv = result;
-          // console.log('csv', csv);
-          // let csv = parser.parse(tableData);
+          // let csv = parser.parse(result);
           data = null;
           let filename;
           let link;
-
+          //
           filename = 'export.csv';
           // filename = 'this.$props.options.downloadFile + '.csv' || 'export.csv'';
 
           if (!csv.match(/^data:text\/csv/i)) {
-              csv = 'data:text/csv;charset=utf-8,' + csv;
+              csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+              // console.log('csv', csv);
           }
-          data = encodeURI(csv);
 
           link = document.createElement('a');
-          link.setAttribute('href', data);
+          link.setAttribute('href', csv);
           link.setAttribute('download', filename);
           link.click();
+
+          // console.log("link: ", link)
 
         } catch (err) {
           console.error(err);

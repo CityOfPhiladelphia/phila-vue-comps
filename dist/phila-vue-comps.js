@@ -1697,9 +1697,7 @@
 	    },
 	    shouldShowDownloadButton: function shouldShowDownloadButton() {
 	      var downloadButton = false;
-	      console.log("this.options.downloadButton", this.options.downloadButton);
 	      if (this.options.downloadButton) {
-	        console.log("this.options.downloadButton", this.options.downloadButton);
 	        downloadButton = this.options.downloadButton;
 	      }
 	      return downloadButton;
@@ -1939,29 +1937,24 @@
 	  },
 	  methods: {
 	    exportTableToCSV: function exportTableToCSV() {
-	      console.log('exportTableToCSV is running');
+	      // console.log('exportTableToCSV is running');
 
 	      // const Json2csvParser = require('json2csv').Parser;
 
 	      var tableData = [];
-	      console.log("table", this);
 	      for (var i = 0, list = this.items; i < list.length; i += 1) {
 	        var item = list[i];
 
-	        console.log('item:', item);
 	        var object = item;
 	        tableData.push(object);
 	      }
 	      // const fields = ['address', 'distance'];
-	      console.log('tableData:', tableData);
 	      var fields = this.fields;
-	      // const fields = this.fields.map( a => a.label)
-	      var opts = { fields: fields };
-	      console.log("fields", opts, "tableData: ", tableData);
+	      // console.log("fields", fields, "tableData: ", tableData);
 
 	      try {
 	        // const parser = new Json2csvParser(opts);
-	        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+	        var result, keys, columnDelimiter, lineDelimiter, data;
 
 	        data = tableData || null;
 	        if (data == null || !data.length) {
@@ -1973,43 +1966,58 @@
 	        // columnDelimiter = args.columnDelimiter || ',';
 	        // lineDelimiter = args.lineDelimiter || '\n';
 
-	        keys = Object.keys(data[0]);
-	        console.log("keys: ", keys);
+	        // keys = Object.keys(data[0]);
+	        keys = fields.map(function (a) { return a.value; });
+	        var state = this.$store.state;
+
+	        // console.log(keys.map( key => key(state, item)))
+
 
 	        result = '';
-	        result += keys.join(columnDelimiter);
+	        result += fields.map(function (field) { return field.label; }).join(columnDelimiter);
 	        result += lineDelimiter;
 
-	        data.forEach(function(item) {
-	            ctr = 0;
-	            keys.forEach(function(key) {
-	                if (ctr > 0) { result += columnDelimiter; }
+	        data = data.map( function (item) { return (keys.map( function (key) { return '"'+key(state, item)+'"'; })); });
 
-	                result += item[key];
-	                ctr++;
-	            });
-	            result += lineDelimiter;
-	        });
+	        result += data.map( function (item) { return item; }).join(lineDelimiter);
+	        // console.log("result: ", result, "data: ", data)
+
+	        // data.forEach(function(item) {
+	        //
+	        //
+	        //
+	        //
+	        //     ctr = 0;
+	        //     keys.forEach(function(key) {
+	        //         if (ctr > 0) result += columnDelimiter;
+	        //
+	        //         result += item[key];
+	        //         ctr++;
+	        //     });
+	        //     result += lineDelimiter;
+	        // });
+
 
 	        var csv = result;
-	        // console.log('csv', csv);
-	        // let csv = parser.parse(tableData);
+	        // let csv = parser.parse(result);
 	        data = null;
 	        var filename;
 	        var link;
-
+	        //
 	        filename = 'export.csv';
 	        // filename = 'this.$props.options.downloadFile + '.csv' || 'export.csv'';
 
 	        if (!csv.match(/^data:text\/csv/i)) {
-	            csv = 'data:text/csv;charset=utf-8,' + csv;
+	            csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+	            // console.log('csv', csv);
 	        }
-	        data = encodeURI(csv);
 
 	        link = document.createElement('a');
-	        link.setAttribute('href', data);
+	        link.setAttribute('href', csv);
 	        link.setAttribute('download', filename);
 	        link.click();
+
+	        // console.log("link: ", link)
 
 	      } catch (err) {
 	        console.error(err);
