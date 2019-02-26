@@ -78,7 +78,9 @@
 
       <div :class="{ 'pvc-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
         <a class="button pvc-download-data-button"
-            v-if="this.shouldShowDownloadButton"
+            v-if="this.shouldShowDownloadButton
+                    && this.$store.state.fullScreenTopicsEnabled !== true
+                    && this.$store.state.fullScreenMapEnabled !== true"
             @click="this.exportTableToCSV"
         >
           Download Data
@@ -881,17 +883,60 @@
 </script>
 
 <style scoped>
+
+  table {
+    /* table-layout: fixed; */
+    margin: 0;
+  }
+
+  .center-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .external-link {
+    padding-top: 5px;
+  }
+
+  .filter-by-text-form {
+    border: 2px solid #0f4d90;
+  }
+
+  .group:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
   .inline-block {
     display: inline-block;
   }
-
-  .vertically-centered {
-    display: inline-block;
-    vertical-align: middle;
+  .loading {
+    float: right;
   }
 
+  .no-padding {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .position-relative {
+    position: relative !important;
+  }
+
+  .pvc-download-data-button {
+    float: right;
+    vertical-align: baseline;
+    display: inline-block;
+  }
   .pvc-horizontal-table {
     margin-bottom: 10px !important;
+  }
+
+  .pvc-horizontal-table-body {
+    padding-top: 1rem;
+    padding-bottom: 0.35rem;
   }
 
   .pvc-horizontal-table-controls {
@@ -900,11 +945,31 @@
     margin-bottom: 10px;
   }
 
-  /* dropdown filters */
-  .pvc-select-text {
+  /*REVIEW this repeats a lot of .pvc-search-control-input. can it be refactored?*/
+
+  .pvc-search-control-button {
+    width: 40px;
+    background: #ccc;
+    line-height: 40px;
+    float: right;
+  }
+
+  /* input filters using text */
+  .pvc-search-control-input {
+    height: 40px !important;
+    line-height: 48px;
+    padding: 8px;
     font-size: 16px;
-    padding-right: 5px;
-    padding-left: 5px;
+    width: 300px;
+    /*margin-left: 10px;*/
+  }
+
+  .pvc-search-control-input-full {
+    height: 40px !important;
+    line-height: 48px;
+    padding: 8px;
+    font-size: 16px;
+    width: 260px;
   }
 
   .pvc-select {
@@ -920,74 +985,16 @@
     margin-right: 100px;
   }
 
-  /* input filters using text */
-  .pvc-search-control-input {
-    height: 40px !important;
-    line-height: 48px;
-    padding: 8px;
+  /* dropdown filters */
+  .pvc-select-text {
     font-size: 16px;
-    width: 300px;
-    /*margin-left: 10px;*/
+    padding-right: 5px;
+    padding-left: 5px;
   }
 
-  /*REVIEW this repeats a lot of .pvc-search-control-input. can it be refactored?*/
-  .pvc-search-control-input-full {
-    height: 40px !important;
-    line-height: 48px;
-    padding: 8px;
-    font-size: 16px;
-    width: 260px;
-  }
-
-  .pvc-search-control-button {
-    width: 40px;
-    background: #ccc;
-    line-height: 40px;
-    float: right;
-  }
-
-  .pvc-download-data-button {
-    float: right;
-    vertical-align: baseline;
+  .vertically-centered {
     display: inline-block;
+    vertical-align: middle;
   }
 
-  .group:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  .pvc-horizontal-table-body {
-    padding-top: 1rem;
-    padding-bottom: 0.35rem;
-  }
-
-  .no-padding {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .center-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .loading {
-    float: right;
-  }
-
-  .filter-by-text-form {
-    border: 2px solid #0f4d90;
-  }
-
-  table {
-    /* table-layout: fixed; */
-    margin: 0;
-  }
-
-  .external-link {
-    padding-top: 5px;
-  }
 </style>
