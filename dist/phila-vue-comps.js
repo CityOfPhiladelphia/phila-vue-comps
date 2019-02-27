@@ -1968,6 +1968,10 @@
 	        // columnDelimiter = args.columnDelimiter || ',';
 	        // lineDelimiter = args.lineDelimiter || '\n';
 
+	        if (this.options.expandDataDownload) {
+	          this.options.expandedData();
+	        }
+	        
 	        // keys = Object.keys(data[0]);
 	        keys = fields.map(function (a) { return a.value; });
 	        var state = this.$store.state;
@@ -1979,25 +1983,10 @@
 	        result += fields.map(function (field) { return field.label; }).join(columnDelimiter);
 	        result += lineDelimiter;
 
-	        data = data.map( function (item) { return (keys.map( function (key) { return '"'+key(state, item)+'"'; })); });
+
+	        data = data.map( function (item) { return (keys.map( function (key) { return '"' + key(state, item) + '"'; })); });
 
 	        result += data.map( function (item) { return item; }).join(lineDelimiter);
-	        // console.log("result: ", result, "data: ", data)
-
-	        // data.forEach(function(item) {
-	        //
-	        //
-	        //
-	        //
-	        //     ctr = 0;
-	        //     keys.forEach(function(key) {
-	        //         if (ctr > 0) result += columnDelimiter;
-	        //
-	        //         result += item[key];
-	        //         ctr++;
-	        //     });
-	        //     result += lineDelimiter;
-	        // });
 
 
 	        var csv = result;
@@ -3249,7 +3238,7 @@
 	  }
 	};
 
-	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .toggle-tab[data-v-25262138] { display: none; } .align-span[data-v-25262138] { margin-left: 14px; } @media screen and (min-width: 46.875em) { .toggle-tab[data-v-25262138] { position: absolute; top: 0px; border-width: 1.3px; border-style: solid; border-color: #CAC9C9; height: 24px; line-height: 16px; width:48px; background-color: white; display: inline-block; z-index: 500; opacity: 0.7; /* border-left-style: solid; */ /* box-shadow: 2px 2px 7px grey; */ } } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
+	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .toggle-tab[data-v-25262138] { display: none; } .align-span[data-v-25262138] { margin-left: 14px; } @media screen and (min-width: 46.875em) { .toggle-tab[data-v-25262138] { position: fixed; top: inherit; border-width: 1.3px; border-style: solid; border-color: #CAC9C9; height: 24px; line-height: 16px; width:48px; background-color: white; display: inline-block; z-index: 500; opacity: 0.7; /* border-left-style: solid; */ /* box-shadow: 2px 2px 7px grey; */ } } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
 
 

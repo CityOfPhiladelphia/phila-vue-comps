@@ -93,8 +93,8 @@
 
   @media screen and (min-width: 46.875em) {
     .toggle-tab {
-      position: absolute;
-      top: 0px;
+      position: fixed;
+      top: inherit;
       border-width: 1.3px;
       border-style: solid;
       border-color: #CAC9C9;

@@ -570,6 +570,10 @@
           // columnDelimiter = args.columnDelimiter || ',';
           // lineDelimiter = args.lineDelimiter || '\n';
 
+          if (this.options.expandDataDownload) {
+            this.options.expandedData()
+          }
+          
           // keys = Object.keys(data[0]);
           keys = fields.map(a => a.value);
           let state = this.$store.state
@@ -581,25 +585,10 @@
           result += fields.map(field => field.label).join(columnDelimiter);
           result += lineDelimiter;
 
-          data = data.map( item => (keys.map( key => '"'+key(state, item)+'"')));
+
+          data = data.map( item => (keys.map( key => '"' + key(state, item) + '"')));
 
           result += data.map( item => item).join(lineDelimiter);
-          // console.log("result: ", result, "data: ", data)
-
-          // data.forEach(function(item) {
-          //
-          //
-          //
-          //
-          //     ctr = 0;
-          //     keys.forEach(function(key) {
-          //         if (ctr > 0) result += columnDelimiter;
-          //
-          //         result += item[key];
-          //         ctr++;
-          //     });
-          //     result += lineDelimiter;
-          // });
 
 
           let csv = result;
