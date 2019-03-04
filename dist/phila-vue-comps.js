@@ -1477,24 +1477,20 @@
 	    },
 	    handleRowClick: function handleRowClick(e) {
 	      // console.log('handleRowClick is starting');
-	      if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
-	        // console.log('handleRowClick actions are running');
+	      if(this.$store.state.activeModal && this.$props.options.clickEnabled ) {
 	        if (!this.hasOverlay) { return; }
-
 	        var featureId = this.item._featureId;
-	        var tableId = this.tableId;
-	        this.$store.commit('setActiveFeature', { featureId: featureId, tableId: tableId });
+	        this.$store.commit('setActiveModal', { featureId: featureId });
 	      }
 	    },
 	    handleRowMouseout: function handleRowMouseout(e) {
-	      // console.log('handleRowMouseout is starting');
-	      // if(!this.isMobileOrTablet) {
+	      if(!this.isMobileOrTablet) {
 	        // console.log('handleRowMouseout actions are running');
-	        if(!this.$props.options.mouseOverDisabled) {
+	        if(!this.$props.options.mouseOverDisabled && this.$store.state.activeModal.featureId === null) {
 	          if (!this.hasOverlay) { return; }
 	          this.$store.commit('setActiveFeature', null);
 	        }
-	      // }
+	      }
 	    },
 	    // REVIEW there's very similar code in the controller. if these can be
 	    // the same thing, make it into a util.
