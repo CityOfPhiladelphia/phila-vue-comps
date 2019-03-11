@@ -19,7 +19,7 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import Checkbox from './Checkbox.vue';
+  import Checkbox from '@philly/vue-mapping/src/esri-leaflet/Checkbox.vue';
 
   export default {
     mixins: [TopicComponent],
