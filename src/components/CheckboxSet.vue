@@ -22,7 +22,7 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import Checkbox from '@philly/vue-mapping/src/esri-leaflet/Checkbox.vue';
+  import Checkbox from '@philly/vue-comps/src/esri-leaflet/Checkbox.vue';
   // import LegendBox from './LegendBox.vue';
   // import Slider from './Slider.vue';
 
