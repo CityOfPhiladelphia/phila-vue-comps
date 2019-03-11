@@ -2,7 +2,6 @@
   <div>
     <form action="#/">
       <fieldset class="options">
-        <!-- <ul class="no-bullet"> -->
           <checkbox v-for="(currentWmLayer, index) in this.currentWmLayers"
                     :layer="currentWmLayer.layer"
                     :layerName="currentWmLayer.title"
@@ -12,9 +11,7 @@
                     :legend="currentWmLayer.legend"
                     :key="currentWmLayer.id"
           >
-          <!-- :tags="currentWmLayer.tags" -->
           </checkbox>
-        <!-- </ul> -->
       </fieldset>
     </form>
   </div>
@@ -22,22 +19,13 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import Checkbox from '@philly/vue-comps/src/esri-leaflet/Checkbox.vue';
-  // import LegendBox from './LegendBox.vue';
-  // import Slider from './Slider.vue';
+  import Checkbox from './Checkbox.vue';
 
   export default {
     mixins: [TopicComponent],
     components: {
       Checkbox
-      // LegendBox,
-      // Slider
     },
-    // data() {
-    //   return {
-    //     opa: this.$props.opacity * 100
-    //   }
-    // },
     computed: {
       categories() {
         return this.$store.state.map.categories;
