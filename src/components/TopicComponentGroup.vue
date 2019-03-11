@@ -40,6 +40,7 @@
       Topic: () => import(/* webpackChunkName: "tcg_pvc_Topic" */'./Topic.vue'),
       TopicSet: () => import(/* webpackChunkName: "tcg_pvc_TopicSet" */'./TopicSet.vue'),
       AnyHeader: () => import(/* webpackChunkName: "tcg_pvc_AnyHeader" */'./AnyHeader.vue'),
+      CheckboxSet: () => import(/* webpackChunkName: "tcg_pvc_CheckboxSet" */'./CheckboxSet.vue'),
     },
     beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');
