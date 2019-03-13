@@ -36,35 +36,51 @@
       scale() {
         return this.$store.state.map.scale;
       },
+      topicLayers() {
+        if (this.$props.options.topicLayers) {
+          return this.$props.options.topicLayers;
+        } else {
+          // if no topicLayers are provided, use all
+          let titles = [];
+          for (let layer of this.$store.state.map.webMapLayersAndRest) {
+            titles.push(layer.title);
+          }
+          return titles;
+        }
+      },
+      activeLayers() {
+        return this.$store.state.map.webMapActiveLayers;
+      },
       currentWmLayers() {
         const layers = this.$store.state.map.webMapLayersAndRest;
-        const topicLayers = this.$props.options.topicLayers;
+        const topicLayers = this.topicLayers;
         let currentLayers = [];
+
+        // loop through all layers to calculate currentLayers
         for (let layer of layers) {
+          const lcFilter = this.inputLayerFilter.toLowerCase();
+          const lcTitle = layer.title.toLowerCase();
+
           if (layer.tags) {
+            const lcTags = layer.tags.join().toLowerCase();
             if (
-              topicLayers.includes(layer.title) && layer.title.toLowerCase().includes(this.inputLayerFilter.toLowerCase()) && layer.tags.join().toLowerCase().includes(this.inputTagsFilter.toLowerCase()) && layer.category.includes(this.selectedCategory)
-              || topicLayers.includes(layer.title) && this.$store.state.map.webMapActiveLayers.includes(layer.title)
+              topicLayers.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory) && lcTags.includes(lcFilter)
+              || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
             ) {
-              // if (this.inputTagsFilter !== '') {
-              //   for (let layerTag of layer.tags) {
-              //     if (layerTag.toLowerCase().includes(this.inputTagsFilter.toLowerCase())) {
-              //       console.log('layerTag:', layerTag);
-              //     }
-              //   }
-              // }
               currentLayers.push(layer)
             }
           } else if (this.inputTagsFilter !== '') {
             continue;
+
           } else {
             if (
-              topicLayers.includes(layer.title) && layer.title.toLowerCase().includes(this.inputLayerFilter.toLowerCase()) && layer.category.includes(this.selectedCategory)
-              || topicLayers.includes(layer.title) && this.$store.state.map.webMapActiveLayers.includes(layer.title)
+              topicLayers.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory)
+              || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
             ) {
               currentLayers.push(layer)
             }
           }
+
         }
         return currentLayers;
       },
