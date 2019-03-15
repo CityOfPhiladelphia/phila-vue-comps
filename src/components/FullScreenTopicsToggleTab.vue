@@ -13,28 +13,32 @@
 
 <script>
   export default {
-    props: {
-      elementContainer: {
-        type: String,
-        default: 'topic-panel-container'
-      }
-    },
+    name: 'FullScreenTopicsToggleTab',
     data() {
       return {
-        'divHeight': 0,
         'buttonPosition': 0,
       }
     },
     mounted() {
-      window.addEventListener('resize', this.setDivHeight);
-      this.setDivHeight();
+      this.setDivHeight(this.windowDim);
+    },
+    watch: {
+      picOrCycloActive() {
+        this.setDivHeight(this.windowDim);
+      },
+      windowDim(nextDim) {
+        this.setDivHeight(nextDim);
+      }
     },
     computed: {
+      windowDim() {
+        return this.$store.state.windowDimensions;
+      },
       fullScreenMapEnabled() {
         return this.$store.state.fullScreenMapEnabled;
       },
       fullScreenTopicsEnabled() {
-        console.log('this.$store.state.fullScreenTopicsEnabled:', this.$store.state.fullScreenTopicsEnabled);
+        // console.log('this.$store.state.fullScreenTopicsEnabled:', this.$store.state.fullScreenTopicsEnabled);
         return this.$store.state.fullScreenTopicsEnabled;// || true;
       },
       isMobileOrTablet() {
@@ -69,26 +73,13 @@
         }
       }
     },
-    watch: {
-      picOrCycloActive() {
-        this.$nextTick(() => {
-          this.setDivHeight();
-        })
-      }
-    },
     methods: {
-      setDivHeight() {
-        let el;
-        if (this.fullScreenTopicsEnabled) {
-          el = document.getElementById(this.$props.elementContainer);
+      setDivHeight(dim) {
+        if (!this.picOrCycloActive) {
+          this.buttonPosition = (dim.height-48)/2 + 'px';
         } else {
-          el = document.getElementById('map-tag');
+          this.buttonPosition = (dim.height-48)/4 + 'px';
         }
-        const mapDivStyle = window.getComputedStyle(el);
-        const mapDivHeight = parseFloat(mapDivStyle.getPropertyValue('height').replace('px', ''));
-        // console.log('FullScreenTopicsToggleTab setDivHeight is running, el:', el, 'mapDivHeight:', mapDivHeight);
-
-        this.buttonPosition = (mapDivHeight-48)/2 + 'px';
       },
       handleFullScreenTopicsToggleButtonClick(e) {
         const prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
@@ -100,21 +91,6 @@
 </script>
 
 <style scoped>
-
-  /* .toggle-tab {
-    position: absolute;
-    left: 0px;
-    border-width: 1.3px;
-    border-color: #CAC9C9;
-    height: 48px;
-    line-height: 58px;
-    width:24px;
-    background-color: white;
-    display: inline-block;
-    z-index: 500; */
-    /* border-left-style: solid; */
-    /* box-shadow: 2px 2px 7px grey; */
-  /* } */
 
   .toggle-tab {
     display: none;
@@ -138,8 +114,6 @@
       display: inline-block;
       z-index: 500;
       opacity: 0.7;
-      /* border-left-style: solid; */
-      /* box-shadow: 2px 2px 7px grey; */
     }
   }
 

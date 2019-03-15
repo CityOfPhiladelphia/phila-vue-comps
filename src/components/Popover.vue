@@ -53,7 +53,7 @@
   };
 </script>
 
-<style>
+<style scoped>
 
   .pl-alert {
     position: fixed;

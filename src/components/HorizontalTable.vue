@@ -138,7 +138,7 @@
              target="_blank"
           >
             {{ externalLinkText }}
-            <font-awesome-icon icon="external-link" aria-hidden="true" />
+            <font-awesome-icon icon="external-link-alt" aria-hidden="true" />
           </a>
         </div> -->
       </div>
@@ -159,8 +159,8 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import HorizontalTableRow from './HorizontalTableRow.vue';
-  import ExternalLink from './ExternalLink.vue';
+  // import HorizontalTableRow from './HorizontalTableRow.vue';
+  // import ExternalLink from './ExternalLink.vue';
   import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinRange } from 'date-fns';
 
 
@@ -212,8 +212,10 @@
       return initialData;
     },
     components: {
-      HorizontalTableRow,
-      ExternalLink,
+      // HorizontalTableRow,
+      HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
+      // ExternalLink,
+      ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
     },
     // beforeCreate() {
     //   console.log('horizTable before create, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
@@ -601,7 +603,7 @@
           }
           tableData.push(theArray);
         }
-        console.log('tableData:', tableData);
+        // console.log('tableData:', tableData);
         // var doc = new jsPDF();
         var doc = new jsPDF('p', 'pt');
         doc.setFontSize(12);
@@ -712,15 +714,35 @@
             filename = 'export.csv';
           }
 
+          let csv_notIE
           if (!csv.match(/^data:text\/csv/i)) {
-              csv = 'data:text/csv;charset=utf-8,' + csv;
+              csv_notIE = 'data:text/csv;charset=utf-8,' + csv;
           }
-          data = encodeURI(csv);
+          data = encodeURI(csv_notIE);
 
-          link = document.createElement('a');
-          link.setAttribute('href', data);
-          link.setAttribute('download', filename);
-          link.click();
+          var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+          var isFirefox = typeof InstallTrigger !== 'undefined';
+          var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+          var isIE = /*@cc_on!@*/false || !!document.documentMode;
+          var isEdge = !isIE && !!window.StyleMedia;
+          var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+          var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+          if (isIE) {
+            var oWin = window.open();
+            oWin.document.write('sep=,\r\n' + csv);
+            oWin.document.close();
+            oWin.document.execCommand('SaveAs', true, filename);
+            oWin.close();
+          } else {
+            link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute('download', filename);
+            link.click();
+          }
+
+
+
 
         } catch (err) {
           console.error(err);
@@ -782,7 +804,7 @@
         this.sortField = value;
       },
       handleFilterValueChange(e) {
-        console.log('handle filter value change', e);
+        // console.log('handle filter value change', e);
 
         const target = e.target;
         const slug = target.value;
@@ -842,7 +864,7 @@
                 // });
                 break;
               case 'time':
-                console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
+                // console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
                 let min, max;
                 let min2, max2;
                 let subFn, addFn
@@ -874,7 +896,7 @@
                 if (direction === 'subtract') {
                   max = new Date();
                   min = subFn(max, value);
-                  console.log('max:', max, 'min', min);
+                  // console.log('max:', max, 'min', min);
                 } else if (direction === 'add') {
                   max = new Date();
                   min = addFn(max, value);
@@ -943,7 +965,7 @@
         } else {
           order = sortOpts.order;
         }
-        console.log('sortField', sortField, 'order', order);
+        // console.log('sortField', sortField, 'order', order);
 
         const valA = getValueFn(a, sortField);
         const valB = getValueFn(b, sortField);

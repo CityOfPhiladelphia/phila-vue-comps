@@ -35,14 +35,15 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import HorizontalTable from './HorizontalTable.vue';
+  // import HorizontalTable from './HorizontalTable.vue';
   // import TopicComponentGroup from '../TopicComponentGroup.vue';
 
   export default {
     // name: 'HorizontalTableGroup',
     mixins: [TopicComponent],
     components: {
-      HorizontalTable,
+      // HorizontalTable,
+      HorizontalTable: () => import(/* webpackChunkName: "htg_pvc_HorizontalTable" */'./HorizontalTable.vue'),
       // TopicComponentGroup
     },
     // some internal state for things local enough that they shouldn't be in

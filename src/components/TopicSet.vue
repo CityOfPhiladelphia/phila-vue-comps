@@ -25,7 +25,8 @@
     methods: {
       setDefaultTopicActive() {
         if (this.$props.options.defaultTopic) {
-          this.$store.state.activeTopic = this.$props.options.defaultTopic;
+          this.$store.commit('setActiveTopic', this.$props.options.defaultTopic);
+          // this.$store.state.activeTopic = this.$props.options.defaultTopic;
         }
       }
     }

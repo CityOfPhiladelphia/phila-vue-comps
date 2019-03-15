@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import debounce from 'lodash.debounce';
+  import debounce from 'lodash-es/debounce';
   import axios from 'axios';
   import generateUniqueId from '../util/unique-id';
 
@@ -269,6 +269,8 @@
   background: #2176d2;
   padding: 0px;
   width: 50px;
+  margin-left: 1.5px;
+  margin-right: 1.5px;
 }
 
 .pvc-button-non-mobile {
