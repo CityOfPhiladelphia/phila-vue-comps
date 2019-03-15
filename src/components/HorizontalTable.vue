@@ -714,15 +714,35 @@
             filename = 'export.csv';
           }
 
+          let csv_notIE
           if (!csv.match(/^data:text\/csv/i)) {
-              csv = 'data:text/csv;charset=utf-8,' + csv;
+              csv_notIE = 'data:text/csv;charset=utf-8,' + csv;
           }
-          data = encodeURI(csv);
+          data = encodeURI(csv_notIE);
 
-          link = document.createElement('a');
-          link.setAttribute('href', data);
-          link.setAttribute('download', filename);
-          link.click();
+          var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+          var isFirefox = typeof InstallTrigger !== 'undefined';
+          var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+          var isIE = /*@cc_on!@*/false || !!document.documentMode;
+          var isEdge = !isIE && !!window.StyleMedia;
+          var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+          var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+          if (isIE) {
+            var oWin = window.open();
+            oWin.document.write('sep=,\r\n' + csv);
+            oWin.document.close();
+            oWin.document.execCommand('SaveAs', true, filename);
+            oWin.close();
+          } else {
+            link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute('download', filename);
+            link.click();
+          }
+
+
+
 
         } catch (err) {
           console.error(err);
