@@ -603,7 +603,7 @@
           }
           tableData.push(theArray);
         }
-        console.log('tableData:', tableData);
+        // console.log('tableData:', tableData);
         // var doc = new jsPDF();
         var doc = new jsPDF('p', 'pt');
         doc.setFontSize(12);
@@ -784,7 +784,7 @@
         this.sortField = value;
       },
       handleFilterValueChange(e) {
-        console.log('handle filter value change', e);
+        // console.log('handle filter value change', e);
 
         const target = e.target;
         const slug = target.value;
@@ -844,7 +844,7 @@
                 // });
                 break;
               case 'time':
-                console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
+                // console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
                 let min, max;
                 let min2, max2;
                 let subFn, addFn
@@ -876,7 +876,7 @@
                 if (direction === 'subtract') {
                   max = new Date();
                   min = subFn(max, value);
-                  console.log('max:', max, 'min', min);
+                  // console.log('max:', max, 'min', min);
                 } else if (direction === 'add') {
                   max = new Date();
                   min = addFn(max, value);
@@ -945,7 +945,7 @@
         } else {
           order = sortOpts.order;
         }
-        console.log('sortField', sortField, 'order', order);
+        // console.log('sortField', sortField, 'order', order);
 
         const valA = getValueFn(a, sortField);
         const valB = getValueFn(b, sortField);
