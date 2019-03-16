@@ -4,7 +4,6 @@
   "version": "1.0.23",
   "author": "City of Philadelphia <maps@phila.gov>",
   "scripts": {
-    "test": "test",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
