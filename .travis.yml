@@ -1,8 +1,8 @@
 language: node_js
 node_js:
   - node
-# before_install:
-#   - printf "@fortawesome:registry=https://npm.fontawesome.com/\n//npm.fontawesome.com/:_authToken=${FA_AUTH_TOKEN}" >> ~/.npmrc
+before_install:
+  - printf "@fortawesome:registry=https://npm.fontawesome.com/\n//npm.fontawesome.com/:_authToken=${FA_AUTH_TOKEN}" >> ~/.npmrc
 # script: npm run build
 before_deploy:
   - rm -rf node_modules
