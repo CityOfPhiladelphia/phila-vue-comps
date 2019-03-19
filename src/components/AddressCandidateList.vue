@@ -23,6 +23,7 @@
 <script>
 
   export default {
+    name: 'AddressCandidateList',
     data() {
       const data = {
         listStyle: {

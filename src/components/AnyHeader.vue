@@ -32,6 +32,7 @@
   import TopicComponent from './TopicComponent.vue';
 
   export default {
+    name: 'AnyHeader',
     mixins: [TopicComponent],
     computed: {
       headerType() {

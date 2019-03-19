@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format } from 'date-fns';
 import escapeHtml from 'escape-html';
 
 /*
@@ -29,7 +29,7 @@ export default function (data) {
   }
 
   // get the current date/time in iso format with timezone
-  const timestamp = moment().format();
+  let timestamp = format(new Date(), 'YYYY-MM-DDTHH:mm:ssZ');
 
   // TODO use a json to xml lib instead of forming this string?
   const xmlString = `<?xml version="1.0" encoding="utf-16"?>

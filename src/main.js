@@ -6,6 +6,8 @@ ______ |  |__ |__|  | _____            ___  ____ __   ____             ____  ___
 |__|        \/             \/                            \/               \/            \/|__|       \/
 */
 
+console.log('main.js phila-vue-comps');
+
 // Font Awesome Icons
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faExternalLink } from '@fortawesome/pro-solid-svg-icons/faExternalLink';
@@ -28,8 +30,8 @@ import Callout from './components/Callout.vue';
 import CollectionSummary from './components/CollectionSummary.vue';
 import Division from './components/Division.vue';
 import ExternalLink from './components/ExternalLink.vue';
-import EPayForm from './components/ePayForm.vue';
-import fullScreenTopicsToggleTab from './components/FullScreenTopicsToggleTab.vue';
+import ePayForm from './components/ePayForm.vue';
+import FullScreenTopicsToggleTab from './components/FullScreenTopicsToggleTab.vue';
 import FullScreenTopicsToggleTabVertical from './components/FullScreenTopicsToggleTabVertical.vue';
 import Greeting from './components/Greeting.vue';
 import HorizontalTable from './components/HorizontalTable.vue';
@@ -49,48 +51,39 @@ import TopicComponentGroup from './components/TopicComponentGroup.vue';
 import Popover from './components/Popover.vue';
 import PopoverLink from './components/PopoverLink.vue';
 
-import Checkbox from './components/Checkbox.vue';
-import LegendBox from './components/LegendBox.vue';
-import Slider from './components/Slider.vue';
-
 import pvcStore from './store.js';
 
-exports.AddressCandidateList = AddressCandidateList;
-exports.AddressInput = AddressInput;
-exports.ConfigurableInput = ConfigurableInput;
-exports.AnyHeader = AnyHeader;
-exports.Badge = Badge;
-exports.BadgeCustom = BadgeCustom;
-exports.ButtonComp = ButtonComp;
-exports.Callout = Callout;
-exports.CollectionSummary = CollectionSummary;
-exports.Division = Division;
-exports.ExternalLink = ExternalLink;
-exports.ePayForm = EPayForm;
-exports.FullScreenTopicsToggleTab = fullScreenTopicsToggleTab;
-exports.FullScreenTopicsToggleTabVertical =  FullScreenTopicsToggleTabVertical;
-exports.Greeting = Greeting;
-exports.HorizontalTable = HorizontalTable;
-exports.HorizontalTableGroup = HorizontalTableGroup;
-exports.HorizontalTableRow = HorizontalTableRow;
-exports.Image = Image;
-exports.List = List;
-exports.OverlayToggleGroup = OverlayToggleGroup;
-exports.Paragraph = Paragraph;
-exports.SpanComp = SpanComp;
-exports.TabGroup = TabGroup;
-exports.VerticalTable = VerticalTable;
-exports.Topic = Topic;
-exports.TopicSet = TopicSet;
-exports.TopicComponent = TopicComponent;
-exports.TopicComponentGroup = TopicComponentGroup;
-exports.Popover = Popover;
-exports.PopoverLink = PopoverLink;
-
-exports.Checkbox = Checkbox;
-exports.LegendBox = LegendBox;
-exports.Slider = Slider;
-
-exports.pvcStore = pvcStore;
-
-export default exports
+export {
+  pvcStore,
+  AddressCandidateList,
+  AddressInput,
+  ConfigurableInput,
+  AnyHeader,
+  Badge,
+  BadgeCustom,
+  ButtonComp,
+  Callout,
+  CollectionSummary,
+  Division,
+  ExternalLink,
+  ePayForm,
+  FullScreenTopicsToggleTab,
+  FullScreenTopicsToggleTabVertical,
+  Greeting,
+  HorizontalTable,
+  HorizontalTableGroup,
+  HorizontalTableRow,
+  Image,
+  List,
+  OverlayToggleGroup,
+  Paragraph,
+  SpanComp,
+  TabGroup,
+  VerticalTable,
+  Topic,
+  TopicSet,
+  TopicComponent,
+  TopicComponentGroup,
+  Popover,
+  PopoverLink,
+}

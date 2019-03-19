@@ -4,4 +4,7 @@ npm-debug.log
 yarn-error.log
 _bin/
 package-lock.json
+package_safe.json
 .npmrc
+package_safe.json
+rollup.config_safe.js
