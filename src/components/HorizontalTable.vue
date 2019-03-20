@@ -97,6 +97,12 @@
         >
           {{ this.options.export.formatButtons.pdf }}
         </a>
+        <a class="button pvc-export-data-button mailing"
+           v-if="this.shouldShowExportMailing"
+           @click="this.exportTableToMailing"
+        >
+          {{ this.options.export.formatButtons.mailing }}
+        </a>
         <div v-if="slots.title">
           <h4 style="display:inline-block">
             {{ evaluateSlot(slots.title) }} {{ countText }}
@@ -318,6 +324,16 @@
         } else {
           return this.options.shouldShowHeaders;
         }
+      },
+      shouldShowExportMailing() {
+        let shouldExport = false;
+        if (this.options.export) {
+          if (this.options.export.formatButtons) {
+            const keys = Object.keys(this.options.export.formatButtons);
+            shouldExport = keys.includes('mailing');
+          }
+        }
+        return shouldExport;
       },
       shouldShowExportPDF() {
         let shouldExport = false;
@@ -567,6 +583,141 @@
       // },
     },
     methods: {
+      exportTableToMailing() {
+        const tableData = []
+        let fields = [];
+        let totals = {};
+        for (let field of this.$props.options.fields) {
+          fields.push(field.label)
+          totals[field.label] = 0;
+        }
+        for (let item of this.items) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field['value'](this.$store.state, item) === null) {
+              theArray.push('');
+            } else {
+              theArray.push(field['value'](this.$store.state, item)) || '';
+            }
+
+            if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
+            // if (isNaN(field['value'](this.$store.state, item))) {
+              // console.log('isnull:', field['value'](this.$store.state, item));
+              totals[field.label] = ''
+            } else {
+              // console.log('is not null:', field['value'](this.$store.state, item));
+              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            }
+          }
+          tableData.push(theArray);
+        }
+
+        if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+              theArray.push('Total');
+            } else if (totals[field.label] === '') {
+              theArray.push('');
+            } else {
+              theArray.push(parseFloat(totals[field.label]).toFixed(2));
+            }
+          }
+          tableData.push(theArray);
+        }
+        console.log('tableData:', tableData);
+        // var doc = new jsPDF();
+        var doc = new jsPDF('p', 'pt');
+        doc.setFontSize(12);
+        let top = 20;
+        if(this.$props.options.export.introLines) {
+          for (let introLine of this.$props.options.export.introLines) {
+            doc.text(10, top, this.evaluateSlot(introLine));
+            top = top + 12
+          }
+        }
+        doc.autoTable(fields, tableData, {
+          startY: 100,
+          tableWidth: 'wrap'
+        });
+
+        let filename;
+        let fileStart = this.evaluateSlot(this.$props.options.export.file);
+        if (fileStart) {
+          filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
+        } else {
+          filename = 'export.pdf';
+        }
+        doc.save(filename);
+      },
+      exportTableToMailing() {
+        const tableData = []
+        let fields = [];
+        let totals = {};
+        for (let field of this.$props.options.fields) {
+          fields.push(field.label)
+          totals[field.label] = 0;
+        }
+        for (let item of this.items) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field['value'](this.$store.state, item) === null) {
+              theArray.push('');
+            } else {
+              theArray.push(field['value'](this.$store.state, item)) || '';
+            }
+
+            if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
+            // if (isNaN(field['value'](this.$store.state, item))) {
+              // console.log('isnull:', field['value'](this.$store.state, item));
+              totals[field.label] = ''
+            } else {
+              // console.log('is not null:', field['value'](this.$store.state, item));
+              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            }
+          }
+          tableData.push(theArray);
+        }
+
+        if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
+          let theArray = []
+          for (let field of this.$props.options.fields) {
+            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+              theArray.push('Total');
+            } else if (totals[field.label] === '') {
+              theArray.push('');
+            } else {
+              theArray.push(parseFloat(totals[field.label]).toFixed(2));
+            }
+          }
+          tableData.push(theArray);
+        }
+        console.log('tableData:', tableData);
+        // var doc = new jsPDF();
+        var doc = new jsPDF('p', 'pt');
+        doc.setFontSize(12);
+        let top = 20;
+        if(this.$props.options.export.introLines) {
+          for (let introLine of this.$props.options.export.introLines) {
+            doc.text(10, top, this.evaluateSlot(introLine));
+            top = top + 12
+          }
+        }
+        doc.autoTable(fields, tableData, {
+          startY: 100,
+          tableWidth: 'wrap'
+        });
+
+        let filename;
+        let fileStart = this.evaluateSlot(this.$props.options.export.file);
+        if (fileStart) {
+          filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
+        } else {
+          filename = 'export.pdf';
+        }
+        doc.save(filename);
+      },
+
       exportTableToPDF() {
         const tableData = []
         let fields = [];
@@ -639,22 +790,35 @@
         // console.log('exportTableToCSV is running');
         const tableData = []
 
-        let fields = [];
+        const fields = this.fields
         let totals = {};
-        for (let field of this.$props.options.fields) {
-          fields.push(field.label)
-          totals[field.label] = 0;
-        }
+
         for (let item of this.items) {
-          let object = item
+          let object = {}
+          for (let field of this.$props.options.fields) {
+            object[field.label] = field['value'](this.$store.state, item);
+            if (isNaN(field['value'](this.$store.state, item))) {
+              totals[field.label] = null
+            } else {
+              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            }
+          }
           tableData.push(object);
         }
-        // const fields = ['address', 'distance'];
-        const fields = this.fields
-        // const fields = this.fields.map( a => a.label)
+
+        if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
+          let object = {}
+          for (let field of this.$props.options.fields) {
+            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+              object[field.label] = 'Total';
+            } else {
+              object[field.label] = totals[field.label];
+            }
+          }
+          tableData.push(object);
+        }
 
         const opts = { fields };
-        // console.log("fields", fields, "tableData: ", tableData);
 
         try {
           var result, ctr, keys, columnDelimiter, lineDelimiter, data;
@@ -663,50 +827,74 @@
           if (data == null || !data.length) {
               return null;
           }
-
           columnDelimiter = ',';
           lineDelimiter = '\n';
           // columnDelimiter = args.columnDelimiter || ',';
           // lineDelimiter = args.lineDelimiter || '\n';
 
-          if (this.options.expandDataDownload) {
-            this.options.expandedData()
-          }
-
           // keys = Object.keys(data[0]);
           keys = fields.map(a => a.value);
-          let state = this.$store.state
-
-          // console.log(keys.map( key => key(state, item)))
-
+          let state = this.$store.state;
 
           result = '';
+
+          if(this.$props.options.export.introLines) {
+            for (let introLine of this.$props.options.export.introLines) {
+              result += this.evaluateSlot(introLine);
+              result += lineDelimiter;
+            }
+          }
+
           result += fields.map(field => field.label).join(columnDelimiter);
-          data = data.map( item => (keys.map( key => '"' + key(state, item) + '"')));
+          result += lineDelimiter;
+
+          data = data.map( item => Object.values(item).map( value => '"' + value + '"'));
 
           result += data.map( item => item).join(lineDelimiter);
 
-
           let csv = result;
-          // let csv = parser.parse(result);
+
           data = null;
           let filename;
           let link;
-          //
-          filename = 'export.csv';
-          // filename = 'this.$props.options.downloadFile + '.csv' || 'export.csv'';
 
-          if (!csv.match(/^data:text\/csv/i)) {
-              csv = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-              // console.log('csv', csv);
+          // filename = 'export.csv';
+          let fileStart = this.evaluateSlot(this.$props.options.export.file);
+          if (fileStart) {
+            filename = this.evaluateSlot(this.$props.options.export.file) + '.csv';
+          } else {
+            filename = 'export.csv';
           }
 
-          link = document.createElement('a');
-          link.setAttribute('href', csv);
-          link.setAttribute('download', filename);
-          link.click();
+          let csv_notIE
+          if (!csv.match(/^data:text\/csv/i)) {
+              csv_notIE = 'data:text/csv;charset=utf-8,' + csv;
+          }
+          data = encodeURI(csv_notIE);
 
-          // console.log("link: ", link)
+          var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+          var isFirefox = typeof InstallTrigger !== 'undefined';
+          var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+          var isIE = /*@cc_on!@*/false || !!document.documentMode;
+          var isEdge = !isIE && !!window.StyleMedia;
+          var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+          var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+          if (isIE) {
+            var oWin = window.open();
+            oWin.document.write('sep=,\r\n' + csv);
+            oWin.document.close();
+            oWin.document.execCommand('SaveAs', true, filename);
+            oWin.close();
+          } else {
+            link = document.createElement('a');
+            link.setAttribute('href', data);
+            link.setAttribute('download', filename);
+            link.click();
+          }
+
+
+
 
         } catch (err) {
           console.error(err);

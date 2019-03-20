@@ -1551,7 +1551,7 @@
 
 	var HorizontalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pvc-horizontal-table"},[(_vm.shouldShowTable)?_c('div',[(_vm.shouldShowFilters !== false)?_c('div',{staticClass:"pvc-horizontal-table-controls"},[(!!_vm.options.filters)?_c('div',{staticClass:"vertically-centered"},_vm._l((_vm.filters),function(filter,index){return _c('div',{staticClass:"inline-block",attrs:{"id":'filter-' + index}},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v(_vm._s(filter.label))]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleFilterValueChange}},[_c('optgroup',_vm._l((filter.values),function(filterValue){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":_vm.slugifyFilterValue(filterValue)}},[_vm._v(" "+_vm._s(filterValue.label)+" ")])}),0)])])}),0):_vm._e(),_vm._v(" "),(!!_vm.options.sort && !!_vm.options.sort.select)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v("Sort by")]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleSortValueChange}},[_c('optgroup',_vm._l((_vm.sortFields),function(sortField){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":sortField}},[_vm._v(" "+_vm._s(sortField)+" ")])}),0)])]):_vm._e(),_vm._v(" "),(_vm.filterByTextFields)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"pvc-select-text inline-block"},[_vm._v(" "+_vm._s(_vm.options.filterByText.label)+" ")]),_vm._v(" "),_c('form',{staticClass:"inline-block filter-by-text-form",on:{"submit":function($event){$event.preventDefault();return _vm.handleFilterFormX($event)}}},[_c('input',{class:this.inputClass,attrs:{"id":"theInput"},on:{"keyup":_vm.handleFilterFormKeyup}}),_vm._v(" "),(this.searchText != '')?_c('button',{staticClass:"pvc-search-control-button"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"times"}})],1):_vm._e()])]):_vm._e()]):_vm._e(),_vm._v(" "),_c('div',{class:{ 'pvc-horizontal-table-body': true, 'no-padding': !_vm.shouldShowFilters }},[(this.shouldShowDownloadButton
 	                  && this.$store.state.fullScreenTopicsEnabled !== true
-	                  && this.$store.state.fullScreenMapEnabled !== true)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportCSV)?_c('a',{staticClass:"button pvc-export-data-button csv",on:{"click":this.exportTableToCSV}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.csv)+" ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportPDF)?_c('a',{staticClass:"button pvc-export-data-button pdf",on:{"click":this.exportTableToPDF}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.pdf)+" ")]):_vm._e(),_vm._v(" "),(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")])]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}),0)]):_vm._e(),_vm._v(" "),_c('tbody',[_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId,"options":_vm.options}})}),_vm._v(" "),(_vm.totalRowEnabled)?_c('horizontal-table-row',{attrs:{"shouldBeBold":true,"item":this.itemsLimitedSummed,"fields":_vm.fields,"tableId":_vm.options.tableId,"totalRowField":this.totalRowField}}):_vm._e()],2)]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"spinner"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
+	                  && this.$store.state.fullScreenMapEnabled !== true)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportCSV)?_c('a',{staticClass:"button pvc-export-data-button csv",on:{"click":this.exportTableToCSV}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.csv)+" ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportPDF)?_c('a',{staticClass:"button pvc-export-data-button pdf",on:{"click":this.exportTableToPDF}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.pdf)+" ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportMailing)?_c('a',{staticClass:"button pvc-export-data-button mailing",on:{"click":this.exportTableToMailing}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.mailing)+" ")]):_vm._e(),_vm._v(" "),(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")])]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}),0)]):_vm._e(),_vm._v(" "),_c('tbody',[_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId,"options":_vm.options}})}),_vm._v(" "),(_vm.totalRowEnabled)?_c('horizontal-table-row',{attrs:{"shouldBeBold":true,"item":this.itemsLimitedSummed,"fields":_vm.fields,"tableId":_vm.options.tableId,"totalRowField":this.totalRowField}}):_vm._e()],2)]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"spinner"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
 	  mixins: [TopicComponent],
 	  data: function data() {
 	    var filters = this.options.filters || [];
@@ -1694,6 +1694,16 @@
 	      } else {
 	        return this.options.shouldShowHeaders;
 	      }
+	    },
+	    shouldShowExportMailing: function shouldShowExportMailing() {
+	      var shouldExport = false;
+	      if (this.options.export) {
+	        if (this.options.export.formatButtons) {
+	          var keys = Object.keys(this.options.export.formatButtons);
+	          shouldExport = keys.includes('mailing');
+	        }
+	      }
+	      return shouldExport;
 	    },
 	    shouldShowExportPDF: function shouldShowExportPDF() {
 	      var shouldExport = false;
@@ -1949,6 +1959,161 @@
 	    // },
 	  },
 	  methods: {
+	    exportTableToMailing: function exportTableToMailing() {
+	      var tableData = [];
+	      var fields = [];
+	      var totals = {};
+	      for (var i = 0, list = this.$props.options.fields; i < list.length; i += 1) {
+	        var field = list[i];
+
+	        fields.push(field.label);
+	        totals[field.label] = 0;
+	      }
+	      for (var i$2 = 0, list$2 = this.items; i$2 < list$2.length; i$2 += 1) {
+	        var item = list$2[i$2];
+
+	        var theArray = [];
+	        for (var i$1 = 0, list$1 = this.$props.options.fields; i$1 < list$1.length; i$1 += 1) {
+	          var field$1 = list$1[i$1];
+
+	          if (field$1['value'](this.$store.state, item) === null) {
+	            theArray.push('');
+	          } else {
+	            theArray.push(field$1['value'](this.$store.state, item)) || '';
+	          }
+
+	          if (field$1['value'](this.$store.state, item) === null || isNaN(field$1['value'](this.$store.state, item))) {
+	          // if (isNaN(field['value'](this.$store.state, item))) {
+	            // console.log('isnull:', field['value'](this.$store.state, item));
+	            totals[field$1.label] = '';
+	          } else {
+	            // console.log('is not null:', field['value'](this.$store.state, item));
+	            totals[field$1.label] = totals[field$1.label] + parseFloat(field$1['value'](this.$store.state, item));
+	          }
+	        }
+	        tableData.push(theArray);
+	      }
+
+	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
+	        var theArray$1 = [];
+	        for (var i$3 = 0, list$3 = this.$props.options.fields; i$3 < list$3.length; i$3 += 1) {
+	          var field$2 = list$3[i$3];
+
+	          if (field$2.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+	            theArray$1.push('Total');
+	          } else if (totals[field$2.label] === '') {
+	            theArray$1.push('');
+	          } else {
+	            theArray$1.push(parseFloat(totals[field$2.label]).toFixed(2));
+	          }
+	        }
+	        tableData.push(theArray$1);
+	      }
+	      console.log('tableData:', tableData);
+	      // var doc = new jsPDF();
+	      var doc = new jsPDF('p', 'pt');
+	      doc.setFontSize(12);
+	      var top = 20;
+	      if(this.$props.options.export.introLines) {
+	        for (var i$4 = 0, list$4 = this.$props.options.export.introLines; i$4 < list$4.length; i$4 += 1) {
+	          var introLine = list$4[i$4];
+
+	          doc.text(10, top, this.evaluateSlot(introLine));
+	          top = top + 12;
+	        }
+	      }
+	      doc.autoTable(fields, tableData, {
+	        startY: 100,
+	        tableWidth: 'wrap'
+	      });
+
+	      var filename;
+	      var fileStart = this.evaluateSlot(this.$props.options.export.file);
+	      if (fileStart) {
+	        filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
+	      } else {
+	        filename = 'export.pdf';
+	      }
+	      doc.save(filename);
+	    },
+	    exportTableToMailing: function exportTableToMailing() {
+	      var tableData = [];
+	      var fields = [];
+	      var totals = {};
+	      for (var i = 0, list = this.$props.options.fields; i < list.length; i += 1) {
+	        var field = list[i];
+
+	        fields.push(field.label);
+	        totals[field.label] = 0;
+	      }
+	      for (var i$2 = 0, list$2 = this.items; i$2 < list$2.length; i$2 += 1) {
+	        var item = list$2[i$2];
+
+	        var theArray = [];
+	        for (var i$1 = 0, list$1 = this.$props.options.fields; i$1 < list$1.length; i$1 += 1) {
+	          var field$1 = list$1[i$1];
+
+	          if (field$1['value'](this.$store.state, item) === null) {
+	            theArray.push('');
+	          } else {
+	            theArray.push(field$1['value'](this.$store.state, item)) || '';
+	          }
+
+	          if (field$1['value'](this.$store.state, item) === null || isNaN(field$1['value'](this.$store.state, item))) {
+	          // if (isNaN(field['value'](this.$store.state, item))) {
+	            // console.log('isnull:', field['value'](this.$store.state, item));
+	            totals[field$1.label] = '';
+	          } else {
+	            // console.log('is not null:', field['value'](this.$store.state, item));
+	            totals[field$1.label] = totals[field$1.label] + parseFloat(field$1['value'](this.$store.state, item));
+	          }
+	        }
+	        tableData.push(theArray);
+	      }
+
+	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
+	        var theArray$1 = [];
+	        for (var i$3 = 0, list$3 = this.$props.options.fields; i$3 < list$3.length; i$3 += 1) {
+	          var field$2 = list$3[i$3];
+
+	          if (field$2.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+	            theArray$1.push('Total');
+	          } else if (totals[field$2.label] === '') {
+	            theArray$1.push('');
+	          } else {
+	            theArray$1.push(parseFloat(totals[field$2.label]).toFixed(2));
+	          }
+	        }
+	        tableData.push(theArray$1);
+	      }
+	      console.log('tableData:', tableData);
+	      // var doc = new jsPDF();
+	      var doc = new jsPDF('p', 'pt');
+	      doc.setFontSize(12);
+	      var top = 20;
+	      if(this.$props.options.export.introLines) {
+	        for (var i$4 = 0, list$4 = this.$props.options.export.introLines; i$4 < list$4.length; i$4 += 1) {
+	          var introLine = list$4[i$4];
+
+	          doc.text(10, top, this.evaluateSlot(introLine));
+	          top = top + 12;
+	        }
+	      }
+	      doc.autoTable(fields, tableData, {
+	        startY: 100,
+	        tableWidth: 'wrap'
+	      });
+
+	      var filename;
+	      var fileStart = this.evaluateSlot(this.$props.options.export.file);
+	      if (fileStart) {
+	        filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
+	      } else {
+	        filename = 'export.pdf';
+	      }
+	      doc.save(filename);
+	    },
+
 	    exportTableToPDF: function exportTableToPDF() {
 	      var tableData = [];
 	      var fields = [];
@@ -1984,7 +2149,7 @@
 	        tableData.push(theArray);
 	      }
 
-	      if (this.$props.options.totalRow.enabled) {
+	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
 	        var theArray$1 = [];
 	        for (var i$3 = 0, list$3 = this.$props.options.fields; i$3 < list$3.length; i$3 += 1) {
 	          var field$2 = list$3[i$3];
@@ -2004,11 +2169,13 @@
 	      var doc = new jsPDF('p', 'pt');
 	      doc.setFontSize(12);
 	      var top = 20;
-	      for (var i$4 = 0, list$4 = this.$props.options.export.introLines; i$4 < list$4.length; i$4 += 1) {
-	        var introLine = list$4[i$4];
+	      if(this.$props.options.export.introLines) {
+	        for (var i$4 = 0, list$4 = this.$props.options.export.introLines; i$4 < list$4.length; i$4 += 1) {
+	          var introLine = list$4[i$4];
 
-	        doc.text(10, top, this.evaluateSlot(introLine));
-	        top = top + 12;
+	          doc.text(10, top, this.evaluateSlot(introLine));
+	          top = top + 12;
+	        }
 	      }
 	      doc.autoTable(fields, tableData, {
 	        startY: 100,
@@ -2029,62 +2196,73 @@
 	      // console.log('exportTableToCSV is running');
 	      var tableData = [];
 
-	      var fields = [];
+	      var fields = this.fields;
 	      var totals = {};
-	      for (var i = 0, list = this.$props.options.fields; i < list.length; i += 1) {
-	        var field = list[i];
 
-	        fields.push(field.label);
-	        totals[field.label] = 0;
-	      }
-	      for (var i$2 = 0, list$2 = this.items; i$2 < list$2.length; i$2 += 1) {
-	        var item = list$2[i$2];
+	      for (var i$1 = 0, list$1 = this.items; i$1 < list$1.length; i$1 += 1) {
+	        var item = list$1[i$1];
 
 	        var object = {};
-	        for (var i$1 = 0, list$1 = this.$props.options.fields; i$1 < list$1.length; i$1 += 1) {
-	          var field$1 = list$1[i$1];
+	        for (var i = 0, list = this.$props.options.fields; i < list.length; i += 1) {
+	          var field = list[i];
 
-	          object[field$1.label] = field$1['value'](this.$store.state, item);
-	          if (isNaN(field$1['value'](this.$store.state, item))) {
-	            totals[field$1.label] = null;
+	          object[field.label] = field['value'](this.$store.state, item);
+	          if (isNaN(field['value'](this.$store.state, item))) {
+	            totals[field.label] = null;
 	          } else {
-	            totals[field$1.label] = totals[field$1.label] + parseFloat(field$1['value'](this.$store.state, item));
+	            totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
 	          }
 	        }
 	        tableData.push(object);
 	      }
 
+	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
+	        var object$1 = {};
+	        for (var i$2 = 0, list$2 = this.$props.options.fields; i$2 < list$2.length; i$2 += 1) {
+	          var field$1 = list$2[i$2];
+
+	          if (field$1.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+	            object$1[field$1.label] = 'Total';
+	          } else {
+	            object$1[field$1.label] = totals[field$1.label];
+	          }
+	        }
+	        tableData.push(object$1);
+	      }
+
 	      try {
-	        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+	        var result, keys, columnDelimiter, lineDelimiter, data;
 
 	        data = tableData || null;
 	        if (data == null || !data.length) {
 	            return null;
 	        }
-
 	        columnDelimiter = ',';
 	        lineDelimiter = '\n';
 	        // columnDelimiter = args.columnDelimiter || ',';
 	        // lineDelimiter = args.lineDelimiter || '\n';
 
-	        keys = Object.keys(data[0]);
+	        // keys = Object.keys(data[0]);
+	        keys = fields.map(function (a) { return a.value; });
+	        var state = this.$store.state;
 
 	        result = '';
 
-	        result += lineDelimiter;
-	        result += keys.join(columnDelimiter);
-	        result += lineDelimiter;
+	        if(this.$props.options.export.introLines) {
+	          for (var i$3 = 0, list$3 = this.$props.options.export.introLines; i$3 < list$3.length; i$3 += 1) {
+	            var introLine = list$3[i$3];
 
-	        data.forEach(function(item) {
-	            ctr = 0;
-	            keys.forEach(function(key) {
-	                if (ctr > 0) { result += columnDelimiter; }
-
-	                result += item[key] || '';
-	                ctr++;
-	            });
+	            result += this.evaluateSlot(introLine);
 	            result += lineDelimiter;
-	        });
+	          }
+	        }
+
+	        result += fields.map(function (field) { return field.label; }).join(columnDelimiter);
+	        result += lineDelimiter;
+
+	        data = data.map( function (item) { return Object.values(item).map( function (value) { return '"' + value + '"'; }); });
+
+	        result += data.map( function (item) { return item; }).join(lineDelimiter);
 
 	        var csv = result;
 
