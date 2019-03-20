@@ -596,7 +596,7 @@
           tableData.push(theArray);
         }
 
-        if (this.$props.options.totalRow.enabled) {
+        if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
           let theArray = []
           for (let field of this.$props.options.fields) {
             if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
@@ -614,9 +614,11 @@
         var doc = new jsPDF('p', 'pt');
         doc.setFontSize(12);
         let top = 20;
-        for (let introLine of this.$props.options.export.introLines) {
-          doc.text(10, top, this.evaluateSlot(introLine));
-          top = top + 12
+        if(this.$props.options.export.introLines) {
+          for (let introLine of this.$props.options.export.introLines) {
+            doc.text(10, top, this.evaluateSlot(introLine));
+            top = top + 12
+          }
         }
         doc.autoTable(fields, tableData, {
           startY: 100,
