@@ -59,25 +59,36 @@
         // loop through all layers to calculate currentLayers
         for (let layer of layers) {
           const lcFilter = this.inputLayerFilter.toLowerCase();
+          const lcTagsFilter = this.inputTagsFilter.toLowerCase();
           const lcTitle = layer.title.toLowerCase();
 
           if (layer.tags) {
             const lcTags = layer.tags.join().toLowerCase();
             if (
-              topicLayers.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory) && lcTags.includes(lcFilter)
+              topicLayers.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory) && lcTags.includes(lcTagsFilter)
+              || topicLayers.includes(layer.title) && lcTitle.includes(lcTagsFilter) && layer.category.includes(this.selectedCategory)
+              // || topicLayers.includes(layer.title) && lcTags.includes(lcTagsFilter)
               || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
             ) {
-              currentLayers.push(layer)
+              // console.log('layer has tags', layer.title);
+              currentLayers.push(layer);
             }
           } else if (this.inputTagsFilter !== '') {
-            continue;
-
+            // continue;
+            if (
+              topicLayers.includes(layer.title) && lcTitle.includes(lcTagsFilter) && layer.category.includes(this.selectedCategory)
+              || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
+            ) {
+              // console.log('layer does not have tags, box is full', layer.title);
+              currentLayers.push(layer);
+            }
           } else {
             if (
               topicLayers.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory)
               || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
             ) {
-              currentLayers.push(layer)
+              // console.log('layer does not have tags, box is empty', layer.title);
+              currentLayers.push(layer);
             }
           }
 
