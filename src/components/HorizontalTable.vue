@@ -85,6 +85,18 @@
         >
           Download Data
         </a>
+        <a class="button pvc-export-data-button csv"
+           v-if="this.shouldShowExportCSV"
+           @click="this.exportTableToCSV"
+        >
+          {{ this.options.export.formatButtons.csv }}
+        </a>
+        <a class="button pvc-export-data-button pdf"
+           v-if="this.shouldShowExportPDF"
+           @click="this.exportTableToPDF"
+        >
+          {{ this.options.export.formatButtons.pdf }}
+        </a>
         <div v-if="slots.title">
           <h4 style="display:inline-block">
             {{ evaluateSlot(slots.title) }} {{ countText }}
@@ -92,18 +104,6 @@
           <h5 style="display:inline-block; color: gray">
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
-          <a class="button pvc-export-data-button"
-                  v-if="this.shouldShowExportCSV"
-                  @click="this.exportTableToCSV"
-          >
-            {{ this.options.export.formatButtons.csv }}
-          </a>
-          <a class="button pvc-export-data-button"
-                  v-if="this.shouldShowExportPDF"
-                  @click="this.exportTableToPDF"
-          >
-            {{ this.options.export.formatButtons.pdf }}
-          </a>
         </div>
 
         <table role="grid" class="stack">
