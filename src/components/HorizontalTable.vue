@@ -1033,7 +1033,7 @@
     position: relative !important;
   }
 
-  .pvc-download-data-button {
+  .pvc-download-data-button, .pvc-export-data-button {
     float: right;
     vertical-align: baseline;
     display: inline-block;
