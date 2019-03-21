@@ -20,6 +20,10 @@
       }
     },
     mounted() {
+      if (this.$config.pluginHeight) {
+        this.buttonPosition = (this.$config.pluginHeight-48)/2 + 'px';
+        return;
+      }
       this.setDivHeight(this.windowDim);
     },
     watch: {
