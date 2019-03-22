@@ -1963,41 +1963,50 @@
 	      var tableData = [];
 	      var fields = [];
 	      var totals = {};
-	      for (var i = 0, list = this.$props.options.fields; i < list.length; i += 1) {
-	        var field = list[i];
+	      var mailingFields = this.$props.options.mailingFields();
+	      var labelFields = mailingFields.fields.map(function (a) { return a.label; });
+	      var labelValues = mailingFields.fields.map(function (a) { return a.value; });
+
+	      for (var i$1 = 0, list = labelFields; i$1 < list.length; i$1 += 1) {
+	        var field = list[i$1];
 
 	        fields.push(field.label);
 	        totals[field.label] = 0;
 	      }
-	      for (var i$2 = 0, list$2 = this.items; i$2 < list$2.length; i$2 += 1) {
-	        var item = list$2[i$2];
+
+
+	      for (var i$3 = 0, list$2 = this.items; i$3 < list$2.length; i$3 += 1) {
+	        var item = list$2[i$3];
 
 	        var theArray = [];
-	        for (var i$1 = 0, list$1 = this.$props.options.fields; i$1 < list$1.length; i$1 += 1) {
-	          var field$1 = list$1[i$1];
+	        var i = 0;
+	        for (var i$2 = 0, list$1 = labelFields; i$2 < list$1.length; i$2 += 1) {
+	          // console.log("field: ", field, "labelValues: ", labelValues, "item: ",  item)
+	          var field$1 = list$1[i$2];
 
-	          if (field$1['value'](this.$store.state, item) === null) {
+	          if (labelValues[i](this.$store.state, item) === null) {
 	            theArray.push('');
 	          } else {
-	            theArray.push(field$1['value'](this.$store.state, item)) || '';
+	            theArray.push(labelValues[i](this.$store.state, item)) || '';
 	          }
 
-	          if (field$1['value'](this.$store.state, item) === null || isNaN(field$1['value'](this.$store.state, item))) {
+	          if (labelValues[i](this.$store.state, item) === null || isNaN(labelValues[i](this.$store.state, item))) {
 	          // if (isNaN(field['value'](this.$store.state, item))) {
 	            // console.log('isnull:', field['value'](this.$store.state, item));
 	            totals[field$1.label] = '';
 	          } else {
 	            // console.log('is not null:', field['value'](this.$store.state, item));
-	            totals[field$1.label] = totals[field$1.label] + parseFloat(field$1['value'](this.$store.state, item));
+	            totals[field$1.label] = totals[field$1.label] + parseFloat(labelValues[i](this.$store.state, item));
 	          }
+	          i++;
 	        }
 	        tableData.push(theArray);
 	      }
 
 	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
 	        var theArray$1 = [];
-	        for (var i$3 = 0, list$3 = this.$props.options.fields; i$3 < list$3.length; i$3 += 1) {
-	          var field$2 = list$3[i$3];
+	        for (var i$4 = 0, list$3 = this.$props.options.fields; i$4 < list$3.length; i$4 += 1) {
+	          var field$2 = list$3[i$4];
 
 	          if (field$2.label.toLowerCase() === this.$props.options.totalRow.totalField) {
 	            theArray$1.push('Total');
@@ -2009,97 +2018,20 @@
 	        }
 	        tableData.push(theArray$1);
 	      }
-	      console.log('tableData:', tableData);
-	      // var doc = new jsPDF();
+	      // console.log('tableData:', tableData);
+	      var doc = new jsPDF();
 	      var doc = new jsPDF('p', 'pt');
 	      doc.setFontSize(12);
 	      var top = 20;
 	      if(this.$props.options.export.introLines) {
-	        for (var i$4 = 0, list$4 = this.$props.options.export.introLines; i$4 < list$4.length; i$4 += 1) {
-	          var introLine = list$4[i$4];
+	        for (var i$5 = 0, list$4 = this.$props.options.export.introLines; i$5 < list$4.length; i$5 += 1) {
+	          var introLine = list$4[i$5];
 
 	          doc.text(10, top, this.evaluateSlot(introLine));
 	          top = top + 12;
 	        }
 	      }
-	      doc.autoTable(fields, tableData, {
-	        startY: 100,
-	        tableWidth: 'wrap'
-	      });
-
-	      var filename;
-	      var fileStart = this.evaluateSlot(this.$props.options.export.file);
-	      if (fileStart) {
-	        filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
-	      } else {
-	        filename = 'export.pdf';
-	      }
-	      doc.save(filename);
-	    },
-	    exportTableToMailing: function exportTableToMailing() {
-	      var tableData = [];
-	      var fields = [];
-	      var totals = {};
-	      for (var i = 0, list = this.$props.options.fields; i < list.length; i += 1) {
-	        var field = list[i];
-
-	        fields.push(field.label);
-	        totals[field.label] = 0;
-	      }
-	      for (var i$2 = 0, list$2 = this.items; i$2 < list$2.length; i$2 += 1) {
-	        var item = list$2[i$2];
-
-	        var theArray = [];
-	        for (var i$1 = 0, list$1 = this.$props.options.fields; i$1 < list$1.length; i$1 += 1) {
-	          var field$1 = list$1[i$1];
-
-	          if (field$1['value'](this.$store.state, item) === null) {
-	            theArray.push('');
-	          } else {
-	            theArray.push(field$1['value'](this.$store.state, item)) || '';
-	          }
-
-	          if (field$1['value'](this.$store.state, item) === null || isNaN(field$1['value'](this.$store.state, item))) {
-	          // if (isNaN(field['value'](this.$store.state, item))) {
-	            // console.log('isnull:', field['value'](this.$store.state, item));
-	            totals[field$1.label] = '';
-	          } else {
-	            // console.log('is not null:', field['value'](this.$store.state, item));
-	            totals[field$1.label] = totals[field$1.label] + parseFloat(field$1['value'](this.$store.state, item));
-	          }
-	        }
-	        tableData.push(theArray);
-	      }
-
-	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
-	        var theArray$1 = [];
-	        for (var i$3 = 0, list$3 = this.$props.options.fields; i$3 < list$3.length; i$3 += 1) {
-	          var field$2 = list$3[i$3];
-
-	          if (field$2.label.toLowerCase() === this.$props.options.totalRow.totalField) {
-	            theArray$1.push('Total');
-	          } else if (totals[field$2.label] === '') {
-	            theArray$1.push('');
-	          } else {
-	            theArray$1.push(parseFloat(totals[field$2.label]).toFixed(2));
-	          }
-	        }
-	        tableData.push(theArray$1);
-	      }
-	      console.log('tableData:', tableData);
-	      // var doc = new jsPDF();
-	      var doc = new jsPDF('p', 'pt');
-	      doc.setFontSize(12);
-	      var top = 20;
-	      if(this.$props.options.export.introLines) {
-	        for (var i$4 = 0, list$4 = this.$props.options.export.introLines; i$4 < list$4.length; i$4 += 1) {
-	          var introLine = list$4[i$4];
-
-	          doc.text(10, top, this.evaluateSlot(introLine));
-	          top = top + 12;
-	        }
-	      }
-	      doc.autoTable(fields, tableData, {
+	      doc.autoTable(labelFields, tableData, {
 	        startY: 100,
 	        tableWidth: 'wrap'
 	      });

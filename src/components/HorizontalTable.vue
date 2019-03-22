@@ -587,27 +587,36 @@
         const tableData = []
         let fields = [];
         let totals = {};
-        for (let field of this.$props.options.fields) {
+        let mailingFields = this.$props.options.mailingFields();
+        let labelFields = mailingFields.fields.map(a => a.label)
+        let labelValues = mailingFields.fields.map(a => a.value)
+
+        for (let field of labelFields) {
           fields.push(field.label)
           totals[field.label] = 0;
         }
+
+
         for (let item of this.items) {
           let theArray = []
-          for (let field of this.$props.options.fields) {
-            if (field['value'](this.$store.state, item) === null) {
+          let i = 0;
+          for (let field of labelFields) {
+            // console.log("field: ", field, "labelValues: ", labelValues, "item: ",  item)
+            if (labelValues[i](this.$store.state, item) === null) {
               theArray.push('');
             } else {
-              theArray.push(field['value'](this.$store.state, item)) || '';
+              theArray.push(labelValues[i](this.$store.state, item)) || '';
             }
 
-            if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
+            if (labelValues[i](this.$store.state, item) === null || isNaN(labelValues[i](this.$store.state, item))) {
             // if (isNaN(field['value'](this.$store.state, item))) {
               // console.log('isnull:', field['value'](this.$store.state, item));
               totals[field.label] = ''
             } else {
               // console.log('is not null:', field['value'](this.$store.state, item));
-              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+              totals[field.label] = totals[field.label] + parseFloat(labelValues[i](this.$store.state, item));
             }
+            i++;
           }
           tableData.push(theArray);
         }
@@ -625,8 +634,8 @@
           }
           tableData.push(theArray);
         }
-        console.log('tableData:', tableData);
-        // var doc = new jsPDF();
+        // console.log('tableData:', tableData);
+        var doc = new jsPDF();
         var doc = new jsPDF('p', 'pt');
         doc.setFontSize(12);
         let top = 20;
@@ -636,74 +645,7 @@
             top = top + 12
           }
         }
-        doc.autoTable(fields, tableData, {
-          startY: 100,
-          tableWidth: 'wrap'
-        });
-
-        let filename;
-        let fileStart = this.evaluateSlot(this.$props.options.export.file);
-        if (fileStart) {
-          filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
-        } else {
-          filename = 'export.pdf';
-        }
-        doc.save(filename);
-      },
-      exportTableToMailing() {
-        const tableData = []
-        let fields = [];
-        let totals = {};
-        for (let field of this.$props.options.fields) {
-          fields.push(field.label)
-          totals[field.label] = 0;
-        }
-        for (let item of this.items) {
-          let theArray = []
-          for (let field of this.$props.options.fields) {
-            if (field['value'](this.$store.state, item) === null) {
-              theArray.push('');
-            } else {
-              theArray.push(field['value'](this.$store.state, item)) || '';
-            }
-
-            if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
-            // if (isNaN(field['value'](this.$store.state, item))) {
-              // console.log('isnull:', field['value'](this.$store.state, item));
-              totals[field.label] = ''
-            } else {
-              // console.log('is not null:', field['value'](this.$store.state, item));
-              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
-            }
-          }
-          tableData.push(theArray);
-        }
-
-        if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
-          let theArray = []
-          for (let field of this.$props.options.fields) {
-            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
-              theArray.push('Total');
-            } else if (totals[field.label] === '') {
-              theArray.push('');
-            } else {
-              theArray.push(parseFloat(totals[field.label]).toFixed(2));
-            }
-          }
-          tableData.push(theArray);
-        }
-        console.log('tableData:', tableData);
-        // var doc = new jsPDF();
-        var doc = new jsPDF('p', 'pt');
-        doc.setFontSize(12);
-        let top = 20;
-        if(this.$props.options.export.introLines) {
-          for (let introLine of this.$props.options.export.introLines) {
-            doc.text(10, top, this.evaluateSlot(introLine));
-            top = top + 12
-          }
-        }
-        doc.autoTable(fields, tableData, {
+        doc.autoTable(labelFields, tableData, {
           startY: 100,
           tableWidth: 'wrap'
         });
