@@ -1,14 +1,15 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('date-fns'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'date-fns', 'escape-html', 'jspdf', 'jspdf-autotable', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
-	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.fontawesomeSvgCore,global.vueFontAwesome));
-}(this, (function (exports,debounce,axios,dateFns,escapeHtml,jsPDF,jspdfAutotable,fontawesomeSvgCore,vueFontawesome) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash.debounce'), require('axios'), require('date-fns'), require('escape-html'), require('jspdf'), require('jspdf-autotable'), require('lodash.chunk'), require('@fortawesome/fontawesome-svg-core'), require('@fortawesome/vue-fontawesome')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'lodash.debounce', 'axios', 'date-fns', 'escape-html', 'jspdf', 'jspdf-autotable', 'lodash.chunk', '@fortawesome/fontawesome-svg-core', '@fortawesome/vue-fontawesome'], factory) :
+	(factory((global.philaVueComps = {}),global.debounce,global.axios,global.dateFns,global.escapeHtml,global.jsPDF,global.jspdfAutotable,global.chunk,global.fontawesomeSvgCore,global.vueFontAwesome));
+}(this, (function (exports,debounce,axios,dateFns,escapeHtml,jsPDF,jspdfAutotable,chunk,fontawesomeSvgCore,vueFontawesome) { 'use strict';
 
 	debounce = debounce && debounce.hasOwnProperty('default') ? debounce['default'] : debounce;
 	axios = axios && axios.hasOwnProperty('default') ? axios['default'] : axios;
 	escapeHtml = escapeHtml && escapeHtml.hasOwnProperty('default') ? escapeHtml['default'] : escapeHtml;
 	jsPDF = jsPDF && jsPDF.hasOwnProperty('default') ? jsPDF['default'] : jsPDF;
 	jspdfAutotable = jspdfAutotable && jspdfAutotable.hasOwnProperty('default') ? jspdfAutotable['default'] : jspdfAutotable;
+	chunk = chunk && chunk.hasOwnProperty('default') ? chunk['default'] : chunk;
 
 	function unwrapExports (x) {
 		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x.default : x;
@@ -2003,38 +2004,26 @@
 	        tableData.push(theArray);
 	      }
 
-	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
-	        var theArray$1 = [];
-	        for (var i$4 = 0, list$3 = this.$props.options.fields; i$4 < list$3.length; i$4 += 1) {
-	          var field$2 = list$3[i$4];
-
-	          if (field$2.label.toLowerCase() === this.$props.options.totalRow.totalField) {
-	            theArray$1.push('Total');
-	          } else if (totals[field$2.label] === '') {
-	            theArray$1.push('');
-	          } else {
-	            theArray$1.push(parseFloat(totals[field$2.label]).toFixed(2));
-	          }
-	        }
-	        tableData.push(theArray$1);
-	      }
 	      // console.log('tableData:', tableData);
-	      var doc = new jsPDF();
-	      var doc = new jsPDF('p', 'pt');
-	      doc.setFontSize(12);
-	      var top = 20;
-	      if(this.$props.options.export.introLines) {
-	        for (var i$5 = 0, list$4 = this.$props.options.export.introLines; i$5 < list$4.length; i$5 += 1) {
-	          var introLine = list$4[i$5];
+	      var doc = new jsPDF('p', 'pt', 'letter');
+	      // console.log("tableData: ", tableData);
+	      var tableJoin = chunk(tableData.map(function (a) { return a.join('\n'); }),3);
+	      // console.log("table joined and chunked: ", tableJoin)
 
-	          doc.text(10, top, this.evaluateSlot(introLine));
-	          top = top + 12;
-	        }
-	      }
-	      doc.autoTable(labelFields, tableData, {
-	        startY: 100,
-	        tableWidth: 'wrap'
+	      doc.autoTable({
+	        body: tableJoin,
+	        content: 'Text',
+	        startY: 36,
+	        margin: {top: 36, right: 12, bottom: 36, left: 12},
+	        willDrawCell: function (data) { return data.section === 'head' ? false : data.cell.height = 72; },
+	        didDrawCell: function (data) { return data.row.height= 72; },
+	        styles: {cellWidth: 196, halign: 'center', valign: 'middle', fontSize: 10},
+	        alternateRowStyles: {fillColor: 'white'},
+	        tableWidth: 'wrap',
+	        rowPageBreak: 'avoid',
 	      });
+
+	      // console.log(doc);
 
 	      var filename;
 	      var fileStart = this.evaluateSlot(this.$props.options.export.file);
@@ -2097,6 +2086,7 @@
 	        tableData.push(theArray$1);
 	      }
 	      console.log('tableData:', tableData);
+
 	      // var doc = new jsPDF();
 	      var doc = new jsPDF('p', 'pt');
 	      doc.setFontSize(12);

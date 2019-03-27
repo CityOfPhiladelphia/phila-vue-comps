@@ -1676,9 +1676,9 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
-jspdf-autotable@^2.3.5:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-2.3.5.tgz#6af23c191c00af86555bc0f91a21c7f6148288dc"
+jspdf-autotable@^3.0.10:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-3.1.0.tgz#16a8890dc5e1155a5273d5de382240d470e01bf6"
 
 jspdf@^1.4.1:
   version "1.5.3"
@@ -1849,6 +1849,10 @@ locate-character@^2.0.5:
 lodash.assign@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
+
+lodash.chunk@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.chunk/-/lodash.chunk-4.2.0.tgz#66e5ce1f76ed27b4303d8c6512e8d1216e8106bc"
 
 lodash.clonedeep@^4.3.2:
   version "4.5.0"

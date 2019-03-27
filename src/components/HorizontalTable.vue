@@ -703,6 +703,7 @@
           tableData.push(theArray);
         }
         console.log('tableData:', tableData);
+
         // var doc = new jsPDF();
         var doc = new jsPDF('p', 'pt');
         doc.setFontSize(12);
@@ -713,7 +714,9 @@
             top = top + 12
           }
         }
-        doc.autoTable(fields, tableData, {
+        doc.autoTable({
+          head: fields,
+          body: tableData
           startY: 100,
           tableWidth: 'wrap'
         });
