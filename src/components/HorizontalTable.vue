@@ -180,6 +180,7 @@
 
   import jsPDF from 'jspdf';
   import autotable from 'jspdf-autotable';
+  import chunk from 'lodash.chunk';
 
   const DEFAULT_SORT_FIELDS = [
     'distance',
@@ -621,34 +622,26 @@
           tableData.push(theArray);
         }
 
-        if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
-          let theArray = []
-          for (let field of this.$props.options.fields) {
-            if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
-              theArray.push('Total');
-            } else if (totals[field.label] === '') {
-              theArray.push('');
-            } else {
-              theArray.push(parseFloat(totals[field.label]).toFixed(2));
-            }
-          }
-          tableData.push(theArray);
-        }
         // console.log('tableData:', tableData);
-        var doc = new jsPDF();
-        var doc = new jsPDF('p', 'pt');
-        doc.setFontSize(12);
-        let top = 20;
-        if(this.$props.options.export.introLines) {
-          for (let introLine of this.$props.options.export.introLines) {
-            doc.text(10, top, this.evaluateSlot(introLine));
-            top = top + 12
-          }
-        }
-        doc.autoTable(labelFields, tableData, {
-          startY: 100,
-          tableWidth: 'wrap'
+        var doc = new jsPDF('p', 'pt', 'letter');
+        // console.log("tableData: ", tableData);
+        let tableJoin = chunk(tableData.map(a => a.join('\n')),3);
+        // console.log("table joined and chunked: ", tableJoin)
+
+        doc.autoTable({
+          body: tableJoin,
+          content: 'Text',
+          startY: 36,
+          margin: {top: 36, right: 12, bottom: 36, left: 12},
+          willDrawCell: data => data.section === 'head' ? false : data.cell.height = 72,
+          didDrawCell: data => data.row.height= 72,
+          styles: {cellWidth: 196, halign: 'center', valign: 'middle', fontSize: 10},
+          alternateRowStyles: {fillColor: 'white'},
+          tableWidth: 'wrap',
+          rowPageBreak: 'avoid',
         });
+
+        // console.log(doc);
 
         let filename;
         let fileStart = this.evaluateSlot(this.$props.options.export.file);
