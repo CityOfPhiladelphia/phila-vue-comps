@@ -709,7 +709,7 @@
         }
         doc.autoTable({
           head: fields,
-          body: tableData
+          body: tableData,
           startY: 100,
           tableWidth: 'wrap'
         });
