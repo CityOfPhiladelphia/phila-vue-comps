@@ -2099,7 +2099,9 @@
 	          top = top + 12;
 	        }
 	      }
-	      doc.autoTable(fields, tableData, {
+	      doc.autoTable({
+	        head: fields,
+	        body: tableData,
 	        startY: 100,
 	        tableWidth: 'wrap'
 	      });
