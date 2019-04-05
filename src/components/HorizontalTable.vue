@@ -716,9 +716,9 @@
 
           let csv_notIE
           if (!csv.match(/^data:text\/csv/i)) {
-              csv_notIE = 'data:text/csv;charset=utf-8,' + csv;
+              csv_notIE = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
           }
-          data = encodeURI(csv_notIE);
+          data = csv_notIE;
 
           var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
           var isFirefox = typeof InstallTrigger !== 'undefined';
