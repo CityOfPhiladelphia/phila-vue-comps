@@ -695,7 +695,7 @@
           }
           tableData.push(theArray);
         }
-        console.log('tableData:', tableData);
+        // console.log('tableData:', tableData);
 
         // var doc = new jsPDF();
         var doc = new jsPDF('p', 'pt');
@@ -726,14 +726,23 @@
 
       exportTableToCSV() {
         // console.log('exportTableToCSV is running');
-        const tableData = []
 
-        const fields = this.fields
+        let tableData = [];
+        let fields = this.fields;
+
+        if (typeof this.$props.options.expandedData != 'undefined') {
+          let expandedData = this.$props.options.expandedData()
+          fields = fields.concat(expandedData);
+          if (typeof this.$props.options.tableSort != 'undefined') {
+            fields  = this.$props.options.tableSort(fields)
+          }
+        }
+
         let totals = {};
 
         for (let item of this.items) {
           let object = {}
-          for (let field of this.$props.options.fields) {
+          for (let field of fields) {
             object[field.label] = field['value'](this.$store.state, item);
             if (isNaN(field['value'](this.$store.state, item))) {
               totals[field.label] = null
@@ -743,7 +752,7 @@
           }
           tableData.push(object);
         }
-
+        
         if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
           let object = {}
           for (let field of this.$props.options.fields) {
@@ -830,14 +839,9 @@
             link.setAttribute('download', filename);
             link.click();
           }
-
-
-
-
         } catch (err) {
           console.error(err);
         }
-
       },
       showMoreRecords() {
         // if there is only 1 page to return (from AIS);

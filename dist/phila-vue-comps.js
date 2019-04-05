@@ -2085,7 +2085,7 @@
 	        }
 	        tableData.push(theArray$1);
 	      }
-	      console.log('tableData:', tableData);
+	      // console.log('tableData:', tableData);
 
 	      // var doc = new jsPDF();
 	      var doc = new jsPDF('p', 'pt');
@@ -2118,16 +2118,25 @@
 
 	    exportTableToCSV: function exportTableToCSV() {
 	      // console.log('exportTableToCSV is running');
-	      var tableData = [];
 
+	      var tableData = [];
 	      var fields = this.fields;
+
+	      if (typeof this.$props.options.expandedData != 'undefined') {
+	        var expandedData = this.$props.options.expandedData();
+	        fields = fields.concat(expandedData);
+	        if (typeof this.$props.options.tableSort != 'undefined') {
+	          fields  = this.$props.options.tableSort(fields);
+	        }
+	      }
+
 	      var totals = {};
 
 	      for (var i$1 = 0, list$1 = this.items; i$1 < list$1.length; i$1 += 1) {
 	        var item = list$1[i$1];
 
 	        var object = {};
-	        for (var i = 0, list = this.$props.options.fields; i < list.length; i += 1) {
+	        for (var i = 0, list = fields; i < list.length; i += 1) {
 	          var field = list[i];
 
 	          object[field.label] = field['value'](this.$store.state, item);
@@ -2139,7 +2148,7 @@
 	        }
 	        tableData.push(object);
 	      }
-
+	      
 	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
 	        var object$1 = {};
 	        for (var i$2 = 0, list$2 = this.$props.options.fields; i$2 < list$2.length; i$2 += 1) {
@@ -2204,9 +2213,9 @@
 
 	        var csv_notIE;
 	        if (!csv.match(/^data:text\/csv/i)) {
-	            csv_notIE = 'data:text/csv;charset=utf-8,' + csv;
+	            csv_notIE = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
 	        }
-	        data = encodeURI(csv_notIE);
+	        data = csv_notIE;
 
 	        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 	        var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
@@ -2227,14 +2236,9 @@
 	          link.setAttribute('download', filename);
 	          link.click();
 	        }
-
-
-
-
 	      } catch (err) {
 	        console.error(err);
 	      }
-
 	    },
 	    showMoreRecords: function showMoreRecords() {
 	      // if there is only 1 page to return (from AIS);
