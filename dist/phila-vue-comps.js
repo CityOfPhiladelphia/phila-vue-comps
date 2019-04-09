@@ -1552,7 +1552,9 @@
 
 	var HorizontalTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pvc-horizontal-table"},[(_vm.shouldShowTable)?_c('div',[(_vm.shouldShowFilters !== false)?_c('div',{staticClass:"pvc-horizontal-table-controls"},[(!!_vm.options.filters)?_c('div',{staticClass:"vertically-centered"},_vm._l((_vm.filters),function(filter,index){return _c('div',{staticClass:"inline-block",attrs:{"id":'filter-' + index}},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v(_vm._s(filter.label))]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleFilterValueChange}},[_c('optgroup',_vm._l((filter.values),function(filterValue){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":_vm.slugifyFilterValue(filterValue)}},[_vm._v(" "+_vm._s(filterValue.label)+" ")])}),0)])])}),0):_vm._e(),_vm._v(" "),(!!_vm.options.sort && !!_vm.options.sort.select)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"vertically-centered pvc-select-text"},[_vm._v("Sort by")]),_vm._v(" "),_c('select',{staticClass:"pvc-select",on:{"change":_vm.handleSortValueChange}},[_c('optgroup',_vm._l((_vm.sortFields),function(sortField){return _c('option',{staticClass:"pvc-select-option",domProps:{"value":sortField}},[_vm._v(" "+_vm._s(sortField)+" ")])}),0)])]):_vm._e(),_vm._v(" "),(_vm.filterByTextFields)?_c('div',{staticClass:"vertically-centered"},[_c('div',{staticClass:"pvc-select-text inline-block"},[_vm._v(" "+_vm._s(_vm.options.filterByText.label)+" ")]),_vm._v(" "),_c('form',{staticClass:"inline-block filter-by-text-form",on:{"submit":function($event){$event.preventDefault();return _vm.handleFilterFormX($event)}}},[_c('input',{class:this.inputClass,attrs:{"id":"theInput"},on:{"keyup":_vm.handleFilterFormKeyup}}),_vm._v(" "),(this.searchText != '')?_c('button',{staticClass:"pvc-search-control-button"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"times"}})],1):_vm._e()])]):_vm._e()]):_vm._e(),_vm._v(" "),_c('div',{class:{ 'pvc-horizontal-table-body': true, 'no-padding': !_vm.shouldShowFilters }},[(this.shouldShowDownloadButton
 	                  && this.$store.state.fullScreenTopicsEnabled !== true
-	                  && this.$store.state.fullScreenMapEnabled !== true)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportCSV)?_c('a',{staticClass:"button pvc-export-data-button csv",on:{"click":this.exportTableToCSV}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.csv)+" ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportPDF)?_c('a',{staticClass:"button pvc-export-data-button pdf",on:{"click":this.exportTableToPDF}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.pdf)+" ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportMailing)?_c('a',{staticClass:"button pvc-export-data-button mailing",on:{"click":this.exportTableToMailing}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.mailing)+" ")]):_vm._e(),_vm._v(" "),(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")])]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}),0)]):_vm._e(),_vm._v(" "),_c('tbody',[_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId,"options":_vm.options}})}),_vm._v(" "),(_vm.totalRowEnabled)?_c('horizontal-table-row',{attrs:{"shouldBeBold":true,"item":this.itemsLimitedSummed,"fields":_vm.fields,"tableId":_vm.options.tableId,"totalRowField":this.totalRowField}}):_vm._e()],2)]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"spinner"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
+	                  && this.$store.state.fullScreenMapEnabled !== true)?_c('a',{staticClass:"button pvc-download-data-button",on:{"click":this.exportTableToCSV}},[_vm._v(" Download Data ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportCSV)?_c('a',{staticClass:"button pvc-export-data-button csv",on:{"click":this.exportTableToCSV}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.csv)+" ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportPDF)?_c('a',{staticClass:"button pvc-export-data-button pdf",on:{"click":this.exportTableToPDF}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.pdf)+" ")]):_vm._e(),_vm._v(" "),(this.shouldShowExportMailing)?_c('a',{staticClass:"button pvc-export-data-button mailing",on:{"click":this.exportTableToMailing}},[_vm._v(" "+_vm._s(this.options.export.formatButtons.mailing)+" ")]):_vm._e(),_vm._v(" "),(_vm.slots.title)?_c('div',[_c('h4',{staticStyle:{"display":"inline-block"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.title))+" "+_vm._s(_vm.countText)+" ")]),_vm._v(" "),_c('h5',{staticStyle:{"display":"inline-block","color":"gray"}},[_vm._v(" "+_vm._s(_vm.evaluateSlot(_vm.slots.subtitle))+" ")])]):_vm._e(),_vm._v(" "),_c('table',{staticClass:"stack",class:typeof _vm.options.customClass != 'undefined'
+	                           && typeof _vm.options.customClass.table != 'undefined' ?
+	                           _vm.options.customClass.table : '',attrs:{"role":"grid"}},[(_vm.shouldShowHeaders !== false)?_c('thead',[_c('tr',_vm._l((_vm.fields),function(field){return _c('th',[_vm._v(_vm._s(_vm.evaluateSlot(field.label)))])}),0)]):_vm._e(),_vm._v(" "),_c('tbody',[_vm._l((_vm.itemsLimited),function(item){return _c('horizontal-table-row',{key:item._featureId,attrs:{"item":item,"fields":_vm.fields,"hasOverlay":_vm.hasOverlay,"tableId":_vm.options.tableId,"options":_vm.options}})}),_vm._v(" "),(_vm.totalRowEnabled)?_c('horizontal-table-row',{attrs:{"shouldBeBold":true,"item":this.itemsLimitedSummed,"fields":_vm.fields,"tableId":_vm.options.tableId,"totalRowField":this.totalRowField}}):_vm._e()],2)]),_vm._v(" "),(_vm.options.externalLink && _vm.shouldShowExternalLink)?_c('external-link',{attrs:{"options":_vm.options.externalLink,"count":this.count,"limit":this.limit,"type":'horizontal-table'}}):_vm._e()],1),_vm._v(" "),(this.shouldShowRetrieveButton)?_c('a',{staticClass:"button center-button",on:{"click":this.showMoreRecords}},[_vm._v(" Retrieve "+_vm._s(this.nextIncrement)+" More "+_vm._s(this.nextIncrement === 1? 'Record' : 'Records')+" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(_vm.secondaryStatus === 'waiting'),expression:"secondaryStatus === 'waiting'"}],staticClass:"loading"},[_c('font-awesome-icon',{staticClass:"fa-lg",attrs:{"icon":"spinner"}})],1)]):_vm._e()]):_vm._e()])},staticRenderFns: [],_scopeId: 'data-v-6dbe65ac',
 	  mixins: [TopicComponent],
 	  data: function data() {
 	    var filters = this.options.filters || [];
@@ -1624,6 +1626,13 @@
 	    // console.log('horiz table mounted props slots items', this.$props.slots.items);
 	    if (this.$store.state.horizontalTables) {
 	      this.updateTableFilteredData();
+	      //the function below is needed when new tables are rendered
+	      if(typeof this.$props.options.customClass != 'undefined') {
+	        if( this.$props.options.customClass.table != 'undefined'
+	            && this.$props.options.customClass.table === 'sortable') {
+	          sorttable.makeSortable(this.$el.querySelector('.sortable'));
+	        }
+	      }
 	    }
 	  },
 	  watch: {
@@ -1680,6 +1689,11 @@
 	        });
 
 	        return hasData;
+	      }
+	    },
+	    customElementClass: function customElementClass() {
+	      if (this.options.customCSS) {
+	        return this.options.customCSS
 	      }
 	    },
 	    shouldShowFilters: function shouldShowFilters() {
@@ -2148,7 +2162,7 @@
 	        }
 	        tableData.push(object);
 	      }
-	      
+
 	      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
 	        var object$1 = {};
 	        for (var i$2 = 0, list$2 = this.$props.options.fields; i$2 < list$2.length; i$2 += 1) {

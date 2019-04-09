@@ -112,7 +112,12 @@
           </h5>
         </div>
 
-        <table role="grid" class="stack">
+        <table role="grid"
+               class="stack"
+               v-bind:class="typeof options.customClass != 'undefined'
+                             && typeof options.customClass.table != 'undefined' ?
+                             options.customClass.table : ''"
+        >
           <thead v-if="shouldShowHeaders !== false">
             <tr>
               <th v-for="field in fields">{{ evaluateSlot(field.label) }}</th>
@@ -172,6 +177,7 @@
 </template>
 
 <script>
+
   import TopicComponent from './TopicComponent.vue';
   import HorizontalTableRow from './HorizontalTableRow.vue';
   import ExternalLink from './ExternalLink.vue';
@@ -256,6 +262,13 @@
       // console.log('horiz table mounted props slots items', this.$props.slots.items);
       if (this.$store.state.horizontalTables) {
         this.updateTableFilteredData();
+        //the function below is needed when new tables are rendered
+        if(typeof this.$props.options.customClass != 'undefined') {
+          if( this.$props.options.customClass.table != 'undefined'
+              && this.$props.options.customClass.table === 'sortable') {
+            sorttable.makeSortable(this.$el.querySelector('.sortable'));
+          }
+        }
       }
     },
     watch: {
@@ -310,6 +323,11 @@
           });
 
           return hasData;
+        }
+      },
+      customElementClass() {
+        if (this.options.customCSS) {
+          return this.options.customCSS
         }
       },
       shouldShowFilters() {
@@ -752,7 +770,7 @@
           }
           tableData.push(object);
         }
-        
+
         if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
           let object = {}
           for (let field of this.$props.options.fields) {
