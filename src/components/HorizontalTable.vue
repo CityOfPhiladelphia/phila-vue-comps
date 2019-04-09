@@ -120,7 +120,13 @@
         >
           <thead v-if="shouldShowHeaders !== false">
             <tr>
-              <th v-for="field in fields">{{ evaluateSlot(field.label) }}</th>
+              <th v-for="field in fields"
+                  v-bind:class="typeof options.customClass != 'undefined'
+                                && typeof options.customClass.th != 'undefined' ?
+                                specifySortType(field.label) : ''"
+              >
+                {{ evaluateSlot(field.label) }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -602,6 +608,9 @@
       // },
     },
     methods: {
+      specifySortType(field){
+        return this.$props.options.customClass.th(field)
+      },
       exportTableToMailing() {
         const tableData = []
         let fields = [];
