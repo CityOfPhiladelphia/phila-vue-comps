@@ -56,6 +56,9 @@
       this.xmlData = generateBillingXml(this.parseData);
     },
     computed: {
+      // this was added to allow fetchData to run even without a geocode result
+      // for the real estate tax site which sometimes needs data from TIPS
+      // even if the property is not in OPA and AIS
       zipCode() {
         if (this.$store.state.geocode.data) {
           return this.$store.state.geocode.data.properties.zip_code;

@@ -98,6 +98,9 @@
             // are "waiting"
             return targets.every(target => target.status !== 'waiting');
 
+          // this was added to allow fetchData to run even without a geocode result
+          // for the real estate tax site which sometimes needs data from TIPS
+          // even if the property is not in OPA and AIS
           } else if (this.$store.state.sources[dataSource].data) {
             if (this.$store.state.sources[dataSource].data.body) {
               if (this.$store.state.sources[dataSource].data.body.includes('Invalid account number')) {
