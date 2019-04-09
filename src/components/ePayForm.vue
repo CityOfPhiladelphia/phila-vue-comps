@@ -38,7 +38,7 @@
           'balances': this.$store.state.sources.tips.data.data,
           'address': {
             'streetAddress':  this.$store.state.sources.tips.data.data.property.address,
-            'zipCode': this.$store.state.geocode.data.properties.zip_code,
+            'zipCode': this.zipCode,
           }
         },
         xmlData: {},
@@ -56,6 +56,13 @@
       this.xmlData = generateBillingXml(this.parseData);
     },
     computed: {
+      zipCode() {
+        if (this.$store.state.geocode.data) {
+          return this.$store.state.geocode.data.properties.zip_code;
+        } else {
+          return '';
+        }
+      },
       message() {
         if (this.$props.slots) {
           return this.evaluateSlot(this.$props.slots.text);

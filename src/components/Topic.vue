@@ -98,6 +98,17 @@
             // are "waiting"
             return targets.every(target => target.status !== 'waiting');
 
+          } else if (this.$store.state.sources[dataSource].data) {
+            if (this.$store.state.sources[dataSource].data.body) {
+              if (this.$store.state.sources[dataSource].data.body.includes('Invalid account number')) {
+                return false;
+              } else {
+                return true;
+              }
+            } else {
+              return true;
+            }
+
           // if the data source is not configured for targets, just check that
           // it has data
           } else {
