@@ -1422,7 +1422,7 @@
 
 	(function(){ if(typeof document !== 'undefined'){ var head=document.head||document.getElementsByTagName('head')[0], style=document.createElement('style'), css=" .active[data-v-36d2e900] { background: #F3D661; } td[data-v-36d2e900] { font-size: 15px; text-align: left; } "; style.type='text/css'; if (style.styleSheet){ style.styleSheet.cssText = css; } else { style.appendChild(document.createTextNode(css)); } head.appendChild(style); } })();
 
-	var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{attrs:{"item":_vm.item}},[_c('b',{directives:[{name:"show",rawName:"v-show",value:(_vm.shouldBeBold),expression:"shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(!_vm.shouldBeBold),expression:"!shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1)])}),0)},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
+	var HorizontalTableRow = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('tr',{class:{ active: this.isActive },on:{"mouseover":_vm.handleRowMouseover,"click":_vm.handleRowClick,"mouseout":_vm.handleRowMouseout}},_vm._l((_vm.fields),function(field){return _c('td',{attrs:{"item":_vm.item,"sorttable_customkey":[field.customkey ? _vm.evaluateSlot(field.customkey)  : _vm.evaluateSlot(field.value)]}},[_c('b',{directives:[{name:"show",rawName:"v-show",value:(_vm.shouldBeBold),expression:"shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(!_vm.shouldBeBold),expression:"!shouldBeBold"}]},[(field.popoverLink)?_c('popover-link',{attrs:{"slots":field,"item":_vm.item,"fieldLabel":field.label}}):_vm._e(),_vm._v(" "),(!field.popoverLink)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.evaluateFieldLabel(field.label) + _vm.evaluateSlot(field.value, field.transforms, field.nullValue))}}):_vm._e()],1)])}),0)},staticRenderFns: [],_scopeId: 'data-v-36d2e900',
 	  mixins: [TopicComponent],
 	  components: {
 	    PopoverLink: PopoverLink,
@@ -1540,7 +1540,11 @@
 	      } else {
 	        return '';
 	      }
+	    },
+	    evaluateCustomkey: function evaluateCustomkey() {
+	      field.customkey;
 	    }
+
 	  }
 	};
 

@@ -6,6 +6,7 @@
   >
     <td v-for="field in fields"
         :item='item'
+        :sorttable_customkey="[field.customkey ? evaluateSlot(field.customkey)  : evaluateSlot(field.value)]"
     >
       <b v-show="shouldBeBold">
         <popover-link v-if="field.popoverLink"
@@ -156,7 +157,11 @@
         } else {
           return '';
         }
+      },
+      evaluateCustomkey() {
+        field.customkey
       }
+
     }
   };
 </script>
