@@ -3699,8 +3699,6 @@
 	|   __/|___|  /__|____(____  /           \_/ |____/  \___  >          \___  >____/|__|_|  /   __/____  >
 	|__|        \/             \/                            \/               \/            \/|__|       \/
 	*/
-
-	console.log('main.js phila-vue-comps');
 	fontawesomeSvgCore.library.add(faExternalLink_2, faSearch_2, faTimes_2, faTimesCircle_2, faCaretLeft_2, faCaretRight_2);
 
 	exports.pvcStore = pvmStore;

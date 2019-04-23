@@ -23,7 +23,7 @@
     "lodash.debounce": "^4.0.8",
     "moment": "^2.21.0",
     "phila-standards": "^1.0.2",
-    "vue": "^2.6.7",
+    "vue": "2.6.7",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^3.0.0",
     "rollup-plugin-vue": "^3.0.0",
-    "vue-template-compiler": "^2.6.7"
+    "vue-template-compiler": "2.6.7"
   },
   "publishConfig": {
     "access": "public"
