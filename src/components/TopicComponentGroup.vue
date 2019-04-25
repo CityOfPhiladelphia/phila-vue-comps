@@ -41,6 +41,7 @@
       TopicSet: () => import(/* webpackChunkName: "tcg_pvc_TopicSet" */'./TopicSet.vue'),
       AnyHeader: () => import(/* webpackChunkName: "tcg_pvc_AnyHeader" */'./AnyHeader.vue'),
       CheckboxSet: () => import(/* webpackChunkName: "tcg_pvc_CheckboxSet" */'./CheckboxSet.vue'),
+      RadioButtonSet: () => import(/* webpackChunkName: "tcg_pvc_RadioButtonSet" */'./RadioButtonSet.vue'),
     },
     beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');
