@@ -35,6 +35,7 @@
         }
       },
       message() {
+        console.log(this.$props);
         if (this.$props.slots) {
           return this.evaluateSlot(this.$props.slots.text) || '';
         } else {
