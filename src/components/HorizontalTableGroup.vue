@@ -4,7 +4,7 @@
          class="mb-horizontal-table-controls"
     >
       <div v-for="(filter, index) in this.$props.options.filters"
-            :key="filter.label"
+            :key="index"
             :id="'filter-' + index"
             class="inline-block"
       >
@@ -14,7 +14,7 @@
         >
           <optgroup>
             <option v-for="filterValue in filter.values"
-            :key="filterValue.label"
+                    :key="filterValue"
                     :value="slugifyFilterValue(filterValue)"
                     class="mb-select-option"
             >
