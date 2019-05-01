@@ -1485,7 +1485,11 @@
 	      if(this.$store.state.activeModal && this.$props.options.clickEnabled ) {
 	        if (!this.hasOverlay) { return; }
 	        var featureId = this.item._featureId;
-	        this.$store.commit('setActiveModal', { featureId: featureId });
+	        if(this.item.condo){
+	          this.$store.commit('setCondoModal', { featureId: featureId });
+	        } else {
+	          this.$store.commit('setActiveModal', { featureId: featureId });
+	        }
 	      }
 	    },
 	    handleRowMouseout: function handleRowMouseout(e) {
