@@ -26,6 +26,9 @@
       this.handleWindowResize();
     },
     computed: {
+      popoverOptions() {
+        return this.$props.options;
+      },
       value() {
         const value = this.$props.slots.value;
         const transforms = this.$props.slots.transforms || [];
@@ -65,6 +68,7 @@
       didClickPopoverLink(e) {
         this.$store.commit('setPopoverOpen', true);
         this.$store.commit('setPopoverText', this.popoverText);
+        this.$store.commit('setPopoverOptions', this.popoverOptions);
       },
       handleWindowResize() {
         if (window.innerWidth >= 750) {
