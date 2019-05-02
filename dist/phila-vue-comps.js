@@ -1485,7 +1485,7 @@
 	      if(this.$store.state.activeModal && this.$props.options.clickEnabled ) {
 	        if (!this.hasOverlay) { return; }
 	        var featureId = this.item._featureId;
-	        if(this.item.condo){
+	        if(this.item.condo === true){
 	          this.$store.commit('setCondoModal', { featureId: featureId });
 	        } else {
 	          this.$store.commit('setActiveModal', { featureId: featureId });

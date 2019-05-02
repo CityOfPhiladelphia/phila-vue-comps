@@ -102,7 +102,7 @@
         if(this.$store.state.activeModal && this.$props.options.clickEnabled ) {
           if (!this.hasOverlay) return;
           const featureId = this.item._featureId;
-          if(this.item.condo){
+          if(this.item.condo === true){
             this.$store.commit('setCondoModal', { featureId });
           } else {
             this.$store.commit('setActiveModal', { featureId });
