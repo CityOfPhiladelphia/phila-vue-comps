@@ -6,6 +6,7 @@
   >
     <td v-for="field in fields"
         :item='item'
+        :class="{ 'in-popover': options.inPopover }"
     >
       <b v-show="shouldBeBold">
         <popover-link v-if="field.popoverLink"
@@ -174,4 +175,9 @@
     font-size: 15px;
     text-align: left;
   }
+
+  .in-popover {
+    color: #000;
+  }
+
 </style>

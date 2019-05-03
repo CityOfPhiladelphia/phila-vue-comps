@@ -5,7 +5,7 @@
     <!-- <li> -->
       <a :href="'http://metadata.phila.gov/#home/representationdetails/' + this.bennyId"
          target="_blank"
-         v-if="bennyId"
+         v-if="this.shouldShowDataLink"
       >
         <span><font-awesome-icon icon="info-circle" class="fa-2x" /></span>
       </a>
@@ -78,7 +78,8 @@
             'layerDefinition',
             'opacity',
             'legend',
-            'tags'
+            'tags',
+            'shouldShowDataLinks'
     ],
     data() {
       return {
@@ -146,6 +147,13 @@
       },
       url() {
         return this.layerUrls[this.$props.layerName];
+      },
+      shouldShowDataLink() {
+        if (this.bennyId && this.$props.shouldShowDataLinks) {
+          return true;
+        } else {
+          return false;
+        }
       },
       bennyId() {
         if (Object.keys(this.bennyEndpoints).length > 0) {

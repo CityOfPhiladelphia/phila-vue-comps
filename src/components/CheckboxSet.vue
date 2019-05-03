@@ -10,6 +10,7 @@
                     :opacity="currentWmLayer.opacity"
                     :legend="currentWmLayer.legend"
                     :key="currentWmLayer.id"
+                    :shouldShowDataLinks="computedShouldShowDataLinks"
           >
           </checkbox>
       </fieldset>
@@ -23,6 +24,7 @@
 
   export default {
     mixins: [TopicComponent],
+    // props: ['dataLinks'],
     components: {
       Checkbox
     },
@@ -35,6 +37,15 @@
       },
       scale() {
         return this.$store.state.map.scale;
+      },
+      computedShouldShowDataLinks() {
+        let configValue;
+        if (Object.keys(this.$props.options).includes('shouldShowDataLinks')) {
+          configValue = this.$props.options.shouldShowDataLinks;
+        } else {
+          configValue = true;
+        }
+        return configValue;
       },
       topicLayers() {
         if (this.$props.options.topicLayers) {
