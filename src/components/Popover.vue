@@ -81,7 +81,7 @@
 
   .pl-alert-close-button {
     position: fixed;
-    right: 40px;
+    /* right: 20px; */
     /* float: right; */
     cursor: pointer;
   }
