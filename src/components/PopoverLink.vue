@@ -4,6 +4,7 @@
     <a class="popover-link"
       @click="didClickPopoverLink"
       :title="value + ' ' + popoverValue"
+      :style="customStyle"
     >
       {{ value }}
     </a>
@@ -14,7 +15,10 @@
   import TopicComponent from './TopicComponent.vue';
   export default {
     mixins: [TopicComponent],
-    props: ['fieldLabel'],
+    props: [
+      'fieldLabel',
+      'customStyle'
+    ],
     data() {
       const data = {
         showFieldLabel: false
@@ -89,10 +93,12 @@
 </script>
 
 <style>
+
   .popover-link {
     border-bottom: 1px dotted;
     font-weight: bold;
     /* color: #444; */
     color: #2176d2;
   }
+
 </style>
