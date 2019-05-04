@@ -82,7 +82,9 @@
         }
       },
       evaluateFieldLabel() {
-        if (this.showFieldLabel) {
+        if (!this.$props.fieldLabel) {
+          return '';
+        } else if (this.showFieldLabel) {
           return this.$props.fieldLabel + ': ';
         } else {
           return '';
