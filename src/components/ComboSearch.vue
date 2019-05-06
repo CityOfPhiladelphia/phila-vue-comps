@@ -1,8 +1,10 @@
 <template>
   <div class="combo-search">
     <select>
-      <option value="address">Address</option>
-      <option value="keyword">Keyword</option>
+      <option
+        v-for="(item, key) in dropdown"
+        :value="key"
+        :key="key">{{ item }}</option>
     </select>
     <div class="search">
       <input class="search-field" type="text" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" placeholder="enter your address">
@@ -17,6 +19,16 @@
 
 export default {
   name: 'comboSearch',
+  props: {
+    dropdown: {
+      type: Object,
+      default: {'key': 'value'},
+    },
+    appTitle: {
+      type: String,
+      default: 'App Title',
+    },
+  },
   methods: {
     async updateResultsList () {
       let filteredJobs = this.jobs
