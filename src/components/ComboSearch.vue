@@ -8,8 +8,9 @@
     </select>
     <div class="search">
       <input class="search-field" type="text" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText">
-      <!-- <input ref="jb-search-bar" type="submit" class="search-submit" @click="updateResultsList();" value="Search"> -->
-      <button class="search-submit"><font-awesome-icon icon="search" /></button>
+      <button class="search-submit"
+        @click="updateResultsList();"
+        value="search"><font-awesome-icon icon="search" /></button>
     </div>
   </div>
 </template>
@@ -29,17 +30,7 @@ export default {
     },
   },
   methods: {
-    async updateResultsList () {
-      let filteredJobs = this.jobs
-
-      filteredJobs = this.departmentFilter(filteredJobs)
-      filteredJobs = await this.searchBarFilter(filteredJobs)
-      filteredJobs = this.jobFilters(filteredJobs)
-
-      this.results = filteredJobs
-
-      this.sortResults()
-    },
+    async updateResultsList () {},
   },
 }
 
@@ -64,18 +55,6 @@ export default {
         border-right: 2px solid white;
         border-bottom:2px solid white;
         border-left: 2px solid color(ghost-gray);
-      }
-    }
-    @media screen and (max-width: 39.9375em) {
-      select {
-        width: 100%;
-        float: none;
-        margin-bottom: 5px;
-      }
-      .search {
-        width: 100%;
-        float: none;
-        margin-bottom: 5px;
       }
     }
   }
