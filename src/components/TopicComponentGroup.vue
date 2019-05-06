@@ -42,6 +42,10 @@
       AnyHeader: () => import(/* webpackChunkName: "tcg_pvc_AnyHeader" */'./AnyHeader.vue'),
       CheckboxSet: () => import(/* webpackChunkName: "tcg_pvc_CheckboxSet" */'./CheckboxSet.vue'),
       RadioButtonSet: () => import(/* webpackChunkName: "tcg_pvc_RadioButtonSet" */'./RadioButtonSet.vue'),
+      Checkbox: () => import(/* webpackChunkName: "tcg_pvc_Checkbox" */'./Checkbox.vue'),
+      RadioButton: () => import(/* webpackChunkName: "tcg_pvc_RadioButton" */'./RadioButton.vue'),
+      LegendBox: () => import(/* webpackChunkName: "tcg_pvc_LegendBox" */'./LegendBox.vue'),
+      Slider: () => import(/* webpackChunkName: "tcg_pvc_Slider" */'./Slider.vue'),
     },
     beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');

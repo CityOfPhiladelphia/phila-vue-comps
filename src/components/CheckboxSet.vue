@@ -2,17 +2,18 @@
   <div>
     <form action="#/">
       <fieldset class="options">
-          <checkbox v-for="(currentWmLayer, index) in this.currentWmLayers"
-                    :layer="currentWmLayer.layer"
-                    :layerName="currentWmLayer.title"
-                    :layerId="currentWmLayer.id"
-                    :layerDefinition="currentWmLayer.rest.layerDefinition"
-                    :opacity="currentWmLayer.opacity"
-                    :legend="currentWmLayer.legend"
-                    :key="currentWmLayer.id"
-                    :shouldShowDataLinks="computedShouldShowDataLinks"
-          >
-          </checkbox>
+        <checkbox v-for="(currentWmLayer, index) in this.currentWmLayers"
+                  :layer="currentWmLayer.layer"
+                  :layerName="currentWmLayer.title"
+                  :layerId="currentWmLayer.id"
+                  :layerDefinition="currentWmLayer.rest.layerDefinition"
+                  :opacity="currentWmLayer.opacity"
+                  :legend="currentWmLayer.legend"
+                  :key="currentWmLayer.id"
+                  :shouldShowDataLinks="computedShouldShowDataLinks"
+                  :options="currentWmLayer.options"
+        >
+        </checkbox>
       </fieldset>
     </form>
   </div>
@@ -20,11 +21,10 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
-  import Checkbox from '@philly/vue-mapping/src/esri-leaflet/Checkbox.vue';
+  import Checkbox from './Checkbox.vue';
 
   export default {
     mixins: [TopicComponent],
-    // props: ['dataLinks'],
     components: {
       Checkbox
     },
@@ -65,6 +65,10 @@
       currentWmLayers() {
         const layers = this.$store.state.map.webMapLayersAndRest;
         const topicLayers = this.topicLayers;
+        let topicLayersKeys = [];
+        for (let topicLayer of topicLayers) {
+          topicLayersKeys.push(topicLayer.title)
+        }
         let currentLayers = [];
 
         // loop through all layers to calculate currentLayers
@@ -76,29 +80,41 @@
           if (layer.tags) {
             const lcTags = layer.tags.join().toLowerCase();
             if (
-              topicLayers.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory) && lcTags.includes(lcTagsFilter)
-              || topicLayers.includes(layer.title) && lcTitle.includes(lcTagsFilter) && layer.category.includes(this.selectedCategory)
-              // || topicLayers.includes(layer.title) && lcTags.includes(lcTagsFilter)
-              || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
+              topicLayersKeys.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory) && lcTags.includes(lcTagsFilter)
+              || topicLayersKeys.includes(layer.title) && lcTitle.includes(lcTagsFilter) && layer.category.includes(this.selectedCategory)
+              // || topicLayersKeys.includes(layer.title) && lcTags.includes(lcTagsFilter)
+              || topicLayersKeys.includes(layer.title) && this.activeLayers.includes(layer.title)
             ) {
-              // console.log('layer has tags', layer.title);
+              for (let topicLayer of topicLayers) {
+                if (topicLayer.title === layer.title) {
+                  layer.options = topicLayer.options
+                }
+              }
               currentLayers.push(layer);
             }
           } else if (this.inputTagsFilter !== '') {
             // continue;
             if (
-              topicLayers.includes(layer.title) && lcTitle.includes(lcTagsFilter) && layer.category.includes(this.selectedCategory)
-              || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
+              topicLayersKeys.includes(layer.title) && lcTitle.includes(lcTagsFilter) && layer.category.includes(this.selectedCategory)
+              || topicLayersKeys.includes(layer.title) && this.activeLayers.includes(layer.title)
             ) {
-              // console.log('layer does not have tags, box is full', layer.title);
+              for (let topicLayer of topicLayers) {
+                if (topicLayer.title === layer.title) {
+                  layer.options = topicLayer.options
+                }
+              }
               currentLayers.push(layer);
             }
           } else {
             if (
-              topicLayers.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory)
-              || topicLayers.includes(layer.title) && this.activeLayers.includes(layer.title)
+              topicLayersKeys.includes(layer.title) && lcTitle.includes(lcFilter) && layer.category.includes(this.selectedCategory)
+              || topicLayersKeys.includes(layer.title) && this.activeLayers.includes(layer.title)
             ) {
-              // console.log('layer does not have tags, box is empty', layer.title);
+              for (let topicLayer of topicLayers) {
+                if (topicLayer.title === layer.title) {
+                  layer.options = topicLayer.options
+                }
+              }
               currentLayers.push(layer);
             }
           }
