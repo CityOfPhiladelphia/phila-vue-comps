@@ -10,7 +10,6 @@
       <input class="search-field" type="text" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText">
       <!-- <input ref="jb-search-bar" type="submit" class="search-submit" @click="updateResultsList();" value="Search"> -->
       <button class="search-submit"><font-awesome-icon icon="search" /></button>
-      <button class="jb-clear-search-btn"><i class="fal fa-times-square"></i></button>
     </div>
   </div>
 </template>
@@ -52,6 +51,7 @@ export default {
     select {
       float: left;
       width: 27.8%;
+      margin:0;
     }
     .search {
       float: left;
@@ -64,11 +64,6 @@ export default {
         border-right: 2px solid white;
         border-bottom:2px solid white;
         border-left: 2px solid color(ghost-gray);
-      }
-      &:after {
-        height: 3.15rem;
-        width: 3.15rem;
-        font-size: 1.5rem;
       }
     }
     @media screen and (max-width: 39.9375em) {
@@ -88,12 +83,14 @@ export default {
   .search {
     width: 100%;
     position: relative;
+    margin:0;
 
     .search-field,
     input[type="text"]:focus {
       min-height: 2.8rem;
       border-color: color(electric-blue);
       background: white;
+      margin:0;
     }
 
     input[type="text"] {
@@ -105,13 +102,10 @@ export default {
       position: absolute;
       top: 0;
       right: 0;
-      width: 3.8rem;
-      height: 3.8rem;
+      min-width: 2.8rem;
+      min-height: 2.8rem;
+      background: color(electric-blue);
       cursor: pointer;
-    }
-
-    .fa-search {
-      color: red
     }
   }
 
