@@ -1,22 +1,23 @@
 <template>
-  <div :class="checkboxClass">
+  <div :class="radioButtonClass">
     <div class="div-row">
       <a :href="'http://metadata.phila.gov/#home/representationdetails/' + this.bennyId"
          target="_blank"
-         v-if="this.shouldShowDataLink"
+         v-if="shouldShowDataLink"
       >
         <span><font-awesome-icon icon="info-circle" class="fa-2x" /></span>
       </a>
 
-      <input :id="'checkbox-'+layerName"
+      <input :id="'radio-'+layerName"
+             :value="layerId"
              :class="{ disabled: shouldBeDisabled }"
-             type="checkbox"
+             type="radio"
              :layerid="layerId"
              :checked="webMapActiveLayers.includes(layerName)"
-             @click="checkboxToggle"
+             @click="radioToggle"
       >
 
-      <label :for="'checkbox-'+layerName"
+      <label :for="'radio-'+layerName"
              :class="{ disabled: shouldBeDisabled, 'label-text': shouldShowDataLink, 'label-text-no-datalinks': !shouldShowDataLink }"
       >
         <div class="layer-name">{{ layerName }}</div>
@@ -70,11 +71,12 @@
             'opacity',
             'legend',
             'tags',
+            'topicLayers',
             'shouldShowDataLinks'
     ],
     data() {
       return {
-        opa: this.$props.opacity * 100
+        opa: this.$props.opacity * 100,
       }
     },
     watch: {
@@ -94,12 +96,9 @@
           this.addToWebMapDisplayedLayers();
         }
       },
-      // inputTagsFilter(nextInputTagsFilter) {
-      //   this.findCurrentTags(nextInputTagsFilter);
-      // },
     },
     computed: {
-      checkboxClass() {
+      radioButtonClass() {
         return this.webMapActiveLayers.includes(this.$props.layerName) ? 'main-div-selected' : 'main-div'
       },
       computedShouldShowLegendBox() {
@@ -174,7 +173,6 @@
       bennyId() {
         if (Object.keys(this.bennyEndpoints).length > 0) {
           const id = this.bennyEndpoints[this.url];
-          // const id = this.bennyEndpoints[this.url]['Metadata'];
           return id;
         } else {
           return ' ';
@@ -194,70 +192,42 @@
       }
     },
     methods: {
-      // findCurrentTags(inputTagsFilter) {
-      //
-      // },
       trim(s) {
         return ( s || '' ).replace( /^\s+|\s+$/g, '' );
       },
-      // getGeoJson(layer) {
-      //   const layer2 = 'services.arcgis.com/fLeGjb7u4uXqeF9q/ArcGIS/rest/services/WasteBaskets_Big_Belly/FeatureServer/0'
-      //   // const url = 'http://' + layer2;
-      //   const url = 'http://' + this.layerUrls[layer];
-      //   console.log('getGeoJson is running, layer:', layer, 'url:', url);
-      //   const dataQuery = L.esri.query({ url });
-      //   dataQuery.where("1=1");
-      //   dataQuery.run((function(error, featureCollection, response) {
-      //     // console.log('parcelQuery ran, activeParcelLayer:', activeParcelLayer);
-      //     this.didGetData(error, featureCollection, response, layer);
-      //   }).bind(this)
-      // )
-      // },
-      // didGetData(error, featureCollection, response, layer) {
-      //   console.log('didGetData is running, layer:', layer, 'featureCollection:', featureCollection, 'response:', response);
-      //   // const obj = {
-      //   //   'layerName': layer,
-      //   //   'json': response
-      //   let obj = this.webMapGeoJson;
-      //   obj[layer] = response;
-      //   this.$store.commit('setWebMapGeoJson', obj);
-      // },
-      checkboxToggle(e) {
-        console.log('checkboxToggle', e.target, e.target.id, e.target.checked);
+      radioToggle(e) {
+        // console.log('radioToggle', e.target, e.target.id, e.target.checked, this.$props.topicLayers);
         const urlLayer = this.webMapUrlLayer;
         const activeLayers = this.webMapActiveLayers;
         const displayedLayers = this.webMapDisplayedLayers;
-        // const splitArray = e.target.id.split('-').splice(0, 1);
-        const targetReplace = e.target.id.replace('checkbox-', '');
-        if (e.target.checked) {
-          console.log('target checked, targetReplace:', targetReplace);
-          activeLayers.push(targetReplace);
-          displayedLayers.push(targetReplace);
-          // activeLayers.push(e.target.id.split('-')[1]);
-          // displayedLayers.push(e.target.id.split('-')[1]);
-          if (activeLayers.length === 1) {
-            this.$store.commit('setWebMapUrlLayer', targetReplace);
-            // this.$controller.handleCheckboxClick(targetReplace);
-          }
-          // if (!Object.keys(this.webMapGeoJson).includes(targetReplace)) {
-          //   this.getGeoJson(targetReplace);
-          // }
-        } else {
-          console.log('target not checked');
-          const activeIndex = activeLayers.indexOf(targetReplace);
-          // const activeIndex = activeLayers.indexOf(e.target.id.split('-')[1]);
-          if (activeIndex >= 0) {
-            activeLayers.splice(activeIndex, 1);
-          }
-          const displayedIndex = displayedLayers.indexOf(targetReplace);
-          // const displayedIndex = displayedLayers.indexOf(e.target.id.split('-')[1]);
-          if (displayedIndex >= 0) {
-            displayedLayers.splice(displayedIndex, 1);
-          }
-          // this.$store.commit('setIntersectingFeatures', []);
-          if (urlLayer === targetReplace) {
-            this.$store.commit('setWebMapUrlLayer', null);
-            // this.$controller.handleCheckboxUnClick(targetReplace);
+        const targetReplace = e.target.id.replace('radio-', '');
+
+        let topicLayersKeys = [];
+        for (let topicLayer of this.$props.topicLayers) {
+          topicLayersKeys.push(topicLayer.title)
+        }
+
+        for (let layer of topicLayersKeys) {
+          if (layer === targetReplace) {
+            // console.log('target checked, targetReplace:', targetReplace);
+            activeLayers.push(layer);
+            displayedLayers.push(layer);
+            if (activeLayers.length === 1) {
+              this.$store.commit('setWebMapUrlLayer', layer);
+            }
+          } else {
+            // console.log('target not checked');
+            const activeIndex = activeLayers.indexOf(layer);
+            if (activeIndex >= 0) {
+              activeLayers.splice(activeIndex, 1);
+            }
+            const displayedIndex = displayedLayers.indexOf(layer);
+            if (displayedIndex >= 0) {
+              displayedLayers.splice(displayedIndex, 1);
+            }
+            if (urlLayer === layer) {
+              this.$store.commit('setWebMapUrlLayer', null);
+            }
           }
         }
         this.$store.commit('setWebMapActiveLayers', activeLayers);
@@ -266,14 +236,12 @@
       removeFromWebMapDisplayedLayers() {
         const displayedLayers = this.webMapDisplayedLayers;
         const index = displayedLayers.indexOf(this.$props.layerName);
-        // console.log('layer', this.$props.layerName, 'is active, but now should not be displayed, index:', index);
         if (index >= 0) {
           displayedLayers.splice(index, 1);
         }
         this.$store.commit('setWebMapDisplayedLayers', displayedLayers);
       },
       addToWebMapDisplayedLayers() {
-        // console.log('layer', this.$props.layerName, 'is active, and now should be displayed');
         const displayedLayers = this.webMapDisplayedLayers;
         displayedLayers.push(this.$props.layerName);
         this.$store.commit('setWebMapDisplayedLayers', displayedLayers);
@@ -313,9 +281,9 @@
     margin-bottom: 12px;
   }
 
-  /* input[type="checkbox"] {
-    width: 25px;
-    height: 25px;
+  /* input[type="radio"] {
+    width: 20px;
+    height: 20px;
     position: absolute;
     top: 50%;
     margin-top: -10px;
@@ -330,14 +298,15 @@
     /*margin-left: 25px;*/
   }
 
-  input[type=checkbox]+label[for] {
+  input[type=radio]+label[for] {
     font-size: 16px;
   }
 
-  input[type=checkbox]+label::before {
+  input[type=radio]+label::before {
     position: absolute;
-    margin-top: -12px;
-    font-size: 30px;
+    margin-left: 5px;
+    margin-top: -4px;
+    font-size: 20px;
     padding-right: 5px;
   }
 
@@ -345,7 +314,7 @@
     color: #d3d3d3 !important;
   }
 
-  input[type=checkbox]+label.disabled::before {
+  input[type=radio]+label.disabled::before {
     color: #d3d3d3;
   }
 
