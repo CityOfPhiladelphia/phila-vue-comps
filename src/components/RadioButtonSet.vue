@@ -55,7 +55,9 @@
           // if no topicLayers are provided, use all
           let titles = [];
           for (let layer of this.$store.state.map.webMapLayersAndRest) {
-            titles.push(layer.title);
+            titles.push({
+              title: layer.title
+            });
           }
           return titles;
         }
@@ -71,6 +73,7 @@
           topicLayersKeys.push(topicLayer.title)
         }
         let currentLayers = [];
+        let currentLayersOrdered = [];
 
         // loop through all layers to calculate currentLayers
         for (let layer of layers) {
@@ -119,9 +122,14 @@
               currentLayers.push(layer);
             }
           }
-
         }
-        return currentLayers;
+        for (let topicLayer of topicLayersKeys) {
+          let potentialLayer = currentLayers.filter(currentLayers => currentLayers.title === topicLayer);
+          if (potentialLayer) {
+            currentLayersOrdered.push(potentialLayer[0]);
+          }
+        }
+        return currentLayersOrdered;
       },
       inputLayerFilter() {
         return this.$store.state.layers.inputLayerFilter;
