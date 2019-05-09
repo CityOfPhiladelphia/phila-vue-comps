@@ -7,9 +7,9 @@
         :key="key">{{ item }}</option>
     </select>
     <div class="search">
-      <input class="search-field" type="text" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText">
+      <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText">
       <button class="search-submit"
-        @click="updateResultsList();"
+        @click="handleSearchFormSubmit();"
         value="search"><font-awesome-icon icon="search" /></button>
     </div>
   </div>
@@ -29,8 +29,22 @@ export default {
       default: 'Search',
     },
   },
+  data() {
+    const data = {
+      inputId: 'testing'
+    }
+    return data;
+  },
   methods: {
-    async updateResultsList () {},
+    async updateResultsList () {
+      
+    },
+    handleSearchFormSubmit() {
+      console.log('handleSearchFormSubmit is running');
+      let value;
+      value = document.querySelector('#' + this.$data.inputId.toString()).value;
+      this.$controller.handleSearchFormSubmit(value);
+    },
   },
 }
 
