@@ -7,7 +7,8 @@
         :key="key">{{ item }}</option>
     </select>
     <div class="search">
-      <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText">
+      <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
+      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText">
       <button class="search-submit"
         @click="handleSearchFormSubmit();"
         value="search"><font-awesome-icon icon="search" /></button>
@@ -37,7 +38,7 @@ export default {
   },
   methods: {
     async updateResultsList () {
-      
+
     },
     handleSearchFormSubmit() {
       console.log('handleSearchFormSubmit is running');
