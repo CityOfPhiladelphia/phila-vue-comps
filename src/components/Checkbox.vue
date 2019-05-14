@@ -14,6 +14,7 @@
              :layerid="layerId"
              :checked="webMapActiveLayers.includes(layerName)"
              @click="checkboxToggle"
+             :disabled="shouldBeDisabled"
       >
 
       <label :for="'checkbox-'+layerName"

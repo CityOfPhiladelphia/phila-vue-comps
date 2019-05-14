@@ -15,6 +15,7 @@
              :layerid="layerId"
              :checked="webMapActiveLayers.includes(layerName)"
              @click="radioToggle"
+             :disabled="shouldBeDisabled"
       >
 
       <label :for="'radio-'+layerName"
