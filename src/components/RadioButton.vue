@@ -281,16 +281,6 @@
     margin-bottom: 12px;
   }
 
-  /* input[type="radio"] {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 50%;
-    margin-top: -10px;
-    margin-left: 32px;
-    cursor: pointer;
-  } */
-
   a {
     position: absolute;
     /* top: 50%; */
@@ -305,8 +295,8 @@
   input[type=radio]+label::before {
     position: absolute;
     margin-left: 5px;
-    margin-top: -4px;
-    font-size: 20px;
+    margin-top: 1px;
+    font-size: 14px;
     padding-right: 5px;
   }
 
