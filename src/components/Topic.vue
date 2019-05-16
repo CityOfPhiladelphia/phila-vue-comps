@@ -2,7 +2,7 @@
   <div v-if="shouldShowTopic">
   <!-- <div> -->
     <a href="#"
-       class="topic-header"
+       :class="shouldBeDisabled ? 'topic-header-disabled' : 'topic-header'"
        @click.prevent="handleTopicHeaderClick"
        v-if="shouldShowHeader"
        :data-topic-key="topicKey"
@@ -51,6 +51,13 @@
       this.$options.components.TopicComponentGroup = TopicComponentGroup;
     },
     computed: {
+      shouldBeDisabled() {
+        if (this.topic.disabled) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       // returns the full config object for the topic
       topic() {
         const topicKey = this.$props.topicKey;
@@ -305,7 +312,7 @@
 <style scoped>
   /*REVIEW these aren't prefixed `mb-`because they're scoped, but it feels
   inconsistent?*/
-  .topic-header {
+  .topic-header, .topic-header-disabled {
     background: #f5f5f5;
     border: 1px solid #ddd;
     display: block;
@@ -321,6 +328,11 @@
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .topic-header-disabled {
+    pointer-events: none;
+    cursor: default;
   }
 
   .topic-header:hover {
