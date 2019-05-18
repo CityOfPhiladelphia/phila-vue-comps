@@ -1,6 +1,7 @@
 <template>
   <div class="combo-search">
-    <select>
+    <select :id="selectId"
+    >
       <option
         v-for="(item, key) in dropdown"
         :value="key"
@@ -32,7 +33,9 @@ export default {
   },
   data() {
     const data = {
-      inputId: 'testing'
+      inputId: 'inputId',
+      selectId: 'selectId',
+      categorySelected: null,
     }
     return data;
   },
@@ -41,10 +44,17 @@ export default {
 
     },
     handleSearchFormSubmit() {
-      console.log('handleSearchFormSubmit is running');
-      let value;
+      let searchCategory, value;
+      const e = document.getElementById(this.$data.selectId);
+      searchCategory = e.options[e.selectedIndex].value;
       value = document.querySelector('#' + this.$data.inputId.toString()).value;
-      this.$controller.handleSearchFormSubmit(value);
+      console.log('handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
+      if (searchCategory === "keyword") {
+        let values = value.split(',');
+        this.$store.commit('setSelectedKeywords', values);
+      } else {
+        this.$controller.handleSearchFormSubmit(value);
+      }
     },
   },
 }
