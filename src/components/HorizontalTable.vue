@@ -78,8 +78,7 @@
 
       <div :class="{ 'pvc-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
         <a class="button pvc-download-data-button"
-            v-if="this.shouldShowDownloadButton
-                    && this.$store.state.fullScreenTopicsEnabled !== true
+            v-if="this.$store.state.fullScreenTopicsEnabled !== true
                     && this.$store.state.fullScreenMapEnabled !== true"
             @click="this.exportTableToCSV"
         >
