@@ -4,7 +4,7 @@
     <a class="popover-link"
       @click="didClickPopoverLink"
       :title="value + ' ' + popoverValue"
-      :style="customStyle"
+      :style="this.$props.options.customStyle"
     >
       {{ value }}
     </a>
@@ -17,7 +17,6 @@
     mixins: [TopicComponent],
     props: [
       'fieldLabel',
-      'customStyle'
     ],
     data() {
       const data = {
@@ -70,6 +69,7 @@
     },
     methods: {
       didClickPopoverLink(e) {
+
         this.$store.commit('setPopoverOpen', true);
         this.$store.commit('setPopoverText', this.popoverText);
         this.$store.commit('setPopoverOptions', this.popoverOptions);

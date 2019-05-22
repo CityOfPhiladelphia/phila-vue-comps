@@ -1,13 +1,27 @@
 <template>
   <div>
-    <component v-for="(comp, compIndex) in topicComponents"
-               :is="comp.type"
-               class="topic-component"
-               :slots="comp.slots"
-               :options="comp.options"
-               :item="item"
-               :key="getCompKey(key, compIndex)"
-    />
+
+    <div v-if="!this.isList">
+      <component v-for="(comp, compIndex) in topicComponents"
+                 :is="comp.type"
+                 class="topic-component"
+                 :slots="comp.slots"
+                 :options="comp.options"
+                 :item="item"
+                 :key="getCompKey(key, compIndex)"
+      />
+    </div>
+    <div v-if="this.isList">
+      <li v-for="(comp, compIndex) in topicComponents">
+        <component :is="comp.type"
+                   class="topic-component"
+                   :slots="comp.slots"
+                   :options="comp.options"
+                   :item="item"
+                   :key="getCompKey(key, compIndex)"
+        />
+      </li>
+    </div>
   </div>
 </template>
 
@@ -16,8 +30,9 @@
 
   export default {
     name: 'TopicComponentGroup',
-    props: ['topicComponents', 'item', 'filterData'],
+    props: ['topicComponents', 'item', 'filterData', 'isList'],
     components: {
+      Anchor: () => import(/* webpackChunkName: "tcg_pvc_Anchor" */'./Anchor.vue'),
       Badge: () => import(/* webpackChunkName: "tcg_pvc_Badge" */'./Badge.vue'),
       ButtonComp: () => import(/* webpackChunkName: "tcg_pvc_ButtonComp" */'./ButtonComp.vue'),
       Callout: () => import(/* webpackChunkName: "tcg_pvc_Callout" */'./Callout.vue'),
@@ -46,14 +61,6 @@
       RadioButton: () => import(/* webpackChunkName: "tcg_pvc_RadioButton" */'./RadioButton.vue'),
       LegendBox: () => import(/* webpackChunkName: "tcg_pvc_LegendBox" */'./LegendBox.vue'),
       Slider: () => import(/* webpackChunkName: "tcg_pvc_Slider" */'./Slider.vue'),
-    },
-    beforeCreate() {
-      // console.log('TopicComponentGroup beforeCreate is running');
-      // this.$options.components.TabGroup = TabGroup;
-      // this.$options.components.BadgeCustom = BadgeCustom;
-      // this.$options.components.Topic = Topic;
-      // this.$options.components.TopicSet = TopicSet;
-      // this.$options.components.AnyHeader = AnyHeader;
     },
     data() {
       return {
