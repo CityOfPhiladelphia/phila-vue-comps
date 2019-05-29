@@ -214,9 +214,20 @@
 </script>
 
 <style scoped>
+
+  .tabs {
+    list-style: none !important;
+    padding-left: 0px !important;
+  }
+
   .tabs-panel {
     padding: 20px;
     padding-bottom: 0px;
+  }
+
+  .tabs-title {
+    margin-left: 0px !important;
+    padding: 0px !important;
   }
 
   /*recreate phila patterns tab styles*/
