@@ -75,7 +75,8 @@
     /*width: 300px;*/
     padding: 0;
     margin: 0 auto;
-    margin-bottom: inherit;
+    /* margin-bottom: inherit; */
+    margin-bottom: 10px;
   }
 
   @media (max-width: 640px) {

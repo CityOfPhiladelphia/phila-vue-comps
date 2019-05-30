@@ -100,10 +100,12 @@
 
   .toggle-tab {
     display: none;
+    padding-top: 9px;
   }
 
   .align-span {
     margin-left: 6px;
+    margin-top: 30px;
   }
 
   @media screen and (min-width: 46.875em) {
@@ -114,7 +116,7 @@
       border-style: solid;
       border-color: #CAC9C9;
       height: 48px;
-      line-height: 56px;
+      /* line-height: 56px !important; */
       width:24px;
       background-color: white;
       display: inline-block;
