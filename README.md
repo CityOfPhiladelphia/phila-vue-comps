@@ -32,3 +32,4 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 ### 1.0.29:
 
 * A large number of changes that were made over the initial development of StreetSmart, and were used in the original release of the StreetSmart site as commits of pvc.
+* A number of changes that were made over the continued development of CleanPhl.
