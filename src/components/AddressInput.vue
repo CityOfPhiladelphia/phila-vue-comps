@@ -20,10 +20,10 @@
             v-if="this.addressEntered != '' && this.addressEntered != null"
             @click="handleFormX"
     >
-    <!-- v-if="this.addressAutocompleteEnabled && this.addressEntered != '' && this.addressEntered != null" -->
       <font-awesome-icon icon="times" />
     </button>
     <button :class="'pvc-search-control-button ' + this.buttonClass"
+            name="pvc-search-control-button"
             tabindex="-1"
             @click="this.handleSearchFormSubmit"
     >
@@ -60,6 +60,7 @@
     created() {
       window.addEventListener('resize', this.handleWindowResize);
       this.handleWindowResize();
+      console.log('AddressInput created is running')
     },
     watch: {
       addressEntered(nextValue) {
@@ -67,9 +68,6 @@
       }
     },
     computed: {
-      // addressEntered() {
-      //   return this.$store.state.addressEntered;
-      // },
       inputWidth() {
         // if (this.addressAutocompleteEnabled) {
           if (this.addressEntered === '' || this.addressEntered === null) {
@@ -139,7 +137,7 @@
               this.$store.commit('setShouldShowAddressCandidateList', true);
             }
           }
-        }, 300
+        }, 50
       ),
       getCandidates(address) {
         // console.log('getCandidates is running, address:', address);
@@ -268,12 +266,12 @@
   background: #2176d2;
   padding: 0px;
   width: 50px;
+  margin-right: 1.5px;
 }
 
 .pvc-button-non-mobile {
   height: 48px;
   line-height: 48px;
-  position: absolute;
 }
 
 .pvc-button-mobile {
