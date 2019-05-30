@@ -7,6 +7,9 @@
       >
         <span><font-awesome-icon icon="info-circle" class="fa-2x" /></span>
       </a>
+      <div v-if="this.shouldShowDataLinks && !this.shouldShowDataLink"
+           class="missing-data-link"
+      />
 
       <input :id="'checkbox-'+layerName"
              :class="{ disabled: shouldBeDisabled }"
@@ -387,6 +390,11 @@
     font-weight: normal;
     font-size: 14px;
     color: red;
+  }
+
+  .missing-data-link {
+    display: inline-block;
+    width: 30px;
   }
 
 

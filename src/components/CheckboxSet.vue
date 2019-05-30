@@ -125,7 +125,9 @@
         for (let topicLayer of topicLayersKeys) {
           let potentialLayer = currentLayers.filter(currentLayers => currentLayers.title === topicLayer);
           if (potentialLayer) {
-            currentLayersOrdered.push(potentialLayer[0]);
+            if (potentialLayer[0]) {
+              currentLayersOrdered.push(potentialLayer[0]);
+            }
           }
         }
         return currentLayersOrdered;
