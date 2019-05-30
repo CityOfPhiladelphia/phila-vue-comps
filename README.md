@@ -21,3 +21,14 @@ phila-vue-comps is a library of Vue components that can be used in apps which us
 
 ## Usage
 Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki) for usage documentation.
+
+## Release Notes
+
+### 1.0.30:
+
+Small changes made in CheckboxSet.vue to fix a bug with filtering layers in Openmaps, which was introduced when work was done on layerboard for StreetSmart.
+Small changes made in Checkbox.vue to fix the alignment of checkboxes in Openmaps if a datasource is not in Benny.
+
+### 1.0.29:
+
+A large number of changes that were made over the initial development of StreetSmart, and were used in the original release of the StreetSmart site as commits of pvc.
