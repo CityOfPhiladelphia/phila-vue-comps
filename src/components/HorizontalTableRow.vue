@@ -8,6 +8,7 @@
         :item='item'
         :class="{ 'in-popover': options.inPopover }"
     >
+      <topic-component-group :topic-components="field.components" :item="item" />
       <b v-show="shouldBeBold">
         <popover-link v-if="field.popoverLink"
                       :slots='field'
@@ -37,12 +38,14 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
+  import TopicComponentGroup from './TopicComponentGroup.vue';
   import PopoverLink from './PopoverLink.vue';
 
   export default {
     mixins: [TopicComponent],
     components: {
       PopoverLink,
+      TopicComponentGroup
     },
     props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField'],
     data() {
