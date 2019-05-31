@@ -8,6 +8,7 @@
         :item='item'
         :sorttable_customkey="[field.customkey ? evaluateSlot(field.customkey)  : evaluateSlot(field.value)]"
     >
+      <topic-component-group :topic-components="field.components" :item="item" />
       <b v-show="shouldBeBold">
         <popover-link v-if="field.popoverLink"
                       :slots='field'
@@ -37,12 +38,14 @@
 
 <script>
   import TopicComponent from './TopicComponent.vue';
+  import TopicComponentGroup from './TopicComponentGroup.vue';
   import PopoverLink from './PopoverLink.vue';
 
   export default {
     mixins: [TopicComponent],
     components: {
       PopoverLink,
+      TopicComponentGroup,
     },
     props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField'],
     data() {
@@ -102,9 +105,7 @@
         if(this.$store.state.activeModal && this.$props.options.clickEnabled ) {
           if (!this.hasOverlay) return;
           const featureId = this.item._featureId;
-          if(this.item.condo === true){
-            this.$store.commit('setCondoModal', { featureId });
-          } else {
+          if(this.item.condo != true){
             this.$store.commit('setActiveModal', { featureId });
           }
         }
