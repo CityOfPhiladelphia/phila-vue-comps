@@ -22,6 +22,10 @@ phila-vue-comps is a library of Vue components that can be used in apps which us
 ## Usage
 Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki) for usage documentation.
 
+## Coming Soon
+
+* The ability to add any component to a Horizontal Table Cell
+
 ## Release Notes
 
 ### 1.0.30 - 5/30/2019
