@@ -21,12 +21,12 @@
       },
       class() {
         if (this.$props.options) {
-          return this.$props.options.class || '';
+          return this.evaluateSlot(this.$props.options.class) || '';
         }
       },
       style() {
         if (this.$props.options) {
-          return this.$props.options.style || '';
+          return this.evaluateSlot(this.$props.options.style) || '';
         }
       }
     }
