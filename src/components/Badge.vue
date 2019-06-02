@@ -39,19 +39,21 @@
     },
     computed: {
       style() {
-        const titleBackgroundValOrFn = (this.options || {}).titleBackground;
-        let titleBackground;
-
-        if (titleBackgroundValOrFn) {
-          if (typeof titleBackgroundValOrFn === 'function') {
-            titleBackground = titleBackgroundValOrFn(this.$store.state);
-          } else {
-            titleBackground = titleBackgroundValOrFn;
-          }
-        } else {
-          titleBackground = '#444';
-        }
-
+        let titleBackground = this.evaluateSlot(this.slots.titleBackground)
+        // const titleBackgroundValOrFn = (this.slots || {}).titleBackground;
+        // let titleBackground;
+        //
+        // if (titleBackgroundValOrFn) {
+        //   console.log('titleBackgroundValOrFn', titleBackgroundValOrFn)
+        //   if (typeof titleBackgroundValOrFn === 'function') {
+        //     titleBackground = titleBackgroundValOrFn(this.$store.state);
+        //   } else {
+        //     titleBackground = titleBackgroundValOrFn;
+        //   }
+        // } else {
+        //   titleBackground = '#444';
+        // }
+        //
         return { background: titleBackground };
       },
       // externalLinkAction() {
