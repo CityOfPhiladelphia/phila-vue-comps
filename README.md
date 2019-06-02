@@ -28,6 +28,11 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 ## Release Notes
 
+### 1.0.31 - 6/2/2019
+
+* Uses axios 0.19.0 to fix security bug
+* Moves badge color to slots
+
 ### 1.0.30 - 5/30/2019
 
 * Small changes made in CheckboxSet.vue to fix a bug with filtering layers in Openmaps, which was introduced when work was done on layerboard for StreetSmart.
