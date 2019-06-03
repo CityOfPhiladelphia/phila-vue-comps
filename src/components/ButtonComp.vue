@@ -1,8 +1,8 @@
 <template>
   <a href="#"
-     :class="'button ' + this.class"
+     :class="'button ' + this.class + ' clicked-' + this.$data.clicked"
      :style="this.style"
-     @click.prevent="evaluateSlot(slots.buttonAction)"
+     @click.prevent="clickAction"
   >
     {{ message }}
   </a>
@@ -13,6 +13,11 @@
 
   export default {
     mixins: [TopicComponent],
+    data: function () {
+      return {
+        clicked: false
+      }
+    },
     computed: {
       message() {
         if (this.$props.slots) {
@@ -29,10 +34,21 @@
           return this.evaluateSlot(this.$props.options.style) || '';
         }
       }
+    },
+    methods: {
+      clickAction(){
+        console.log("clickAction:");
+        this.evaluateSlot(this.slots.buttonAction)
+        this.$data.clicked = true
+      }
     }
   };
 </script>
 
 <style scoped>
+
+  .clicked-true {
+    display: none;
+  }
 
 </style>
