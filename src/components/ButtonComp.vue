@@ -37,7 +37,6 @@
     },
     methods: {
       clickAction(){
-        console.log("clickAction:");
         this.evaluateSlot(this.slots.buttonAction)
         this.$data.clicked = true
       }
