@@ -9,7 +9,7 @@
     </select>
     <div class="search">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
-      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText">
+      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText" @keyup="testForEnter">
       <button class="search-submit"
         @click="handleSearchFormSubmit();"
         value="search"><font-awesome-icon icon="search" /></button>
@@ -43,6 +43,12 @@ export default {
     async updateResultsList () {
 
     },
+    testForEnter(event) {
+      if(event.key == "Enter") {
+        // console.log('enter key was pressed')
+        this.handleSearchFormSubmit();
+      }
+    },
     handleSearchFormSubmit() {
       let searchCategory, value;
       const e = document.getElementById(this.$data.selectId);
@@ -67,11 +73,13 @@ export default {
     select {
       float: left;
       width: 27.8%;
+      height: 39px;
       margin:0;
     }
     .search {
       float: left;
       width: 72.2%;
+      height: 40px;
       .search-field {
         min-height: 2.8rem;
         background: white;
