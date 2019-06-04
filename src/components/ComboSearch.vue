@@ -1,6 +1,7 @@
 <template>
   <div class="combo-search">
     <select :id="selectId"
+            @change="handleCategoryChange"
     >
       <option
         v-for="(item, key) in dropdown"
@@ -46,6 +47,16 @@ export default {
     }
     return data;
   },
+  mounted() {
+    console.log('ComboSearch mounted, this.$store.state.selectedKeywords:', this.$store.state.selectedKeywords)
+    if (this.$store.state.selectedKeywords.length) {
+      const el = document.getElementById('selectId');
+      console.log('still in mounted, el:', el);
+      el.value = 'keyword';
+      let keywords = this.$store.state.selectedKeywords.join(', ');
+      this.value = keywords;
+    }
+  },
   computed: {
     address() {
       if (this.$store.state.geocode.data) {
@@ -55,25 +66,39 @@ export default {
       } else {
         return ''
       }
+    },
+    keywords() {
+      return this.$store.state.selectedKeywords;
     }
   },
   watch: {
     value(nextValue) {
-      console.log('watch value fired, nextValue:', nextValue);
+      // console.log('watch value fired, nextValue:', nextValue);
       let input = document.getElementById('inputId');
       input.value = nextValue;
     },
     address(nextAddress) {
       this.value = nextAddress;
+    },
+    keywords(nextKeywords) {
+      console.log('ComboSearch watch keywords is firing, nextKeywords', nextKeywords);
     }
   },
   methods: {
+    handleCategoryChange(event) {
+      console.log('handleCategoryChange is running, event:', event);
+      this.$controller.routeToNoAddress();
+      this.$controller.resetGeocode();
+      this.$store.commit('setSelectedKeywords', []);
+      this.value = '';
+      this.$store.commit('setSearchType', event.target.value)
+    },
     handleTypeInInput(event) {
-      console.log('handleTypeInInput is running, event:', event);
+      // console.log('handleTypeInInput is running, event:', event);
       if(event.key == "Enter") {
         this.handleSearchFormSubmit();
       } else {
-        console.log('event key not enter')
+        // console.log('event key not enter')
         this.value = event.target.value;
       }
     },
@@ -83,18 +108,19 @@ export default {
       searchCategory = e.options[e.selectedIndex].value;
       value = document.querySelector('#' + this.$data.inputId.toString()).value;
       console.log('handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
-      if (searchCategory === "keyword") {
-        let values = value.split(',');
-        this.$store.commit('setSelectedKeywords', values);
-      } else {
-        this.$controller.handleSearchFormSubmit(value);
-      }
+      // if (searchCategory === "keyword") {
+      //   let values = value.split(',');
+      //   this.$store.commit('setSelectedKeywords', values);
+      // } else {
+        this.$controller.handleSearchFormSubmit(value, searchCategory);
+      // }
     },
     clearSearch(event) {
       console.log('clearSearch, event:', event);
       this.value = '';
       this.$controller.routeToNoAddress();
       this.$controller.resetGeocode();
+      this.$store.commit('setSelectedKeywords', []);
     },
   },
 }
