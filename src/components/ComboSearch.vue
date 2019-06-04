@@ -9,7 +9,13 @@
     </select>
     <div class="search">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
-      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText" @keyup="testForEnter">
+      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText" @keyup="handleTypeInInput">
+      <button class="search-x"
+        @click="clearSearch"
+        v-if="value.length > 0"
+      >
+        <font-awesome-icon icon="times" />
+      </button>
       <button class="search-submit"
         @click="handleSearchFormSubmit();"
         value="search"><font-awesome-icon icon="search" /></button>
@@ -36,17 +42,39 @@ export default {
       inputId: 'inputId',
       selectId: 'selectId',
       categorySelected: null,
+      value: ''
     }
     return data;
   },
-  methods: {
-    async updateResultsList () {
-
+  computed: {
+    address() {
+      if (this.$store.state.geocode.data) {
+        if (this.$store.state.geocode.data.properties) {
+          return this.$store.state.geocode.data.properties.street_address;
+        }
+      } else {
+        return ''
+      }
+    }
+  },
+  watch: {
+    value(nextValue) {
+      console.log('watch value fired, nextValue:', nextValue);
+      let input = document.getElementById('inputId');
+      input.value = nextValue;
     },
-    testForEnter(event) {
+    address(nextAddress) {
+      this.value = nextAddress;
+    }
+  },
+  methods: {
+    handleTypeInInput(event) {
+      console.log('handleTypeInInput is running, event:', event);
       if(event.key == "Enter") {
-        // console.log('enter key was pressed')
         this.handleSearchFormSubmit();
+      } else {
+        console.log('event key not enter')
+        this.value = event.target.value;
       }
     },
     handleSearchFormSubmit() {
@@ -61,6 +89,12 @@ export default {
       } else {
         this.$controller.handleSearchFormSubmit(value);
       }
+    },
+    clearSearch(event) {
+      console.log('clearSearch, event:', event);
+      this.value = '';
+      this.$controller.routeToNoAddress();
+      this.$controller.resetGeocode();
     },
   },
 }
@@ -107,6 +141,17 @@ export default {
 
     input[type="text"] {
       background: white;
+    }
+
+    .search-x {
+      z-index: 10;
+      position: absolute;
+      top: 2.5px;
+      right: 3rem;
+      min-width: 2.4rem;
+      min-height: 2.4rem;
+      background: color(electric-blue);
+      cursor: pointer;
     }
 
     .search-submit {
