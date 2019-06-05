@@ -6,7 +6,10 @@
       <option
         v-for="(item, key) in dropdown"
         :value="key"
-        :key="key">{{ item }}</option>
+        :key="key"
+      >
+        {{ item.text }}
+      </option>
     </select>
     <div class="search">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
@@ -31,7 +34,12 @@ export default {
   props: {
     dropdown: {
       type: Object,
-      default: { key: 'value' },
+      default: {
+        key: {
+          text: 'value',
+          data: 'value',
+        }
+      },
     },
     placeholderText: {
       type: String,
@@ -48,58 +56,54 @@ export default {
     return data;
   },
   mounted() {
-    console.log('ComboSearch mounted, this.$store.state.selectedKeywords:', this.$store.state.selectedKeywords)
-    if (this.$store.state.selectedKeywords.length) {
-      const el = document.getElementById('selectId');
-      console.log('still in mounted, el:', el);
-      el.value = 'keyword';
-      let keywords = this.$store.state.selectedKeywords.join(', ');
-      this.value = keywords;
-    }
-  },
-  computed: {
-    address() {
-      if (this.$store.state.geocode.data) {
-        if (this.$store.state.geocode.data.properties) {
-          return this.$store.state.geocode.data.properties.street_address;
+    // console.log('ComboSearch mounted, this.dropdown.keyword.data:', this.dropdown.keyword.data);
+    for (let dropdownOption of Object.keys(this.dropdown)) {
+      // console.log('ComboSearch mounted in loop, dropdownOption:', dropdownOption);
+      if (this.dropdown[dropdownOption].data) {
+        console.log('ComboSearch mounted dropdownOption.data:', this.dropdown[dropdownOption].data);
+        let dataConcat;
+        if (Array.isArray(this.dropdown[dropdownOption].data)) {
+          dataConcat = this.dropdown[dropdownOption].data.join(', ');
         }
-      } else {
-        return ''
+        this.value = dataConcat;
+        continue;
       }
-    },
-    keywords() {
-      return this.$store.state.selectedKeywords;
     }
   },
   watch: {
     value(nextValue) {
-      // console.log('watch value fired, nextValue:', nextValue);
+      console.log('ComboSearch watch value fired, nextValue:', nextValue);
       let input = document.getElementById('inputId');
       input.value = nextValue;
     },
-    address(nextAddress) {
-      this.value = nextAddress;
-    },
-    keywords(nextKeywords) {
-      console.log('ComboSearch watch keywords is firing, nextKeywords', nextKeywords);
+    dropdownValue(nextDropdownValue) {
+      console.log('ComboSearch watch dropdownValue fired, nextDropdown:', nextDropdownValue);
+      this.value = nextDropdownValue;
+    }
+  },
+  computed: {
+    dropdownValue() {
+      let data;
+      for (let dropdownOption of Object.keys(this.dropdown)) {
+        // console.log('ComboSearch dropdownValue computed in loop, dropdownOption:', dropdownOption);
+        if (this.dropdown[dropdownOption].data) {
+          // console.log('ComboSearch dropdownValue computed:', this.dropdown[dropdownOption].data);
+          let dataConcat = this.dropdown[dropdownOption].data;
+          if (Array.isArray(this.dropdown[dropdownOption].data)) {
+            dataConcat = this.dropdown[dropdownOption].data.join(', ');
+          }
+          data = dataConcat;
+          continue;
+        }
+      }
+      return data;
     }
   },
   methods: {
-    handleCategoryChange(event) {
-      console.log('handleCategoryChange is running, event:', event);
-      this.$controller.routeToNoAddress();
-      this.$controller.resetGeocode();
-      this.$store.commit('setSelectedKeywords', []);
-      this.value = '';
-      this.$store.commit('setSearchType', event.target.value)
-    },
     handleTypeInInput(event) {
       // console.log('handleTypeInInput is running, event:', event);
       if(event.key == "Enter") {
         this.handleSearchFormSubmit();
-      } else {
-        // console.log('event key not enter')
-        this.value = event.target.value;
       }
     },
     handleSearchFormSubmit() {
@@ -107,13 +111,17 @@ export default {
       const e = document.getElementById(this.$data.selectId);
       searchCategory = e.options[e.selectedIndex].value;
       value = document.querySelector('#' + this.$data.inputId.toString()).value;
+      this.value = value;
       console.log('handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
-      // if (searchCategory === "keyword") {
-      //   let values = value.split(',');
-      //   this.$store.commit('setSelectedKeywords', values);
-      // } else {
-        this.$controller.handleSearchFormSubmit(value, searchCategory);
-      // }
+      this.$controller.handleSearchFormSubmit(value, searchCategory);
+    },
+    handleCategoryChange(event) {
+      console.log('handleCategoryChange is running, event:', event);
+      this.$controller.routeToNoAddress();
+      this.$controller.resetGeocode();
+      this.$store.commit('setSelectedKeywords', []);
+      this.value = '';
+      this.$store.commit('setSearchType', event.target.value)
     },
     clearSearch(event) {
       console.log('clearSearch, event:', event);
