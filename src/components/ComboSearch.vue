@@ -101,7 +101,6 @@ export default {
   },
   methods: {
     handleTypeInInput(event) {
-      // console.log('handleTypeInInput is running, event:', event);
       if(event.key == "Enter") {
         this.handleSearchFormSubmit();
       }
@@ -117,14 +116,14 @@ export default {
     },
     handleCategoryChange(event) {
       console.log('handleCategoryChange is running, event:', event);
+      this.value = '';
       this.$controller.routeToNoAddress();
       this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
-      this.value = '';
       this.$store.commit('setSearchType', event.target.value)
     },
     clearSearch(event) {
-      console.log('clearSearch, event:', event);
+      console.log('clearSearch is running, event:', event);
       this.value = '';
       this.$controller.routeToNoAddress();
       this.$controller.resetGeocode();
