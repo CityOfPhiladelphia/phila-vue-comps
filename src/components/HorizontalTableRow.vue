@@ -3,6 +3,7 @@
       @mouseover="handleRowMouseover"
       @click="handleRowClick"
       @mouseout="handleRowMouseout"
+      v-colspan
   >
     <td v-for="field in fields"
         :item='item'
@@ -57,6 +58,19 @@
     created() {
       window.addEventListener('resize', this.handleWindowResize);
       this.handleWindowResize();
+    },
+    directives: {
+      colspan: {
+        // directive definition
+           inserted: function (el) {
+             let allRows = el.querySelectorAll('td')
+            allRows.forEach(
+              a => a.querySelector('.condo-button') ? (a.setAttribute('colspan', '3'), a.setAttribute('style', 'padding: unset')):
+                   a.querySelectorAll('div').forEach( b => b.innerHTML === "Not Applicable"? a.remove():"")
+
+                )
+          },
+      }
     },
     computed: {
       activeFeature() {
