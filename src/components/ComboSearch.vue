@@ -5,7 +5,7 @@
     >
       <option
         v-for="(item, key) in dropdown"
-        :value="key"
+        :value="item.text"
         :key="key"
       >
         {{ item.text }}
