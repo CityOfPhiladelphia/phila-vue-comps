@@ -9,3 +9,4 @@ package_safe.json
 .npmrc
 package_safe.json
 rollup.config_safe.js
+.editorconfig
