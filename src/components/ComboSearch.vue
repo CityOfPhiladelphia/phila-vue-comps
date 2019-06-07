@@ -7,13 +7,14 @@
         v-for="(item, key) in dropdown"
         :value="item.text"
         :key="key"
+        :selected="item.selected"
       >
         {{ item.text }}
       </option>
     </select>
     <div class="search">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
-      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText" @keyup="handleTypeInInput">
+      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText" @keyup="handleTypeInInput" :value="searchString">
       <button class="search-x"
         @click="clearSearch"
         v-if="value.length > 0"
@@ -41,9 +42,17 @@ export default {
         }
       },
     },
+    searchString: {
+      type: String,
+      default: '',
+    },
     placeholderText: {
       type: String,
       default: 'Search',
+    },
+    dropdownSelected: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -69,6 +78,12 @@ export default {
         continue;
       }
     }
+
+    if (this.searchString != '') {
+      this.value = searchString;
+      this.handleSearchFormSubmit();
+    }
+
   },
   watch: {
     value(nextValue) {
@@ -106,18 +121,20 @@ export default {
       }
     },
     handleSearchFormSubmit() {
-      let searchCategory, value;
+      let searchCategory, value, comboSearch = {};
       const e = document.getElementById(this.$data.selectId);
       searchCategory = e.options[e.selectedIndex].value;
       value = document.querySelector('#' + this.$data.inputId.toString()).value;
       this.value = value;
       console.log('handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
+      comboSearch[searchCategory] = value;
+      this.$emit('trigger-combo-search', comboSearch)
       this.$controller.handleSearchFormSubmit(value, searchCategory);
     },
     handleCategoryChange(event) {
       console.log('handleCategoryChange is running, event:', event);
       this.value = '';
-      this.$controller.routeToNoAddress();
+      // this.$controller.routeToNoAddress();
       this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
       this.$store.commit('setSearchType', event.target.value)
@@ -125,7 +142,7 @@ export default {
     clearSearch(event) {
       console.log('clearSearch is running, event:', event);
       this.value = '';
-      this.$controller.routeToNoAddress();
+      // this.$controller.routeToNoAddress();
       this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
     },
