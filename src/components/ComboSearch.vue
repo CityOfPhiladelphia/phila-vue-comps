@@ -79,8 +79,8 @@ export default {
       }
     }
 
-    if (this.searchString != '') {
-      this.value = searchString;
+    if (this.searchString && this.searchString != '') {
+      this.value = this.searchString;
       this.handleSearchFormSubmit();
     }
 
@@ -123,7 +123,7 @@ export default {
     handleSearchFormSubmit() {
       let searchCategory, value, comboSearch = {};
       const e = document.getElementById(this.$data.selectId);
-      searchCategory = e.options[e.selectedIndex].value;
+      searchCategory = e.options[e.selectedIndex].value.toLowerCase();
       value = document.querySelector('#' + this.$data.inputId.toString()).value;
       this.value = value;
       console.log('handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
@@ -137,7 +137,7 @@ export default {
       // this.$controller.routeToNoAddress();
       this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
-      this.$store.commit('setSearchType', event.target.value)
+      this.$store.commit('setSearchType', event.target.value.toLowerCase());
     },
     clearSearch(event) {
       console.log('clearSearch is running, event:', event);
@@ -145,6 +145,7 @@ export default {
       // this.$controller.routeToNoAddress();
       this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
+      this.$emit('trigger-clear-search')
     },
   },
 }
