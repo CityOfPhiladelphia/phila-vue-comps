@@ -1197,7 +1197,7 @@
   }
 
   .pvc-download-data-button, .pvc-export-data-button {
-    float: right;
+    /* float: right; */
     vertical-align: baseline;
     display: inline-block;
   }
@@ -1257,12 +1257,14 @@
   }
 
   .pvc-export-data-button {
-    float: right;
+    /* float: right; */
     vertical-align: baseline;
     display: inline-block;
-    margin-left: 5px;
+    margin-left: 10px;
     margin-right: 5px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
+    margin-top: 5px;
+    padding: 4px;
   }
 
   /* dropdown filters */
