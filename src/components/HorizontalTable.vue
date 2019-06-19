@@ -624,6 +624,8 @@
           totals[field.label] = 0;
         }
 
+        if (this.items.length > 0) { } else { return }
+
 
         for (let item of this.items) {
           let theArray = []
@@ -766,6 +768,8 @@
         }
 
         let totals = {};
+
+        if (this.items.length > 0) { } else { return }
 
         for (let item of this.items) {
           let object = {}
