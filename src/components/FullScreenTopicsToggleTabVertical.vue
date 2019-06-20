@@ -63,9 +63,9 @@
       setDivWidth() {
         let el;
         if (this.fullScreenTopicsEnabled) {
-          el = document.getElementById('topic-panel-container');
+          el = document.getElementById('data-panel-container');
         } else {
-          el = document.getElementById('map-tag');
+          el = document.getElementById('map-panel-container');
         }
         const mapDivStyle = window.getComputedStyle(el);
         const mapDivWidth = parseFloat(mapDivStyle.getPropertyValue('width').replace('px', ''));
