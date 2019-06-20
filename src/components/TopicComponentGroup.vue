@@ -62,6 +62,7 @@
     },
     beforeCreate() {
       // console.log('TopicComponentGroup beforeCreate is running');
+      this.$options.components.HorizontalTable = HorizontalTable;
       this.$options.components.TabGroup = TabGroup;
       this.$options.components.BadgeCustom = BadgeCustom;
       this.$options.components.Topic = Topic;
