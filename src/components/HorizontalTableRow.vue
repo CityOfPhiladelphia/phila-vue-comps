@@ -1,8 +1,8 @@
 <template>
   <tr :class="{ active: this.isActive }"
-      @mouseover="handleRowMouseover"
+      @mouseenter="handleRowMouseover"
       @click="handleRowClick"
-      @mouseout="handleRowMouseout"
+      @mouseleave="handleRowMouseout"
       v-colspan
   >
     <td v-for="field in fields"
@@ -51,7 +51,8 @@
     props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField'],
     data() {
       const data = {
-        showFieldLabel: false
+        showFieldLabel: false,
+        mouseover: false
       };
       return data;
     },
@@ -77,8 +78,10 @@
         return this.$store.state.activeFeature;
       },
       isActive() {
-        if (this.activeFeature) {
-          return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+        if (this.$data.mouseover) {
+          return true;
+        } else if (this.activeFeature) {
+          return this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6)); //&& this.$props.tableId === this.activeFeature.tableId;
         } else {
           return;
         }
@@ -112,6 +115,7 @@
           const featureId = this.item._featureId;
           const tableId = this.tableId;
           this.$store.commit('setActiveFeature', { featureId, tableId });
+          this.$data.mouseover = true;
         }
       },
       handleRowClick(e) {
@@ -130,6 +134,7 @@
           if(!this.$props.options.mouseOverDisabled && this.$store.state.activeModal.featureId === null) {
             if (!this.hasOverlay) return;
             this.$store.commit('setActiveFeature', null);
+            this.$data.mouseover = false;
           }
         }
       },
