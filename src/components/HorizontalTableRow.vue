@@ -99,7 +99,7 @@
 
           // console.log('visible?', visible ? 'YES' : 'NO');
 
-          if (!visible) {
+          if (!visible && !this.$store.state.horizontalTables.mouseover) {
             el.scrollIntoView();
           }
         }
@@ -115,6 +115,7 @@
           const featureId = this.item._featureId;
           const tableId = this.tableId;
           this.$store.commit('setActiveFeature', { featureId, tableId });
+          this.$store.commit('setHorizontalTableMouseover', true);
           this.$data.mouseover = true;
         }
       },
@@ -134,6 +135,7 @@
           if(!this.$props.options.mouseOverDisabled && this.$store.state.activeModal.featureId === null) {
             if (!this.hasOverlay) return;
             this.$store.commit('setActiveFeature', null);
+            this.$store.commit('setHorizontalTableMouseover', false);
             this.$data.mouseover = false;
           }
         }
