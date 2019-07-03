@@ -81,7 +81,10 @@
         if (this.$data.mouseover) {
           return true;
         } else if (this.activeFeature) {
-          return this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6)); //&& this.$props.tableId === this.activeFeature.tableId;
+          if (this.activeFeature.featureId === this.$props.item._featureId || this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6))) {
+            return true;
+          }
+          // return this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6)); //&& this.$props.tableId === this.activeFeature.tableId;
         } else {
           return;
         }
@@ -100,7 +103,7 @@
           // console.log('visible?', visible ? 'YES' : 'NO');
 
           if (!visible && !this.$store.state.horizontalTables.mouseover) {
-            el.scrollIntoView();
+            el.scrollIntoView({block: 'center'});
           }
         }
       }
@@ -145,7 +148,7 @@
       isElementInViewport(el) {
         const rect = el.getBoundingClientRect();
 
-        // console.log('bounding box', rect);
+        // console.log('isElementInViewport is running, bounding box:', rect);
 
         const visibility = {
           // TODO the 108 below is account for the combined height of the
@@ -155,13 +158,13 @@
           // which would require again hard-coding screen breakpoints from
           // standards or some other magic, which might not a huge
           // improvement in terms of decoupling logic and presentation. hmm.
-          top: rect.top >= 108,
+          top: rect.top >= 508,
           left: rect.left >= 0,
           bottom: rect.bottom <= (window.innerHeight || document.documentElement.clientHeight),
           right: rect.right <= (window.innerWidth || document.documentElement.clientWidth),
         };
 
-        // console.log('visibility', visibility);
+        // console.log('isElementInViewport is running, rect:', rect, 'visibility', visibility);
 
         // return if all sides are visible
         return Object.values(visibility).every(val => val);
