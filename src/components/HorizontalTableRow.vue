@@ -81,8 +81,12 @@
         if (this.$data.mouseover) {
           return true;
         } else if (this.activeFeature) {
-          if (this.activeFeature.featureId === this.$props.item._featureId || this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6))) {
-            return true;
+          if (this.$props.item._featureId) {
+            if (this.activeFeature.featureId === this.$props.item._featureId || this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6))) {
+              return true;
+            }
+          } else {
+            return;
           }
           // return this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6)); //&& this.$props.tableId === this.activeFeature.tableId;
         } else {
