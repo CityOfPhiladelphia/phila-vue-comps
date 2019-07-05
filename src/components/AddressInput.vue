@@ -228,7 +228,6 @@
 .pvc-search-control-container {
   display: inline-block;
   border-radius: 2px;
-  box-shadow:0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
   width: 305px;
 }
 
@@ -250,6 +249,9 @@
   font-family: 'Montserrat', 'Tahoma', sans-serif;
   font-size: 16px;
   width: 250px;
+  border-style: solid;
+  border-color: #2176d2;
+  border-width: 2px;
 }
 
 .pvc-input-non-mobile {
@@ -269,6 +271,7 @@
   background: #2176d2;
   padding: 0px;
   width: 50px;
+  margin-right: 1.5px;
 }
 
 .pvc-button-non-mobile {
