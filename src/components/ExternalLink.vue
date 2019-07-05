@@ -46,7 +46,7 @@
             } else {
               return `${this.externalLinkAction}`;
             }
-          } else if (this.type === 'horizontal-table') {
+          } else if (this.type === 'horizontal-table' || this.type === 'badge-custom') {
             // if (name) {
             //   return `${this.externalLinkAction} at ${name}`;
             // } else {
