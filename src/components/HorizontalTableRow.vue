@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{ active: this.isActive }"
+  <tr v-bind:class="this.customClass + ' ' + [ typeof this.isActive != 'undefined' ? this.isActive : '' ]"
       @mouseenter="handleRowMouseover"
       @click="handleRowClick"
       @mouseleave="handleRowMouseout"
@@ -79,11 +79,11 @@
       },
       isActive() {
         if (this.$data.mouseover) {
-          return true;
+          return 'active';
         } else if (this.activeFeature) {
           if (this.$props.item._featureId) {
             if (this.activeFeature.featureId === this.$props.item._featureId || this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6))) {
-              return true;
+              return 'active';
             }
           } else {
             return;
@@ -92,6 +92,12 @@
         } else {
           return;
         }
+      },
+      customClass(){
+        console.log("customClass: ", this)
+        return typeof this.options.customClass != 'undefined'
+               && typeof this.options.customClass.tr != 'undefined' ? 
+                this.options.customClass.tr : ''
       },
       isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
