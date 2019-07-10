@@ -94,9 +94,9 @@
         }
       },
       customClass(){
-        console.log("customClass: ", this)
+        // console.log("customClass: ", this)
         return typeof this.options.customClass != 'undefined'
-               && typeof this.options.customClass.tr != 'undefined' ? 
+               && typeof this.options.customClass.tr != 'undefined' ?
                 this.options.customClass.tr : ''
       },
       isMobileOrTablet() {
