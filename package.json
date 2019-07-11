@@ -17,7 +17,6 @@
     "escape-html": "^1.0.3",
     "jspdf": "^1.4.1",
     "jspdf-autotable": "^3.0.10",
-    "lodash-es": "^4.17.11",
     "lodash.chunk": "^4.2.0",
     "lodash.debounce": "^4.0.8",
     "phila-standards": "^1.0.2",
