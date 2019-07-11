@@ -105,7 +105,7 @@
     },
     watch: {
       isActive(value) {
-        if (value === true) {
+        if (typeof value != "undefined") {
           const el = this.$el;
           const visible = this.isElementInViewport(el);
           // console.log('horizontaltablerow WATCH isActive is firing, el:', el, 'visible:', visible);
