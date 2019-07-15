@@ -133,12 +133,14 @@
         }
       },
       handleRowClick(e) {
-        // console.log('handleRowClick is starting');
         if(this.$store.state.activeModal && this.$props.options.clickEnabled ) {
           if (!this.hasOverlay) return;
           const featureId = this.item._featureId;
           if(this.item.condo != true){
             this.$store.commit('setActiveModal', { featureId });
+          }
+          if( typeof this.$props.options.rowAction != 'undefined' ) {
+            this.$props.options.rowAction(this.$store.state, this.item)
           }
         }
       },
