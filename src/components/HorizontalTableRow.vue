@@ -1,5 +1,6 @@
 <template>
-  <tr v-bind:class="this.customClass + ' ' + [ typeof this.isActive != 'undefined' ? this.isActive : '' ]"
+  <!-- <tr v-bind:class="this.customClass + ' ' + [ typeof this.isActive != 'undefined' ? this.isActive : '' ]" -->
+  <tr v-bind:class="this.customClass + ' ' + [ this.isActive == true ? 'active' : '' ]"
       @mouseenter="handleRowMouseover"
       @click="handleRowClick"
       @mouseleave="handleRowMouseout"
@@ -79,18 +80,20 @@
       },
       isActive() {
         if (this.$data.mouseover) {
-          return 'active';
+          return true;
         } else if (this.activeFeature) {
           if (this.$props.item._featureId) {
             if (this.activeFeature.featureId === this.$props.item._featureId || this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6))) {
-              return 'active';
+              return true;
+            } else {
+              return false;
             }
           } else {
-            return;
+            return false;
           }
           // return this.activeFeature.featureId === parseInt(this.$props.item._featureId.toString().slice(0,6)); //&& this.$props.tableId === this.activeFeature.tableId;
         } else {
-          return;
+          return false;
         }
       },
       customClass(){
@@ -142,6 +145,7 @@
           if( typeof this.$props.options.rowAction != 'undefined' ) {
             this.$props.options.rowAction(this.$store.state, this.item)
           }
+          this.$data.mouseover = false;
         }
       },
       handleRowMouseout(e) {
