@@ -108,7 +108,7 @@
     },
     watch: {
       isActive(value) {
-        if (typeof value != "undefined") {
+        if (value === true) {
           const el = this.$el;
           const visible = this.isElementInViewport(el);
           // console.log('horizontaltablerow WATCH isActive is firing, el:', el, 'visible:', visible);
@@ -123,7 +123,7 @@
     },
     methods: {
       handleRowMouseover(e) {
-        // console.log('handleRowMouseover is starting');
+        console.log('handleRowMouseover is starting');
         if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
           // console.log('handleRowMouseover actions are running');
           if (!this.hasOverlay) return;
