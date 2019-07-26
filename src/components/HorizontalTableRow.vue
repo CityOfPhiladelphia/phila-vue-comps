@@ -126,7 +126,7 @@
     },
     methods: {
       handleRowMouseover: throttle(function (e) {
-          console.log('handleRowMouseover is starting');
+          // console.log('handleRowMouseover is starting');
           if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
             // console.log('handleRowMouseover actions are running');
             if (!this.hasOverlay) return;
