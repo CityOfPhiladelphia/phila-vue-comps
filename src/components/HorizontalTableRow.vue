@@ -39,6 +39,9 @@
 </template>
 
 <script>
+  // import debounce from 'lodash-es/debounce';
+  import throttle from 'lodash-es/throttle';
+
   import TopicComponent from './TopicComponent.vue';
   import TopicComponentGroup from './TopicComponentGroup.vue';
   import PopoverLink from './PopoverLink.vue';
@@ -108,7 +111,7 @@
     },
     watch: {
       isActive(value) {
-        if (typeof value != "undefined") {
+        if (value === true) {
           const el = this.$el;
           const visible = this.isElementInViewport(el);
           // console.log('horizontaltablerow WATCH isActive is firing, el:', el, 'visible:', visible);
@@ -122,17 +125,29 @@
       }
     },
     methods: {
-      handleRowMouseover(e) {
-        // console.log('handleRowMouseover is starting');
-        if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
-          // console.log('handleRowMouseover actions are running');
-          if (!this.hasOverlay) return;
+      handleRowMouseover: throttle(function (e) {
+          // console.log('handleRowMouseover is starting');
+          if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
+            // console.log('handleRowMouseover actions are running');
+            if (!this.hasOverlay) return;
 
-          const featureId = this.item._featureId;
-          const tableId = this.tableId;
-          this.$store.commit('setActiveFeature', { featureId, tableId });
-          this.$store.commit('setHorizontalTableMouseover', true);
-          this.$data.mouseover = true;
+            const featureId = this.item._featureId;
+            const tableId = this.tableId;
+            this.$store.commit('setActiveFeature', { featureId, tableId });
+            this.$store.commit('setHorizontalTableMouseover', true);
+            this.$data.mouseover = true;
+          }
+        }, 200
+      ),
+      handleRowMouseout(e) {
+        if(!this.isMobileOrTablet) {
+          // console.log('handleRowMouseout actions are running');
+          if(!this.$props.options.mouseOverDisabled && this.$store.state.activeModal.featureId === null) {
+            if (!this.hasOverlay) return;
+            this.$store.commit('setActiveFeature', null);
+            this.$store.commit('setHorizontalTableMouseover', false);
+            this.$data.mouseover = false;
+          }
         }
       },
       handleRowClick(e) {
@@ -146,17 +161,6 @@
             this.$props.options.rowAction(this.$store.state, this.item)
           }
           this.$data.mouseover = false;
-        }
-      },
-      handleRowMouseout(e) {
-        if(!this.isMobileOrTablet) {
-          // console.log('handleRowMouseout actions are running');
-          if(!this.$props.options.mouseOverDisabled && this.$store.state.activeModal.featureId === null) {
-            if (!this.hasOverlay) return;
-            this.$store.commit('setActiveFeature', null);
-            this.$store.commit('setHorizontalTableMouseover', false);
-            this.$data.mouseover = false;
-          }
         }
       },
       // REVIEW there's very similar code in the controller. if these can be
