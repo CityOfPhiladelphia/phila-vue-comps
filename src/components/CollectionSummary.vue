@@ -116,7 +116,8 @@
           let labelWithNumber;
 
           // singular
-          if (quantity !== 1) {
+
+          if (quantity !== 1 && this.options.context.pluralizeList != false) {
             const labelPlural = type.plural || labelSingular + 's';
             labelWithNumber = labelPlural;
           // plural
