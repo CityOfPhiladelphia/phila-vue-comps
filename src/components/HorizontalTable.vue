@@ -1156,8 +1156,8 @@
 <style scoped>
 
   table {
-    /* table-layout: fixed; */
-    margin: 0;
+    margin-top: -3px;
+    margin-bottom: 0px;
   }
 
   .center-button {
