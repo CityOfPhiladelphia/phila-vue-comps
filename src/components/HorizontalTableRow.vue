@@ -29,9 +29,19 @@
                       :item='item'
                       :fieldLabel="field.label"
         />
+        <div>
         <div v-if="!field.popoverLink"
+             v-bind:style="field.customStyle"
              v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
+        <font-awesome-icon 
+        v-if="mobileIcon(field.mobileIcon)"
+        v-show="evaluateSlot(field.hideMobileIcon)"
+        v-bind:icon="field.mobileIcon"
+        aria-hidden="true" 
+        style="margin-left: 5px"
+        />
+        </div>
       </div>
 
     </td>
@@ -105,6 +115,12 @@
                && typeof this.options.customClass.tr != 'undefined' ?
                 this.options.customClass.tr : ''
       },
+      customStyle(){
+        console.log("customStyle: ", this)
+        return typeof this.customStyle != 'undefined'
+               && typeof this.customStyle != 'undefined' ?
+                this.customStyle : ''
+      },
       isMobileOrTablet() {
         return this.$store.state.isMobileOrTablet;
       },
@@ -161,6 +177,14 @@
             this.$props.options.rowAction(this.$store.state, this.item)
           }
           this.$data.mouseover = false;
+        }
+      },
+      mobileIcon(value) {
+        console.log("There is an icon field: ", window.innerWidth)
+        if (window.innerWidth < 750) {
+          return typeof value != 'undefined' ? ' ' + value : ''
+        } else {
+          return ''
         }
       },
       // REVIEW there's very similar code in the controller. if these can be
