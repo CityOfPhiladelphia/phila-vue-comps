@@ -180,7 +180,7 @@
         }
       },
       mobileIcon(value) {
-        console.log("There is an icon field: ", window.innerWidth)
+        // console.log("There is an icon field: ", window.innerWidth)
         if (window.innerWidth < 750) {
           return typeof value != 'undefined' ? ' ' + value : ''
         } else {
