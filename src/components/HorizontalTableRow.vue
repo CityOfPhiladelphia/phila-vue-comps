@@ -6,7 +6,10 @@
   >
     <td v-for="field in fields"
         :item='item'
-        :class="{ 'in-popover': options.inPopover }"
+        :class="{
+          'in-popover': options.inPopover,
+          'half-screen-table-cell': !fullScreenTopics
+        }"
     >
       <topic-component-group :topic-components="field.components" :item="item" />
       <b v-show="shouldBeBold">
@@ -59,6 +62,13 @@
       this.handleWindowResize();
     },
     computed: {
+      fullScreenTopics() {
+        if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       activeFeature() {
         return this.$store.state.activeFeature;
       },
@@ -177,10 +187,15 @@
   td {
     font-size: 15px;
     text-align: left;
+    word-wrap: break-word;
   }
 
   .in-popover {
     color: #000;
+  }
+
+  .half-screen-table-cell {
+    max-width: 300px;
   }
 
 </style>
