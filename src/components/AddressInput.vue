@@ -224,7 +224,7 @@
 /* Container */
 
 .pvc-search-control-container {
-  display: inline-block;
+  display: flex;
   border-radius: 2px;
   width: 305px;
 }
@@ -247,6 +247,9 @@
   font-family: 'Montserrat', 'Tahoma', sans-serif;
   font-size: 16px;
   width: 250px;
+  border-style: solid;
+  border-color: #2176d2;
+  border-width: 2px;
 }
 
 .pvc-input-non-mobile {
