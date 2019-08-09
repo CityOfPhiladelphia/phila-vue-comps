@@ -98,7 +98,7 @@
           </a>
         </div>
 
-        <table role="grid" class="stack">
+        <table :id="this.$props.options.id" role="grid" class="stack">
           <thead v-if="shouldShowHeaders !== false">
             <tr>
               <th v-for="field in fields">{{ evaluateSlot(field.label) }}</th>

@@ -5,7 +5,7 @@
     >
       {{ evaluateSlot(slots.title) }}
     </h4>
-    <table>
+    <table :id="this.$props.options.id">
       <tbody>
         <tr v-for="field in slots.fields">
           <th v-html="evaluateSlot(field.label)"
