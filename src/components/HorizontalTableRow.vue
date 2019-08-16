@@ -34,11 +34,11 @@
              v-bind:style="field.customStyle"
              v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
-        <font-awesome-icon 
+        <font-awesome-icon
         v-if="mobileIcon(field.mobileIcon)"
         v-show="evaluateSlot(field.hideMobileIcon)"
         v-bind:icon="field.mobileIcon"
-        aria-hidden="true" 
+        aria-hidden="true"
         style="margin-left: 5px"
         />
         </div>
@@ -167,10 +167,12 @@
         }
       },
       handleRowClick(e) {
+        // console.log('handleRowClick is running, e:', e);
         if(this.$store.state.activeModal && this.$props.options.clickEnabled ) {
           if (!this.hasOverlay) return;
           const featureId = this.item._featureId;
           if(this.item.condo != true){
+            this.$store.commit('setActiveFeature', { featureId });
             this.$store.commit('setActiveModal', { featureId });
           }
           if( typeof this.$props.options.rowAction != 'undefined' ) {
