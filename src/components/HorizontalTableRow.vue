@@ -34,13 +34,13 @@
              v-bind:style="field.customStyle"
              v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
-        <font-awesome-icon
-        v-if="mobileIcon(field.mobileIcon)"
-        v-show="evaluateSlot(field.hideMobileIcon)"
-        v-bind:icon="field.mobileIcon"
-        aria-hidden="true"
-        style="margin-left: 5px"
-        />
+          <font-awesome-icon
+              v-if="mobileIcon(field.mobileIcon)"
+              v-show="evaluateSlot(field.hideMobileIcon)"
+              v-bind:icon="field.mobileIcon"
+              aria-hidden="true"
+              style="margin-left: 5px"
+          />
         </div>
       </div>
 
@@ -116,7 +116,7 @@
                 this.options.customClass.tr : ''
       },
       customStyle(){
-        console.log("customStyle: ", this)
+        // console.log("customStyle: ", this)
         return typeof this.customStyle != 'undefined'
                && typeof this.customStyle != 'undefined' ?
                 this.customStyle : ''
@@ -233,9 +233,9 @@
           return '';
         }
       },
-      evaluateCustomkey() {
-        field.customkey
-      }
+      // evaluateCustomkey() {
+      //   field.customkey
+      // }
 
     }
   };
