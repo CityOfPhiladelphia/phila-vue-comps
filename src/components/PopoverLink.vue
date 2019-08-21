@@ -4,6 +4,7 @@
     <a class="popover-link"
       @click="didClickPopoverLink"
       :title="value + ' ' + popoverValue"
+      :style="this.$props.options.customStyle"
     >
       {{ value }}
     </a>
@@ -14,7 +15,9 @@
   import TopicComponent from './TopicComponent.vue';
   export default {
     mixins: [TopicComponent],
-    props: ['fieldLabel'],
+    props: [
+      'fieldLabel',
+    ],
     data() {
       const data = {
         showFieldLabel: false
@@ -26,6 +29,9 @@
       this.handleWindowResize();
     },
     computed: {
+      popoverOptions() {
+        return this.$props.options;
+      },
       value() {
         const value = this.$props.slots.value;
         const transforms = this.$props.slots.transforms || [];
@@ -65,6 +71,7 @@
       didClickPopoverLink(e) {
         this.$store.commit('setPopoverOpen', true);
         this.$store.commit('setPopoverText', this.popoverText);
+        this.$store.commit('setPopoverOptions', this.popoverOptions);
       },
       handleWindowResize() {
         if (window.innerWidth >= 750) {
@@ -74,7 +81,9 @@
         }
       },
       evaluateFieldLabel() {
-        if (this.showFieldLabel) {
+        if (!this.$props.fieldLabel) {
+          return '';
+        } else if (this.showFieldLabel) {
           return this.$props.fieldLabel + ': ';
         } else {
           return '';
