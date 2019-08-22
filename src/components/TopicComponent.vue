@@ -29,7 +29,7 @@
     },
     methods: {
       evaluateSlot(valOrGetter, transforms = [], nullValue = '') {
-        // console.log('evaluateSlot is running, valOrGetter:', valOrGetter);
+        // console.log('evaluateSlot is running, this:', this, 'valOrGetter:', valOrGetter);
         // check for null val/getter
         if (!valOrGetter) {
           return valOrGetter;
@@ -69,7 +69,8 @@
         // format nulls but not falses
         if (val === false) {
 
-        } else if (!val) {
+        }
+        else if (!transforms.includes('currency') && !val) {
           return nullValue;
         }
 
