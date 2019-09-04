@@ -7,6 +7,7 @@
       v-colspan
   >
     <td v-for="field in fields"
+        v-bind:class="typeof field.customClass != 'undefined'? field.customClass : ''"
         :item='item'
         :sorttable_customkey="[field.customkey ? evaluateSlot(field.customkey)  : evaluateSlot(field.value)]"
     >
