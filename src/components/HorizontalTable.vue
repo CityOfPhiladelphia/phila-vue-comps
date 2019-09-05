@@ -503,15 +503,17 @@
       itemsLimitedSummed() {
         let summed = {};
         for (let key of Object.keys(this.itemsLimited[0])) {
-          if (typeof this.itemsLimited[0][key] === 'number') {
+          console.log('key:', key, 'typeof this.itemsLimited[0][key]:', typeof this.itemsLimited[0][key]);
+          if (typeof this.itemsLimited[0][key] === 'number' || typeof parseFloat(this.itemsLimited[0][key] === 'float')) {
             summed[key] = 0
           }
           if (this.totalRowField) {
             summed[this.totalRowField] = 'Total'
           }
           for (let item of this.itemsLimited) {
+            // console.log('item:', item, 'typeof summed[key]:', typeof summed[key])
             if (typeof summed[key] === 'number') {
-              summed[key] = summed[key] + item[key]
+              summed[key] = summed[key] + parseFloat(item[key])
             }
           }
         }
