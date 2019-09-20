@@ -64,18 +64,18 @@
       };
     },
     created() {
-      console.log('horizontalTableGroup created is starting, this.tableGroupData:', this.tableGroupData);
+      // console.log('horizontalTableGroup created is starting, this.tableGroupData:', this.tableGroupData);
       if (this.options.filters) {
-        console.log('horizontalTableGroup created, if this.options.filters is running:', this.options.filters, this.options.filters.entries());
+        // console.log('horizontalTableGroup created, if this.options.filters is running:', this.options.filters, this.options.filters.entries());
         for (let filter of this.options.filters) {
         // for (let [index, filter] of this.options.filters.entries()) {
-          console.log('for loop, this.options.filters:', this.options.filters[0]);
+          // console.log('for loop, this.options.filters:', this.options.filters[0]);
           // let filter = this.options.filters[0]
         // for (let [index, filter] of this.options.filters.entries()) {
-          console.log('for loop, filter:', filter);
+          // console.log('for loop, filter:', filter);
           // console.log('for loop, index:', index, 'filter:', filter);
           const defaultTableName = filter.values[0].value || {};
-          console.log('for loop, defaultTableName:', defaultTableName);
+          // console.log('for loop, defaultTableName:', defaultTableName);
 
           // add activeTable to local data
           this.tableGroupData.activeTable = defaultTableName;
@@ -86,14 +86,14 @@
               this.tableGroupData.activeTableId = comp._id;
             }
           }
-          console.log('horizontalTableGroup this.tableGroupData:', this.tableGroupData);
+          // console.log('horizontalTableGroup this.tableGroupData:', this.tableGroupData);
           this.$store.commit('setHorizontalTableGroupActiveTable', this.tableGroupData);
           // this.$store.commit('setHorizontalTableGroupActiveTableId', this.activeTable);
         }
-        console.log('horizontalTableGroup created, if this.options.filters is ending');
+        // console.log('horizontalTableGroup created, if this.options.filters is ending');
       }
       if (this.options.alternate) {
-        console.log('horizontalTableGroup created, if this.options.alternate - mainTable', this.options.alternate.mainTable, this.altMainTable, 'dependentTable', this.options.alternate.dependentTable, this.altDepTable);
+        // console.log('horizontalTableGroup created, if this.options.alternate - mainTable', this.options.alternate.mainTable, this.altMainTable, 'dependentTable', this.options.alternate.dependentTable, this.altDepTable);
         const sources = this.$store.state.sources;
         // console.log('Tablegroup source check dep', sources[this.altDepTable.dataSource].data);
         // console.log('Tablegroup source check main', sources[this.altMainTable.dataSource].data);
@@ -111,7 +111,7 @@
         }
       }
       if (this.options.showBoth) {
-        console.log('tableGroup showBoth');
+        // console.log('tableGroup showBoth');
       }
     },
     computed: {
@@ -161,7 +161,7 @@
         return {value, unit, direction};
       },
       handleFilterValueChange(e) {
-        console.log('handle activeTable value change', e);
+        // console.log('handle activeTable value change', e);
         const target = e.target;
         const slug = target.value;
         // deslugify filter value
@@ -173,13 +173,13 @@
 
         // add activeTableId to local data
         for (let comp of this.options.tables) {
-          console.log('tableName:', tableName, 'comp.options.id:', comp.options.id, 'comp:', comp);
+          // console.log('tableName:', tableName, 'comp.options.id:', comp.options.id, 'comp:', comp);
           if (comp.options.id === tableName) {
             this.tableGroupData.activeTableId = comp._id;
           }
         }
 
-        console.log('handleFilterValueChange, this.tableGroupData:', this.tableGroupData);
+        // console.log('handleFilterValueChange, this.tableGroupData:', this.tableGroupData);
         this.$store.commit('setHorizontalTableGroupActiveTable', this.tableGroupData);
         // this.$store.commit('setHorizontalTableGroupActiveTableId', this.activeTable);
       },
