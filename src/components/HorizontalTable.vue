@@ -124,6 +124,9 @@
                   v-bind:class="typeof options.customClass != 'undefined'
                                 && typeof options.customClass.th != 'undefined' ?
                                 specifySortType(field.label) : ''"
+                  v-bind:title="typeof options.customClass != 'undefined' 
+                                 && typeof options.customClass.title != 'undefined' ?
+                                options.customClass.title : ''"
               >
                 {{ evaluateSlot(field.label) }}
               </th>
