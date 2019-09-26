@@ -3,6 +3,8 @@
     <topic v-for="topic in this.$config.topics"
            :topicKey="topic.key"
            :key="topic.key"
+           @handle-topic-header-click="handleTopicHeaderClick"
+           @get-more-records="getMoreRecords"
     />
   </div>
 </template>
@@ -23,6 +25,15 @@
       }
     },
     methods: {
+      getMoreRecords(dataSource, highestPageRetrieved) {
+        console.log('TopicSet getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
+        // this.$emit('test-event', dataSource, highestPageRetrieved);
+        this.$emit('get-more-records', dataSource, highestPageRetrieved);
+      },
+      handleTopicHeaderClick(nextTopic) {
+        console.log('TopicSet.vue handleTopicHeaderClick is running, nextTopic:', nextTopic);
+        this.$emit('handle-topic-header-click', nextTopic);
+      },
       setDefaultTopicActive() {
         if (this.$props.options.defaultTopic) {
           this.$store.commit('setActiveTopic', this.$props.options.defaultTopic);

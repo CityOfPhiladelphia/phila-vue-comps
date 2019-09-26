@@ -134,7 +134,6 @@
       },
       closeAddressCandidateList(addressCandidate) {
         console.log('AddressCandidateList.vue closeAddressCandidateList is running, addressCandidate:', addressCandidate);
-        // this.$controller.handleSearchFormSubmit(addressCandidate);
         this.$store.commit('setAddressEntered', addressCandidate);
         this.$store.commit('setShouldShowAddressCandidateList', false);
       },

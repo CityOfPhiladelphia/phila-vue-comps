@@ -134,16 +134,14 @@ export default {
     handleCategoryChange(event) {
       console.log('handleCategoryChange is running, event:', event);
       this.value = '';
-      // this.$controller.routeToNoAddress();
-      this.$controller.resetGeocode();
+      // this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
       this.$store.commit('setSearchType', event.target.value.toLowerCase());
     },
     clearSearch(event) {
       console.log('clearSearch is running, event:', event);
       this.value = '';
-      // this.$controller.routeToNoAddress();
-      this.$controller.resetGeocode();
+      // this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
       this.$emit('trigger-clear-search')
     },

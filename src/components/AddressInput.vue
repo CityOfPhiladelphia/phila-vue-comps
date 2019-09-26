@@ -181,8 +181,7 @@
           //   return;
           // }
         }
-        // console.log('phila-vue-comps AddressInput.vue, handleSearchFormSubmit is running, value:', value);
-        this.$controller.handleSearchFormSubmit(value);
+        this.$emit('handle-search-form-submit', value);
         // this.$store.commit('setAddressEntered', value);
       },
       handleWindowResize() {

@@ -131,7 +131,7 @@
           }
         // }
       },
-      // REVIEW there's very similar code in the controller. if these can be
+      // REVIEW there's very similar code in pvd. if these can be
       // the same thing, make it into a util.
       isElementInViewport(el) {
         const rect = el.getBoundingClientRect();
