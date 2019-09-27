@@ -26,12 +26,11 @@
     },
     methods: {
       getMoreRecords(dataSource, highestPageRetrieved) {
-        console.log('TopicSet getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
-        // this.$emit('test-event', dataSource, highestPageRetrieved);
+        // console.log('TopicSet getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
         this.$emit('get-more-records', dataSource, highestPageRetrieved);
       },
       handleTopicHeaderClick(nextTopic) {
-        console.log('TopicSet.vue handleTopicHeaderClick is running, nextTopic:', nextTopic);
+        // console.log('TopicSet.vue handleTopicHeaderClick is running, nextTopic:', nextTopic);
         this.$emit('handle-topic-header-click', nextTopic);
       },
       setDefaultTopicActive() {

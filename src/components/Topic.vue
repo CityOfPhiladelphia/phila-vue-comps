@@ -302,14 +302,13 @@
       },
 
       handleTopicHeaderClick(e) {
-        console.log('Topic.vue handleTopicHeaderClick is running');
+        // console.log('Topic.vue handleTopicHeaderClick is running');
         const topic = this.$props.topicKey;
         let nextTopic;
 
         if (topic !== this.$store.state.activeTopic) {
           nextTopic = topic;
         }
-
         // send event up
         this.$emit('handle-topic-header-click', nextTopic);
       },

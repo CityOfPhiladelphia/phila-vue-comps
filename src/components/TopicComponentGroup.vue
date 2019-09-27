@@ -79,14 +79,12 @@
         return `topic-comp-${compGroupKey}-${compIndex}`;
       },
       handleTopicHeaderClick(nextTopic) {
-        console.log('TopicComponentGroup handleTopicHeaderClick is running');
+        // console.log('TopicComponentGroup handleTopicHeaderClick is running');
         this.$emit('handle-topic-header-click', nextTopic);
       },
       getMoreRecords(dataSource, highestPageRetrieved) {
-        console.log('TopicComponentGroup getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
-        // this.$emit('test-event', dataSource, highestPageRetrieved);
+        // console.log('TopicComponentGroup getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
         this.$emit('get-more-records', dataSource, highestPageRetrieved);
-        console.log('TopicComponentGroup getMoreRecords is still running');
       }
     }
   };
