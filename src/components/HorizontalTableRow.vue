@@ -80,7 +80,7 @@
         // directive definition
         inserted: function (el) {
           let allRows = el.querySelectorAll('td')
-          console.log('allRows:', allRows);
+          // console.log('allRows:', allRows);
           allRows.forEach(
             a => a.querySelector('.condo-button') ? (a.setAttribute('colspan', '3'), a.setAttribute('style', 'padding: unset')):
                  a.querySelectorAll('div').forEach( b => b.innerHTML === "Not Applicable"? a.remove():"")
