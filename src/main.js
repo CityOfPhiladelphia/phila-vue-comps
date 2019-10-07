@@ -10,7 +10,6 @@ ______ |  |__ |__|  | _____            ___  ____ __   ____             ____  ___
 
 import AddressCandidateList from './components/AddressCandidateList.vue';
 import AddressInput from './components/AddressInput.vue';
-import ConfigurableInput from './components/ConfigurableInput.vue';
 import AnyHeader from './components/AnyHeader.vue';
 import Badge from './components/Badge.vue';
 import BadgeCustom from './components/BadgeCustom.vue';
@@ -46,7 +45,6 @@ export {
   pvcStore,
   AddressCandidateList,
   AddressInput,
-  ConfigurableInput,
   AnyHeader,
   Badge,
   BadgeCustom,

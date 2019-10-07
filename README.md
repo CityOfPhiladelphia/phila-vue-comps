@@ -28,6 +28,18 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 ## Release Notes
 
+### 1.0.40 - 10/7/2019
+
+* Fixes bug with removal of old "ConfigurableInput" component
+
+### 1.0.39 - 10/7/2019
+
+* Monthly package upgrades
+
+### 1.0.38 - 9/20/2019
+
+* Changes to make polyline work in pvm
+
 ### 1.0.37 - 9/6/2019
 
 * Monthly package upgrades
