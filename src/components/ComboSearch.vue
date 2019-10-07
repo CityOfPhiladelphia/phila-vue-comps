@@ -129,21 +129,16 @@ export default {
       console.log('handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
       comboSearch[searchCategory] = value;
       this.$emit('trigger-combo-search', comboSearch)
-      this.$controller.handleSearchFormSubmit(value, searchCategory);
     },
     handleCategoryChange(event) {
       console.log('handleCategoryChange is running, event:', event);
       this.value = '';
-      // this.$controller.routeToNoAddress();
-      this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
       this.$store.commit('setSearchType', event.target.value.toLowerCase());
     },
     clearSearch(event) {
       console.log('clearSearch is running, event:', event);
       this.value = '';
-      // this.$controller.routeToNoAddress();
-      this.$controller.resetGeocode();
       this.$store.commit('setSelectedKeywords', []);
       this.$emit('trigger-clear-search')
     },

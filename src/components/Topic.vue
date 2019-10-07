@@ -26,7 +26,9 @@
            v-if="shouldShowBody"
            :data-topic-key="topicKey"
       >
-        <topic-component-group :topic-components="topic.components" />
+        <topic-component-group :topic-components="topic.components"
+                              @get-more-records="getMoreRecords"
+        />
       </div>
     </transition>
 
@@ -262,6 +264,11 @@
       },
     },
     methods: {
+      getMoreRecords(dataSource, highestPageRetrieved) {
+        console.log('Topic.vue getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
+        // this.$emit('test-event', dataSource, highestPageRetrieved);
+        this.$emit('get-more-records', dataSource, highestPageRetrieved);
+      },
       checkForData(requiredData) {
         const requiredDataSources = Object.keys(requiredData);
         // console.log('checkForData is running, requiredData:', requiredData, 'requiredDataSources:', requiredDataSources);
@@ -295,15 +302,15 @@
       },
 
       handleTopicHeaderClick(e) {
+        // console.log('Topic.vue handleTopicHeaderClick is running');
         const topic = this.$props.topicKey;
         let nextTopic;
 
         if (topic !== this.$store.state.activeTopic) {
           nextTopic = topic;
         }
-
-        // notify controller (which will handle routing)
-        this.$controller.handleTopicHeaderClick(nextTopic);
+        // send event up
+        this.$emit('handle-topic-header-click', nextTopic);
       },
     }
   };

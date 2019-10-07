@@ -9,6 +9,8 @@
                  :options="comp.options"
                  :item="item"
                  :key="getCompKey(key, compIndex)"
+                 @handle-topic-header-click="handleTopicHeaderClick"
+                 @get-more-records="getMoreRecords"
       />
     </div>
     <div v-if="this.isList">
@@ -19,6 +21,8 @@
                    :options="comp.options"
                    :item="item"
                    :key="getCompKey(key, compIndex)"
+                   @handle-topic-header-click="handleTopicHeaderClick"
+                   @get-more-records="getMoreRecords"
         />
       </li>
     </div>
@@ -73,6 +77,14 @@
     methods: {
       getCompKey(compGroupKey, compIndex) {
         return `topic-comp-${compGroupKey}-${compIndex}`;
+      },
+      handleTopicHeaderClick(nextTopic) {
+        // console.log('TopicComponentGroup handleTopicHeaderClick is running');
+        this.$emit('handle-topic-header-click', nextTopic);
+      },
+      getMoreRecords(dataSource, highestPageRetrieved) {
+        // console.log('TopicComponentGroup getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
+        this.$emit('get-more-records', dataSource, highestPageRetrieved);
       }
     }
   };

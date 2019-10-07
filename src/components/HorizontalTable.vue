@@ -784,9 +784,10 @@
         }
       },
       getMoreRecords() {
+        console.log('HorizontalTable.vue getMoreRecords is running');
         const dataSource = this.options.id;
         const highestPageRetrieved = this.highestPageRetrieved;
-        this.$controller.getMoreRecords(dataSource, highestPageRetrieved);
+        this.$emit('get-more-records', dataSource, highestPageRetrieved);
       },
       slugifyFilterValue(filterValue) {
         const { direction, value, unit } = filterValue;
