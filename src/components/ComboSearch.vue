@@ -65,11 +65,11 @@ export default {
     return data;
   },
   mounted() {
-    // console.log('ComboSearch mounted, this.dropdown.keyword.data:', this.dropdown.keyword.data);
+    // console.log('ComboSearch mounted, this.dropdown.keyword.data:', this.dropdown.keyword.data, 'this.searchString:', this.searchString);
     for (let dropdownOption of Object.keys(this.dropdown)) {
       // console.log('ComboSearch mounted in loop, dropdownOption:', dropdownOption);
       if (this.dropdown[dropdownOption].data) {
-        console.log('ComboSearch mounted dropdownOption.data:', this.dropdown[dropdownOption].data);
+        // console.log('ComboSearch mounted dropdownOption.data:', this.dropdown[dropdownOption].data);
         let dataConcat;
         if (Array.isArray(this.dropdown[dropdownOption].data)) {
           dataConcat = this.dropdown[dropdownOption].data.join(', ');
@@ -80,39 +80,17 @@ export default {
     }
 
     if (this.searchString && this.searchString != '') {
-      this.value = this.searchString;
+      // this.value = this.searchString;
       this.handleSearchFormSubmit();
     }
 
   },
   watch: {
     value(nextValue) {
-      console.log('ComboSearch watch value fired, nextValue:', nextValue);
+      // console.log('ComboSearch watch value fired, nextValue:', nextValue);
       let input = document.getElementById('inputId');
       input.value = nextValue;
     },
-    dropdownValue(nextDropdownValue) {
-      console.log('ComboSearch watch dropdownValue fired, nextDropdown:', nextDropdownValue);
-      this.value = nextDropdownValue;
-    }
-  },
-  computed: {
-    dropdownValue() {
-      let data;
-      for (let dropdownOption of Object.keys(this.dropdown)) {
-        // console.log('ComboSearch dropdownValue computed in loop, dropdownOption:', dropdownOption);
-        if (this.dropdown[dropdownOption].data) {
-          // console.log('ComboSearch dropdownValue computed:', this.dropdown[dropdownOption].data);
-          let dataConcat = this.dropdown[dropdownOption].data;
-          if (Array.isArray(this.dropdown[dropdownOption].data)) {
-            dataConcat = this.dropdown[dropdownOption].data.join(', ');
-          }
-          data = dataConcat;
-          continue;
-        }
-      }
-      return data;
-    }
   },
   methods: {
     handleTypeInInput(event) {
@@ -126,20 +104,18 @@ export default {
       searchCategory = e.options[e.selectedIndex].value.toLowerCase();
       value = document.querySelector('#' + this.$data.inputId.toString()).value;
       this.value = value;
-      console.log('handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
+      // console.log('ComboSearch handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
       comboSearch[searchCategory] = value;
       this.$emit('trigger-combo-search', comboSearch)
     },
     handleCategoryChange(event) {
-      console.log('handleCategoryChange is running, event:', event);
+      // console.log('handleCategoryChange is running, event:', event);
       this.value = '';
-      this.$store.commit('setSelectedKeywords', []);
-      this.$store.commit('setSearchType', event.target.value.toLowerCase());
+      this.$emit('trigger-search-category-change', event.target.value.toLowerCase());
     },
     clearSearch(event) {
-      console.log('clearSearch is running, event:', event);
+      // console.log('clearSearch is running, event:', event);
       this.value = '';
-      this.$store.commit('setSelectedKeywords', []);
       this.$emit('trigger-clear-search')
     },
   },
