@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="legend"
+    <div :class="legendClass"
          v-html="this.legendHtml"
     />
   </div>
@@ -17,6 +17,7 @@
             // minScale, maxScale, and drawingInfo are stored in layerDefinition
             'layerDefinition',
             'legend',
+            'legendClass',
             'scales'
     ],
     data() {
@@ -133,6 +134,7 @@
 ul {
   list-style: none;
   margin-left: 0px;
+  margin-bottom: 2px;
 }
 
 ul ul {
@@ -143,4 +145,15 @@ ul ul {
 li {
   list-style: none;
 }
+
+.street-legend {
+  border: 1px solid rgb(160, 159, 159);
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.street-legend li {
+  padding: 5px;
+}
+
 </style>

@@ -9,6 +9,7 @@
                   :layerDefinition="currentWmLayer.rest.layerDefinition"
                   :opacity="currentWmLayer.opacity"
                   :legend="currentWmLayer.legend"
+                  :legendClass="compLegendClass"
                   :key="currentWmLayer.id"
                   :shouldShowDataLinks="computedShouldShowDataLinks"
                   :topicLayers="topicLayers"
@@ -30,6 +31,13 @@
       RadioButton
     },
     computed: {
+      compLegendClass() {
+        if (this.$props.options.legendClass) {
+          return this.$props.options.legendClass
+        } else {
+          return 'legend'
+        }
+      },
       categories() {
         return this.$store.state.map.categories;
       },
