@@ -32,6 +32,7 @@
                 :layerId="layerId"
                 :layerDefinition="layerDefinition"
                 :legend="legend"
+                :legendClass="legendClass"
                 :scales="this.$config.map.scales"
       >
     </legend-box>
@@ -71,6 +72,7 @@
             'layerDefinition',
             'opacity',
             'legend',
+            'legendClass',
             'tags',
             'topicLayers',
             'shouldShowDataLinks'
