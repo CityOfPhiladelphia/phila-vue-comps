@@ -1,56 +1,66 @@
 <template>
-  <div class="pl-alert"
-       :style="plAlertStyle"
+  <div 
+    :style="plAlertStyle"
+    class="pl-alert"
   >
-    <span class="pl-alert-close-button" @click="close">
-      <font-awesome-icon icon="times-circle" class="fa-2x" />
+    <span 
+      class="pl-alert-close-button" 
+      @click="close"
+    >
+      <font-awesome-icon 
+        icon="times-circle" 
+        class="fa-2x"
+      />
     </span>
     <div class="pl-alert-body">
-      <span v-html="this.value"></span>
-      <topic-component-group :topic-components="options.components" :item="item" />
+      <span v-html="this.value" />
+      <topic-component-group 
+        :topic-components="options.components" 
+        :item="item"
+      />
     </div>
   </div>
 </template>
 
 <script>
-  import TopicComponent from './TopicComponent.vue';
-  import TopicComponentGroup from './TopicComponentGroup.vue';
-  export default {
-    mixins: [TopicComponent],
-    data() {
-      const data = {
-        plAlertStyle: {
-          'height': '300px'
-        }
-      };
-      return data;
-    },
-    beforeCreate() {
-      this.$options.components.TopicComponentGroup = TopicComponentGroup;
-    },
-    created() {
-      // console.log('this.$props.options.height:', this.$props.options.height);
-      if (this.$props.options.height) {
-        this.plAlertStyle.height = this.$props.options.height;
-      }
-    },
-    computed: {
-      value() {
-        if (this.$props.slots.text) {
-          return this.$props.slots.text;
-        } else {
-          return '';
-        }
-      }
-    },
-    methods: {
-      close() {
-        this.$store.commit('setPopoverOpen', false);
-        this.$store.commit('setPopoverOptions', {});
-        this.$store.commit('setPopoverText', '');
+import TopicComponent from './TopicComponent.vue';
+import TopicComponentGroup from './TopicComponentGroup.vue';
+export default {
+  mixins: [ TopicComponent ],
+  data() {
+    const data = {
+      plAlertStyle: {
+        'height': '300px',
       },
+    };
+    return data;
+  },
+  computed: {
+    value() {
+      if (this.$props.slots.text) {
+        return this.$props.slots.text;
+      } 
+      return '';
+        
     },
-  };
+  },
+  beforeCreate() {
+    this.$options.components.TopicComponentGroup = TopicComponentGroup;
+  },
+  created() {
+    // console.log('this.$props.options.height:', this.$props.options.height);
+    if (this.$props.options.height) {
+      this.plAlertStyle.height = this.$props.options.height;
+    }
+  },
+  methods: {
+    close() {
+      this.$store.commit('setPopoverOpen', false);
+      this.$store.commit('setPopoverOptions', {});
+      this.$store.commit('setPopoverText', '');
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -1,44 +1,45 @@
 <template>
   <div>
-    <topic v-for="topic in this.$config.topics"
-           :topicKey="topic.key"
-           :key="topic.key"
-           @handle-topic-header-click="handleTopicHeaderClick"
-           @get-more-records="getMoreRecords"
+    <topic 
+      v-for="topic in this.$config.topics"
+      :key="topic.key"
+      :topic-key="topic.key"
+      @handle-topic-header-click="handleTopicHeaderClick"
+      @get-more-records="getMoreRecords"
     />
   </div>
 </template>
 
 <script>
-  import Topic from './Topic.vue';
-  import TopicComponent from './TopicComponent.vue';
+import Topic from './Topic.vue';
+import TopicComponent from './TopicComponent.vue';
 
-  export default {
-    mixins: [TopicComponent],
-    name: 'TopicSet',
-    components: {
-      Topic,
-    },
-    mounted() {
-      if (this.$store.state.activeTopic === null || this.$store.state.activeTopic === '') {
-        this.setDefaultTopicActive();
-      }
-    },
-    methods: {
-      getMoreRecords(dataSource, highestPageRetrieved) {
-        // console.log('TopicSet getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
-        this.$emit('get-more-records', dataSource, highestPageRetrieved);
-      },
-      handleTopicHeaderClick(nextTopic) {
-        // console.log('TopicSet.vue handleTopicHeaderClick is running, nextTopic:', nextTopic);
-        this.$emit('handle-topic-header-click', nextTopic);
-      },
-      setDefaultTopicActive() {
-        if (this.$props.options.defaultTopic) {
-          this.$store.commit('setActiveTopic', this.$props.options.defaultTopic);
-          // this.$store.state.activeTopic = this.$props.options.defaultTopic;
-        }
-      }
+export default {
+  name: 'TopicSet',
+  components: {
+    Topic,
+  },
+  mixins: [ TopicComponent ],
+  mounted() {
+    if (this.$store.state.activeTopic === null || this.$store.state.activeTopic === '') {
+      this.setDefaultTopicActive();
     }
-  };
+  },
+  methods: {
+    getMoreRecords(dataSource, highestPageRetrieved) {
+      // console.log('TopicSet getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
+      this.$emit('get-more-records', dataSource, highestPageRetrieved);
+    },
+    handleTopicHeaderClick(nextTopic) {
+      // console.log('TopicSet.vue handleTopicHeaderClick is running, nextTopic:', nextTopic);
+      this.$emit('handle-topic-header-click', nextTopic);
+    },
+    setDefaultTopicActive() {
+      if (this.$props.options.defaultTopic) {
+        this.$store.commit('setActiveTopic', this.$props.options.defaultTopic);
+        // this.$store.state.activeTopic = this.$props.options.defaultTopic;
+      }
+    },
+  },
+};
 </script>

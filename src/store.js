@@ -34,7 +34,7 @@ const pvmStore = {
     setFullScreenTopicsEnabled(state, payload) {
       state.fullScreenTopicsEnabled = payload;
     },
-  }
-}
+  },
+};
 
 export default pvmStore;

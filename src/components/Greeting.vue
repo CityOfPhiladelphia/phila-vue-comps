@@ -1,86 +1,97 @@
 <template>
-  <div class="columns medium-20 medium-centered"
-       :style="greetingStyle"
+  <div 
+    :style="greetingStyle"
+    class="columns medium-20 medium-centered"
   >
-
     <address-input v-if="this.shouldShowAddressInput" />
-    <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput"/>
+    <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput" />
 
-    <div v-if="!components && !hasError" class="greeting" v-html="message">
+    <div 
+      v-if="!components && !hasError" 
+      class="greeting" 
+      v-html="message"
+    >
       <!-- {{ this.$props.message }} -->
     </div>
 
-    <div v-if="!components && hasError" class="greeting greeting-error" v-html="errorMessage">
-    </div>
+    <div 
+      v-if="!components && hasError" 
+      class="greeting greeting-error" 
+      v-html="errorMessage"
+    />
 
-    <topic-component-group :topic-components="options.components" :item="item" />
+    <topic-component-group 
+      :topic-components="options.components" 
+      :item="item"
+    />
 
-    <component v-if="components"
-               v-for="(topicComp, topicCompIndex) in components"
-               class="topic-comp"
-               :is="topicComp.type"
-               :slots="topicComp.slots"
-               :key="'greeting'"
+    <component 
+      :is="topicComp.type"
+      v-for="(topicComp, topicCompIndex) in components"
+      v-if="components"
+      :key="'greeting'"
+      :slots="topicComp.slots"
+      class="topic-comp"
     />
   </div>
 </template>
 
 <script>
 
-  import TopicComponent from './TopicComponent.vue';
+import TopicComponent from './TopicComponent.vue';
 
-  export default {
-    components: {
-      Image_: () => import(/* webpackChunkName: "inGreeting_pvc_Image" */'./Image.vue'),
-      AddressInput: () => import(/* webpackChunkName: "inGreeting_pvc_AddressInput" */'./AddressInput.vue'),
-      AddressCandidateList: () => import(/* webpackChunkName: "inGreeting_pvc_AddressCandidateList" */'./AddressCandidateList.vue'),
-      TopicComponentGroup: () => import(/* webpackChunkName: "inGreeting_pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
-    },
-    mixins: [TopicComponent],
-    data() {
-      let data = {
-        greetingStyle: this.$props.options.style || {}
-      }
-      return data;
-    },
-    props: {
-      'message': {
-        type: String,
-        default: function() {
-          return 'defaultMessage';
-        }
+export default {
+  components: {
+    Image_: () => import(/* webpackChunkName: "inGreeting_pvc_Image" */'./Image.vue'),
+    AddressInput: () => import(/* webpackChunkName: "inGreeting_pvc_AddressInput" */'./AddressInput.vue'),
+    AddressCandidateList: () => import(/* webpackChunkName: "inGreeting_pvc_AddressCandidateList" */'./AddressCandidateList.vue'),
+    TopicComponentGroup: () => import(/* webpackChunkName: "inGreeting_pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
+  },
+  mixins: [ TopicComponent ],
+  props: {
+    'message': {
+      type: String,
+      default: function() {
+        return 'defaultMessage';
       },
     },
-    computed: {
-      shouldShowAddressInput() {
-        if (this.$config.addressInputLocation == 'topics') {
+  },
+  data() {
+    let data = {
+      greetingStyle: this.$props.options.style || {},
+    };
+    return data;
+  },
+  computed: {
+    shouldShowAddressInput() {
+      if (this.$config.addressInputLocation == 'topics') {
+        return true;
+      } 
+      return false;
+        
+    },
+    addressAutocompleteEnabled() {
+      // TODO tidy up the code
+      if (this.$config.addressInput) {
+        if (this.$config.addressInput.autocompleteEnabled === true) {
           return true;
-        } else {
-          return false;
-        }
-      },
-      addressAutocompleteEnabled() {
-        // TODO tidy up the code
-        if (this.$config.addressInput) {
-          if (this.$config.addressInput.autocompleteEnabled === true) {
-            return true;
-          } else {
-            return false;
-          }
-        } else {
-          return false;
-        }
-      },
-      components() {
-        const greetingConfig = this.$config.greeting || {};
-        return greetingConfig.components;
-      },
-      hasError() {
-        return this.$store.state.geocode.status === 'error';
-      },
-      errorMessage() {
-        const input = this.$store.state.geocode.input;
-        return `
+        } 
+        return false;
+          
+      } 
+      return false;
+        
+    },
+    components() {
+      const greetingConfig = this.$config.greeting || {};
+      return greetingConfig.components;
+    },
+    hasError() {
+      return this.$store.state.geocode.status === 'error';
+    },
+    errorMessage() {
+      const input = this.$store.state.geocode.input;
+      return `
           <p>
             We couldn't find
             ${input ? '<strong>' + input + '</strong>' : 'that address'}.
@@ -96,9 +107,9 @@
             <li>883309050 (an OPA number with no hyphens or other characters)</li>
           </ul>
         `;
-      }
-    }
-  };
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -1,107 +1,115 @@
 <template>
-  <div v-if="shouldShowTable" class="table-container">
-    <h4 v-if="slots.title"
-        class="table-title"
+  <div 
+    v-if="shouldShowTable" 
+    class="table-container"
+  >
+    <h4 
+      v-if="slots.title"
+      class="table-title"
     >
       {{ evaluateSlot(slots.title) }}
     </h4>
     <table :id="this.$props.options.id">
       <tbody>
         <tr v-for="field in slots.fields">
-          <th v-html="evaluateSlot(field.label)"
-              :style="styles.th || ''"
+          <th 
+            :style="styles.th || ''"
+            v-html="evaluateSlot(field.label)"
           />
-          <td v-html="evaluateSlot(field.value, field.transforms, nullValue)"
-              v-if="hasData"
+          <td 
+            v-if="hasData"
+            v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
-          <td v-html="''"
-              v-if="!hasData"
+          <td 
+            v-if="!hasData"
+            v-html="''"
           />
         </tr>
       </tbody>
     </table>
-    <external-link v-if="options && options.externalLink"
-                   :options="options.externalLink"
-                   :type="'vertical-table'"
+    <external-link 
+      v-if="options && options.externalLink"
+      :options="options.externalLink"
+      :type="'vertical-table'"
     />
   </div>
 </template>
 
 <script>
-  import TopicComponent from './TopicComponent.vue';
-  import ExternalLink from './ExternalLink.vue';
+import TopicComponent from './TopicComponent.vue';
+import ExternalLink from './ExternalLink.vue';
 
-  export default {
-    mixins: [TopicComponent],
-    components: {
-      ExternalLink,
+export default {
+  components: {
+    ExternalLink,
+  },
+  mixins: [ TopicComponent ],
+  computed: {
+    styles() {
+      if (this.$props.options.styles) {
+        return this.$props.options.styles;
+      } 
+      return '';
+        
     },
-    computed: {
-      styles() {
-        if (this.$props.options.styles) {
-          return this.$props.options.styles;
-        } else {
-          return '';
-        }
-      },
-      shouldShowTable() {
-        const hasData = this.hasData;
-        if (this.item) {
-          if (this.item.activeTable) {
-            const filterValue = this.item.activeTable;
-            const id = this.options.id;
-            if (filterValue === id) {
-              return true
-              // return hasData;
-            } else {
-              return false;
-            }
-          } else {
+    shouldShowTable() {
+      const hasData = this.hasData;
+      if (this.item) {
+        if (this.item.activeTable) {
+          const filterValue = this.item.activeTable;
+          const id = this.options.id;
+          if (filterValue === id) {
             return true;
             // return hasData;
+          } 
+          return false;
+            
+        } 
+        return true;
+        // return hasData;
+          
+      } 
+      return true;
+      // return hasData;
+        
+    },
+    hasData() {
+      // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
+      // console.log('vertTable hasData is running, this.$props.options:', this.$props.options, 'this.$config.dataSources:', this.$config.dataSources);
+
+      // make sure the following is true for all data sources
+      if (!this.$props.options.dataSources) {
+        return true;
+      } 
+      const hasData = this.$props.options.dataSources.every(dataSource => {
+        const targetsFn = this.$config.dataSources[dataSource].targets;
+
+        // if the data source is configured for targets
+        if (targetsFn) {
+          const targetsMap = this.$store.state.sources[dataSource].targets;
+          const targets = Object.values(targetsMap);
+
+          // but there are no targets for this address, return false
+          if (targets.length === 0) {
+            return false;
           }
-        } else {
-          return true;
-          // return hasData;
-        }
-      },
-      hasData() {
-        // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
-        // console.log('vertTable hasData is running, this.$props.options:', this.$props.options, 'this.$config.dataSources:', this.$config.dataSources);
 
-        // make sure the following is true for all data sources
-        if (!this.$props.options.dataSources) {
-          return true;
-        } else {
-          const hasData = this.$props.options.dataSources.every(dataSource => {
-            const targetsFn = this.$config.dataSources[dataSource].targets;
+          // if there are targets for this address, make sure none of them
+          // are "waiting"
+          return targets.every(target => target.status !== 'waiting');
 
-            // if the data source is configured for targets
-            if (targetsFn) {
-              const targetsMap = this.$store.state.sources[dataSource].targets;
-              const targets = Object.values(targetsMap);
+          // if the data source is not configured for targets, just check that
+          // it has data
+        } 
+        return !!this.$store.state.sources[dataSource].data;
+            
+      });
 
-              // but there are no targets for this address, return false
-              if (targets.length === 0) {
-                return false;
-              }
-
-              // if there are targets for this address, make sure none of them
-              // are "waiting"
-              return targets.every(target => target.status !== 'waiting');
-
-            // if the data source is not configured for targets, just check that
-            // it has data
-            } else {
-              return !!this.$store.state.sources[dataSource].data;
-            }
-          });
-
-          return hasData;
-        }
-      },
-    }
-  };
+      return hasData;
+        
+    },
+  },
+};
 </script>
 
 <style scoped>

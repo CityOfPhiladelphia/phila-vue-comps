@@ -1,13 +1,13 @@
 <template>
-  <img :src="slots.source" />
+  <img :src="slots.source">
 </template>
 
 <script>
 import TopicComponent from './TopicComponent.vue';
 
-  export default {
-    mixins: [TopicComponent]
-  };
+export default {
+  mixins: [ TopicComponent ],
+};
 </script>
 
 <style scoped>

@@ -1,12 +1,13 @@
 <template>
   <div class="combo-search">
-    <select :id="selectId"
-            @change="handleCategoryChange"
+    <select 
+      :id="selectId"
+      @change="handleCategoryChange"
     >
       <option
         v-for="(item, key) in dropdown"
-        :value="item.text"
         :key="key"
+        :value="item.text"
         :selected="item.selected"
       >
         {{ item.text }}
@@ -14,16 +15,28 @@
     </select>
     <div class="search">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
-      <input class="search-field" type="text" :id="inputId" :placeholder="placeholderText" @keyup="handleTypeInInput" :value="searchString">
-      <button class="search-x"
-        @click="clearSearch"
+      <input 
+        :id="inputId" 
+        :placeholder="placeholderText" 
+        :value="searchString" 
+        class="search-field" 
+        type="text" 
+        @keyup="handleTypeInInput"
+      >
+      <button 
         v-if="value.length > 0"
+        class="search-x"
+        @click="clearSearch"
       >
         <font-awesome-icon icon="times" />
       </button>
-      <button class="search-submit"
+      <button 
+        class="search-submit"
+        value="search"
         @click="handleSearchFormSubmit();"
-        value="search"><font-awesome-icon icon="search" /></button>
+      >
+        <font-awesome-icon icon="search" />
+      </button>
     </div>
   </div>
 </template>
@@ -31,7 +44,7 @@
 <script>
 
 export default {
-  name: 'comboSearch',
+  name: 'ComboSearch',
   props: {
     dropdown: {
       type: Object,
@@ -39,7 +52,7 @@ export default {
         key: {
           text: 'value',
           data: 'value',
-        }
+        },
       },
     },
     searchString: {
@@ -60,9 +73,16 @@ export default {
       inputId: 'inputId',
       selectId: 'selectId',
       categorySelected: null,
-      value: ''
-    }
+      value: '',
+    };
     return data;
+  },
+  watch: {
+    value(nextValue) {
+      // console.log('ComboSearch watch value fired, nextValue:', nextValue);
+      let input = document.getElementById('inputId');
+      input.value = nextValue;
+    },
   },
   mounted() {
     // console.log('ComboSearch mounted, this.dropdown.keyword.data:', this.dropdown.keyword.data, 'this.searchString:', this.searchString);
@@ -85,13 +105,6 @@ export default {
     }
 
   },
-  watch: {
-    value(nextValue) {
-      // console.log('ComboSearch watch value fired, nextValue:', nextValue);
-      let input = document.getElementById('inputId');
-      input.value = nextValue;
-    },
-  },
   methods: {
     handleTypeInInput(event) {
       if(event.key == "Enter") {
@@ -106,7 +119,7 @@ export default {
       this.value = value;
       // console.log('ComboSearch handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
       comboSearch[searchCategory] = value;
-      this.$emit('trigger-combo-search', comboSearch)
+      this.$emit('trigger-combo-search', comboSearch);
     },
     handleCategoryChange(event) {
       // console.log('handleCategoryChange is running, event:', event);
@@ -116,10 +129,10 @@ export default {
     clearSearch(event) {
       // console.log('clearSearch is running, event:', event);
       this.value = '';
-      this.$emit('trigger-clear-search')
+      this.$emit('trigger-clear-search');
     },
   },
-}
+};
 
 </script>
 

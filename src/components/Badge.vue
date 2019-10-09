@@ -2,7 +2,10 @@
   <!-- REVIEW this uses patterns -->
   <div class="center">
     <div class="mb-badge panel">
-      <div class="mb-badge-header" :style="style">
+      <div 
+        :style="style" 
+        class="mb-badge-header"
+      >
         {{ evaluateSlot(slots.title) }}
       </div>
       <div class="mb-badge-body">
@@ -10,9 +13,10 @@
         <strong>{{ evaluateSlot(slots.description) }}</strong>
       </div>
     </div>
-    <external-link v-if="options && options.externalLink"
-                   :options="options.externalLink"
-                   :type="'badge'"
+    <external-link 
+      v-if="options && options.externalLink"
+      :options="options.externalLink"
+      :type="'badge'"
     />
     <!-- <div class="external-link">
       <a v-if="options && options.externalLink"
@@ -27,49 +31,49 @@
 </template>
 
 <script>
-  // console.log('in Badge.vue script');
-  import TopicComponent from './TopicComponent.vue';
-  import ExternalLink from './ExternalLink.vue';
+// console.log('in Badge.vue script');
+import TopicComponent from './TopicComponent.vue';
+import ExternalLink from './ExternalLink.vue';
 
-  export default {
-    name: 'Badge',
-    mixins: [TopicComponent],
-    components: {
-      ExternalLink,
+export default {
+  name: 'Badge',
+  components: {
+    ExternalLink,
+  },
+  mixins: [ TopicComponent ],
+  computed: {
+    style() {
+      let titleBackground = this.evaluateSlot(this.slots.titleBackground);
+      // const titleBackgroundValOrFn = (this.slots || {}).titleBackground;
+      // let titleBackground;
+      //
+      // if (titleBackgroundValOrFn) {
+      //   console.log('titleBackgroundValOrFn', titleBackgroundValOrFn)
+      //   if (typeof titleBackgroundValOrFn === 'function') {
+      //     titleBackground = titleBackgroundValOrFn(this.$store.state);
+      //   } else {
+      //     titleBackground = titleBackgroundValOrFn;
+      //   }
+      // } else {
+      //   titleBackground = '#444';
+      // }
+      //
+      return { background: titleBackground };
     },
-    computed: {
-      style() {
-        let titleBackground = this.evaluateSlot(this.slots.titleBackground)
-        // const titleBackgroundValOrFn = (this.slots || {}).titleBackground;
-        // let titleBackground;
-        //
-        // if (titleBackgroundValOrFn) {
-        //   console.log('titleBackgroundValOrFn', titleBackgroundValOrFn)
-        //   if (typeof titleBackgroundValOrFn === 'function') {
-        //     titleBackground = titleBackgroundValOrFn(this.$store.state);
-        //   } else {
-        //     titleBackground = titleBackgroundValOrFn;
-        //   }
-        // } else {
-        //   titleBackground = '#444';
-        // }
-        //
-        return { background: titleBackground };
-      },
-      // externalLinkAction() {
-      //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
-      // },
-      // externalLinkText() {
-      //   const externalLinkConf = this.options.externalLink;
-      //   const actionFn = externalLinkConf.action;
-      //   const name = this.externalLinkAction || '';
-      //   return `${name}`;
-      // },
-      // externalLinkHref() {
-      //   return this.evaluateSlot(this.options.externalLink.href);
-      // },
-    }
-  };
+    // externalLinkAction() {
+    //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
+    // },
+    // externalLinkText() {
+    //   const externalLinkConf = this.options.externalLink;
+    //   const actionFn = externalLinkConf.action;
+    //   const name = this.externalLinkAction || '';
+    //   return `${name}`;
+    // },
+    // externalLinkHref() {
+    //   return this.evaluateSlot(this.options.externalLink.href);
+    // },
+  },
+};
 </script>
 
 <style scoped>

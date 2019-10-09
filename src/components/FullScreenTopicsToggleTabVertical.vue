@@ -1,83 +1,87 @@
 <template>
-  <div id="toggle-tab"
-       class="toggle-tab"
-       :style="{ left: buttonPosition }"
-       @click="handleFullScreenTopicsToggleButtonClick"
-       v-if="!this.isMobileOrTablet"
+  <div 
+    v-if="!this.isMobileOrTablet"
+    id="toggle-tab"
+    :style="{ left: buttonPosition }"
+    class="toggle-tab"
+    @click="handleFullScreenTopicsToggleButtonClick"
   >
     <span class="align-span">
-      <font-awesome-icon :icon="this.currentIcon" class="fa-2x" />
+      <font-awesome-icon 
+        :icon="this.currentIcon" 
+        class="fa-2x"
+      />
     </span>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        'divWidth': 0,
-        'buttonPosition': 0,
-      }
+export default {
+  data() {
+    return {
+      'divWidth': 0,
+      'buttonPosition': 0,
+    };
+  },
+  computed: {
+    fullScreenMapEnabled() {
+      return this.$store.state.fullScreenMapEnabled;
     },
-    mounted() {
-      window.addEventListener('resize', this.setDivWidth);
+    fullScreenTopicsEnabled() {
+      return this.$store.state.fullScreenTopicsEnabled;
+    },
+    isMobileOrTablet() {
+      return this.$store.state.isMobileOrTablet;
+    },
+    cyclomediaActive() {
+      return this.$store.state.cyclomedia.active;
+    },
+    pictometryActive() {
+      return this.$store.state.pictometry.active;
+    },
+    picOrCycloActive() {
+      if (this.cyclomediaActive || this.pictometryActive) {
+        return true;
+      } 
+      return false;
+        
+    },
+    currentIcon() {
+      if (this.fullScreenTopicsEnabled) {
+        return 'caret-down';
+      } 
+      return 'caret-up';
+        
+    },
+  },
+  watch: {
+    fullScreenMapEnabled() {
       this.setDivWidth();
     },
-    computed: {
-      fullScreenMapEnabled() {
-        return this.$store.state.fullScreenMapEnabled;
-      },
-      fullScreenTopicsEnabled() {
-        return this.$store.state.fullScreenTopicsEnabled;
-      },
-      isMobileOrTablet() {
-        return this.$store.state.isMobileOrTablet;
-      },
-      cyclomediaActive() {
-        return this.$store.state.cyclomedia.active;
-      },
-      pictometryActive() {
-        return this.$store.state.pictometry.active;
-      },
-      picOrCycloActive() {
-        if (this.cyclomediaActive || this.pictometryActive) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      currentIcon() {
-        if (this.fullScreenTopicsEnabled) {
-          return 'caret-down'
-        } else {
-          return 'caret-up'
-        }
+  },
+  mounted() {
+    window.addEventListener('resize', this.setDivWidth);
+    this.setDivWidth();
+  },
+  methods: {
+    setDivWidth() {
+      let el;
+      if (this.fullScreenTopicsEnabled) {
+        el = document.getElementById('topic-panel-container');
+      } else {
+        el = document.getElementById('map-tag');
       }
+      const mapDivStyle = window.getComputedStyle(el);
+      const mapDivWidth = parseFloat(mapDivStyle.getPropertyValue('width').replace('px', ''));
+      this.buttonPosition = (mapDivWidth-48)/2 + 'px';
     },
-    watch: {
-      fullScreenMapEnabled() {
-        this.setDivWidth();
-      }
+    handleFullScreenTopicsToggleButtonClick(e) {
+      const prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
+      const nextFullScreenTopicsEnabled = !prevFullScreenTopicsEnabled;
+      this.$store.commit('setFullScreenTopicsEnabled', nextFullScreenTopicsEnabled);
     },
-    methods: {
-      setDivWidth() {
-        let el;
-        if (this.fullScreenTopicsEnabled) {
-          el = document.getElementById('topic-panel-container');
-        } else {
-          el = document.getElementById('map-tag');
-        }
-        const mapDivStyle = window.getComputedStyle(el);
-        const mapDivWidth = parseFloat(mapDivStyle.getPropertyValue('width').replace('px', ''));
-        this.buttonPosition = (mapDivWidth-48)/2 + 'px';
-      },
-      handleFullScreenTopicsToggleButtonClick(e) {
-        const prevFullScreenTopicsEnabled = this.$store.state.fullScreenTopicsEnabled;
-        const nextFullScreenTopicsEnabled = !prevFullScreenTopicsEnabled;
-        this.$store.commit('setFullScreenTopicsEnabled', nextFullScreenTopicsEnabled);
-      },
-    }
-  };
+  },
+};
 
 </script>
 
