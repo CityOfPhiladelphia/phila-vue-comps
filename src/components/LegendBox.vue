@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="legend"
+    <div class="street-legend"
          v-html="this.legendHtml"
     />
   </div>
@@ -142,5 +142,14 @@ ul ul {
 
 li {
   list-style: none;
+}
+
+.street-legend {
+  border: 1px solid rgb(160, 159, 159);
+  padding-left: 5px;
+  padding-top: 10px;
+}
+#street-legend li { 
+  padding: 10px; 
 }
 </style>
