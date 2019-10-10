@@ -1,8 +1,8 @@
 <template>
-  <div 
-    v-show="this.vshowComputed"
+  <div
+    v-show="vshowComputed"
     :class="this.class"
-    :style="this.style"
+    :style="style"
   >
     <topic-component-group :topic-components="this.$props.options.components" />
   </div>
@@ -30,14 +30,14 @@ export default {
         if (this.evaluateSlot(this.$props.slots.vshowProp) === false) {
           // console.log('returning vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
           return false;
-        } 
+        }
         // console.log('returning true, vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
         return true;
-          
-      } 
+
+      }
       // console.log('returning true, no props');
       return true;
-        
+
     },
   },
   beforeCreate() {

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="!this.isList">
-      <component 
+    <div v-if="!isList">
+      <component
         :is="comp.type"
         v-for="(comp, compIndex) in topicComponents"
         :key="getCompKey(key, compIndex)"
@@ -13,9 +13,12 @@
         @get-more-records="getMoreRecords"
       />
     </div>
-    <div v-if="this.isList">
-      <li v-for="(comp, compIndex) in topicComponents">
-        <component 
+    <div v-if="isList">
+      <li
+        v-for="(comp, compIndex) in topicComponents"
+        :key="compIndex"
+      >
+        <component
           :is="comp.type"
           :key="getCompKey(key, compIndex)"
           :slots="comp.slots"

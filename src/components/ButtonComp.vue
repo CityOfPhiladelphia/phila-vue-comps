@@ -1,7 +1,7 @@
 <template>
-  <a 
+  <a
     :class="'button ' + this.class"
-    :style="this.style"
+    :style="style"
     href="#"
     @click.prevent="evaluateSlot(slots.buttonAction)"
   >
@@ -16,19 +16,25 @@ export default {
   mixins: [ TopicComponent ],
   computed: {
     message() {
+      let value;
       if (this.$props.slots) {
-        return this.evaluateSlot(this.$props.slots.text);
+        value = this.evaluateSlot(this.$props.slots.text);
       }
+      return value;
     },
     class() {
+      let value;
       if (this.$props.options) {
-        return this.$props.options.class || '';
+        value = this.$props.options.class || '';
       }
+      return value;
     },
     style() {
+      let value;
       if (this.$props.options) {
-        return this.$props.options.style || '';
+        value = this.$props.options.style || '';
       }
+      return value;
     },
   },
 };

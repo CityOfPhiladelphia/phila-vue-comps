@@ -1,21 +1,21 @@
 <template>
-  <div 
+  <div
     :style="plAlertStyle"
     class="pl-alert"
   >
-    <span 
-      class="pl-alert-close-button" 
+    <span
+      class="pl-alert-close-button"
       @click="close"
     >
-      <font-awesome-icon 
-        icon="times-circle" 
+      <font-awesome-icon
+        icon="times-circle"
         class="fa-2x"
       />
     </span>
     <div class="pl-alert-body">
-      <span v-html="this.value" />
-      <topic-component-group 
-        :topic-components="options.components" 
+      <span v-html="value" />
+      <topic-component-group
+        :topic-components="options.components"
         :item="item"
       />
     </div>
@@ -39,9 +39,9 @@ export default {
     value() {
       if (this.$props.slots.text) {
         return this.$props.slots.text;
-      } 
+      }
       return '';
-        
+
     },
   },
   beforeCreate() {

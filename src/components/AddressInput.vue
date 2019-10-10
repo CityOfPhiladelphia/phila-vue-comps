@@ -1,36 +1,36 @@
 <template>
-  <div 
-    :class="'pvc-search-control-container ' + this.containerClass"
-    :style="this.containerStyle"
+  <div
+    :class="'pvc-search-control-container ' + containerClass"
+    :style="containerStyle"
   >
-    <form 
+    <form
       id="search-form"
       autocomplete="off"
       class="pvc-search-control-form"
       @submit.prevent="handleSearchFormSubmit"
     >
-      <input 
+      <input
         :id="inputID"
-        :class="'pvc-search-control-input ' + this.inputClass"
-        :style="this.inputStyle"
+        :class="'pvc-search-control-input ' + inputClass"
+        :style="inputStyle"
         :placeholder="this.$props.placeholder || 'Search the map'"
-        :value="this.addressEntered"
+        :value="addressEntered"
         tabindex="0"
         @keyup="didType"
       >
     </form>
-    <button 
-      v-if="this.addressEntered != '' && this.addressEntered != null"
-      :class="'pvc-search-control-button ' + this.buttonClass"
+    <button
+      v-if="addressEntered != '' && addressEntered != null"
+      :class="'pvc-search-control-button ' + buttonClass"
       @click="handleFormX"
     >
       <font-awesome-icon icon="times" />
     </button>
-    <button 
-      :class="'pvc-search-control-button ' + this.buttonClass"
+    <button
+      :class="'pvc-search-control-button ' + buttonClass"
       name="pvc-search-control-button"
       tabindex="-1"
-      @click="this.handleSearchFormSubmit"
+      @click="handleSearchFormSubmit"
     >
       <font-awesome-icon icon="search" />
     </button>
@@ -67,9 +67,9 @@ export default {
       // if (this.addressAutocompleteEnabled) {
       if (this.addressEntered === '' || this.addressEntered === null) {
         return this.$props.widthFromConfig - 55;
-      } 
+      }
       return this.$props.widthFromConfig - 108;
-          
+
       // } else {
       //   return this.$props.widthFromConfig - 55;
       // }
@@ -77,35 +77,35 @@ export default {
     inputClass() {
       if (this.isMobileOrTablet) {
         return 'pvc-input-mobile';
-      } 
+      }
       return 'pvc-input-non-mobile';
-        
+
     },
     containerClass() {
       if (this.isMobileOrTablet) {
         return 'pvc-container-mobile';
-      } 
+      }
       return 'pvc-container-non-mobile';
-        
+
     },
     buttonClass() {
       if (this.isMobileOrTablet) {
         return 'pvc-button-mobile';
-      } 
+      }
       return 'pvc-button-non-mobile';
-        
+
     },
     addressAutocompleteEnabled() {
       // TODO this is temporarily disabled
       if (this.$config.addressInput) {
         if (this.$config.addressInput.autocompleteEnabled === true) {
           return true;
-        } 
+        }
         return false;
-          
-      } 
+
+      }
       return false;
-        
+
     },
     isMobileOrTablet() {
       return this.$store.state.isMobileOrTablet;
@@ -175,7 +175,7 @@ export default {
       console.log('handleSearchFormSubmit is running');
       let value;
       if (this.addressAutocompleteEnabled){
-        value = addressEntered;
+        value = this.addressEntered;
         // value = this.$store.state.addressEntered;
       } else {
         // if (document.querySelector('#' + inputID)) {

@@ -1,12 +1,12 @@
 <template>
   <div class="external-link">
-    <a 
+    <a
       :href="externalLinkHref"
       target="_blank"
     >
       {{ externalLinkText }}
-      <font-awesome-icon 
-        icon="external-link-alt" 
+      <font-awesome-icon
+        icon="external-link-alt"
         aria-hidden="true"
       />
     </a>
@@ -26,10 +26,12 @@ export default {
     },
     // for horizontal or vertical tables
     externalLinkAction() {
+      let value;
       const actionFn = this.options.action;
       if (actionFn) {
-        return actionFn(this.externalLinkCount) || 'See more at ';
+        value = actionFn(this.externalLinkCount) || 'See more at ';
       }
+      return value;
     },
     // for anything else, for getting data from the state
     externalLinkDataFromState() {
@@ -47,28 +49,28 @@ export default {
           // if (this.externalLinkAction) {
           if (name) {
             return `${this.externalLinkAction} at ${name}`;
-          } 
+          }
           return `${this.externalLinkAction}`;
-            
+
         } else if (this.type === 'horizontal-table') {
           // if (name) {
           //   return `${this.externalLinkAction} at ${name}`;
           // } else {
           return `${this.externalLinkAction}`;
           // }
-        } 
+        }
         return `${this.externalLinkDataFromState}`;
-          
-      } 
+
+      }
       return null;
-        
+
     },
     externalLinkHref() {
       if (this.options) {
         return this.evaluateSlot(this.options.href);
-      } 
+      }
       return null;
-        
+
     },
     // the number of items that aren't being shown (e.g. See 54 more...)
   },

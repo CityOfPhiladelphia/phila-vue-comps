@@ -1,14 +1,14 @@
 <template>
   <div class="wrapper grid-y">
     <!-- <div class="callout columns small-24"> -->
-    <div :class="'callout ' + this.calloutClass">
-      <p 
-        v-if="this.message"
-        v-html="this.message"
+    <div :class="'callout ' + calloutClass">
+      <p
+        v-if="message"
+        v-html="message"
       />
-      <topic-component-group 
-        v-if="this.components"
-        :topic-components="this.components"
+      <topic-component-group
+        v-if="components"
+        :topic-components="components"
       />
     </div>
   </div>
@@ -23,32 +23,30 @@ export default {
     TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
   },
   mixins: [ TopicComponent ],
-  // beforeCreate() {
-  //   this.$options.components.TopicComponentGroup = TopicComponentGroup;
-  // }
   computed: {
     calloutClass() {
+      let value;
       if (this.$props.options) {
         if (this.$props.options.class) {
-          return this.$props.options.class;
-        } 
-        return 'columns small-24';
-          
+          value = this.$props.options.class;
+        }
+        value = 'columns small-24';
       }
+      return value;
     },
     message() {
       if (this.$props.slots) {
         return this.evaluateSlot(this.$props.slots.text) || '';
-      } 
+      }
       return '';
-        
+
     },
     components() {
       if (this.$props.options) {
         return this.$props.options.components || null;
-      } 
+      }
       return null;
-        
+
     },
   },
 };

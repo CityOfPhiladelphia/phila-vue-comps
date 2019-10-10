@@ -1,30 +1,31 @@
 <template>
-  <tr 
-    :class="{ active: this.isActive }"
+  <tr
+    :class="{ active: isActive }"
     @mouseover="handleRowMouseover"
     @click="handleRowClick"
     @mouseout="handleRowMouseout"
   >
-    <td 
-      v-for="field in fields"
+    <td
+      v-for="(field, index) in fields"
+      :key="index"
       :item="item"
       :class="{
         'in-popover': options.inPopover,
         'half-screen-table-cell': !fullScreenTopics
       }"
     >
-      <topic-component-group 
-        :topic-components="field.components" 
+      <topic-component-group
+        :topic-components="field.components"
         :item="item"
       />
       <b v-show="shouldBeBold">
-        <popover-link 
+        <popover-link
           v-if="field.popoverLink"
           :slots="field"
           :item="item"
           :field-label="field.label"
         />
-        <div 
+        <div
           v-if="!field.popoverLink"
           v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
@@ -32,13 +33,13 @@
 
       <!-- Total Row -->
       <div v-show="!shouldBeBold">
-        <popover-link 
+        <popover-link
           v-if="field.popoverLink"
           :slots="field"
           :item="item"
           :field-label="field.label"
         />
-        <div 
+        <div
           v-if="!field.popoverLink"
           v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
@@ -69,19 +70,19 @@ export default {
     fullScreenTopics() {
       if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly) {
         return true;
-      } 
+      }
       return false;
-        
+
     },
     activeFeature() {
       return this.$store.state.activeFeature;
     },
     isActive() {
+      let value;
       if (this.activeFeature) {
-        return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
-      } 
-      return;
-        
+        value = this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+      }
+      return value;
     },
     isMobileOrTablet() {
       return this.$store.state.isMobileOrTablet;
@@ -185,9 +186,9 @@ export default {
       // console.log('evaluateFieldLabel, label:', label);
       if (this.showFieldLabel && this.$props.totalRowField !== label.toLowerCase()) {
         return label + ': ';
-      } 
+      }
       return '';
-        
+
     },
   },
 };

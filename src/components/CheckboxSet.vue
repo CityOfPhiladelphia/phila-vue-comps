@@ -2,8 +2,8 @@
   <div>
     <form action="#/">
       <fieldset class="options">
-        <checkbox 
-          v-for="(currentWmLayer, index) in this.currentWmLayers"
+        <checkbox
+          v-for="(currentWmLayer) in currentWmLayers"
           :key="currentWmLayer.id"
           :layer="currentWmLayer.layer"
           :layer-name="currentWmLayer.title"
@@ -50,7 +50,7 @@ export default {
     topicLayers() {
       if (this.$props.options.topicLayers) {
         return this.$props.options.topicLayers;
-      } 
+      }
       // if no topicLayers are provided, use all
       let titles = [];
       for (let layer of this.$store.state.map.webMapLayersAndRest) {
@@ -59,7 +59,7 @@ export default {
         });
       }
       return titles;
-        
+
     },
     activeLayers() {
       return this.$store.state.map.webMapActiveLayers;

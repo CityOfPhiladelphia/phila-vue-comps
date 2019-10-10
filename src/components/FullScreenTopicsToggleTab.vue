@@ -1,14 +1,14 @@
 <template>
-  <div 
-    v-if="!this.isMobileOrTablet"
+  <div
+    v-if="!isMobileOrTablet"
     id="toggle-tab"
     :style="{ top: buttonPosition }"
     class="toggle-tab"
     @click="handleFullScreenTopicsToggleButtonClick"
   >
     <span class="align-span">
-      <font-awesome-icon 
-        :icon="this.currentIcon" 
+      <font-awesome-icon
+        :icon="currentIcon"
         class="fa-2x"
       />
     </span>
@@ -40,30 +40,30 @@ export default {
     cyclomediaActive() {
       if (this.$store.state.cyclomedia) {
         return this.$store.state.cyclomedia.active;
-      } 
+      }
       return null;
-        
+
     },
     pictometryActive() {
       if (this.$store.state.pictometry) {
         return this.$store.state.pictometry.active;
-      } 
+      }
       return null;
-        
+
     },
     picOrCycloActive() {
       if (this.cyclomediaActive || this.pictometryActive) {
         return true;
-      } 
+      }
       return false;
-        
+
     },
     currentIcon() {
       if (this.fullScreenTopicsEnabled) {
         return 'caret-left';
-      } 
+      }
       return 'caret-right';
-        
+
     },
   },
   watch: {

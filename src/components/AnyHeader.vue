@@ -1,34 +1,34 @@
 <template>
   <div>
-    <h1 
-      v-if="this.headerType === 'h1'"
-      :style="this.style"
-      v-html="this.message"
+    <h1
+      v-if="headerType === 'h1'"
+      :style="style"
+      v-html="message"
     />
-    <h2 
-      v-if="this.headerType === 'h2'"
-      :style="this.style"
-      v-html="this.message"
+    <h2
+      v-if="headerType === 'h2'"
+      :style="style"
+      v-html="message"
     />
-    <h3 
-      v-if="this.headerType === 'h3'"
-      :style="this.style"
-      v-html="this.message"
+    <h3
+      v-if="headerType === 'h3'"
+      :style="style"
+      v-html="message"
     />
-    <h4 
-      v-if="this.headerType === 'h4'"
-      :style="this.style"
-      v-html="this.message"
+    <h4
+      v-if="headerType === 'h4'"
+      :style="style"
+      v-html="message"
     />
-    <h5 
-      v-if="this.headerType === 'h5'"
-      :style="this.style"
-      v-html="this.message"
+    <h5
+      v-if="headerType === 'h5'"
+      :style="style"
+      v-html="message"
     />
-    <h6 
-      v-if="this.headerType === 'h6'"
-      :style="this.style"
-      v-html="this.message"
+    <h6
+      v-if="headerType === 'h6'"
+      :style="style"
+      v-html="message"
     />
   </div>
 </template>
@@ -59,9 +59,11 @@ export default {
       return textWithTags;
     },
     style() {
+      let value;
       if (this.$props.options) {
-        return this.$props.options.style || '';
+        value = this.$props.options.style || '';
       }
+      return value;
     },
   },
 };

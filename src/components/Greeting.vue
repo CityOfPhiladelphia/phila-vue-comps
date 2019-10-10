@@ -1,35 +1,35 @@
 <template>
-  <div 
+  <div
     :style="greetingStyle"
     class="columns medium-20 medium-centered"
   >
-    <address-input v-if="this.shouldShowAddressInput" />
-    <address-candidate-list v-if="this.addressAutocompleteEnabled && this.shouldShowAddressInput" />
+    <address-input v-if="shouldShowAddressInput" />
+    <address-candidate-list v-if="addressAutocompleteEnabled && shouldShowAddressInput" />
 
-    <div 
-      v-if="!components && !hasError" 
-      class="greeting" 
+    <div
+      v-if="!components && !hasError"
+      class="greeting"
       v-html="message"
     >
       <!-- {{ this.$props.message }} -->
     </div>
 
-    <div 
-      v-if="!components && hasError" 
-      class="greeting greeting-error" 
+    <div
+      v-if="!components && hasError"
+      class="greeting greeting-error"
       v-html="errorMessage"
     />
 
-    <topic-component-group 
-      :topic-components="options.components" 
+    <topic-component-group
+      :topic-components="options.components"
       :item="item"
     />
 
-    <component 
+    <component
       :is="topicComp.type"
-      v-for="(topicComp, topicCompIndex) in components"
+      v-for="(topicComp) in components"
       v-if="components"
-      :key="'greeting'"
+      :key="topicComp.type"
       :slots="topicComp.slots"
       class="topic-comp"
     />
@@ -66,21 +66,21 @@ export default {
     shouldShowAddressInput() {
       if (this.$config.addressInputLocation == 'topics') {
         return true;
-      } 
+      }
       return false;
-        
+
     },
     addressAutocompleteEnabled() {
       // TODO tidy up the code
       if (this.$config.addressInput) {
         if (this.$config.addressInput.autocompleteEnabled === true) {
           return true;
-        } 
+        }
         return false;
-          
-      } 
+
+      }
       return false;
-        
+
     },
     components() {
       const greetingConfig = this.$config.greeting || {};

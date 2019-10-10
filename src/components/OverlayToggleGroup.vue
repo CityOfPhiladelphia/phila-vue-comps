@@ -4,10 +4,11 @@
       <h4 v-if="slots.title">
         {{ evaluateSlot(slots.title) }}
       </h4>
-      <a 
-        v-for="item in items" 
-        :data-key="keyForItem(item)" 
-        :class="{'active': isActive(item), 'mouseover': isMousedover(item)}" 
+      <a
+        v-for="(item, index) in items"
+        :key="index"
+        :data-key="keyForItem(item)"
+        :class="{'active': isActive(item), 'mouseover': isMousedover(item)}"
         class="button overlay-toggle"
         href="#"
         @click="handleClick"
@@ -67,9 +68,9 @@ export default {
       const itemKey = this.keyForItem(item);
       if (itemKey === this.mouseover) {
         return true;
-      } 
+      }
       return false;
-        
+
     },
   },
 };

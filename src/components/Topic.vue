@@ -1,7 +1,7 @@
 <template>
   <div v-if="shouldShowTopic">
     <!-- <div> -->
-    <a 
+    <a
       v-if="shouldShowHeader"
       :class="shouldBeDisabled ? 'topic-header-disabled' : 'topic-header'"
       :data-topic-key="topicKey"
@@ -15,12 +15,12 @@
         </div>
       </div>
       <!-- <div class="loading"> -->
-      <span 
-        v-show="status === 'waiting'" 
+      <span
+        v-show="status === 'waiting'"
         class="loading"
       >
-        <font-awesome-icon 
-          icon="spinner" 
+        <font-awesome-icon
+          icon="spinner"
           class="fa-lg spin"
         />
       </span>
@@ -29,12 +29,12 @@
 
     <!-- success -->
     <transition name="topic-body">
-      <div 
+      <div
         v-if="shouldShowBody"
         :data-topic-key="topicKey"
         class="topic-body"
       >
-        <topic-component-group 
+        <topic-component-group
           :topic-components="topic.components"
           @get-more-records="getMoreRecords"
         />
@@ -42,10 +42,10 @@
     </transition>
 
     <!-- error -->
-    <div 
+    <div
       v-show="shouldShowError"
       class="topic-body"
-      v-html="this.errorMessage"
+      v-html="errorMessage"
     >
       <!-- Could not locate records for that address. -->
     </div>
@@ -63,9 +63,9 @@ export default {
     shouldBeDisabled() {
       if (this.topic.disabled) {
         return true;
-      } 
+      }
       return false;
-        
+
     },
     // returns the full config object for the topic
     topic() {
@@ -121,18 +121,18 @@ export default {
           if (this.$store.state.sources[dataSource].data.body) {
             if (this.$store.state.sources[dataSource].data.body.includes('Invalid account number')) {
               return false;
-            } 
+            }
             return true;
-              
-          } 
+
+          }
           return true;
-            
+
 
           // if the data source is not configured for targets, just check that
           // it has data
-        } 
+        }
         return !!this.$store.state.sources[dataSource].data;
-          
+
       });
 
       return hasData;
@@ -150,9 +150,9 @@ export default {
       } else if (this.showTopicBasedOnOtherData) {
         return true;
         // if showTopicOnlyIfDataExists and it is not overrulled
-      } 
+      }
       return this.showTopicOnlyIfDataExists;
-        
+
     },
     shouldShowError() {
       const shouldShowError = (
@@ -170,9 +170,9 @@ export default {
     errorMessage() {
       if (this.topic.errorMessage) {
         return this.topic.errorMessage(this.$store.state);
-      } 
+      }
       return 'Could not locate records for that address.';
-        
+
     },
     // REVIEW this is getting cached and not updating when the deps update
     status: {
@@ -208,9 +208,9 @@ export default {
 
             // if the data source is not configured for targets, just check that
             // it has data
-          } 
+          }
           return [ this.$store.state.sources[dataSource].status ];
-            
+
         });
 
         let flatArray = [];
@@ -262,9 +262,9 @@ export default {
       }
       if (!answers.includes(false)) {
         return true;
-      } 
+      }
       return false;
-        
+
     },
     showTopicOnlyIfDataExists() {
       return this.checkForData(this.topic.showTopicOnlyIfDataExists);
@@ -290,7 +290,7 @@ export default {
         if (!this.$store.state.sources[requiredDataSource].data) {
           // if there is no data (yet)
           return false;
-        } 
+        }
         if (!pathToDataArray) {
           dataArray = this.$store.state.sources[requiredDataSource].data;
         } else if (pathToDataArray.length === 1) {
@@ -303,7 +303,7 @@ export default {
         if (dataArray.length < minDataLength) {
           result = false;
         }
-          
+
       }
       return result;
     },

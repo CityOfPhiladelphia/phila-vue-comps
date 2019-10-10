@@ -1,18 +1,18 @@
 <template>
   <div :class="radioButtonClass">
     <div class="div-row">
-      <a 
+      <a
         v-if="shouldShowDataLink"
-        :href="'http://metadata.phila.gov/#home/representationdetails/' + this.bennyId"
+        :href="'http://metadata.phila.gov/#home/representationdetails/' + bennyId"
         target="_blank"
       >
-        <span><font-awesome-icon 
-          icon="info-circle" 
+        <span><font-awesome-icon
+          icon="info-circle"
           class="fa-2x"
         /></span>
       </a>
 
-      <input 
+      <input
         :id="'radio-'+layerName"
         :value="layerId"
         :class="{ disabled: shouldBeDisabled }"
@@ -23,7 +23,7 @@
         @click="radioToggle"
       >
 
-      <label 
+      <label
         :for="'radio-'+layerName"
         :class="{ disabled: shouldBeDisabled, 'label-text': shouldShowDataLink, 'label-text-no-datalinks': !shouldShowDataLink }"
       >
@@ -31,7 +31,7 @@
       </label>
     </div>
 
-    <legend-box 
+    <legend-box
       v-if="this.$store.state.map.webMapActiveLayers.includes(layerName) && computedShouldShowLegendBox"
       :layer="layer"
       :layer-name="layerName"
@@ -41,7 +41,7 @@
       :scales="this.$config.map.scales"
     />
 
-    <slider 
+    <slider
       v-if="this.$store.state.map.webMapActiveLayers.includes(layerName) && computedShouldShowSlider"
       :layer="layer"
       :layer-name="layerName"
@@ -49,7 +49,7 @@
       :opacity="opacity"
     />
 
-    <topic-component-group 
+    <topic-component-group
       v-if="this.$store.state.map.webMapActiveLayers.includes(layerName)"
       :topic-components="options.components"
     />
@@ -93,23 +93,23 @@ export default {
       if (this.$props.options) {
         if (Object.keys(this.$props.options).includes('shouldShowLegendBox')) {
           return this.$props.options.shouldShowLegendBox;
-        } 
+        }
         return true;
-          
-      } 
+
+      }
       return true;
-        
+
     },
     computedShouldShowSlider() {
       if (this.$props.options) {
         if (Object.keys(this.$props.options).includes('shouldShowSlider')) {
           return this.$props.options.shouldShowSlider;
-        } 
+        }
         return true;
-          
-      } 
+
+      }
       return true;
-        
+
     },
     matchingTags() {
       let matches = [];
@@ -129,18 +129,22 @@ export default {
       return this.$store.state.map.scale;
     },
     shouldBeDisabled() {
+      let value;
       const def = this.$props.layerDefinition;
       if (def) {
         if (def.minScale) {
           if (this.scale > def.minScale) {
-            return true;
-          } 
-          return false;
-            
+            value = true;
+            // return true;
+          }
+          value = false;
+          // return false;
         }
       } else {
-        return false;
+        value = false;
+        // return false;
       }
+      return value;
     },
     layerUrls() {
       return this.$store.state.layers.layerUrls;
@@ -154,17 +158,17 @@ export default {
     shouldShowDataLink() {
       if (this.bennyId && this.$props.shouldShowDataLinks) {
         return true;
-      } 
+      }
       return false;
-        
+
     },
     bennyId() {
       if (Object.keys(this.bennyEndpoints).length > 0) {
         const id = this.bennyEndpoints[this.url];
         return id;
-      } 
+      }
       return ' ';
-        
+
     },
     webMapUrlLayer() {
       return this.$store.state.map.webMapUrlLayer;

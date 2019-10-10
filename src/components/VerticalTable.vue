@@ -1,9 +1,9 @@
 <template>
-  <div 
-    v-if="shouldShowTable" 
+  <div
+    v-if="shouldShowTable"
     class="table-container"
   >
-    <h4 
+    <h4
       v-if="slots.title"
       class="table-title"
     >
@@ -11,23 +11,26 @@
     </h4>
     <table :id="this.$props.options.id">
       <tbody>
-        <tr v-for="field in slots.fields">
-          <th 
+        <tr
+          v-for="(field, index) in slots.fields"
+          :key="index"
+        >
+          <th
             :style="styles.th || ''"
             v-html="evaluateSlot(field.label)"
           />
-          <td 
+          <td
             v-if="hasData"
             v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
-          <td 
+          <td
             v-if="!hasData"
             v-html="''"
           />
         </tr>
       </tbody>
     </table>
-    <external-link 
+    <external-link
       v-if="options && options.externalLink"
       :options="options.externalLink"
       :type="'vertical-table'"
@@ -48,9 +51,9 @@ export default {
     styles() {
       if (this.$props.options.styles) {
         return this.$props.options.styles;
-      } 
+      }
       return '';
-        
+
     },
     shouldShowTable() {
       const hasData = this.hasData;
@@ -61,17 +64,17 @@ export default {
           if (filterValue === id) {
             return true;
             // return hasData;
-          } 
+          }
           return false;
-            
-        } 
+
+        }
         return true;
         // return hasData;
-          
-      } 
+
+      }
       return true;
       // return hasData;
-        
+
     },
     hasData() {
       // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
@@ -80,7 +83,7 @@ export default {
       // make sure the following is true for all data sources
       if (!this.$props.options.dataSources) {
         return true;
-      } 
+      }
       const hasData = this.$props.options.dataSources.every(dataSource => {
         const targetsFn = this.$config.dataSources[dataSource].targets;
 
@@ -100,13 +103,13 @@ export default {
 
           // if the data source is not configured for targets, just check that
           // it has data
-        } 
+        }
         return !!this.$store.state.sources[dataSource].data;
-            
+
       });
 
       return hasData;
-        
+
     },
   },
 };

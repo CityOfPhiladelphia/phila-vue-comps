@@ -1,7 +1,7 @@
 <template>
-  <span 
-    :style="this.style"
-    v-html="this.message"
+  <span
+    :style="style"
+    v-html="message"
   />
   <!-- test
   </span> -->
@@ -29,9 +29,11 @@ export default {
       return textWithTags;
     },
     style() {
+      let value;
       if (this.$props.options) {
-        return this.$props.options.style || '';
+        value = this.$props.options.style || '';
       }
+      return value;
     },
   },
 };

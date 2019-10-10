@@ -1,17 +1,17 @@
 <template>
   <!-- <form action="https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx" -->
-  <form 
+  <form
     :action="actionAddress"
     method="post"
     target="_blank"
   >
-    <input 
+    <input
       :value="xmlData"
       name="billStmt"
       type="hidden"
     >
-    <input 
-      v-show="this.shouldShowButton"
+    <input
+      v-show="shouldShowButton"
       :value="this.$props.slots.text"
       :style="buttonStyle"
       type="submit"
@@ -60,31 +60,37 @@ export default {
     zipCode() {
       if (this.$store.state.geocode.data) {
         return this.$store.state.geocode.data.properties.zip_code;
-      } 
+      }
       return '';
-        
+
     },
     message() {
+      let value;
       if (this.$props.slots) {
-        return this.evaluateSlot(this.$props.slots.text);
+        value = this.evaluateSlot(this.$props.slots.text);
       }
+      return value;
     },
     class() {
+      let value;
       if (this.$props.options) {
-        return this.$props.options.class || '';
+        value = this.$props.options.class || '';
       }
+      return value;
     },
     style() {
+      let value;
       if (this.$props.options) {
-        return this.$props.options.style || '';
+        value = this.$props.options.style || '';
       }
+      return value;
     },
     shouldShowButton() {
       if (this.parseData.totalDue > 0) {
         return true;
-      } 
+      }
       return false;
-        
+
     },
   },
   created() {

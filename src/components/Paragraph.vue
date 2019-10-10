@@ -1,8 +1,8 @@
 <template>
-  <p 
-    v-show="this.vshowComputed"
-    :style="this.style"
-    v-html="this.message"
+  <p
+    v-show="vshowComputed"
+    :style="style"
+    v-html="message"
   />
 </template>
 
@@ -28,9 +28,11 @@ export default {
       return textWithTags;
     },
     style() {
+      let value;
       if (this.$props.options) {
-        return this.$props.options.style || '';
+        value = this.$props.options.style || '';
       }
+      return value;
     },
     vshowComputed() {
       // console.log('vshowProp:', this.$props.slots.vshowProp);
@@ -38,14 +40,14 @@ export default {
         if (this.evaluateSlot(this.$props.slots.vshowProp) === false) {
           // console.log('returning vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
           return false;
-        } 
+        }
         // console.log('returning true, vshowProp:', this.evaluateSlot(this.$props.slots.vshowProp));
         return true;
-          
-      } 
+
+      }
       // console.log('returning true, no props');
       return true;
-        
+
     },
   },
 };

@@ -6,31 +6,33 @@
     </button> -->
     <div v-if="shouldShowTable">
       <!-- controls -->
-      <div 
+      <div
         v-if="shouldShowFilters !== false"
         class="pvc-horizontal-table-controls"
       >
-        <div 
+        <div
           v-if="!!options.filters"
           class="vertically-centered"
         >
           <!-- TODO the ids for filter spans should incorporate some sort of topic comp
           to make them globally unique -->
-          <div 
+          <div
             v-for="(filter, index) in filters"
             :id="'filter-' + index"
+            :key="index"
             class="inline-block"
           >
             <div class="vertically-centered pvc-select-text">
               {{ filter.label }}
             </div>
-            <select 
+            <select
               class="pvc-select"
               @change="handleFilterValueChange"
             >
               <optgroup>
-                <option 
+                <option
                   v-for="filterValue in filter.values"
+                  :key="filterValue"
                   :value="slugifyFilterValue(filterValue)"
                   class="pvc-select-option"
                 >
@@ -41,21 +43,22 @@
           </div>
         </div>
 
-        <!-- <div v-if="!!this.$props.options.sort && !!this.$props.options.sort.select" -->
-        <div 
+        <!-- <div v-if="!!$props.options.sort && !!$props.options.sort.select" -->
+        <div
           v-if="!!options.sort && !!options.sort.select"
           class="vertically-centered"
         >
           <div class="vertically-centered pvc-select-text">
             Sort by
           </div>
-          <select 
+          <select
             class="pvc-select"
             @change="handleSortValueChange"
           >
             <optgroup>
-              <option 
+              <option
                 v-for="sortField in sortFields"
+                :key="sortField"
                 :value="sortField"
                 class="pvc-select-option"
               >
@@ -65,28 +68,28 @@
           </select>
         </div>
 
-        <div 
+        <div
           v-if="filterByTextFields"
           class="vertically-centered"
         >
           <div class="pvc-select-text inline-block">
             {{ options.filterByText.label }}
           </div>
-          <form 
+          <form
             class="inline-block filter-by-text-form"
             @submit.prevent="handleFilterFormX"
           >
-            <input 
+            <input
               id="theInput"
-              :class="this.inputClass"
+              :class="inputClass"
               @keyup="handleFilterFormKeyup"
             >
-            <button 
-              v-if="this.searchText != ''"
+            <button
+              v-if="searchText != ''"
               class="pvc-search-control-button"
             >
-              <font-awesome-icon 
-                icon="times" 
+              <font-awesome-icon
+                icon="times"
                 class="fa-lg"
               />
             </button>
@@ -102,36 +105,39 @@
           <h5 style="display:inline-block; color: gray">
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
-          <a 
-            v-if="this.shouldShowExportCSV"
+          <a
+            v-if="shouldShowExportCSV"
             class="button pvc-export-data-button"
-            @click="this.exportTableToCSV"
+            @click="exportTableToCSV"
           >
-            {{ this.options.export.formatButtons.csv }}
+            {{ options.export.formatButtons.csv }}
           </a>
-          <a 
-            v-if="this.shouldShowExportPDF"
+          <a
+            v-if="shouldShowExportPDF"
             class="button pvc-export-data-button"
-            @click="this.exportTableToPDF"
+            @click="exportTableToPDF"
           >
-            {{ this.options.export.formatButtons.pdf }}
+            {{ options.export.formatButtons.pdf }}
           </a>
         </div>
 
-        <table 
-          :id="this.$props.options.id" 
-          role="grid" 
+        <table
+          :id="options.id"
+          role="grid"
           class="stack"
         >
           <thead v-if="shouldShowHeaders !== false">
             <tr>
-              <th v-for="field in fields">
+              <th
+                v-for="field in fields"
+                :key="field.label"
+              >
                 {{ evaluateSlot(field.label) }}
               </th>
             </tr>
           </thead>
           <tbody>
-            <horizontal-table-row 
+            <horizontal-table-row
               v-for="item in itemsLimited"
               :key="item._featureId"
               :item="item"
@@ -140,23 +146,23 @@
               :table-id="options.tableId"
               :options="options"
             />
-            <horizontal-table-row 
+            <horizontal-table-row
               v-if="totalRowEnabled"
               :should-be-bold="true"
-              :item="this.itemsLimitedSummed"
+              :item="itemsLimitedSummed"
               :fields="fields"
               :table-id="options.tableId"
-              :total-row-field="this.totalRowField"
+              :total-row-field="totalRowField"
             />
           </tbody>
         </table>
 
         <!-- external link (aka "see more")-->
-        <external-link 
+        <external-link
           v-if="options.externalLink && shouldShowExternalLink"
           :options="options.externalLink"
-          :count="this.count"
-          :limit="this.limit"
+          :count="count"
+          :limit="limit"
           :type="'horizontal-table'"
         />
         <!-- <div class="external-link"
@@ -171,18 +177,18 @@
         </div> -->
       </div>
 
-      <a 
-        v-if="this.shouldShowRetrieveButton"
+      <a
+        v-if="shouldShowRetrieveButton"
         class="button center-button"
-        @click="this.showMoreRecords"
+        @click="showMoreRecords"
       >
-        Retrieve {{ this.nextIncrement }} More {{ this.nextIncrement === 1? 'Record' : 'Records' }}
-        <span 
-          v-show="secondaryStatus === 'waiting'" 
+        Retrieve {{ nextIncrement }} More {{ nextIncrement === 1? 'Record' : 'Records' }}
+        <span
+          v-show="secondaryStatus === 'waiting'"
           class="loading"
         >
-          <font-awesome-icon 
-            icon="spinner" 
+          <font-awesome-icon
+            icon="spinner"
             class="fa-lg"
           />
         </span>
@@ -253,20 +259,24 @@ export default {
   },
   computed: {
     totalRowEnabled() {
+      let value;
       if (this.$props.options.totalRow) {
-        return this.$props.options.totalRow.enabled || false;
+        value = this.$props.options.totalRow.enabled || false;
       }
+      return value;
     },
     totalRowField() {
+      let value;
       if (this.$props.options.totalRow) {
-        return this.$props.options.totalRow.totalField || '';
+        value = this.$props.options.totalRow.totalField || '';
       }
+      return value;
     },
     hasData() {
       // console.log('horizTable hasData is running, this.$config:', this.$config, 'this.$store.state:', this.$store.state);
       if (!this.$props.options.dataSources) {
         return true;
-      } 
+      }
       const hasData = this.$props.options.dataSources.every(dataSource => {
         // const targetsFn = this.$config.dataSources[dataSource].targets;
         const targetsFn = this.$store.state.sources[dataSource].targets;
@@ -287,27 +297,27 @@ export default {
 
           // if the data source is not configured for targets, just check that
           // it has data
-        } 
+        }
         return !!this.$store.state.sources[dataSource].data;
-            
+
       });
 
       return hasData;
-        
+
     },
     shouldShowFilters() {
       if (typeof this.options.shouldShowFilters === 'undefined') {
         return true;
-      } 
+      }
       return this.options.shouldShowFilters;
-        
+
     },
     shouldShowHeaders() {
       if (typeof this.options.shouldShowHeaders === 'undefined') {
         return true;
-      } 
+      }
       return this.options.shouldShowHeaders;
-        
+
     },
     shouldShowExportPDF() {
       let shouldExport = false;
@@ -362,12 +372,12 @@ export default {
       if (!this.options.showAllRowsOnFirstClick) {
         if (this.leftToRetrieve < this.options.defaultIncrement) {
           return this.leftToRetrieve;
-        } 
+        }
         return this.options.defaultIncrement;
-          
-      } 
+
+      }
       return this.leftToRetrieve;
-        
+
     },
     highestPageRetrieved() {
       return this.evaluateSlot(this.slots.highestPageRetrieved);
@@ -385,9 +395,9 @@ export default {
     inputClass() {
       if (this.searchText === '') {
         return 'pvc-search-control-input';
-      } 
+      }
       return 'pvc-search-control-input-full';
-        
+
     },
     filters() {
       return this.options.filters;
@@ -408,16 +418,16 @@ export default {
         const items = this.evaluateSlot(itemsSlot) || [];
         // console.log('horiz table items', items);
         return items;
-      } 
+      }
       return [];
-        
+
     },
     filterByTextFields() {
       if (this.options.filterByText) {
         return this.options.filterByText.fields;
-      } 
+      }
       return null;
-        
+
     },
     itemsAfterSearch() {
       // console.log('itemsAfterSearch is running');
@@ -464,14 +474,14 @@ export default {
       // console.log('itemsAfterFilters is running, this.filters:', this.filters, 'this.filterSelections:', this.filterSelections);
       if (!this.itemsAfterSearch) {
         return [];
-      } 
+      }
       const itemsAfterSearch = this.itemsAfterSearch;
       const items = this.filterItems(itemsAfterSearch,
         this.filters,
         this.filterSelections);
       // console.log('horiz table itemsAfterFilters', items);
       return items;
-        
+
     },
     itemsAfterSort() {
       const itemsAfterFilters = this.itemsAfterFilters;
@@ -481,9 +491,9 @@ export default {
     sortFields() {
       if (this.options.sort.sortFields) {
         return this.options.sort.sortFields;
-      } 
+      }
       return DEFAULT_SORT_FIELDS;
-        
+
     },
     // this takes filtered items and applies the max number of rows
     itemsLimited() {
@@ -492,9 +502,9 @@ export default {
         return this.itemsAfterSort.slice(0, this.options.limit);
       } else if (this.options.defaultIncrement) {
         return this.itemsAfterSort.slice(0, this.highestRowRetrieved);
-      } 
+      }
       return this.itemsAfterSort;
-        
+
     },
     itemsLimitedSummed() {
       let summed = {};
@@ -516,25 +526,25 @@ export default {
     count() {
       if (this.$props.options.useApiCount) {
         return this.totalSize;
-      } 
+      }
       return this.itemsAfterFilters.length;
-        
+
     },
     countText() {
       if (this.$props.options.noCount) {
         return '';
       } else if (this.highestRowRetrieved < this.count) {
         return `(1 - ${ this.count < this.highestRowRetrieved ? this.count : this.highestRowRetrieved } of ${this.count})`;
-      } 
+      }
       return `(${this.count})`;
-        
+
     },
     shouldShowExternalLink() {
       if (this.options.externalLink.forceShow) {
         return this.options.externalLink.forceShow;
-      } 
+      }
       return this.itemsAfterSearch.length > this.limit;
-        
+
     },
     // externalLinkAction() {
     //   return this.options.externalLink.action || 'See more';
@@ -756,11 +766,11 @@ export default {
         }
         data = encodeURI(csv_notIE);
 
-        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        var isOpera = (!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
         var isFirefox = typeof InstallTrigger !== 'undefined';
         var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) {
-          return p.toString() === "[object SafariRemoteNotification]"; 
-        })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+          return p.toString() === "[object SafariRemoteNotification]";
+        })(!window['safari'] || (typeof window['safari'] !== 'undefined' && window['safari'].pushNotification));
         var isIE = /*@cc_on!@*/false || !!document.documentMode;
         var isEdge = !isIE && !!window.StyleMedia;
         var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
@@ -893,6 +903,10 @@ export default {
           // console.log('type:', type);
 
           // TODO put these in separate methods
+          let min, max;
+          let min2, max2;
+          let subFn, addFn;
+
           switch(type) {
           case 'data':
             // console.log('DATA FILTER');
@@ -904,9 +918,9 @@ export default {
             break;
           case 'time':
             // console.log('TIME FILTER direction', direction, 'value:', value, 'unit:', unit);
-            let min, max;
-            let min2, max2;
-            let subFn, addFn;
+            // let min, max;
+            // let min2, max2;
+            // let subFn, addFn;
 
             switch (unit) {
             case 'hours':
@@ -955,7 +969,7 @@ export default {
 
           default:
             throw `Unhandled filter type: ${type}`;
-            break;
+            // break;
           }
         }
       }

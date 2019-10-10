@@ -1,6 +1,6 @@
 <template>
   <div class="combo-search">
-    <select 
+    <select
       :id="selectId"
       @change="handleCategoryChange"
     >
@@ -15,22 +15,22 @@
     </select>
     <div class="search">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
-      <input 
-        :id="inputId" 
-        :placeholder="placeholderText" 
-        :value="searchString" 
-        class="search-field" 
-        type="text" 
+      <input
+        :id="inputId"
+        :placeholder="placeholderText"
+        :value="searchString"
+        class="search-field"
+        type="text"
         @keyup="handleTypeInInput"
       >
-      <button 
+      <button
         v-if="value.length > 0"
         class="search-x"
         @click="clearSearch"
       >
         <font-awesome-icon icon="times" />
       </button>
-      <button 
+      <button
         class="search-submit"
         value="search"
         @click="handleSearchFormSubmit();"

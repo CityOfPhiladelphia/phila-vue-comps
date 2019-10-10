@@ -6,7 +6,10 @@
   >
     <!-- :style="'width: ' + this.inputWidth + 'px;'" -->
     <ul>
-      <li v-for="(candidate, i) in candidates">
+      <li
+        v-for="(candidate, i) in candidates"
+        :key="i"
+      >
         <a
           :id="'address-candidate-list-' + i"
           :href="createLink(candidate)"

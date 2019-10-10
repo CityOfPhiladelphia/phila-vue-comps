@@ -1,24 +1,26 @@
 <template>
   <div>
-    <div 
+    <div
       v-if="!!this.$props.options.filters"
       class="mb-horizontal-table-controls"
     >
-      <div 
+      <div
         v-for="(filter, index) in this.$props.options.filters"
         :id="'filter-' + index"
+        :key="index"
         class="inline-block"
       >
         <div class="vertically-centered mb-select-text">
           {{ filter.label }}
         </div>
-        <select 
+        <select
           class="mb-select"
           @change="handleFilterValueChange"
         >
           <optgroup>
-            <option 
+            <option
               v-for="filterValue in filter.values"
+              :key="filterValue"
               :value="slugifyFilterValue(filterValue)"
               class="mb-select-option"
             >
@@ -28,9 +30,10 @@
         </select>
       </div>
     </div>
-    <horizontal-table 
-      v-for="table in options.tables"
+    <horizontal-table
+      v-for="(table, index) in options.tables"
       v-show="shouldShowTable(table.options.id)"
+      :key="index"
       :item="tableGroupData"
       :options="table.options"
       :slots="table.slots"
@@ -73,16 +76,16 @@ export default {
     altMainTable() {
       if (this.options.alternate) {
         return this.options.alternate.mainTable;
-      } 
+      }
       return null;
-        
+
     },
     altDepTable() {
       if (this.options.alternate) {
         return this.options.alternate.dependentTable;
-      } 
+      }
       return null;
-        
+
     },
   },
   created() {

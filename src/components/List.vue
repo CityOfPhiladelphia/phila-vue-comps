@@ -1,17 +1,18 @@
 <template>
   <div class="list">
     <ul v-if="evaluateSlot(slots.relatedAddresses)">
-      <li 
-        v-for="relatedAddress in evaluateSlot(slots.relatedAddresses)"
+      <li
+        v-for="(relatedAddress, index) in evaluateSlot(slots.relatedAddresses)"
+        :key="index"
       >
-        <a 
+        <a
           :href="'#/' + encodeURIComponent(relatedAddress.properties.street_address)"
         >
           {{ relatedAddress.properties.street_address }}
         </a>
       </li>
     </ul>
-    <p 
+    <p
       v-else
       class="message-p"
     >
