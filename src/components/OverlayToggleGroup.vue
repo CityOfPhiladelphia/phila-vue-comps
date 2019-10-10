@@ -4,11 +4,17 @@
       <h4 v-if="slots.title">
         {{ evaluateSlot(slots.title) }}
       </h4>
-      <a class="button overlay-toggle" href="#" v-for="item in items" :data-key="keyForItem(item)"
-                @click="handleClick"
-                @mouseover="handleMouseover(keyForItem(item))"
-                @mouseout="handleMouseout"
-                :class="{'active': isActive(item), 'mouseover': isMousedover(item)}">
+      <a
+        v-for="(item, index) in items"
+        :key="index"
+        :data-key="keyForItem(item)"
+        :class="{'active': isActive(item), 'mouseover': isMousedover(item)}"
+        class="button overlay-toggle"
+        href="#"
+        @click="handleClick"
+        @mouseover="handleMouseover(keyForItem(item))"
+        @mouseout="handleMouseout"
+      >
         {{ keyForItem(item) }}
       </a>
     </div>
@@ -17,57 +23,57 @@
 
 
 <script>
-  import TopicComponent from './TopicComponent.vue';
+import TopicComponent from './TopicComponent.vue';
 
-  export default {
-    mixins: [TopicComponent],
-    data() {
-      return {
-        mouseover: null
+export default {
+  mixins: [ TopicComponent ],
+  data() {
+    return {
+      mouseover: null,
+    };
+  },
+  computed: {
+    items() {
+      return this.evaluateSlot(this.slots.items);
+    },
+  },
+  methods: {
+    isActive(item) {
+      const imageOverlay = this.$store.state.map.imageOverlay;
+      const itemKey = this.keyForItem(item);
+      return imageOverlay === itemKey;
+    },
+    keyForItem(item) {
+      const getKeyFn = this.options.getKey;
+      return getKeyFn(item);
+    },
+    handleClick(e) {
+      e.preventDefault();
+      const prevImageOverlay = this.$store.state.map.imageOverlay;
+      const nextImageOverlay = e.target.getAttribute('data-key');
+      // console.log(nextImageOverlay);
+      if (prevImageOverlay === nextImageOverlay) {
+        this.$store.commit('setImageOverlay', null);
+      } else {
+        this.$store.commit('setImageOverlay', nextImageOverlay);
       }
     },
-    computed: {
-      items() {
-        return this.evaluateSlot(this.slots.items);
-      },
+    handleMouseover(key) {
+      this.mouseover = key;
     },
-    methods: {
-      isActive(item) {
-        const imageOverlay = this.$store.state.map.imageOverlay;
-        const itemKey = this.keyForItem(item);
-        return imageOverlay === itemKey;
-      },
-      keyForItem(item) {
-        const getKeyFn = this.options.getKey;
-        return getKeyFn(item);
-      },
-      handleClick(e) {
-        e.preventDefault();
-        const prevImageOverlay = this.$store.state.map.imageOverlay;
-        const nextImageOverlay = e.target.getAttribute('data-key');
-        // console.log(nextImageOverlay);
-        if (prevImageOverlay === nextImageOverlay) {
-          this.$store.commit('setImageOverlay', null);
-        } else {
-          this.$store.commit('setImageOverlay', nextImageOverlay);
-        }
-      },
-      handleMouseover(key) {
-        this.mouseover = key;
-      },
-      handleMouseout() {
-        this.mouseover = null;
-      },
-      isMousedover(item) {
-        const itemKey = this.keyForItem(item);
-        if (itemKey === this.mouseover) {
-          return true;
-        } else {
-          return false;
-        }
+    handleMouseout() {
+      this.mouseover = null;
+    },
+    isMousedover(item) {
+      const itemKey = this.keyForItem(item);
+      if (itemKey === this.mouseover) {
+        return true;
       }
-    }
-  };
+      return false;
+
+    },
+  },
+};
 </script>
 
 <style scoped>

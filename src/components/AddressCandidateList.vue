@@ -1,17 +1,22 @@
 <template>
-  <div :class="this.listGroupClass"
-       v-show="this.shouldShowAddressCandidateList"
-       :style="this.listStyle"
+  <div
+    v-show="shouldShowAddressCandidateList"
+    :class="listGroupClass"
+    :style="listStyle"
   >
-  <!-- :style="'width: ' + this.inputWidth + 'px;'" -->
+    <!-- :style="'width: ' + this.inputWidth + 'px;'" -->
     <ul>
-      <li v-for="(candidate, i) in candidates">
-        <a :href="createLink(candidate)"
-           @click="closeAddressCandidateList(candidate)"
-           class="list-group-item"
-           tabindex="-1"
-           :id="'address-candidate-list-' + i"
-           @keydown="maybeUsedArrow"
+      <li
+        v-for="(candidate, i) in candidates"
+        :key="i"
+      >
+        <a
+          :id="'address-candidate-list-' + i"
+          :href="createLink(candidate)"
+          class="list-group-item"
+          tabindex="-1"
+          @click="closeAddressCandidateList(candidate)"
+          @keydown="maybeUsedArrow"
         >
           {{ candidate }}
         </a>
@@ -22,132 +27,134 @@
 
 <script>
 
-  export default {
-    name: 'AddressCandidateList',
-    data() {
-      const data = {
-        listStyle: {
-          'width': '250px'
-        }
+export default {
+  name: 'AddressCandidateList',
+  props: [
+    'widthFromConfig',
+  ],
+  data() {
+    const data = {
+      listStyle: {
+        'width': '250px',
+      },
+    };
+    return data;
+  },
+  computed: {
+    inputWidth() {
+      return this.$props.widthFromConfig - 55;
+    },
+    candidates() {
+      const autocompleteMax = this.$config.addressInput.autocompleteMax;
+      if (!autocompleteMax) {
+        return this.$store.state.candidates;
       }
-      return data;
+      let candidates = this.$store.state.candidates.slice(0, autocompleteMax);
+      return candidates;
+
     },
-    created() {
-      window.addEventListener('resize', this.handleWindowResize);
-      this.handleWindowResize();
+    shouldShowAddressCandidateList() {
+      return this.$store.state.shouldShowAddressCandidateList;
     },
-    watch: {
-      addressEntered(nextValue) {
-        this.handleWindowResize();
+    activeTopic() {
+      return this.$store.state.activeTopic;
+    },
+    isMobileOrTablet() {
+      return this.$store.state.isMobileOrTablet;
+    },
+    addressAutocompleteEnabled() {
+      // TODO this is temporarily disabled
+      if (this.$config.addressInput) {
+        if (this.$config.addressInput.autocompleteEnabled === true) {
+          return true;
+        }
+        return false;
+
       }
+      return false;
+
     },
-    props: [
-      'widthFromConfig',
-    ],
-    computed: {
-      inputWidth() {
-        return this.$props.widthFromConfig - 55;
-      },
-      candidates() {
-        const autocompleteMax = this.$config.addressInput.autocompleteMax
-        if (!autocompleteMax) {
-          return this.$store.state.candidates;
-        } else {
-          let candidates = this.$store.state.candidates.slice(0, autocompleteMax);
-          return candidates;
-        }
-      },
-      shouldShowAddressCandidateList() {
-        return this.$store.state.shouldShowAddressCandidateList;
-      },
-      activeTopic() {
-        return this.$store.state.activeTopic;
-      },
-      isMobileOrTablet() {
-        return this.$store.state.isMobileOrTablet;
-      },
-      addressAutocompleteEnabled() {
-        // TODO this is temporarily disabled
-        if (this.$config.addressInput) {
-          if (this.$config.addressInput.autocompleteEnabled === true) {
-            return true;
-          } else {
-            return false;
-          }
-        } else {
-          return false;
-        }
-      },
-      listGroupClass() {
-        if (this.isMobileOrTablet) {
-          if (this.addressAutocompleteEnabled) {
-            if (this.addressEntered === '' || this.addressEntered === null) {
-              return 'list-group-mobile';
-            } else {
-              return 'list-group-mobile-full';
-            }
-          } else {
+    listGroupClass() {
+      if (this.isMobileOrTablet) {
+        if (this.addressAutocompleteEnabled) {
+          if (this.addressEntered === '' || this.addressEntered === null) {
             return 'list-group-mobile';
           }
-        } else {
-          if (this.addressAutocompleteEnabled) {
-            if (this.addressEntered === '' || this.addressEntered === null) {
-              return 'list-group';
-            } else {
-              return 'list-group-full';
-            }
-          } else {
-            return 'list-group';
-          }
+          return 'list-group-mobile-full';
+
         }
+        return 'list-group-mobile';
+
+      }
+      if (this.addressAutocompleteEnabled) {
+        if (this.addressEntered === '' || this.addressEntered === null) {
+          return 'list-group';
+        }
+        return 'list-group-full';
+
+      }
+      return 'list-group';
+
+
+    },
+  },
+  watch: {
+    addressEntered(nextValue) {
+      this.handleWindowResize();
+    },
+  },
+  created() {
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
+  },
+  methods: {
+    createLink(candidate) {
+      if (this.$store.state.activeTopic) {
+        return '#/' + candidate + '/' + this.activeTopic;
+      }
+      return '#/' + candidate;
+
+    },
+    maybeUsedArrow(e) {
+      const id = e.target.id;
+      const index = parseInt(id.substring(id.lastIndexOf('-') + 1));
+      let indexUp, indexDown;
+      if (index < this.candidates.length - 1) {
+        indexUp = index + 1;
+      } else {
+        (
+          indexUp = index
+        );
+      }
+      if (index !== 0) {
+        indexDown = index - 1;
+      } else {
+        indexDown = 0;
+      }
+      // console.log('maybeUsedArrow running, e:', e, 'index:', index, 'indexUp:', indexUp, 'indexDown:', indexDown);
+      if (e.key === "ArrowDown") {
+        document.getElementById('address-candidate-list-' + indexUp).focus();
+      }
+      if (e.key === "ArrowUp") {
+        document.getElementById('address-candidate-list-' + indexDown).focus();
       }
     },
-    methods: {
-      createLink(candidate) {
-        if (this.$store.state.activeTopic) {
-          return '#/' + candidate + '/' + this.activeTopic;
-        } else {
-          return '#/' + candidate;
-        }
-      },
-      maybeUsedArrow(e) {
-        const id = e.target.id;
-        const index = parseInt(id.substring(id.lastIndexOf('-') + 1));
-        let indexUp, indexDown;
-        if (index < this.candidates.length - 1) {
-          indexUp = index + 1;
-        } else (
-          indexUp = index
-        )
-        if (index !== 0) {
-          indexDown = index - 1;
-        } else {
-          indexDown = 0
-        }
-        // console.log('maybeUsedArrow running, e:', e, 'index:', index, 'indexUp:', indexUp, 'indexDown:', indexDown);
-        if (e.key === "ArrowDown") {
-          document.getElementById('address-candidate-list-' + indexUp).focus();
-        }
-        if (e.key === "ArrowUp") {
-          document.getElementById('address-candidate-list-' + indexDown).focus();
-        }
-      },
-      closeAddressCandidateList(addressCandidate) {
-        console.log('AddressCandidateList.vue closeAddressCandidateList is running, addressCandidate:', addressCandidate);
-        this.$store.commit('setAddressEntered', addressCandidate);
-        this.$store.commit('setShouldShowAddressCandidateList', false);
-      },
-      handleWindowResize(addressEntered) {
-        if (window.innerWidth >= 850) {
-          this.listStyle.width = this.$props.widthFromConfig - 55 + 'px';
-        } else if (window.innerWidth >= 750) {
-          this.listStyle.width = this.$props.widthFromConfig - 155 + 'px';
-        } else {
-          this.listStyle.width = '248px';
-        }
+    closeAddressCandidateList(addressCandidate) {
+      console.log('AddressCandidateList.vue closeAddressCandidateList is running, addressCandidate:', addressCandidate);
+      this.$store.commit('setAddressEntered', addressCandidate);
+      this.$store.commit('setShouldShowAddressCandidateList', false);
+    },
+    handleWindowResize(addressEntered) {
+      if (window.innerWidth >= 850) {
+        this.listStyle.width = this.$props.widthFromConfig - 55 + 'px';
+      } else if (window.innerWidth >= 750) {
+        this.listStyle.width = this.$props.widthFromConfig - 155 + 'px';
+      } else {
+        this.listStyle.width = '248px';
       }
-    }
-  };
+    },
+  },
+};
 
 </script>
 

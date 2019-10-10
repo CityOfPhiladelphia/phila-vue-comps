@@ -73,4 +73,4 @@ export {
   TopicComponentGroup,
   Popover,
   PopoverLink,
-}
+};

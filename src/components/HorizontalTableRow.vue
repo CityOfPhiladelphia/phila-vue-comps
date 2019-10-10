@@ -1,182 +1,197 @@
 <template>
-  <tr :class="{ active: this.isActive }"
-      @mouseover="handleRowMouseover"
-      @click="handleRowClick"
-      @mouseout="handleRowMouseout"
+  <tr
+    :class="{ active: isActive }"
+    @mouseover="handleRowMouseover"
+    @click="handleRowClick"
+    @mouseout="handleRowMouseout"
   >
-    <td v-for="field in fields"
-        :item='item'
-        :class="{
-          'in-popover': options.inPopover,
-          'half-screen-table-cell': !fullScreenTopics
-        }"
+    <td
+      v-for="(field, index) in fields"
+      :key="index"
+      :item="item"
+      :class="{
+        'in-popover': options.inPopover,
+        'half-screen-table-cell': !fullScreenTopics
+      }"
     >
-      <topic-component-group :topic-components="field.components" :item="item" />
+      <topic-component-group
+        :topic-components="field.components"
+        :item="item"
+      />
       <b v-show="shouldBeBold">
-        <popover-link v-if="field.popoverLink"
-                      :slots='field'
-                      :item='item'
-                      :fieldLabel="field.label"
+        <popover-link
+          v-if="field.popoverLink"
+          :slots="field"
+          :item="item"
+          :field-label="field.label"
         />
-        <div v-if="!field.popoverLink"
-             v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+        <div
+          v-if="!field.popoverLink"
+          v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
       </b>
 
       <!-- Total Row -->
       <div v-show="!shouldBeBold">
-        <popover-link v-if="field.popoverLink"
-                      :slots='field'
-                      :item='item'
-                      :fieldLabel="field.label"
+        <popover-link
+          v-if="field.popoverLink"
+          :slots="field"
+          :item="item"
+          :field-label="field.label"
         />
-        <div v-if="!field.popoverLink"
-             v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+        <div
+          v-if="!field.popoverLink"
+          v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
       </div>
-
     </td>
   </tr>
 </template>
 
 <script>
-  import TopicComponent from './TopicComponent.vue';
-  import TopicComponentGroup from './TopicComponentGroup.vue';
-  import PopoverLink from './PopoverLink.vue';
+import TopicComponent from './TopicComponent.vue';
+import TopicComponentGroup from './TopicComponentGroup.vue';
+import PopoverLink from './PopoverLink.vue';
 
-  export default {
-    mixins: [TopicComponent],
-    components: {
-      PopoverLink,
-      TopicComponentGroup
+export default {
+  components: {
+    PopoverLink,
+    TopicComponentGroup,
+  },
+  mixins: [ TopicComponent ],
+  props: [ 'fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField' ],
+  data() {
+    const data = {
+      showFieldLabel: false,
+    };
+    return data;
+  },
+  computed: {
+    fullScreenTopics() {
+      if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly) {
+        return true;
+      }
+      return false;
+
     },
-    props: ['fields', 'hasOverlay', 'tableId', 'shouldBeBold', 'totalRowField'],
-    data() {
-      const data = {
-        showFieldLabel: false
-      };
-      return data;
+    activeFeature() {
+      return this.$store.state.activeFeature;
     },
-    created() {
-      window.addEventListener('resize', this.handleWindowResize);
-      this.handleWindowResize();
+    isActive() {
+      let value;
+      if (this.activeFeature) {
+        value = this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
+      }
+      return value;
     },
-    computed: {
-      fullScreenTopics() {
-        if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly) {
-          return true;
-        } else {
-          return false;
+    isMobileOrTablet() {
+      return this.$store.state.isMobileOrTablet;
+    },
+  },
+  watch: {
+    isActive(value) {
+      if (value === true) {
+        const el = this.$el;
+        const visible = this.isElementInViewport(el);
+        // console.log('horizontaltablerow WATCH isActive is firing, el:', el, 'visible:', visible);
+
+        // console.log('visible?', visible ? 'YES' : 'NO');
+
+        if (!visible) {
+          el.scrollIntoView();
         }
-      },
-      activeFeature() {
-        return this.$store.state.activeFeature;
-      },
-      isActive() {
-        if (this.activeFeature) {
-          return this.activeFeature.featureId === this.$props.item._featureId && this.$props.tableId === this.activeFeature.tableId;
-        } else {
+      }
+    },
+  },
+  created() {
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize();
+  },
+  methods: {
+    handleRowMouseover(e) {
+      // console.log('handleRowMouseover is starting');
+      if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
+        // console.log('handleRowMouseover actions are running');
+        if (!this.hasOverlay) {
           return;
         }
-      },
-      isMobileOrTablet() {
-        return this.$store.state.isMobileOrTablet;
-      },
-    },
-    watch: {
-      isActive(value) {
-        if (value === true) {
-          const el = this.$el;
-          const visible = this.isElementInViewport(el);
-          // console.log('horizontaltablerow WATCH isActive is firing, el:', el, 'visible:', visible);
 
-          // console.log('visible?', visible ? 'YES' : 'NO');
-
-          if (!visible) {
-            el.scrollIntoView();
-          }
-        }
+        const featureId = this.item._featureId;
+        const tableId = this.tableId;
+        this.$store.commit('setActiveFeature', { featureId, tableId });
       }
     },
-    methods: {
-      handleRowMouseover(e) {
-        // console.log('handleRowMouseover is starting');
-        if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
-          // console.log('handleRowMouseover actions are running');
-          if (!this.hasOverlay) return;
-
-          const featureId = this.item._featureId;
-          const tableId = this.tableId;
-          this.$store.commit('setActiveFeature', { featureId, tableId });
+    handleRowClick(e) {
+      // console.log('handleRowClick is starting');
+      if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
+        // console.log('handleRowClick actions are running');
+        if (!this.hasOverlay) {
+          return;
         }
-      },
-      handleRowClick(e) {
-        // console.log('handleRowClick is starting');
-        if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {
-          // console.log('handleRowClick actions are running');
-          if (!this.hasOverlay) return;
 
-          const featureId = this.item._featureId;
-          const tableId = this.tableId;
-          this.$store.commit('setActiveFeature', { featureId, tableId });
-        }
-      },
-      handleRowMouseout(e) {
-        // console.log('handleRowMouseout is starting');
-        // if(!this.isMobileOrTablet) {
-          // console.log('handleRowMouseout actions are running');
-          if(!this.$props.options.mouseOverDisabled) {
-            if (!this.hasOverlay) return;
-            this.$store.commit('setActiveFeature', null);
-          }
-        // }
-      },
-      // REVIEW there's very similar code in pvd. if these can be
-      // the same thing, make it into a util.
-      isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-
-        // console.log('bounding box', rect);
-
-        const visibility = {
-          // TODO the 108 below is account for the combined height of the
-          // app header and address header. this is not a good long-term
-          // solution - instead, use the `bottom` value of the address header's
-          // bounding rect. however, this should only fire on small devices,
-          // which would require again hard-coding screen breakpoints from
-          // standards or some other magic, which might not a huge
-          // improvement in terms of decoupling logic and presentation. hmm.
-          top: rect.top >= 108,
-          left: rect.left >= 0,
-          bottom: rect.bottom <= (window.innerHeight || document.documentElement.clientHeight),
-          right: rect.right <= (window.innerWidth || document.documentElement.clientWidth),
-        };
-
-        // console.log('visibility', visibility);
-
-        // return if all sides are visible
-        return Object.values(visibility).every(val => val);
-      },
-      featuresMatch(a, b) {
-        return a.featureId === b.featureId && a.tableId === b.tableId;
-      },
-      handleWindowResize() {
-        if (window.innerWidth >= 750) {
-          this.showFieldLabel = false;
-        } else {
-          this.showFieldLabel = true;
-        }
-      },
-      evaluateFieldLabel(label) {
-        // console.log('evaluateFieldLabel, label:', label);
-        if (this.showFieldLabel && this.$props.totalRowField !== label.toLowerCase()) {
-          return label + ': ';
-        } else {
-          return '';
-        }
+        const featureId = this.item._featureId;
+        const tableId = this.tableId;
+        this.$store.commit('setActiveFeature', { featureId, tableId });
       }
-    }
-  };
+    },
+    handleRowMouseout(e) {
+      // console.log('handleRowMouseout is starting');
+      // if(!this.isMobileOrTablet) {
+      // console.log('handleRowMouseout actions are running');
+      if(!this.$props.options.mouseOverDisabled) {
+        if (!this.hasOverlay) {
+          return;
+        }
+        this.$store.commit('setActiveFeature', null);
+      }
+      // }
+    },
+    // REVIEW there's very similar code in pvd. if these can be
+    // the same thing, make it into a util.
+    isElementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+
+      // console.log('bounding box', rect);
+
+      const visibility = {
+        // TODO the 108 below is account for the combined height of the
+        // app header and address header. this is not a good long-term
+        // solution - instead, use the `bottom` value of the address header's
+        // bounding rect. however, this should only fire on small devices,
+        // which would require again hard-coding screen breakpoints from
+        // standards or some other magic, which might not a huge
+        // improvement in terms of decoupling logic and presentation. hmm.
+        top: rect.top >= 108,
+        left: rect.left >= 0,
+        bottom: rect.bottom <= (window.innerHeight || document.documentElement.clientHeight),
+        right: rect.right <= (window.innerWidth || document.documentElement.clientWidth),
+      };
+
+      // console.log('visibility', visibility);
+
+      // return if all sides are visible
+      return Object.values(visibility).every(val => val);
+    },
+    featuresMatch(a, b) {
+      return a.featureId === b.featureId && a.tableId === b.tableId;
+    },
+    handleWindowResize() {
+      if (window.innerWidth >= 750) {
+        this.showFieldLabel = false;
+      } else {
+        this.showFieldLabel = true;
+      }
+    },
+    evaluateFieldLabel(label) {
+      // console.log('evaluateFieldLabel, label:', label);
+      if (this.showFieldLabel && this.$props.totalRowField !== label.toLowerCase()) {
+        return label + ': ';
+      }
+      return '';
+
+    },
+  },
+};
 </script>
 
 <style scoped>

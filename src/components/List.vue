@@ -1,16 +1,20 @@
 <template>
   <div class="list">
     <ul v-if="evaluateSlot(slots.relatedAddresses)">
-      <li v-for="relatedAddress in evaluateSlot(slots.relatedAddresses)"
+      <li
+        v-for="(relatedAddress, index) in evaluateSlot(slots.relatedAddresses)"
+        :key="index"
       >
-        <a :href="'#/' + encodeURIComponent(relatedAddress.properties.street_address)"
+        <a
+          :href="'#/' + encodeURIComponent(relatedAddress.properties.street_address)"
         >
           {{ relatedAddress.properties.street_address }}
         </a>
       </li>
     </ul>
-    <p v-else
-       class="message-p"
+    <p
+      v-else
+      class="message-p"
     >
       No related addresses were found for this address.
     </p>
@@ -18,11 +22,11 @@
 </template>
 
 <script>
-  import TopicComponent from './TopicComponent.vue';
+import TopicComponent from './TopicComponent.vue';
 
-  export default {
-    mixins: [TopicComponent],
-  };
+export default {
+  mixins: [ TopicComponent ],
+};
 </script>
 
 <style scoped>
