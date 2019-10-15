@@ -19,8 +19,8 @@
         >
           <optgroup>
             <option
-              v-for="(filterValue, index) in filter.values"
-              :key="index"
+              v-for="(filterValue, filterIndex) in filter.values"
+              :key="filterIndex"
               :value="slugifyFilterValue(filterValue)"
               class="mb-select-option"
             >
