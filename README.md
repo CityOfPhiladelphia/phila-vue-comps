@@ -28,6 +28,14 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 ## Release Notes
 
+### 1.0.42 - 10/9/2019
+
+* Allows legends (used in StreetSmart) to have style passed to them
+
+### 1.0.41 - 10/8/2019
+
+* Removes connections to pvd from ComboSearch
+
 ### 1.0.40 - 10/7/2019
 
 * Fixes bug with removal of old "ConfigurableInput" component
