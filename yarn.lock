@@ -4987,10 +4987,10 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jspdf-autotable@^2.3.5:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-2.3.5.tgz#6af23c191c00af86555bc0f91a21c7f6148288dc"
-  integrity sha512-QQzqTKBAC20VfuMjrOyqHArFAxKJx1oikWL8qeH+c6aF32F1H2jI8LNPVUWFcYGB0/XBlBKTT2NSQZBS9TNu2A==
+jspdf-autotable@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-3.2.7.tgz#9f80e374b24b60d39c71dc95e1b6c3e76602fda5"
+  integrity sha512-rFxddWBVYstwAJ7yVE3Pvodh8UZo2Adw63Gn98sv6/8AvS1QR2EFfgDkWV5Vo2WrMM9upJ/i/2FzHo8rO34O0g==
 
 jspdf@^1.4.1:
   version "1.5.3"
