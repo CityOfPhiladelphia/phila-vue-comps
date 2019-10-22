@@ -201,7 +201,7 @@
 import TopicComponent from './TopicComponent.vue';
 // import HorizontalTableRow from './HorizontalTableRow.vue';
 // import ExternalLink from './ExternalLink.vue';
-import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinInterval } from 'date-fns';
+import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinInterval, parseISO } from 'date-fns';
 
 
 import jsPDF from 'jspdf';
@@ -960,7 +960,7 @@ export default {
             // console.log('in case time, itemsFiltered:', itemsFiltered);
             itemsFiltered = itemsFiltered.filter(item => {
               const itemValue = getValue(item);
-              const isBetween = isWithinInterval(itemValue, { start: min, end: max });
+              const isBetween = isWithinInterval(parseISO(itemValue), { start: min, end: max });
               // console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
               return isBetween;
             });
