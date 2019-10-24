@@ -28,6 +28,22 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 ## Release Notes
 
+### 1.0.46 - 10/24/2019
+
+* fixes more bugs caused new date-fns
+
+### 1.0.45 - 10/22/2019
+
+* fixes bugs caused by new date-fns
+
+### 1.0.44 - 10/22/2019
+
+* ran all pull requests created by dependabot
+
+### 1.0.43 - 10/22/2019
+
+push failed due to linting
+
 ### 1.0.42 - 10/9/2019
 
 * Allows legends (used in StreetSmart) to have style passed to them
