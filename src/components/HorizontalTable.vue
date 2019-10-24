@@ -960,7 +960,12 @@ export default {
             // console.log('in case time, itemsFiltered:', itemsFiltered);
             itemsFiltered = itemsFiltered.filter(item => {
               const itemValue = getValue(item);
-              const isBetween = isWithinInterval(parseISO(itemValue), { start: min, end: max });
+              let isBetween;
+              if (typeof itemValue === 'string') {
+                isBetween = isWithinInterval(parseISO(itemValue), { start: min, end: max });
+              } else {
+                isBetween = isWithinInterval(itemValue, { start: min, end: max });
+              }
               // console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
               return isBetween;
             });
