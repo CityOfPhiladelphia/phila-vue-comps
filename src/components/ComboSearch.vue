@@ -1,5 +1,8 @@
 <template>
   <div class="combo-search">
+    <label 
+      :for="selectId"
+      class="accessible-text">Filter search by:</label>
     <select
       :id="selectId"
       @change="handleCategoryChange"
@@ -23,6 +26,9 @@
         type="text"
         @keyup="handleTypeInInput"
       >
+      <label 
+        :for="inputId"
+        class="accessible-text">Enter search text</label>
       <button
         v-if="value.length > 0"
         class="search-x"
@@ -35,6 +41,7 @@
         value="search"
         @click="handleSearchFormSubmit();"
       >
+        <span class="accessible-text">Search</span>
         <font-awesome-icon icon="search" />
       </button>
     </div>
@@ -137,7 +144,12 @@ export default {
 </script>
 
 <style lang="scss">
-
+  .accessible-text{
+    position: absolute;
+    left: -99999px;
+    height: 10px;
+    width: 10px;
+  }
   .combo-search {
     select {
       float: left;
