@@ -98,6 +98,39 @@
       </div> <!-- end of pvc-horizontal-table-controls block -->
 
       <div :class="{ 'pvc-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
+        <!-- this is the start of an added zone -->
+        <a
+          v-if="this.$store.state.fullScreenTopicsEnabled !== true
+            && this.$store.state.fullScreenMapEnabled !== true
+            && options.downloadButton === true"
+          class="button pvc-download-data-button"
+          @click="exportTableToCSV"
+        >
+          Download Data
+        </a>
+        <a
+          v-if="shouldShowExportCSV"
+          class="button pvc-export-data-button csv"
+          @click="exportTableToCSV"
+        >
+          {{ options.export.formatButtons.csv }}
+        </a>
+        <a
+          v-if="shouldShowExportPDF"
+          class="button pvc-export-data-button pdf"
+          @click="exportTableToPDF"
+        >
+          {{ options.export.formatButtons.pdf }}
+        </a>
+        <a
+          v-if="shouldShowExportMailing"
+          class="button pvc-export-data-button mailing"
+          @click="exportTableToMailing"
+        >
+          {{ options.export.formatButtons.mailing }}
+        </a>
+        <!-- this is the end of an added zone -->
+
         <div v-if="slots.title">
           <h4 style="display:inline-block">
             {{ evaluateSlot(slots.title) }} {{ countText }}
@@ -105,7 +138,7 @@
           <h5 style="display:inline-block; color: gray">
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
-          <a
+          <!-- <a
             v-if="shouldShowExportCSV"
             class="button pvc-export-data-button"
             @click="exportTableToCSV"
@@ -118,19 +151,28 @@
             @click="exportTableToPDF"
           >
             {{ options.export.formatButtons.pdf }}
-          </a>
+          </a> -->
         </div>
 
         <table
           :id="options.id"
           role="grid"
           class="stack"
+          :class="typeof options.customClass != 'undefined'
+            && typeof options.customClass.table != 'undefined' ?
+              options.customClass.table : ''"
         >
           <thead v-if="shouldShowHeaders !== false">
             <tr>
               <th
                 v-for="field in fields"
                 :key="field.label"
+                :class="typeof options.customClass != 'undefined'
+                  && typeof options.customClass.th != 'undefined' ?
+                    specifySortType(field.label) : ''"
+                :title="typeof options.customClass != 'undefined'
+                  && typeof options.customClass.title != 'undefined' ?
+                    options.customClass.title : ''"
               >
                 {{ evaluateSlot(field.label) }}
               </th>
@@ -206,6 +248,7 @@ import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMo
 
 import jsPDF from 'jspdf';
 import autotable from 'jspdf-autotable';
+import chunk from 'lodash-es/chunk';
 
 const DEFAULT_SORT_FIELDS = [
   'distance',
@@ -214,9 +257,7 @@ const DEFAULT_SORT_FIELDS = [
 
 export default {
   components: {
-    // HorizontalTableRow,
     HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
-    // ExternalLink,
     ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
   },
   mixins: [ TopicComponent ],
@@ -305,6 +346,15 @@ export default {
       return hasData;
 
     },
+    // this is the start of an added zone
+    customElementClass() {
+      let customCSS;
+      if (this.options.customCSS) {
+        customCSS = this.options.customCSS;
+      }
+      return customCSS;
+    },
+    // this is the end of an added zone
     shouldShowFilters() {
       if (typeof this.options.shouldShowFilters === 'undefined') {
         return true;
@@ -319,6 +369,18 @@ export default {
       return this.options.shouldShowHeaders;
 
     },
+    // this is the start of an added zone
+    shouldShowExportMailing() {
+      let shouldExport = false;
+      if (this.options.export) {
+        if (this.options.export.formatButtons) {
+          const keys = Object.keys(this.options.export.formatButtons);
+          shouldExport = keys.includes('mailing');
+        }
+      }
+      return shouldExport;
+    },
+    // this is the end of an added zone
     shouldShowExportPDF() {
       let shouldExport = false;
       if (this.options.export) {
@@ -602,9 +664,99 @@ export default {
     // console.log('horiz table mounted props slots items', this.$props.slots.items);
     if (this.$store.state.horizontalTables) {
       this.updateTableFilteredData();
+      // this is the start of an added zone
+      if(typeof this.$props.options.customClass != 'undefined') {
+        if( this.$props.options.customClass.table != 'undefined'
+              && this.$props.options.customClass.table === 'sortable') {
+          sorttable.makeSortable(this.$el.querySelector('.sortable'));
+        }
+      }
+      // this is the end of an added zone
     }
   },
   methods: {
+    // this is the start of an added zone
+    specifySortType(field){
+      return this.$props.options.customClass.th(field);
+    },
+    exportTableToMailing() {
+      const tableData = [];
+      let fields = [];
+      let totals = {};
+      let mailingFields = this.$props.options.mailingFields();
+      let labelFields = mailingFields.fields.map(a => a.label);
+      let labelValues = mailingFields.fields.map(a => a.value);
+
+      for (let field of labelFields) {
+        fields.push(field.label);
+        totals[field.label] = 0;
+      }
+
+      // if (this.items.length > 0) { } else {
+      //   return;
+      // }
+
+      if (!this.items.length > 0) {
+        return;
+      }
+
+
+      for (let item of this.items) {
+        let theArray = [];
+        let i = 0;
+        for (let field of labelFields) {
+          // console.log("field: ", field, "labelValues: ", labelValues, "item: ",  item)
+          if (labelValues[i](this.$store.state, item) === null) {
+            theArray.push('');
+          } else {
+            theArray.push(labelValues[i](this.$store.state, item)) || '';
+          }
+
+          if (labelValues[i](this.$store.state, item) === null || isNaN(labelValues[i](this.$store.state, item))) {
+            // if (isNaN(field['value'](this.$store.state, item))) {
+            // console.log('isnull:', field['value'](this.$store.state, item));
+            totals[field.label] = '';
+          } else {
+            // console.log('is not null:', field['value'](this.$store.state, item));
+            totals[field.label] = totals[field.label] + parseFloat(labelValues[i](this.$store.state, item));
+          }
+          i++;
+        }
+        tableData.push(theArray);
+      }
+
+      // console.log('tableData:', tableData);
+      var doc = new jsPDF('p', 'pt', 'letter');
+      // console.log("tableData: ", tableData);
+      let tableJoin = chunk(tableData.map(a => a.join('\n')),3);
+      // console.log("table joined and chunked: ", tableJoin)
+
+      doc.autoTable({
+        body: tableJoin,
+        content: 'Text',
+        startY: 36,
+        margin: { top: 36, right: 12, bottom: 36, left: 12 },
+        willDrawCell: data => data.section === 'head' ? false : data.cell.height = 72,
+        didDrawCell: data => data.row.height= 72,
+        styles: { cellWidth: 196, halign: 'center', valign: 'middle', fontSize: 10 },
+        alternateRowStyles: { fillColor: 'white' },
+        tableWidth: 'wrap',
+        rowPageBreak: 'avoid',
+      });
+
+      // console.log(doc);
+
+      let filename;
+      let fileStart = this.evaluateSlot(this.$props.options.export.file);
+      if (fileStart) {
+        filename = this.evaluateSlot(this.$props.options.export.file) + '.pdf';
+      } else {
+        filename = 'export.pdf';
+      }
+      doc.save(filename);
+    },
+    // this is the end of an added zone
+
     exportTableToPDF() {
       const tableData = [];
       let fields = [];
@@ -634,7 +786,8 @@ export default {
         tableData.push(theArray);
       }
 
-      if (this.$props.options.totalRow.enabled) {
+      // if (this.$props.options.totalRow.enabled) {
+      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
         let theArray = [];
         for (let field of this.$props.options.fields) {
           if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
@@ -652,11 +805,15 @@ export default {
       var doc = new jsPDF('p', 'pt');
       doc.setFontSize(12);
       let top = 20;
-      for (let introLine of this.$props.options.export.introLines) {
-        doc.text(10, top, this.evaluateSlot(introLine));
-        top = top + 12;
+      if(this.$props.options.export.introLines) {
+        for (let introLine of this.$props.options.export.introLines) {
+          doc.text(10, top, this.evaluateSlot(introLine));
+          top = top + 12;
+        }
       }
       doc.autoTable(fields, tableData, {
+        head: fields,
+        body: tableData,
         startY: 100,
         tableWidth: 'wrap',
       });
@@ -675,12 +832,28 @@ export default {
       // console.log('exportTableToCSV is running');
       const tableData = [];
 
-      let fields = [];
-      let totals = {};
-      for (let field of this.$props.options.fields) {
-        fields.push(field.label);
-        totals[field.label] = 0;
+      // let fields = [];
+      let fields = this.fields;
+
+      if (typeof this.$props.options.expandedData != 'undefined') {
+        let expandedData = this.$props.options.expandedData();
+        fields = fields.concat(expandedData);
+        if (typeof this.$props.options.tableSort != 'undefined') {
+          fields  = this.$props.options.tableSort(fields);
+        }
       }
+
+      let totals = {};
+
+      // for (let field of this.$props.options.fields) {
+      //   fields.push(field.label);
+      //   totals[field.label] = 0;
+      // }
+
+      if (!this.items.length > 0) {
+        return;
+      }
+
       for (let item of this.items) {
         let object = {};
         for (let field of this.$props.options.fields) {
@@ -694,7 +867,7 @@ export default {
         tableData.push(object);
       }
 
-      if (this.$props.options.totalRow.enabled) {
+      if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
         let object = {};
         for (let field of this.$props.options.fields) {
           if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
@@ -720,31 +893,42 @@ export default {
         // columnDelimiter = args.columnDelimiter || ',';
         // lineDelimiter = args.lineDelimiter || '\n';
 
-        keys = Object.keys(data[0]);
+        // keys = Object.keys(data[0]);
+        keys = fields.map(a => a.value);
+        let state = this.$store.state;
 
         result = '';
 
-        for (let introLine of this.$props.options.export.introLines) {
-          result += this.evaluateSlot(introLine);
-          result += lineDelimiter;
+        if (this.$props.options.export) {
+          for (let introLine of this.$props.options.export.introLines) {
+            result += this.evaluateSlot(introLine);
+            result += lineDelimiter;
+          }
         }
 
-        result += lineDelimiter;
-        result += keys.join(columnDelimiter);
+        result += fields.map(field => field.label).join(columnDelimiter);
         result += lineDelimiter;
 
-        data.forEach(function(item) {
-          ctr = 0;
-          keys.forEach(function(key) {
-            if (ctr > 0) {
-              result += columnDelimiter;
-            }
+        data = data.map( item => Object.values(item).map( value => '"' + value + '"'));
 
-            result += item[key] || '';
-            ctr++;
-          });
-          result += lineDelimiter;
-        });
+        result += data.map( item => item).join(lineDelimiter);
+
+        // result += lineDelimiter;
+        // result += keys.join(columnDelimiter);
+        // result += lineDelimiter;
+        //
+        // data.forEach(function(item) {
+        //   ctr = 0;
+        //   keys.forEach(function(key) {
+        //     if (ctr > 0) {
+        //       result += columnDelimiter;
+        //     }
+        //
+        //     result += item[key] || '';
+        //     ctr++;
+        //   });
+        //   result += lineDelimiter;
+        // });
 
         let csv = result;
 
@@ -753,7 +937,10 @@ export default {
         let link;
 
         // filename = 'export.csv';
-        let fileStart = this.evaluateSlot(this.$props.options.export.file);
+        let fileStart;
+        if (this.$props.options.export) {
+          fileStart = this.evaluateSlot(this.$props.options.export.file);
+        }
         if (fileStart) {
           filename = this.evaluateSlot(this.$props.options.export.file) + '.csv';
         } else {
@@ -788,14 +975,9 @@ export default {
           link.setAttribute('download', filename);
           link.click();
         }
-
-
-
-
       } catch (err) {
         console.error(err);
       }
-
     },
     showMoreRecords() {
       // if there is only 1 page to return (from AIS);
@@ -1162,6 +1344,20 @@ export default {
     margin-bottom: 5px;
   }
 
+  /* .pvc-download-data-button, .pvc-export-data-button {
+    vertical-align: baseline;
+    display: inline-block;
+  }
+
+  .pvc-export-data-button {
+    vertical-align: baseline;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 4px;
+  } */
+
   .group:after {
     content: "";
     display: table;
@@ -1190,6 +1386,10 @@ export default {
 
   .filter-by-text-form {
     border: 2px solid #0f4d90;
+  }
+
+  .position-relative {
+    position: relative !important;
   }
 
   table {
