@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import escapeHtml from 'escape-html';
 
 /*
@@ -29,7 +29,9 @@ export default function (data) {
   }
 
   // get the current date/time in iso format with timezone
-  let timestamp = format(new Date(), 'YYYY-MM-DDTHH:mm:ssZ');
+  // let timestamp = formatISO(new Date());
+  let timestamp = format(new Date(), "yyyy-MM-dd'T'HH:mm:ssxxx");
+  console.log('timestamp in pvc gb:', timestamp);
 
   // TODO use a json to xml lib instead of forming this string?
   const xmlString = `<?xml version="1.0" encoding="utf-16"?>
