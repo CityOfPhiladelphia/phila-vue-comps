@@ -5,7 +5,6 @@
     href="#"
     @click.prevent="clickAction"
   >
-  <!-- @click.prevent="evaluateSlot(slots.buttonAction)" -->
     {{ message }}
   </a>
 </template>
@@ -20,6 +19,12 @@ export default {
       clicked: false,
     };
   },
+  // created() {
+  //   console.log('buttonComp created');
+  // },
+  // mounted() {
+  //   console.log('buttonComp mounted');
+  // },
   computed: {
     message() {
       let value;

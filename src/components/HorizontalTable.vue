@@ -661,7 +661,7 @@ export default {
     // });
   },
   mounted() {
-    // console.log('horiz table mounted props slots items', this.$props.slots.items);
+    console.log('horiz table mounted props slots items', this.$props.slots.items);
     if (this.$store.state.horizontalTables) {
       this.updateTableFilteredData();
       // this is the start of an added zone

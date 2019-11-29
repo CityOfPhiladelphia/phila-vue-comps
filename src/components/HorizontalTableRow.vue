@@ -1,6 +1,5 @@
 <template>
   <tr
-    v-colspan
     :class="customClass + ' ' + [ isActive == true ? 'active' : '' ]"
     @mouseover="handleRowMouseover"
     @click="handleRowClick"
@@ -8,13 +7,22 @@
   >
     <td
       v-for="(field, index) in fields"
+      v-colspan="{columnLabel:field.label, columnValue: evaluateSlot(field.value), isCondo, options:$props.options.colSpan}"
       :key="index"
-      :item="item"
+      :sorttable_customkey="[field.customKey ? evaluateSlot(field.customKey) : evaluateSlot(field.value)]"
       :class="{
+        'custom-class': typeof field.customClass != 'undefined'? field.customClass : '',
         'in-popover': options.inPopover,
-        'half-screen-table-cell': !fullScreenTopics
+        'half-screen-table-cell': !fullScreenTopics,
       }"
     >
+    <!-- field.customClass: true, -->
+    <!-- field.customClass: typeof field.customClass != 'undefined' -->
+
+    <!-- :class="[typeof field.customClass !== 'undefined'? field.customClass : '']" -->
+
+    <!-- :class="typeof field.customClass != 'undefined'? field.customClass : ''" -->
+    <!-- :item="item" -->
       <topic-component-group
         :topic-components="field.components"
         :item="item"
@@ -40,10 +48,19 @@
           :item="item"
           :field-label="field.label"
         />
-        <div
-          v-if="!field.popoverLink"
-          v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
-        />
+        <div>
+          <div
+            v-if="!field.popoverLink"
+            v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+          />
+          <font-awesome-icon
+            v-if="mobileIcon(field.mobileIcon)"
+            v-show="evaluateSlot(field.hideMobileIcon)"
+            :icon="field.mobileIcon"
+            aria-hidden="true"
+            style="margin-left: 5px"
+          />
+        </div>
       </div>
     </td>
   </tr>
@@ -63,14 +80,16 @@ export default {
   },
   directives: {
     colspan: {
-      // directive definition
-      inserted: function (el) {
-        let allRows = el.querySelectorAll('td');
-        // console.log('allRows:', allRows);
-        allRows.forEach(
-          a => a.querySelector('.condo-button') ? (a.setAttribute('colspan', '3'), a.setAttribute('style', 'padding: unset')):
-            a.querySelectorAll('div').forEach( b => b.innerHTML === "Not Applicable"? a.remove():""),
-        );
+      inserted: function (el, binding) {
+        // console.log('colspan directive running, el', el, 'binding:', binding, 'binding.value:', binding.value, 'binding.expression:', binding.expression);
+        if (binding.value.isCondo && binding.value.columnLabel === binding.value.options.column) {
+          console.log('colspan inserted if, binding:', binding);
+          el.setAttribute('colspan', binding.value.options.span);
+          el.setAttribute('style', 'padding: unset');
+        } else if (binding.value.isCondo && binding.value.columnValue === 'Not Applicable') {
+          console.log('colspan inserted else, binding:', binding);
+          el.remove();
+        }
       },
     },
   },
@@ -84,6 +103,15 @@ export default {
     return data;
   },
   computed: {
+    isCondo() {
+      let value;
+      if (this.$props.item.condo) {
+        value = true;
+      } else {
+        value = false;
+      }
+      return value;
+    },
     fullScreenTopics() {
       if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly) {
         return true;
@@ -114,12 +142,12 @@ export default {
         && typeof this.options.customClass.tr != 'undefined' ?
         this.options.customClass.tr : '';
     },
-    // customStyle() {
-    //   // console.log("customStyle: ", this)
-    //   return typeof this.customStyle != 'undefined'
-    //     && typeof this.customStyle != 'undefined' ?
-    //     this.customStyle : '';
-    // },
+    customStyle() {
+      // console.log("customStyle: ", this)
+      return typeof this.customStyle != 'undefined'
+        && typeof this.customStyle != 'undefined' ?
+        this.customStyle : '';
+    },
     isMobileOrTablet() {
       return this.$store.state.isMobileOrTablet;
     },
@@ -140,8 +168,12 @@ export default {
     },
   },
   created() {
+    // console.log('horizontaltablerow created');
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
+  },
+  mounted() {
+    console.log('horizontaltablerow mounted');
   },
   methods: {
     // handleRowMouseover(e) {
@@ -157,6 +189,8 @@ export default {
     //     this.$store.commit('setActiveFeature', { featureId, tableId });
     //   }
     // },
+
+    // handleRowMouseover(e) {
     handleRowMouseover: throttle(function (e) {
       // console.log('handleRowMouseover is starting');
       if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {
@@ -173,6 +207,8 @@ export default {
       }
     }, 100,
     ),
+  // },
+
     // handleRowClick(e) {
     //   // console.log('handleRowClick is starting');
     //   if(this.isMobileOrTablet || this.$props.options.mouseOverDisabled) {

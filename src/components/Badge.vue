@@ -2,8 +2,8 @@
   <!-- REVIEW this uses patterns -->
   <div class="center">
     <div class="mb-badge panel">
-      <div 
-        :style="style" 
+      <div
+        :style="style"
         class="mb-badge-header"
       >
         {{ evaluateSlot(slots.title) }}
@@ -13,7 +13,7 @@
         <strong>{{ evaluateSlot(slots.description) }}</strong>
       </div>
     </div>
-    <external-link 
+    <external-link
       v-if="options && options.externalLink"
       :options="options.externalLink"
       :type="'badge'"
