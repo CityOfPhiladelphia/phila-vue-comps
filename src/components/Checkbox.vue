@@ -138,9 +138,9 @@ export default {
           if (this.scale > def.minScale) {
             value = true;
             // return true;
+          } else {
+            value = false;
           }
-          value = false;
-          // return false;
         }
       } else {
         value = false;
