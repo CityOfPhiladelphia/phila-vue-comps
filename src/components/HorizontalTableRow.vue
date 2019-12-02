@@ -7,8 +7,8 @@
   >
     <td
       v-for="(field, index) in fields"
-      v-colspan="{columnLabel:field.label, columnValue: evaluateSlot(field.value), isCondo, options:$props.options.colSpan}"
       :key="index"
+      v-colspan="{columnLabel:field.label, columnValue: evaluateSlot(field.value), isCondo, options:$props.options.colSpan}"
       :sorttable_customkey="[field.customKey ? evaluateSlot(field.customKey) : evaluateSlot(field.value)]"
       :class="{
         'custom-class': typeof field.customClass != 'undefined'? field.customClass : '',
@@ -16,13 +16,13 @@
         'half-screen-table-cell': !fullScreenTopics,
       }"
     >
-    <!-- field.customClass: true, -->
-    <!-- field.customClass: typeof field.customClass != 'undefined' -->
+      <!-- field.customClass: true, -->
+      <!-- field.customClass: typeof field.customClass != 'undefined' -->
 
-    <!-- :class="[typeof field.customClass !== 'undefined'? field.customClass : '']" -->
+      <!-- :class="[typeof field.customClass !== 'undefined'? field.customClass : '']" -->
 
-    <!-- :class="typeof field.customClass != 'undefined'? field.customClass : ''" -->
-    <!-- :item="item" -->
+      <!-- :class="typeof field.customClass != 'undefined'? field.customClass : ''" -->
+      <!-- :item="item" -->
       <topic-component-group
         :topic-components="field.components"
         :item="item"
@@ -207,7 +207,7 @@ export default {
       }
     }, 100,
     ),
-  // },
+    // },
 
     // handleRowClick(e) {
     //   // console.log('handleRowClick is starting');
