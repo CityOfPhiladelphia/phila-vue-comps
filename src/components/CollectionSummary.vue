@@ -29,11 +29,13 @@ export default {
       return summary;
     },
     contextSingular() {
+      // console.log('contextSingular is running');
       const context = this.options.context;
       return context.singular || context;
     },
     contextPlural() {
       const context = this.options.context;
+      // console.log('contextPlural, context.plural:', context.plural);
       return context.plural || context;
     },
     descriptorSingular() {
@@ -49,6 +51,7 @@ export default {
     naturalList() {
       const valueQuantities = this.valueQuantities;
       const items = this.naturalizeQuantities(valueQuantities);
+      // console.log('in naturalList, items:', items);
       const len = items.length;
       if (Array.isArray(items) && len > 0) {
         if (len === 1) {
@@ -116,7 +119,7 @@ export default {
         let labelWithNumber;
 
         // singular
-        if (quantity !== 1) {
+        if (quantity !== 1  && this.options.context.pluralizeList != false) {
           const labelPlural = type.plural || labelSingular + 's';
           labelWithNumber = labelPlural;
           // plural

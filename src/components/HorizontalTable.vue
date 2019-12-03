@@ -1336,20 +1336,29 @@ export default {
   }
 
   .pvc-export-data-button {
+    vertical-align: baseline;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 4px;
+  }
+  
+  /* .pvc-export-data-button {
     float: right;
     vertical-align: baseline;
     display: inline-block;
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-  }
+  } */
 
-  /* .pvc-download-data-button, .pvc-export-data-button {
+  .pvc-download-data-button, .pvc-export-data-button {
     vertical-align: baseline;
     display: inline-block;
   }
 
-  .pvc-export-data-button {
+  /* .pvc-export-data-button {
     vertical-align: baseline;
     display: inline-block;
     margin-left: 10px;

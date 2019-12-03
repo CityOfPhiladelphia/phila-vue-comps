@@ -83,11 +83,11 @@ export default {
       inserted: function (el, binding) {
         // console.log('colspan directive running, el', el, 'binding:', binding, 'binding.value:', binding.value, 'binding.expression:', binding.expression);
         if (binding.value.isCondo && binding.value.columnLabel === binding.value.options.column) {
-          console.log('colspan inserted if, binding:', binding);
+          // console.log('colspan inserted if, binding:', binding);
           el.setAttribute('colspan', binding.value.options.span);
           el.setAttribute('style', 'padding: unset');
         } else if (binding.value.isCondo && binding.value.columnValue === 'Not Applicable') {
-          console.log('colspan inserted else, binding:', binding);
+          // console.log('colspan inserted else, binding:', binding);
           el.remove();
         }
       },
@@ -172,9 +172,9 @@ export default {
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
   },
-  mounted() {
-    console.log('horizontaltablerow mounted');
-  },
+  // mounted() {
+  //   console.log('horizontaltablerow mounted');
+  // },
   methods: {
     // handleRowMouseover(e) {
     //   // console.log('handleRowMouseover is starting');
