@@ -10,19 +10,12 @@
       :key="index"
       v-colspan="{columnLabel:field.label, columnValue: evaluateSlot(field.value), isCondo, options:$props.options.colSpan}"
       :sorttable_customkey="[field.customKey ? evaluateSlot(field.customKey) : evaluateSlot(field.value)]"
-      :class="{
-        'custom-class': typeof field.customClass != 'undefined'? field.customClass : '',
-        'in-popover': options.inPopover,
-        'half-screen-table-cell': !fullScreenTopics,
-      }"
+      :class="[
+        typeof field.customClass !== 'undefined'? field.customClass : '',
+        options.inPopover? 'in-popover': '',
+        !fullScreenTopics? 'half-screen-table-cell': ''
+        ]"
     >
-      <!-- field.customClass: true, -->
-      <!-- field.customClass: typeof field.customClass != 'undefined' -->
-
-      <!-- :class="[typeof field.customClass !== 'undefined'? field.customClass : '']" -->
-
-      <!-- :class="typeof field.customClass != 'undefined'? field.customClass : ''" -->
-      <!-- :item="item" -->
       <topic-component-group
         :topic-components="field.components"
         :item="item"
@@ -103,6 +96,14 @@ export default {
     return data;
   },
   computed: {
+    // tdClass() {
+    //   let value = {
+    //     'custom-class': typeof field.customClass != 'undefined'? field.customClass : '',
+    //     'in-popover': options.inPopover,
+    //     'half-screen-table-cell': !fullScreenTopics,
+    //   }
+    //   return value;
+    // },
     isCondo() {
       let value;
       if (this.$props.item.condo) {
