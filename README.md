@@ -28,9 +28,13 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 ## Release Notes
 
+### 1.0.48 - 12/09/2019
+
+* Fixes generation of xml for epay 
+
 ### 1.0.47 - 11/04/2019
 
-* Adds form labels to combo search 
+* Adds form labels to combo search
 
 ### 1.0.46 - 10/24/2019
 

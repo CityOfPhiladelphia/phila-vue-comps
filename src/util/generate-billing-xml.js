@@ -21,7 +21,7 @@ import escapeHtml from 'escape-html';
 */
 
 export default function (data) {
-  console.log('generate billing xml', data);
+  console.log('pvc generate billing xml, data:', data, 'data.address.zipCode:', data.address.zipCode);
 
   // if data object is empty, return empty string
   if (Object.keys(data).length < 1) {
@@ -29,7 +29,10 @@ export default function (data) {
   }
 
   // get the current date/time in iso format with timezone
-  let timestamp = format(new Date(), 'YYYY-MM-DDTHH:mm:ssZ');
+  let theDate = format(new Date(), 'yyyy-MM-dd');
+  let theTime = format(new Date(), 'HH:mm:ssxxx');
+  let timestamp = theDate + 'T' + theTime;
+  // console.log('timestamp:', timestamp);
 
   // TODO use a json to xml lib instead of forming this string?
   const xmlString = `<?xml version="1.0" encoding="utf-16"?>
