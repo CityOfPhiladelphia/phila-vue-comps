@@ -843,6 +843,8 @@ export default {
         }
       }
 
+      // console.log('exportTableToCSV, fields:', fields);
+
       let totals = {};
 
       // for (let field of this.$props.options.fields) {
@@ -856,7 +858,8 @@ export default {
 
       for (let item of this.items) {
         let object = {};
-        for (let field of this.$props.options.fields) {
+        // for (let field of this.$props.options.fields) {
+        for (let field of fields) {
           object[field.label] = field['value'](this.$store.state, item);
           if (isNaN(field['value'](this.$store.state, item))) {
             totals[field.label] = null;
@@ -880,6 +883,8 @@ export default {
       }
       const opts = { fields };
 
+      // console.log('in exportTableToCSV, tableData:', tableData);
+
       try {
         var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
@@ -899,7 +904,7 @@ export default {
 
         result = '';
 
-        if (this.$props.options.export) {
+        if (this.$props.options.export.introLines) {
           for (let introLine of this.$props.options.export.introLines) {
             result += this.evaluateSlot(introLine);
             result += lineDelimiter;
@@ -909,9 +914,11 @@ export default {
         result += fields.map(field => field.label).join(columnDelimiter);
         result += lineDelimiter;
 
-        data = data.map( item => Object.values(item).map( value => '"' + value + '"'));
+        data = data.map(item => Object.values(item).map(value => '"' + value + '"'));
 
-        result += data.map( item => item).join(lineDelimiter);
+        result += data.map(item => item).join(lineDelimiter);
+
+        // console.log('in exportTableToCSV, fields:', fields, 'result:', result);
 
         // result += lineDelimiter;
         // result += keys.join(columnDelimiter);
@@ -1343,7 +1350,7 @@ export default {
     margin-top: 5px;
     padding: 4px;
   }
-  
+
   /* .pvc-export-data-button {
     float: right;
     vertical-align: baseline;

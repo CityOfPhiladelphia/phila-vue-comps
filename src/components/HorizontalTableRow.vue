@@ -14,7 +14,7 @@
         typeof field.customClass !== 'undefined'? field.customClass : '',
         options.inPopover? 'in-popover': '',
         !fullScreenTopics? 'half-screen-table-cell': ''
-        ]"
+      ]"
     >
       <topic-component-group
         :topic-components="field.components"
