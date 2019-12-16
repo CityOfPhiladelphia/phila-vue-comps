@@ -13,7 +13,7 @@
       :class="[
         typeof field.customClass !== 'undefined'? field.customClass : '',
         options.inPopover? 'in-popover': '',
-        !fullScreenTopics? 'half-screen-table-cell': ''
+        !fullScreenTopicsOrTable? 'half-screen-table-cell': ''
       ]"
     >
       <topic-component-group
@@ -44,6 +44,7 @@
         <div>
           <div
             v-if="!field.popoverLink"
+            :style="field.customStyle"
             v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
           />
           <font-awesome-icon
@@ -113,12 +114,17 @@ export default {
       }
       return value;
     },
-    fullScreenTopics() {
-      if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly) {
-        return true;
+    fullScreenTopicsOrTable() {
+      if (this.$config.dataPanelWidth !== 'undefined') {
+        if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly || this.$config.dataPanelWidth === 'whole') {
+          return true;
+        }
+      } else {
+        if (this.$store.state.fullScreenTopicsEnabled || this.$store.state.fullScreen.topicsOnly) {
+          return true;
+        }
       }
       return false;
-
     },
     activeFeature() {
       return this.$store.state.activeFeature;
