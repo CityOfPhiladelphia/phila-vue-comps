@@ -110,21 +110,21 @@
         </a>
         <a
           v-if="shouldShowExportCSV"
-          class="button pvc-export-data-button csv"
+          :class="'button csv ' + buttonPositionClass"
           @click="exportTableToCSV"
         >
           {{ options.export.formatButtons.csv }}
         </a>
         <a
           v-if="shouldShowExportPDF"
-          class="button pvc-export-data-button pdf"
+          :class="'button pdf ' + buttonPositionClass"
           @click="exportTableToPDF"
         >
           {{ options.export.formatButtons.pdf }}
         </a>
         <a
           v-if="shouldShowExportMailing"
-          class="button pvc-export-data-button mailing"
+          :class="'button mailing ' + buttonPositionClass"
           @click="exportTableToMailing"
         >
           {{ options.export.formatButtons.mailing }}
@@ -299,6 +299,19 @@ export default {
     return initialData;
   },
   computed: {
+    buttonPositionClass() {
+      let value;
+      if (this.$props.options.export.buttonPosition) {
+        if (this.$props.options.export.buttonPosition === 'right') {
+          value = 'pvc-export-data-button-right';
+        } else {
+          value = 'pvc-export-data-button';
+        }
+      } else {
+        value = 'pvc-export-data-button';
+      }
+      return value;
+    },
     totalRowEnabled() {
       let value;
       if (this.$props.options.totalRow) {
@@ -1351,14 +1364,15 @@ export default {
     padding: 4px;
   }
 
-  /* .pvc-export-data-button {
+  .pvc-export-data-button-right {
     float: right;
     vertical-align: baseline;
     display: inline-block;
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-  } */
+    padding: 4px;
+  }
 
   .pvc-download-data-button, .pvc-export-data-button {
     vertical-align: baseline;
