@@ -3,7 +3,7 @@
     :class="customClass + ' ' + [ isActive == true ? 'active' : '' ]"
     @mouseover="handleRowMouseover"
     @click="handleRowClick"
-    @mouseout="handleRowMouseout"
+    @mouseleave="handleRowMouseout"
   >
     <td
       v-for="(field, index) in fields"
