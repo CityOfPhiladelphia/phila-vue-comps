@@ -58,6 +58,7 @@ export default {
     // for the real estate tax site which sometimes needs data from TIPS
     // even if the property is not in OPA and AIS
     zipCode() {
+      // console.log('ePayForm zipCode computed');
       if (this.$store.state.geocode.data) {
         return this.$store.state.geocode.data.properties.zip_code;
       }
@@ -94,8 +95,13 @@ export default {
     },
   },
   created() {
+    // console.log('ePayForm created is running, this.zipCode:', this.zipCode)
     this.parseData.totalDue = this.calculateTotalDue();
     this.$store.commit('setPropertyBalance', this.parseData.totalDue);
+  },
+  mounted() {
+    // console.log('ePayForm mounted, this.zipCode:', this.zipCode);
+    this.$data.parseData.address.zipCode = this.zipCode;
     this.xmlData = generateBillingXml(this.parseData);
   },
   methods: {

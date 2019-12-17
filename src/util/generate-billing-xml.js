@@ -21,7 +21,7 @@ import escapeHtml from 'escape-html';
 */
 
 export default function (data) {
-  console.log('generate billing xml', data);
+  console.log('pvc generate billing xml, data:', data, 'data.address.zipCode:', data.address.zipCode);
 
   // if data object is empty, return empty string
   if (Object.keys(data).length < 1) {
