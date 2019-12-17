@@ -34,6 +34,10 @@ const pvmStore = {
     setFullScreenTopicsEnabled(state, payload) {
       state.fullScreenTopicsEnabled = payload;
     },
+
+    setHorizontalTableMouseover(state, payload) {
+      state.horizontalTables.mouseover = payload;
+    },
   },
 };
 

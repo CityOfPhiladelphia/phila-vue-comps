@@ -1,14 +1,14 @@
 <template>
   <div
-    v-if="!isMobileOrTablet"
     id="toggle-tab"
     :style="{ left: buttonPosition }"
     class="toggle-tab"
     @click="handleFullScreenTopicsToggleButtonClick"
   >
+  <!-- v-if="!isMobileOrTablet" -->
     <span class="align-span">
       <font-awesome-icon
-        :icon="currentIcon" 
+        :icon="currentIcon"
         class="fa-2x"
       />
     </span>
@@ -67,9 +67,9 @@ export default {
     setDivWidth() {
       let el;
       if (this.fullScreenTopicsEnabled) {
-        el = document.getElementById('topic-panel-container');
+        el = document.getElementById('data-panel-container');
       } else {
-        el = document.getElementById('map-tag');
+        el = document.getElementById('map-panel-container');
       }
       const mapDivStyle = window.getComputedStyle(el);
       const mapDivWidth = parseFloat(mapDivStyle.getPropertyValue('width').replace('px', ''));
