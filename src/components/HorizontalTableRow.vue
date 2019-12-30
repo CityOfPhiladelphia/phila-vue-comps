@@ -75,7 +75,7 @@ export default {
   directives: {
     colspan: {
       inserted: function (el, binding) {
-        console.log('colspan directive running, el', el, 'binding:', binding, 'binding.value:', binding.value, 'binding.expression:', binding.expression);
+        // console.log('colspan directive running, el', el, 'binding:', binding, 'binding.value:', binding.value, 'binding.expression:', binding.expression);
         if (binding.value.isCondo && binding.value.columnLabel === binding.value.options.column) {
           // console.log('colspan inserted if, binding:', binding);
           el.setAttribute('colspan', binding.value.options.span);

@@ -813,7 +813,7 @@ export default {
         }
         tableData.push(theArray);
       }
-      // console.log('tableData:', tableData);
+      // console.log('fields:', fields, 'tableData:', tableData);
       // var doc = new jsPDF();
       var doc = new jsPDF('p', 'pt');
       doc.setFontSize(12);
@@ -825,7 +825,7 @@ export default {
         }
       }
       doc.autoTable(fields, tableData, {
-        head: fields,
+        head: [ fields ],
         body: tableData,
         startY: 100,
         tableWidth: 'wrap',
@@ -869,19 +869,30 @@ export default {
         return;
       }
 
+      // console.log('this.items:', this.items);
+
       for (let item of this.items) {
         let object = {};
         // for (let field of this.$props.options.fields) {
         for (let field of fields) {
           object[field.label] = field['value'](this.$store.state, item);
+          // console.log("field['value'](this.$store.state, item)", field['value'](this.$store.state, item));
           if (isNaN(field['value'](this.$store.state, item))) {
+            // console.log('its NaN!');
             totals[field.label] = null;
           } else {
-            totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            if (!totals[field.label]) {
+              totals[field.label] = parseFloat(field['value'](this.$store.state, item));
+            } else {
+              // console.log('its not NaN:', field['value'](this.$store.state, item));
+              totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            }
           }
         }
         tableData.push(object);
       }
+
+      // console.log('tableData:', tableData, 'this.$props.options.totalRow:', this.$props.options.totalRow, 'totals:', totals);
 
       if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
         let object = {};
@@ -931,7 +942,7 @@ export default {
 
         result += data.map(item => item).join(lineDelimiter);
 
-        // console.log('in exportTableToCSV, fields:', fields, 'result:', result);
+        // console.log('in exportTableToCSV, fields:', fields, 'result:', result, 'data:', data);
 
         // result += lineDelimiter;
         // result += keys.join(columnDelimiter);
