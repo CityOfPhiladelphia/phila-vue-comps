@@ -4,9 +4,8 @@
     :style="style"
     href="#"
     @click.prevent="clickAction"
-  >
-    {{ message }}
-  </a>
+    v-html="message"
+  />
 </template>
 
 <script>
