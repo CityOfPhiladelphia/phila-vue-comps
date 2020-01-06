@@ -28,6 +28,11 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 ## Release Notes
 
+### 2.0.2 - 1/5/2020
+
+* Message slot changed to allow html code
+* Prop added to prevent data change when button clicked
+
 ### 2.0.1 - 12/30/2019
 
 * Fixes bug with pdf and csv export buttons
