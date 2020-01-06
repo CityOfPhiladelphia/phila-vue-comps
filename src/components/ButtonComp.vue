@@ -4,9 +4,8 @@
     :style="style"
     href="#"
     @click.prevent="clickAction"
-  >
-    {{ message }}
-  </a>
+    v-html="message"
+  />
 </template>
 
 <script>
@@ -51,7 +50,7 @@ export default {
   methods: {
     clickAction(){
       this.evaluateSlot(this.slots.buttonAction);
-      this.$data.clicked = true;
+      this.$props.options.stopClickedChange ? "" : this.$data.clicked = true;
     },
   },
 };
