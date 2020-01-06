@@ -28,9 +28,17 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 ## Release Notes
 
+### 2.0.1 - 12/30/2019
+
+* Fixes bug with pdf and csv export buttons
+
+### 2.0.0 - 12/17/2019
+
+* Merges all changes necessary for Property Data Explorer
+
 ### 1.0.48 - 12/09/2019
 
-* Fixes generation of xml for epay 
+* Fixes generation of xml for epay
 
 ### 1.0.47 - 11/04/2019
 
