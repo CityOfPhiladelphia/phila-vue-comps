@@ -26,7 +26,24 @@ Check out [the wiki](https://github.com/CityOfPhiladelphia/phila-vue-comps/wiki)
 
 * The ability to add any component to a Horizontal Table Cell
 
-## Release Notes
+## Publishing
+To publish a new version of Mapboard to NPM:
+
+Commit your changes to master.
+Bump the NPM version with npm version major|minor|patch.
+Push with tags: git push && git push --tags.
+Update wiki docs to reflect new version and/or dependency changes.
+Travis will now run a build and publish to NPM.
+
+
+## Publishing
+
+To publish a new version of Mapboard to NPM:
+
+1. Commit your changes to `master`.
+2. Bump the NPM version with `npm version major|minor|patch`.
+3. Push with tags: `git push && git push --tags`.
+4. Update wiki docs to reflect new version and/or dependency changes.
 
 ### 2.0.2 - 1/5/2020
 
