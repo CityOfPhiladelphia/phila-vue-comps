@@ -876,7 +876,9 @@ export default {
         // for (let field of this.$props.options.fields) {
         for (let field of fields) {
           console.log("field['value'](this.$store.state, item)", field['value'](this.$store.state, item));
-          object[field.label] = field['value'](this.$store.state, item).toString().replace('#', 'No.');
+          object[field.label] = typeof field['value'](this.$store.state, item) === 'undefined' ? "" :
+            field['value'](this.$store.state, item) === null ? "" :
+              field['value'](this.$store.state, item).toString().replace('#', 'No.');
           if (isNaN(field['value'](this.$store.state, item))) {
             // console.log('its NaN!');
             totals[field.label] = null;
