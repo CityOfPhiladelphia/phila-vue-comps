@@ -45,6 +45,10 @@ To publish a new version of Mapboard to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.0.3 - 1/7/2020
+
+*Fixes csv export for fields that are number format instead of string.
+
 ### 2.0.2 - 1/5/2020
 
 * Message slot changed to allow html code
