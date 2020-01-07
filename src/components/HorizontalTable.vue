@@ -875,8 +875,8 @@ export default {
         let object = {};
         // for (let field of this.$props.options.fields) {
         for (let field of fields) {
-          object[field.label] = field['value'](this.$store.state, item).replace('#', 'No.');
-          // console.log("field['value'](this.$store.state, item)", field['value'](this.$store.state, item));
+          console.log("field['value'](this.$store.state, item)", field['value'](this.$store.state, item));
+          object[field.label] = field['value'](this.$store.state, item).toString().replace('#', 'No.');
           if (isNaN(field['value'](this.$store.state, item))) {
             // console.log('its NaN!');
             totals[field.label] = null;
