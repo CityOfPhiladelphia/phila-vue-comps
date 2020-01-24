@@ -5,7 +5,7 @@
     class="toggle-tab"
     @click="handleFullScreenTopicsToggleButtonClick"
   >
-  <!-- v-if="!isMobileOrTablet" -->
+    <!-- v-if="!isMobileOrTablet" -->
     <span class="align-span">
       <font-awesome-icon
         :icon="currentIcon"

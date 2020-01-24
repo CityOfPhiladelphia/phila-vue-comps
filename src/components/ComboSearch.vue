@@ -2,7 +2,8 @@
   <div class="combo-search">
     <label 
       :for="selectId"
-      class="accessible-text">Filter search by:</label>
+      class="accessible-text"
+    >Filter search by:</label>
     <select
       :id="selectId"
       @change="handleCategoryChange"
@@ -28,7 +29,8 @@
       >
       <label 
         :for="inputId"
-        class="accessible-text">Enter search text</label>
+        class="accessible-text"
+      >Enter search text</label>
       <button
         v-if="value.length > 0"
         class="search-x"
