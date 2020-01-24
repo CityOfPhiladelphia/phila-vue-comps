@@ -45,6 +45,10 @@ To publish a new version of Mapboard to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.0.6 - 1/24/2020
+
+* Linting ran
+
 ### 2.0.5 - 1/24/2020
 
 * Fixes small bug in collection summary for PDE
