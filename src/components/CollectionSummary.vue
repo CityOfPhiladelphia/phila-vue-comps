@@ -68,6 +68,9 @@ export default {
     },
     valueQuantities() {
       const items = this.slots.items(this.$store.state);
+      if (!items) {
+        return;
+      }
       const getValue = this.options.getValue;
 
       // make an object of value => quantity
