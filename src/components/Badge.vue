@@ -1,8 +1,8 @@
 <template>
   <!-- REVIEW this uses patterns -->
   <div
-    class="center"
     v-if="shouldShowBadge"
+    class="center"
   >
     <div class="mb-badge panel">
       <div
@@ -73,13 +73,13 @@ export default {
       return result;
     },
     evaluatedItem() {
-      let items = []
+      let items = [];
       let value = this.evaluateSlot(this.item.item);
       if (value) {
         items.push(value);
       }
       return items;
-    }
+    },
     // externalLinkAction() {
     //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
     // },
