@@ -1,6 +1,9 @@
 <template>
   <!-- REVIEW this uses patterns -->
-  <div class="center">
+  <div
+    class="center"
+    v-if="shouldShowBadge"
+  >
     <div class="mb-badge panel">
       <div
         :style="style"
@@ -60,6 +63,23 @@ export default {
       //
       return { background: titleBackground };
     },
+    shouldShowBadge() {
+      let result = true;
+      // if there is no data, and the badge should not show at all if it is empty
+      // console.log('shouldShowBadge is computing, this.evaluatedItem.length:', this.evaluatedItem.length);
+      if (this.$props.options.showOnlyIfData && this.evaluatedItem.length === 0) {
+        result = false;
+      }
+      return result;
+    },
+    evaluatedItem() {
+      let items = []
+      let value = this.evaluateSlot(this.item.item);
+      if (value) {
+        items.push(value);
+      }
+      return items;
+    }
     // externalLinkAction() {
     //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
     // },
