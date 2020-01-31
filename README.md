@@ -45,6 +45,10 @@ To publish a new version of Mapboard to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.0.9 - 1/31/2020
+
+* pushes to @phila/vue-comps instead of @philly/vue-comps
+
 ### 2.0.8 - 1/30/2020
 
 * allows hiding badges

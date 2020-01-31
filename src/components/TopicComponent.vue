@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     evaluateSlot(valOrGetter, transforms = [], nullValue = '') {
-      // console.log('evaluateSlot is running, valOrGetter:', valOrGetter);
+      // console.log('evaluateSlot is running, this.item:', this.item, 'valOrGetter:', valOrGetter);
       // check for null val/getter
       if (!valOrGetter) {
         return valOrGetter;

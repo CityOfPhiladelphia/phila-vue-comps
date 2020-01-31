@@ -74,7 +74,7 @@ export default {
     },
     evaluatedItem() {
       let items = [];
-      let value = this.evaluateSlot(this.item.item);
+      let value = this.evaluateSlot(this.slots.dataItem);
       if (value) {
         items.push(value);
       }

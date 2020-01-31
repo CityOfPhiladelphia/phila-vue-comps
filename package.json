@@ -1,8 +1,10 @@
 {
-  "name": "@philly/vue-comps",
+  "name": "@phila/vue-comps",
   "description": "A library of vue components for js apps",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "author": "City of Philadelphia <maps@phila.gov>",
+  "license": "MIT",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
