@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="this.class + ' clicked-' + this.$data.clicked"
+    :class="'button-light ' + this.class + ' clicked-' + this.$data.clicked"
     :style="style"
     @click.prevent="clickAction"
   >
@@ -47,6 +47,13 @@ export default {
 
   .clicked-true {
     display: none;
+  }
+
+  .button-light {
+    background-color: white;
+    color:  #0f4d90;
+    border: 1.49px solid #0f4d90;
+    text-transform: uppercase;
   }
 
 </style>
