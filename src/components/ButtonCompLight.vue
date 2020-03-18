@@ -1,11 +1,11 @@
 <template>
-  <a
-    :class="'button ' + this.class + ' clicked-' + this.$data.clicked"
+  <button
+    :class="this.class + ' clicked-' + this.$data.clicked"
     :style="style"
-    href="#"
     @click.prevent="clickAction"
-    v-html="message"
-  />
+  >
+    <slot />
+  </button>
 </template>
 
 <script>
@@ -18,20 +18,7 @@ export default {
       clicked: false,
     };
   },
-  // created() {
-  //   console.log('buttonComp created');
-  // },
-  // mounted() {
-  //   console.log('buttonComp mounted');
-  // },
   computed: {
-    message() {
-      let value;
-      if (this.$props.slots) {
-        value = this.evaluateSlot(this.$props.slots.text);
-      }
-      return value;
-    },
     class() {
       let value;
       if (this.$props.options) {

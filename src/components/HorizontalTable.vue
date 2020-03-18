@@ -99,7 +99,7 @@
 
       <div :class="{ 'pvc-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
         <!-- this is the start of an added zone -->
-        <a
+        <button-comp-light
           v-if="this.$store.state.fullScreenTopicsEnabled !== true
             && this.$store.state.fullScreenMapEnabled !== true
             && options.downloadButton === true"
@@ -107,14 +107,14 @@
           @click="exportTableToCSV"
         >
           Download Data
-        </a>
-        <a
+        </button-comp-light>
+        <button-comp-light
           v-if="shouldShowExportCSV"
           :class="'button csv ' + buttonPositionClass"
           @click="exportTableToCSV"
         >
           {{ options.export.formatButtons.csv }}
-        </a>
+        </button-comp-light>
         <a
           v-if="shouldShowExportPDF"
           :class="'button pdf ' + buttonPositionClass"
@@ -241,6 +241,7 @@
 
 <script>
 import TopicComponent from './TopicComponent.vue';
+import ButtonCompLight from './ButtonCompLight.vue';
 // import HorizontalTableRow from './HorizontalTableRow.vue';
 // import ExternalLink from './ExternalLink.vue';
 import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinInterval, parseISO } from 'date-fns';
@@ -260,7 +261,7 @@ export default {
     HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
     ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
   },
-  mixins: [ TopicComponent ],
+  mixins: [ TopicComponent, ButtonCompLight ],
   data() {
     const filters = this.options.filters || [];
     const filtersKeys = Object.keys(filters);
