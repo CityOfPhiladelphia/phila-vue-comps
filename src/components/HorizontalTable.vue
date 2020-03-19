@@ -1315,10 +1315,6 @@ export default {
 </script>
 
 <style scoped>
-  .button-icon {
-    float: left;
-    margin-right: 5px;
-  }
 
   .pvc-export-data-button {
     position: fixed;

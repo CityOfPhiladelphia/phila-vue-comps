@@ -49,6 +49,11 @@ export default {
     display: none;
   }
 
+  .button-icon {
+    float: left;
+    margin-right: 5px;
+  }
+
   .button-light {
     background-color: white;
     color:  #0f4d90;
