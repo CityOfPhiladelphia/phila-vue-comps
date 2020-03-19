@@ -99,7 +99,7 @@
 
       <div :class="{ 'pvc-horizontal-table-body': true, 'no-padding': !shouldShowFilters }">
         <!-- this is the start of an added zone -->
-        <button-comp-light
+        <a
           v-if="this.$store.state.fullScreenTopicsEnabled !== true
             && this.$store.state.fullScreenMapEnabled !== true
             && options.downloadButton === true"
@@ -107,7 +107,14 @@
           @click="exportTableToCSV"
         >
           Download Data
-        </button-comp-light>
+        </a>
+        <a
+          v-if="shouldShowExportPDF"
+          :class="'pdf ' + buttonPositionClass"
+          @click="exportTableToPDF"
+        >
+          {{ options.export.formatButtons.pdf }}
+        </a>
         <button-comp-light
           v-if="shouldShowExportCSV"
           :class="'csv ' + buttonPositionClass"
@@ -119,13 +126,6 @@
             class="button-icon"
           />
           {{ options.export.formatButtons.csv.text }}
-        </button-comp-light>
-        <button-comp-light
-          v-if="shouldShowExportPDF"
-          :class="'pdf ' + buttonPositionClass"
-          @click="exportTableToPDF"
-        >
-          {{ options.export.formatButtons.pdf }}
         </button-comp-light>
         <button-comp-light
           v-if="shouldShowExportMailing"
