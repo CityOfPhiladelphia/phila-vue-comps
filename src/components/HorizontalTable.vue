@@ -268,7 +268,7 @@ const DEFAULT_SORT_FIELDS = [
 
 export default {
   components: {
-    ButtonCompLight: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./ButtonCompLight.vue'),
+    ButtonCompLight: () => import(/* webpackChunkName: "pvc_pvc_ButtonCompLight" */'./ButtonCompLight.vue'),
     HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
     ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
   },
