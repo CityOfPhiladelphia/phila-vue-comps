@@ -1319,6 +1319,20 @@ export default {
     float: left;
     margin-right: 5px;
   }
+
+  .pvc-export-data-button {
+    position: fixed;
+    float: right;
+  }
+
+  .csv {
+    right: 5px;
+  }
+
+  .mailing {
+    right: 165px;
+  }
+
   .inline-block {
     display: inline-block;
   }
