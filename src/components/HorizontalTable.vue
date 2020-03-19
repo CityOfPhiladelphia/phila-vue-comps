@@ -118,7 +118,7 @@
         <button-comp-light
           v-if="shouldShowExportCSV"
           :class="'csv ' + buttonPositionClass"
-          @click="exportTableToCSV"
+          :slots="{buttonAction: exportTableToCSV}"
         >
           <font-awesome-icon
             v-if="options.export.formatButtons.csv.icon"
@@ -130,7 +130,7 @@
         <button-comp-light
           v-if="shouldShowExportMailing"
           :class="'mailing ' + buttonPositionClass"
-          @click="exportTableToMailing"
+          :slots="{buttonAction: exportTableToMailing}"
         >
           <font-awesome-icon
             v-if="options.export.formatButtons.mailing.icon"
