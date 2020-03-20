@@ -5,11 +5,15 @@
   "author": "City of Philadelphia <maps@phila.gov>",
   "license": "MIT",
   "private": false,
+  "description": "A library of vue components for js apps",
+  "author": "City of Philadelphia <maps@phila.gov>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lintFix": "vue-cli-service lint --fix"
+    "lintFix": "vue-cli-service lint --fix",
+    "styleguide": "vue-cli-service styleguidist",
+    "styleguide:build": "vue-cli-service styleguidist:build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
@@ -23,7 +27,7 @@
     "jspdf-autotable": "^3.2.8",
     "lodash-es": "^4.17.14",
     "phila-standards": "^1.0.2",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
@@ -33,7 +37,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.0.1",
-    "vue-template-compiler": "^2.6.10",
+    "vue-template-compiler": "^2.6.11",
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "postcss": {
@@ -45,5 +49,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "license": "MIT"
 }
