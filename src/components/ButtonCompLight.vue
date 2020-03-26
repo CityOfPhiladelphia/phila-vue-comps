@@ -45,9 +45,9 @@ export default {
 
 <style scoped>
 
-  .clicked-true {
+  /* .clicked-true {
     display: none;
-  }
+  } */
 
   .button-icon {
     float: left;
