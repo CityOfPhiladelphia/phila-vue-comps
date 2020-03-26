@@ -103,7 +103,7 @@ export default {
   position: absolute;
   display: inline-block;
   margin-left: 5px;
-  width: 220px;
+  width: 260px;
   background-color: rgb(15, 77, 144);
   color: white;
   z-index: 10002;
@@ -127,7 +127,7 @@ export default {
   padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  width: 110px;
+  width: 130px;
   background-color: rgb(15, 77, 144);
   color: white;
 }
