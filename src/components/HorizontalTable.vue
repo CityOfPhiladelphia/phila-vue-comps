@@ -109,26 +109,36 @@
           Download Data
         </a>
         <a
-          v-if="shouldShowExportCSV"
-          :class="'button csv ' + buttonPositionClass"
-          @click="exportTableToCSV"
-        >
-          {{ options.export.formatButtons.csv }}
-        </a>
-        <a
           v-if="shouldShowExportPDF"
-          :class="'button pdf ' + buttonPositionClass"
+          :class="'pdf ' + buttonPositionClass"
           @click="exportTableToPDF"
         >
           {{ options.export.formatButtons.pdf }}
         </a>
-        <a
-          v-if="shouldShowExportMailing"
-          :class="'button mailing ' + buttonPositionClass"
-          @click="exportTableToMailing"
+        <button-comp-light
+          v-if="shouldShowExportCSV"
+          :class="'csv ' + buttonPositionClass"
+          :slots="{buttonAction: exportTableToCSV}"
         >
-          {{ options.export.formatButtons.mailing }}
-        </a>
+          <font-awesome-icon
+            v-if="options.export.formatButtons.csv.icon"
+            :icon="options.export.formatButtons.csv.icon"
+            class="button-icon"
+          />
+          {{ options.export.formatButtons.csv.text }}
+        </button-comp-light>
+        <button-comp-light
+          v-if="shouldShowExportMailing"
+          :class="'mailing ' + buttonPositionClass"
+          :slots="{buttonAction: exportTableToMailing}"
+        >
+          <font-awesome-icon
+            v-if="options.export.formatButtons.mailing.icon"
+            :icon="options.export.formatButtons.mailing.icon"
+            class="button-icon"
+          />
+          {{ options.export.formatButtons.mailing.text }}
+        </button-comp-light>
         <!-- this is the end of an added zone -->
 
         <div v-if="slots.title">
@@ -241,6 +251,7 @@
 
 <script>
 import TopicComponent from './TopicComponent.vue';
+import ButtonCompLight from './ButtonCompLight.vue';
 // import HorizontalTableRow from './HorizontalTableRow.vue';
 // import ExternalLink from './ExternalLink.vue';
 import { format, subHours, addHours, subDays, addDays, subWeeks, addWeeks, subMonths, addMonths, subYears, addYears, isWithinInterval, parseISO } from 'date-fns';
@@ -257,10 +268,11 @@ const DEFAULT_SORT_FIELDS = [
 
 export default {
   components: {
+    ButtonCompLight: () => import(/* webpackChunkName: "pvc_pvc_ButtonCompLight" */'./ButtonCompLight.vue'),
     HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
     ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
   },
-  mixins: [ TopicComponent ],
+  mixins: [ TopicComponent, ButtonCompLight ],
   data() {
     const filters = this.options.filters || [];
     const filtersKeys = Object.keys(filters);
@@ -1303,6 +1315,20 @@ export default {
 </script>
 
 <style scoped>
+
+  .pvc-export-data-button {
+    position: fixed;
+    float: right;
+  }
+
+  .csv {
+    right: 5px;
+  }
+
+  .mailing {
+    right: 165px;
+  }
+
   .inline-block {
     display: inline-block;
   }

@@ -14,6 +14,7 @@ import AnyHeader from './components/AnyHeader.vue';
 import Badge from './components/Badge.vue';
 import BadgeCustom from './components/BadgeCustom.vue';
 import ButtonComp from './components/ButtonComp.vue';
+import ButtonCompLight from './components/ButtonCompLight.vue';
 import Callout from './components/Callout.vue';
 import CollectionSummary from './components/CollectionSummary.vue';
 import Division from './components/Division.vue';
@@ -49,6 +50,7 @@ export {
   Badge,
   BadgeCustom,
   ButtonComp,
+  ButtonCompLight,
   Callout,
   CollectionSummary,
   Division,
