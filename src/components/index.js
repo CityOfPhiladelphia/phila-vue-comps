@@ -4,3 +4,4 @@ export * from './HorizontalTable';
 export * from './Image';
 // export * from './TopicComponent';
 export * from './VerticalTable';
+export * from './VerticalTableLight';

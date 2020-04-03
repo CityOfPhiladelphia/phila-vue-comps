@@ -33,6 +33,7 @@ import Paragraph from './components/Paragraph.vue';
 import SpanComp from './components/SpanComp.vue';
 import TabGroup from './components/TabGroup.vue';
 import VerticalTable from './components/VerticalTable.vue';
+import VerticalTableLight from './components/VerticalTableLight.vue';
 import Topic from './components/Topic.vue';
 import TopicSet from './components/TopicSet.vue';
 import TopicComponent from './components/TopicComponent.vue';
@@ -69,6 +70,7 @@ export {
   SpanComp,
   TabGroup,
   VerticalTable,
+  VerticalTableLight,
   Topic,
   TopicSet,
   TopicComponent,
