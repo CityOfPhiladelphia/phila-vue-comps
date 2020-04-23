@@ -1,10 +1,12 @@
 <template>
   <div class="combo-search">
-    <label 
+    <label
+      v-if="Object.keys(dropdown).length > 1"
       :for="selectId"
       class="accessible-text"
     >Filter search by:</label>
     <select
+      v-if="Object.keys(dropdown).length > 1"
       :id="selectId"
       @change="handleCategoryChange"
     >
@@ -17,7 +19,7 @@
         {{ item.text }}
       </option>
     </select>
-    <div class="search">
+    <div :class="'search ' + position + '-side'">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
       <input
         :id="inputId"
@@ -27,7 +29,7 @@
         type="text"
         @keyup="handleTypeInInput"
       >
-      <label 
+      <label
         :for="inputId"
         class="accessible-text"
       >Enter search text</label>
@@ -63,6 +65,10 @@ export default {
           data: 'value',
         },
       },
+    },
+    position: {
+      type: String,
+      default: 'left',
     },
     searchString: {
       type: String,
@@ -123,7 +129,11 @@ export default {
     handleSearchFormSubmit() {
       let searchCategory, value, comboSearch = {};
       const e = document.getElementById(this.$data.selectId);
-      searchCategory = e.options[e.selectedIndex].value.toLowerCase();
+      if (e) {
+        searchCategory = e.options[e.selectedIndex].value.toLowerCase();
+      } else {
+        searchCategory = Object.keys(this.dropdown)[0]
+      }
       value = document.querySelector('#' + this.$data.inputId.toString()).value;
       this.value = value;
       // console.log('ComboSearch handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
@@ -172,6 +182,9 @@ export default {
         border-bottom:2px solid white;
         border-left: 2px solid color(ghost-gray);
       }
+    }
+    .right-side {
+      float: right !important;
     }
   }
 
