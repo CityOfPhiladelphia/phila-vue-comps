@@ -19,7 +19,8 @@
         {{ item.text }}
       </option>
     </select>
-    <div :class="'search ' + position + '-side'">
+    <!-- <div :class="'search ' + position + '-side'"> -->
+    <div :class="{ search: Object.keys(dropdown).length > 1, 'search-full': Object.keys(dropdown).length <= 1 }">
       <!-- <input class="search-field" type="text" :id="inputId" v-on:keydown.enter="updateResultsList();" v-on:keyup.enter="hideMobileKeyboard($event); updateResultsList()" :placeholder="placeholderText"> -->
       <input
         :id="inputId"
@@ -183,12 +184,71 @@ export default {
         border-left: 2px solid color(ghost-gray);
       }
     }
-    .right-side {
-      float: right !important;
+
+    .search-full {
+      float: left;
+      width: 100%;
+      height: 40px;
+      .search-field {
+        min-height: 2.8rem;
+        background: white;
+        //add white border to ensure heights match when focus is set
+        border-top: 2px solid white;
+        border-right: 2px solid white;
+        border-bottom:2px solid white;
+        border-left: 2px solid color(ghost-gray);
+      }
     }
+
+    @media screen and (min-width: 1050px) {
+      .right-side {
+        float: right !important;
+      }
+    }
+
   }
 
   .search {
+    width: 100%;
+    position: relative;
+    margin:0;
+
+    .search-field,
+    input[type="text"]:focus {
+      min-height: 2.8rem;
+      border-color: color(electric-blue);
+      background: white;
+      margin:0;
+    }
+
+    input[type="text"] {
+      background: white;
+    }
+
+    .search-x {
+      z-index: 10;
+      position: absolute;
+      top: 2.5px;
+      right: 3rem;
+      min-width: 2.4rem;
+      min-height: 2.4rem;
+      background: color(electric-blue);
+      cursor: pointer;
+    }
+
+    .search-submit {
+      z-index: 10;
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 2.8rem;
+      min-height: 2.8rem;
+      background: color(electric-blue);
+      cursor: pointer;
+    }
+  }
+
+  .search-full {
     width: 100%;
     position: relative;
     margin:0;
