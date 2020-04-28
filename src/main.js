@@ -24,6 +24,7 @@ import FullScreenTopicsToggleTab from './components/FullScreenTopicsToggleTab.vu
 import FullScreenTopicsToggleTabVertical from './components/FullScreenTopicsToggleTabVertical.vue';
 import Greeting from './components/Greeting.vue';
 import HorizontalTable from './components/HorizontalTable.vue';
+import HorizontalTableLight from './components/HorizontalTableLight.vue';
 import HorizontalTableGroup from './components/HorizontalTableGroup.vue';
 import HorizontalTableRow from './components/HorizontalTableRow.vue';
 import Image from './components/Image.vue';
@@ -61,6 +62,7 @@ export {
   FullScreenTopicsToggleTabVertical,
   Greeting,
   HorizontalTable,
+  HorizontalTableLight,
   HorizontalTableGroup,
   HorizontalTableRow,
   Image,

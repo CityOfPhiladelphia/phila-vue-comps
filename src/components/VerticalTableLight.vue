@@ -21,17 +21,46 @@
           :key="index"
         >
           <th
+            v-if="field.labelType !== 'i18n'"
             :style="styles.th || ''"
             v-html="evaluateSlot(field.label)"
           />
+
+          <th
+            v-if="field.labelType === 'i18n'"
+            :style="styles.th || ''"
+            v-html="$t(field.label)"
+          />
+
+
+
+
+
           <td
-            v-if="hasData"
+            v-if="hasData && field.type !== 'i18n' && field.type !== 'component'"
             v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
+
+          <td
+            v-if="hasData && field.type !== 'i18n' && field.type !== 'component'"
+            v-html="evaluateSlot(field.value1, field.transforms, nullValue)"
+          />
+
+          <td
+            v-if="hasData && field.type === 'i18n'"
+            v-html="$t(field.value)"
+          />
+
           <td
             v-if="!hasData"
             v-html="''"
           />
+
+          <slot
+            v-if="field.type === 'component'"
+          />
+          <!-- name="field.value" -->
+
         </tr>
       </tbody>
     </table>
@@ -146,7 +175,7 @@ export default {
   }
   .table-light table {
     width: 90%;
-    margin-left:5%; 
+    margin-left:5%;
   }
   .table-light td {
     width: 40%;
