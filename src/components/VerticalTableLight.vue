@@ -20,6 +20,7 @@
           v-for="(field, index) in slots.fields"
           :key="index"
         >
+          <!-- headers -->
           <th
             v-if="field.labelType !== 'i18n'"
             :style="styles.th || ''"
@@ -32,34 +33,34 @@
             v-html="$t(field.label)"
           />
 
-
-
-
-
+          <!-- data -->
           <td
             v-if="hasData && field.type !== 'i18n' && field.type !== 'component'"
+            :style="styles.td || ''"
             v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
 
           <td
             v-if="hasData && field.type !== 'i18n' && field.type !== 'component'"
+            :style="styles.td || ''"
             v-html="evaluateSlot(field.value1, field.transforms, nullValue)"
           />
 
           <td
             v-if="hasData && field.type === 'i18n'"
+            :style="styles.td || ''"
             v-html="$t(field.value)"
           />
 
           <td
             v-if="!hasData"
+            :style="styles.td || ''"
             v-html="''"
           />
 
           <slot
             v-if="field.type === 'component'"
           />
-          <!-- name="field.value" -->
 
         </tr>
       </tbody>
