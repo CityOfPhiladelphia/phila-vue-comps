@@ -35,13 +35,13 @@
 
           <!-- data -->
           <td
-            v-if="hasData && field.type !== 'i18n' && field.type !== 'component'"
+            v-if="hasData && field.type !== 'i18n' && field.type !== 'component' && field.type !== 'component1' && field.type !== 'component2'"
             :style="styles.td || ''"
             v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
 
           <td
-            v-if="hasData && field.type !== 'i18n' && field.type !== 'component'"
+            v-if="hasData && field.type !== 'i18n' && field.type !== 'component' && field.type !== 'component1' && field.type !== 'component2'"
             :style="styles.td || ''"
             v-html="evaluateSlot(field.value1, field.transforms, nullValue)"
           />
@@ -60,6 +60,16 @@
 
           <slot
             v-if="field.type === 'component'"
+          />
+
+          <slot
+            v-if="field.type === 'component1'"
+            name="component1"
+          />
+
+          <slot
+            v-if="field.type === 'component2'"
+            name="component2"
           />
 
         </tr>
