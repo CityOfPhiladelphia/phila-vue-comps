@@ -83,11 +83,19 @@ export default {
       type: String,
       default: '',
     },
+    inputId: {
+      type: String,
+      default: 'inputId',
+    },
+    selectId: {
+      type: String,
+      default: 'selectId',
+    }
   },
   data() {
     const data = {
-      inputId: 'inputId',
-      selectId: 'selectId',
+      // inputId: 'inputId',
+      // selectId: 'selectId',
       categorySelected: null,
       value: '',
     };
@@ -96,7 +104,7 @@ export default {
   watch: {
     value(nextValue) {
       // console.log('ComboSearch watch value fired, nextValue:', nextValue);
-      let input = document.getElementById('inputId');
+      let input = document.getElementById(this.$props.inputId);
       input.value = nextValue;
     },
   },
@@ -135,7 +143,7 @@ export default {
       } else {
         searchCategory = Object.keys(this.dropdown)[0]
       }
-      value = document.querySelector('#' + this.$data.inputId.toString()).value;
+      value = document.querySelector('#' + this.$props.inputId.toString()).value;
       this.value = value;
       // console.log('ComboSearch handleSearchFormSubmit is running, value:', value, 'searchCategory:', searchCategory);
       comboSearch[searchCategory] = value;
