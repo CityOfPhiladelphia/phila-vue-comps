@@ -41,7 +41,7 @@
           />
 
           <td
-            v-if="hasData && field.valueType !== 'i18n' && field.valueType !== 'component' && field.valueType !== 'component1' && field.valueType !== 'component2'"
+            v-if="hasData && field.value1Type && field.value1Type !== 'i18n' && field.value1Type !== 'component' && field.value1Type !== 'component1' && field.value1Type !== 'component2'"
             :style="styles.td || ''"
             v-html="evaluateSlot(field.value1, field.transforms, nullValue)"
           />
