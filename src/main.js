@@ -24,6 +24,7 @@ import FullScreenTopicsToggleTab from './components/FullScreenTopicsToggleTab.vu
 import FullScreenTopicsToggleTabVertical from './components/FullScreenTopicsToggleTabVertical.vue';
 import Greeting from './components/Greeting.vue';
 import HorizontalTable from './components/HorizontalTable.vue';
+import HorizontalTableLight from './components/HorizontalTableLight.vue';
 import HorizontalTableGroup from './components/HorizontalTableGroup.vue';
 import HorizontalTableRow from './components/HorizontalTableRow.vue';
 import Image from './components/Image.vue';
@@ -34,6 +35,7 @@ import SpanComp from './components/SpanComp.vue';
 import TabGroup from './components/TabGroup.vue';
 import VerticalTable from './components/VerticalTable.vue';
 import VerticalTableLight from './components/VerticalTableLight.vue';
+import VerticalTable3CellLight from './components/VerticalTable3CellLight.vue';
 import Topic from './components/Topic.vue';
 import TopicSet from './components/TopicSet.vue';
 import TopicComponent from './components/TopicComponent.vue';
@@ -61,6 +63,7 @@ export {
   FullScreenTopicsToggleTabVertical,
   Greeting,
   HorizontalTable,
+  HorizontalTableLight,
   HorizontalTableGroup,
   HorizontalTableRow,
   Image,
@@ -71,6 +74,7 @@ export {
   TabGroup,
   VerticalTable,
   VerticalTableLight,
+  VerticalTable3CellLight,
   Topic,
   TopicSet,
   TopicComponent,
