@@ -35,7 +35,7 @@ import SpanComp from './components/SpanComp.vue';
 import TabGroup from './components/TabGroup.vue';
 import VerticalTable from './components/VerticalTable.vue';
 import VerticalTableLight from './components/VerticalTableLight.vue';
-import VerticalTable3CellLight from './components/VerticalTable3CellLight.vue';
+import VerticalTable3CellsLight from './components/VerticalTable3CellsLight.vue';
 import Topic from './components/Topic.vue';
 import TopicSet from './components/TopicSet.vue';
 import TopicComponent from './components/TopicComponent.vue';
@@ -74,7 +74,7 @@ export {
   TabGroup,
   VerticalTable,
   VerticalTableLight,
-  VerticalTable3CellLight,
+  VerticalTable3CellsLight,
   Topic,
   TopicSet,
   TopicComponent,

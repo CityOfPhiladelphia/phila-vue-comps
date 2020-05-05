@@ -45,6 +45,10 @@ To publish a new version of Mapboard to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.1 - 5/5/2020
+
+* Fixes bug and re-releases
+
 ### 2.1.0 - 5/5/2020
 
 * merges changes for use in pinboard and viewerboard
