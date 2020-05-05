@@ -90,7 +90,7 @@ export default {
     selectId: {
       type: String,
       default: 'selectId',
-    }
+    },
   },
   data() {
     const data = {
@@ -141,7 +141,7 @@ export default {
       if (e) {
         searchCategory = e.options[e.selectedIndex].value.toLowerCase();
       } else {
-        searchCategory = Object.keys(this.dropdown)[0]
+        searchCategory = Object.keys(this.dropdown)[0];
       }
       value = document.querySelector('#' + this.$props.inputId.toString()).value;
       this.value = value;

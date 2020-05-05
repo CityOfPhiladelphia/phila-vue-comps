@@ -77,7 +77,6 @@
             v-if="field.valueType === 'component2'"
             name="component2"
           />
-
         </tr>
       </tbody>
     </table>

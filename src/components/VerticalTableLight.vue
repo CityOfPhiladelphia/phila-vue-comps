@@ -63,15 +63,14 @@
           />
 
           <slot
-            name="component1"
             v-if="field.valueType === 'component1'"
+            name="component1"
           />
 
           <slot
-            name="component2"
             v-if="field.valueType === 'component2'"
+            name="component2"
           />
-
         </tr>
       </tbody>
     </table>

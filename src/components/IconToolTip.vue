@@ -11,10 +11,10 @@
     />
     <!-- @click="infoClick" -->
     <div
+      v-if="active"
       :id="item + '-tooltip'"
       :class="tipClass"
       :style="tooltipStyle"
-      v-if="active"
       v-html="circleData.html"
     >
     <!-- :style="{'top': '0px'}" -->
@@ -38,7 +38,7 @@ export default {
       active: false,
       tipClass: 'popup-tip',
       tooltipStyle: {},
-    }
+    };
   },
   methods: {
     infoClick(e) {
@@ -56,11 +56,11 @@ export default {
         this.tooltipStyle = {
           'top': iconStyle.top + 20 + 'px',
           'right': '10px',
-        }
+        };
       } else {
         this.tooltipStyle = {
           'top': iconStyle.top + 20 + 'px',
-        }
+        };
       }
     },
     infoOn() {
@@ -78,18 +78,18 @@ export default {
         this.tooltipStyle = {
           'top': iconStyle.top + 20 + 'px',
           'right': '10px',
-        }
+        };
       } else {
         this.tooltipStyle = {
           'top': iconStyle.top + 20 + 'px',
-        }
+        };
       }
     },
     infoOff() {
       this.active = false;
     },
-  }
-}
+  },
+};
 
 </script>
 
