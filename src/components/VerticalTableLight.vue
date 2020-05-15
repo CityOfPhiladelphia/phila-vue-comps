@@ -62,15 +62,23 @@
             v-if="field.valueType === 'component'"
           />
 
-          <slot
+          <td
             v-if="field.valueType === 'component1'"
-            name="component1"
-          />
+          >
+            <slot
+              name="component1"
+            />
+          </td>
 
-          <slot
+          <td
             v-if="field.valueType === 'component2'"
-            name="component2"
-          />
+          >
+            <slot
+              name="component2"
+            />
+          </td>
+
+
         </tr>
       </tbody>
     </table>
