@@ -137,7 +137,8 @@ export default {
     },
     handleSearchFormSubmit() {
       let searchCategory, value, comboSearch = {};
-      const e = document.getElementById(this.$data.selectId);
+      const e = document.getElementById(this.$props.selectId);
+      // console.log('in handleSearchFormSubmit, this.$props.selectId:', this.$props.selectId, 'e:', e);
       if (e) {
         searchCategory = e.options[e.selectedIndex].value.toLowerCase();
       } else {
