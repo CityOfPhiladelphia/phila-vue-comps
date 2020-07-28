@@ -655,7 +655,7 @@ export default {
   },
   watch: {
     itemsAfterFilters(nextItems) {
-      console.log('WATCH items after filters', nextItems);
+      // console.log('WATCH items after filters', nextItems);
       // this.$nextTick(() => {
       if (this.$store.state.horizontalTables) {
         this.updateTableFilteredData();

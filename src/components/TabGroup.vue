@@ -1,16 +1,16 @@
 <template>
   <div>
-    <ul 
-      class="tabs" 
-      data-tabs
+    <ul
+      class="tabs"
     >
-      <li 
+    <!-- data-tabs -->
+      <li
         v-for="item in items"
         :key="keyForItem(item)"
         :class="{'is-active': itemIsActive(item)}"
         class="tabs-title"
       >
-        <a 
+        <a
           :href="'#parcel-' + keyForItem(item)"
           @click.prevent="clickedItem(item)"
         >
@@ -21,15 +21,15 @@
     </ul>
 
     <div class="tabs-content">
-      <div 
+      <div
         v-for="item in items"
         :id="'parcel-' + keyForItem(item)"
         :key="keyForItem(item)"
         :class="{'is-active': itemIsActive(item)}"
         class="tabs-panel"
       >
-        <topic-component-group 
-          :topic-components="comps" 
+        <topic-component-group
+          :topic-components="comps"
           :item="item"
         />
       </div>
@@ -112,6 +112,7 @@ export default {
   },
   methods: {
     clickedItem(item) {
+      // console.log('TabGroup.vue clickedItem is running, item:', item);
       this.$data.activeItem = this.keyForItem(item);
       this.$data.activeMapreg = this.titleForItem(item);
       this.$data.activeAddress = this.addressForItem(item);
