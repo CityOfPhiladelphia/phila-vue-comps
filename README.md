@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.5 - 7/29/2020
+
+* small fixes for making tabs work in atlas with a mapbox map
+
 ### 2.1.4 - 6/14/2020
 
 * updates comboSearch for Pinboard apps
