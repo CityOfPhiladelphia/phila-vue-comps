@@ -128,6 +128,18 @@
           {{ options.export.formatButtons.csv.text }}
         </button-comp-light>
         <button-comp-light
+          v-if="shouldShowExportPDFLight"
+          :class="'pdf ' + buttonPositionClass"
+          :slots="{buttonAction: exportTableToPDF}"
+        >
+          <font-awesome-icon
+            v-if="options.export.formatButtons['pdf-light'].icon"
+            :icon="options.export.formatButtons['pdf-light'].icon"
+            class="button-icon"
+          />
+          {{ options.export.formatButtons['pdf-light'].text }}
+        </button-comp-light>
+        <button-comp-light
           v-if="shouldShowExportMailing"
           :class="'mailing ' + buttonPositionClass"
           :slots="{buttonAction: exportTableToMailing}"
@@ -412,6 +424,16 @@ export default {
         if (this.options.export.formatButtons) {
           const keys = Object.keys(this.options.export.formatButtons);
           shouldExport = keys.includes('pdf');
+        }
+      }
+      return shouldExport;
+    },
+    shouldShowExportPDFLight() {
+      let shouldExport = false;
+      if (this.options.export) {
+        if (this.options.export.formatButtons) {
+          const keys = Object.keys(this.options.export.formatButtons);
+          shouldExport = keys.includes('pdf-light');
         }
       }
       return shouldExport;
