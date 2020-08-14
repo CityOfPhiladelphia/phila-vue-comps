@@ -3,11 +3,20 @@
     <!-- :for="item" -->
     <!-- v-show="Object.keys(infoCirclesData).includes(item)" -->
     <font-awesome-icon
+      v-if="circleType === 'hover'"
       :id="item + '-icon'"
       icon="info-circle"
       class="fa-infoCircle"
       @mouseover="infoOn"
       @mouseout="infoOff"
+    />
+
+    <font-awesome-icon
+      v-if="circleType === 'click'"
+      :id="item + '-icon'"
+      icon="info-circle"
+      class="fa-infoCircle"
+      @click="infoClick"
     />
     <!-- @click="infoClick" -->
     <div
@@ -31,6 +40,10 @@ export default {
     },
     circleData: {
 
+    },
+    circleType: {
+      type: String,
+      default: 'hover',
     },
   },
   data() {
