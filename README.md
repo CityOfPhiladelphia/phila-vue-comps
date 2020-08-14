@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.7 - 8/14/2020
+
+* adds props to IconToolTip.vue
+
 ### 2.1.6 - 8/3/2020
 
 * fixes optional buttons in HorizontalTable.vue
