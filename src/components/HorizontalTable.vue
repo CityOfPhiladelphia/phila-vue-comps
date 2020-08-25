@@ -813,21 +813,25 @@ export default {
         totals[field.label] = 0;
       }
       for (let item of this.items) {
+        console.log('item:', item);
         let theArray = [];
         for (let field of this.$props.options.fields) {
           if (field['value'](this.$store.state, item) === null) {
+            console.log('if 1 is running');
             theArray.push('');
           } else {
+            console.log('else 1 is running');
             theArray.push(field['value'](this.$store.state, item)) || '';
           }
 
-          if (field['value'](this.$store.state, item) === null || isNaN(field['value'](this.$store.state, item))) {
+          if (field['value'](this.$store.state, item) === null || field['value'](this.$store.state, item) === '' ||isNaN(field['value'](this.$store.state, item))) {
+            console.log('if 2 is running');
             // if (isNaN(field['value'](this.$store.state, item))) {
             // console.log('isnull:', field['value'](this.$store.state, item));
             totals[field.label] = '';
           } else {
-            // console.log('is not null:', field['value'](this.$store.state, item));
             totals[field.label] = totals[field.label] + parseFloat(field['value'](this.$store.state, item));
+            console.log("field['value'](this.$store.state, item):", field['value'](this.$store.state, item), "totals[field.label]:", totals[field.label], 'else 2 is running, is not null:', field['value'](this.$store.state, item));
           }
         }
         tableData.push(theArray);
@@ -837,11 +841,15 @@ export default {
       if (typeof this.$props.options.totalRow != 'undefined' && this.$props.options.totalRow.enabled) {
         let theArray = [];
         for (let field of this.$props.options.fields) {
+          console.log('totals:', totals, 'field:', field, 'totals[field.label]:', totals[field.label]);
           if (field.label.toLowerCase() === this.$props.options.totalRow.totalField) {
+            console.log('if is running');
             theArray.push('Total');
           } else if (totals[field.label] === '') {
+            console.log('else if is running');
             theArray.push('');
           } else {
+            console.log('else is running');
             theArray.push(parseFloat(totals[field.label]).toFixed(2));
           }
         }
@@ -913,7 +921,8 @@ export default {
           object[field.label] = typeof field['value'](this.$store.state, item) === 'undefined' ? "" :
             field['value'](this.$store.state, item) === null ? "" :
               field['value'](this.$store.state, item).toString().replace('#', 'No.');
-          if (isNaN(field['value'](this.$store.state, item))) {
+          if (field['value'](this.$store.state, item) === null || field['value'](this.$store.state, item) === '' ||isNaN(field['value'](this.$store.state, item))) {
+          // if (isNaN(field['value'](this.$store.state, item))) {
             // console.log('its NaN!');
             totals[field.label] = null;
           } else {
