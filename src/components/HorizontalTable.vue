@@ -924,7 +924,7 @@ export default {
           if (field['value'](this.$store.state, item) === null || field['value'](this.$store.state, item) === '' ||isNaN(field['value'](this.$store.state, item))) {
           // if (isNaN(field['value'](this.$store.state, item))) {
             // console.log('its NaN!');
-            totals[field.label] = null;
+            totals[field.label] = '';
           } else {
             if (!totals[field.label]) {
               totals[field.label] = parseFloat(field['value'](this.$store.state, item));
