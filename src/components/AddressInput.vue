@@ -9,6 +9,13 @@
       class="pvc-search-control-form"
       @submit.prevent="handleSearchFormSubmit"
     >
+      <label
+        :for="inputID"
+        title="search form"
+        class="accessible"
+      >
+        search form
+      </label>
       <input
         :id="inputID"
         :class="'pvc-search-control-input ' + inputClass"
@@ -22,6 +29,8 @@
     <button
       v-if="addressEntered != '' && addressEntered != null"
       :class="'pvc-search-control-button ' + buttonClass"
+      aria-label="delete button"
+      title="delete button"
       @click="handleFormX"
     >
       <font-awesome-icon icon="times" />
@@ -30,6 +39,8 @@
       :class="'pvc-search-control-button ' + buttonClass"
       name="pvc-search-control-button"
       tabindex="-1"
+      aria-label="search button"
+      title="search button"
       @click="handleSearchFormSubmit"
     >
       <font-awesome-icon icon="search" />
