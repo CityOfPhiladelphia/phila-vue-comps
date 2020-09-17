@@ -37,6 +37,13 @@
       </label>
     </div>
 
+    <div
+      v-if="!computedShouldShowCheckbox"
+      class="layer-name-no-checkbox"
+    >
+      <b>{{ layerName }}</b>
+    </div>
+
     <legend-box
       v-if="this.$store.state.map.webMapActiveLayers.includes(layerName) && computedShouldShowLegendBox"
       :layer="layer"
@@ -389,6 +396,14 @@ export default {
     vertical-align: middle;
     display: inline-block;
     margin-left: 30px;
+    margin-bottom: 6px;
+  }
+
+  .layer-name-no-checkbox {
+    font-weight: normal;
+    vertical-align: middle;
+    display: inline-block;
+    /* margin-left: 30px; */
     margin-bottom: 6px;
   }
 

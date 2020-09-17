@@ -29,7 +29,7 @@
 import TopicComponent from './TopicComponent.vue';
 
 export default {
-  name: 'infoBox',
+  name: 'InfoBox',
   components: {
     TopicComponentGroup: () => import(/* webpackChunkName: "pvc_TopicComponentGroup" */'./TopicComponentGroup.vue'),
   },

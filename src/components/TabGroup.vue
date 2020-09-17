@@ -3,7 +3,7 @@
     <ul
       class="tabs"
     >
-    <!-- data-tabs -->
+      <!-- data-tabs -->
       <li
         v-for="item in items"
         :key="keyForItem(item)"

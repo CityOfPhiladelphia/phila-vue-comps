@@ -77,8 +77,6 @@
               name="component2"
             />
           </td>
-
-
         </tr>
       </tbody>
     </table>
