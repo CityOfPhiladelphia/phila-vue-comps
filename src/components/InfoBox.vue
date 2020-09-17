@@ -48,9 +48,11 @@ export default {
       return null;
     },
     italic() {
+      let value;
       if (this.$props.options && this.$props.options.italic) {
-        return 'italic';
+        value = 'italic';
       }
+      return value;
     },
     textClass() {
       let value;
