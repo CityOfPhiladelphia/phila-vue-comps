@@ -1,6 +1,9 @@
 <template>
   <div :class="checkboxClass">
-    <div class="div-row">
+    <div
+      class="div-row"
+      v-if="computedShouldShowCheckbox"
+    >
       <a
         v-if="shouldShowDataLink"
         :href="'http://metadata.phila.gov/#home/representationdetails/' + bennyId"
@@ -91,16 +94,23 @@ export default {
     checkboxClass() {
       return this.webMapActiveLayers.includes(this.$props.layerName) ? 'main-div-selected' : 'main-div';
     },
+    computedShouldShowCheckbox() {
+      if (this.$props.options) {
+        if (Object.keys(this.$props.options).includes('shouldShowCheckbox')) {
+          return this.$props.options.shouldShowCheckbox;
+        }
+        return true;
+      }
+      return true;
+    },
     computedShouldShowLegendBox() {
       if (this.$props.options) {
         if (Object.keys(this.$props.options).includes('shouldShowLegendBox')) {
           return this.$props.options.shouldShowLegendBox;
         }
         return true;
-
       }
       return true;
-
     },
     computedShouldShowSlider() {
       if (this.$props.options) {
@@ -108,10 +118,8 @@ export default {
           return this.$props.options.shouldShowSlider;
         }
         return true;
-
       }
       return true;
-
     },
     matchingTags() {
       let matches = [];
