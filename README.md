@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.10 - 9/17/2020
+
+* re-releases due to npm error
+
 ### 2.1.9 - 9/17/2020
 
 * adds InfoBox.vue
