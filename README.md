@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.9 - 9/17/2020
+
+* adds InfoBox.vue
+
 ### 2.1.8 - 9/4/2020
 
 * changes for WAVE for atlas.phila.gov
