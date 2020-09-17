@@ -28,6 +28,7 @@ import HorizontalTableLight from './components/HorizontalTableLight.vue';
 import HorizontalTableGroup from './components/HorizontalTableGroup.vue';
 import HorizontalTableRow from './components/HorizontalTableRow.vue';
 import Image from './components/Image.vue';
+import InfoBox from './components/InfoBox.vue';
 import List from './components/List.vue';
 import OverlayToggleGroup from './components/OverlayToggleGroup.vue';
 import Paragraph from './components/Paragraph.vue';
@@ -67,6 +68,7 @@ export {
   HorizontalTableGroup,
   HorizontalTableRow,
   Image,
+  InfoBox,
   List,
   OverlayToggleGroup,
   Paragraph,

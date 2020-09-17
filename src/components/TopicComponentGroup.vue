@@ -48,6 +48,7 @@ export default {
     ePayForm: () => import(/* webpackChunkName: "tcg_pvc_ePayForm" */'./ePayForm.vue'),
     ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
     HorizontalTable: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTable" */'./HorizontalTable.vue'),
+    InfoBox: () => import(/* webpackChunkName: "tcg_pvc_InfoBox" */'./InfoBox.vue'),
     Image_: () => import(/* webpackChunkName: "tcg_pvc_Image" */'./Image.vue'),
     VerticalTable: () => import(/* webpackChunkName: "tcg_pvc_VerticalTable" */'./VerticalTable.vue'),
     OverlayToggleGroup: () => import(/* webpackChunkName: "tcg_pvc_OverlayToggleGroup" */'./OverlayToggleGroup.vue'),
