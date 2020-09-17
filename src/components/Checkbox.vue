@@ -1,8 +1,8 @@
 <template>
   <div :class="checkboxClass">
     <div
-      class="div-row"
       v-if="computedShouldShowCheckbox"
+      class="div-row"
     >
       <a
         v-if="shouldShowDataLink"
