@@ -7,6 +7,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons/faCaretRight';
-library.add(faExternalLinkAlt, faSearch, faTimes, faTimesCircle, faCaretLeft, faCaretRight);
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
+import { faMinus } from "@fortawesome/free-solid-svg-icons/faMinus";
+library.add(faExternalLinkAlt, faSearch, faTimes, faTimesCircle, faCaretLeft, faCaretRight, faPlus, faMinus);
 
 export default library;

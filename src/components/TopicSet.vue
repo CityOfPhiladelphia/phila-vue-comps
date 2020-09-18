@@ -1,9 +1,10 @@
 <template>
   <div>
-    <topic 
+    <topic
       v-for="topic in this.$config.topics"
       :key="topic.key"
       :topic-key="topic.key"
+      :options="options"
       @handle-topic-header-click="handleTopicHeaderClick"
       @get-more-records="getMoreRecords"
     />

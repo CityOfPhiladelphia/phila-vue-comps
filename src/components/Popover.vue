@@ -1,9 +1,10 @@
 <template>
   <div
     :style="plAlertStyle"
-    class="pl-alert"
+    :class="backgroundClass"
   >
     <span
+      v-if="shouldShowCloseButton"
       class="pl-alert-close-button"
       @click="close"
     >
@@ -43,6 +44,20 @@ export default {
       return '';
 
     },
+    shouldShowCloseButton() {
+      let value = true;
+      if (Object.keys(this.$props.options).includes('closeButton') && this.$props.options.closeButton === false) {
+        value = false;
+      }
+      return value;
+    },
+    backgroundClass() {
+      let value = 'pl-alert';
+      if (this.$props.options.background && this.$props.options.background === 'light') {
+        value = 'pl-alert-light';
+      }
+      return value;
+    }
   },
   beforeCreate() {
     this.$options.components.TopicComponentGroup = TopicComponentGroup;
@@ -73,6 +88,20 @@ export default {
     /* height: 300px; */
     width: 100%;
     background: rgba(68, 68, 68, 0.95);
+    color: #fff;
+    z-index: 10000;
+    font-size: 1.25em;
+    margin: 0 auto;
+    padding: 1em;
+    overflow-y: auto;
+  }
+
+  .pl-alert-light {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgb(255,255,255, 0.5);
     color: #fff;
     z-index: 10000;
     font-size: 1.25em;

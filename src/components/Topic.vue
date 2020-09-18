@@ -14,7 +14,7 @@
           {{ topic.label }}
         </div>
       </div>
-      <!-- <div class="loading"> -->
+
       <span
         v-show="status === 'waiting'"
         class="loading"
@@ -24,7 +24,15 @@
           class="fa-lg spin"
         />
       </span>
-      <!-- </div> -->
+
+      <span v-show="options.plusMinus && !shouldBeDisabled && !shouldShowBody">
+        <font-awesome-icon icon="plus"/>
+      </span>
+
+      <span v-show="options.plusMinus && !shouldBeDisabled && shouldShowBody">
+        <font-awesome-icon icon="minus"/>
+      </span>
+
     </a>
 
     <!-- success -->
@@ -53,11 +61,14 @@
 </template>
 
 <script>
+
+import TopicComponent from './TopicComponent.vue';
 import TopicComponentGroup from './TopicComponentGroup.vue';
 
 export default {
   name: 'Topic',
   components: {},
+  mixins: [ TopicComponent ],
   props: [ 'topicKey' ],
   computed: {
     shouldBeDisabled() {
@@ -348,6 +359,7 @@ export default {
   }
 
   .topic-header-disabled {
+    opacity: 40%;
     pointer-events: none;
     cursor: default;
   }
