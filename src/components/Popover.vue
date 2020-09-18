@@ -57,7 +57,7 @@ export default {
         value = 'pl-alert-light';
       }
       return value;
-    }
+    },
   },
   beforeCreate() {
     this.$options.components.TopicComponentGroup = TopicComponentGroup;
