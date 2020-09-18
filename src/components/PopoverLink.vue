@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div :style="divStyle">
     {{ evaluateFieldLabel() }}
-    <a 
+    <a
       :title="value + ' ' + popoverValue"
       :style="this.$props.options.customStyle"
       class="popover-link"
@@ -29,6 +29,13 @@ export default {
     popoverOptions() {
       return this.$props.options;
     },
+    divStyle() {
+      let value;
+      if (this.$props.options.divStyle) {
+        value = this.$props.options.divStyle;
+      }
+      return value;
+    },
     value() {
       const value = this.$props.slots.value;
       const transforms = this.$props.slots.transforms || [];
@@ -52,16 +59,16 @@ export default {
     shouldShowValue() {
       if (this.$props.slots.shouldShowValue === false) {
         return false;
-      } 
+      }
       return true;
-        
+
     },
     popoverText() {
       if (this.shouldShowValue === true) {
         return this.popoverPreText + ' ' + this.popoverValue + ' ' + this.popoverPostText;
-      } 
+      }
       return this.popoverPreText + ' ' + this.popoverPostText;
-        
+
     },
   },
   created() {
@@ -87,9 +94,9 @@ export default {
         return '';
       } else if (this.showFieldLabel) {
         return this.$props.fieldLabel + ': ';
-      } 
+      }
       return '';
-        
+
     },
   },
 };
