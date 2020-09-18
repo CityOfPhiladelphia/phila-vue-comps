@@ -26,11 +26,11 @@
       </span>
 
       <span v-show="options.plusMinus && !shouldBeDisabled && !shouldShowBody">
-        <font-awesome-icon icon="plus"/>
+        <font-awesome-icon icon="plus" />
       </span>
 
       <span v-show="options.plusMinus && !shouldBeDisabled && shouldShowBody">
-        <font-awesome-icon icon="minus"/>
+        <font-awesome-icon icon="minus" />
       </span>
 
     </a>
