@@ -359,7 +359,7 @@ export default {
   }
 
   .topic-header-disabled {
-    opacity: 40%;
+    opacity: 0.4;
     pointer-events: none;
     cursor: default;
   }
