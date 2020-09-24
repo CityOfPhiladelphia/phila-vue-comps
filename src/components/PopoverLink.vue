@@ -108,7 +108,7 @@ export default {
     border-bottom: 1px dotted;
     font-weight: bold;
     /* color: #444; */
-    color: #2176d2;
+    color: #0f4d90;
   }
 
 </style>

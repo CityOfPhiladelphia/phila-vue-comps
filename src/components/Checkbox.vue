@@ -38,10 +38,10 @@
     </div>
 
     <div
-      v-if="!computedShouldShowCheckbox"
+      v-if="!computedShouldShowCheckbox && !shouldBeDisabled"
       class="layer-name-no-checkbox"
     >
-      <b>{{ layerName }}</b>
+      <b>{{ computedLayerName }}</b>
     </div>
 
     <legend-box
@@ -98,8 +98,14 @@ export default {
     };
   },
   computed: {
-    checkboxClass() {
-      return this.webMapActiveLayers.includes(this.$props.layerName) ? 'main-div-selected' : 'main-div';
+    computedLayerName() {
+      let value;
+      if (this.$props.options.layerNameChange) {
+        value = this.$props.options.layerNameChange
+      } else {
+        value = this.$props.layerName;
+      }
+      return value;
     },
     computedShouldShowCheckbox() {
       if (this.$props.options) {
@@ -111,6 +117,9 @@ export default {
       return true;
     },
     computedShouldShowLegendBox() {
+      if (this.shouldBeDisabled) {
+        return false;
+      }
       if (this.$props.options) {
         if (Object.keys(this.$props.options).includes('shouldShowLegendBox')) {
           return this.$props.options.shouldShowLegendBox;
@@ -127,6 +136,18 @@ export default {
         return true;
       }
       return true;
+    },
+    checkboxClass() {
+      // return this.webMapActiveLayers.includes(this.$props.layerName) ? 'main-div-selected' : 'main-div';
+      let value;
+      if (!this.computedShouldShowCheckbox && this.shouldBeDisabled) {
+        value = 'hide-div'
+      } else if (this.webMapActiveLayers.includes(this.$props.layerName)) {
+        'main-div-selected';
+      } else {
+        value = 'main-div';
+      }
+      return value;
     },
     matchingTags() {
       let matches = [];
@@ -148,13 +169,14 @@ export default {
     shouldBeDisabled() {
       let value;
       const def = this.$props.layerDefinition;
+      console.log('shouldBeDisabled is running, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
       if (def) {
         if (def.minScale) {
-          if (this.scale > def.minScale) {
-            value = true;
+          if (this.scale < def.minScale && this.scale > def.maxScale) {
+            value = false;
             // return true;
           } else {
-            value = false;
+            value = true;
           }
         }
       } else {
@@ -310,6 +332,10 @@ export default {
 </script>
 
 <style scoped>
+
+  .hide-div {
+    display: none;
+  }
 
   .main-div-selected {
     padding-bottom: 20px;
