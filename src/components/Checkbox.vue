@@ -101,7 +101,7 @@ export default {
     computedLayerName() {
       let value;
       if (this.$props.options.layerNameChange) {
-        value = this.$props.options.layerNameChange
+        value = this.$props.options.layerNameChange;
       } else {
         value = this.$props.layerName;
       }
@@ -141,7 +141,7 @@ export default {
       // return this.webMapActiveLayers.includes(this.$props.layerName) ? 'main-div-selected' : 'main-div';
       let value;
       if (!this.computedShouldShowCheckbox && this.shouldBeDisabled) {
-        value = 'hide-div'
+        value = 'hide-div';
       } else if (this.webMapActiveLayers.includes(this.$props.layerName)) {
         'main-div-selected';
       } else {
@@ -169,7 +169,7 @@ export default {
     shouldBeDisabled() {
       let value;
       const def = this.$props.layerDefinition;
-      console.log('shouldBeDisabled is running, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
+      // console.log('shouldBeDisabled is running, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
       if (def) {
         if (def.minScale) {
           if (this.scale < def.minScale && this.scale > def.maxScale) {
