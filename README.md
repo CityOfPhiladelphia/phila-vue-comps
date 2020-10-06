@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.15 - 10/6/2020
+
+* ran yarn upgrades
+
 ### 2.1.14 - 9/18/2020
 
 * changes for layerboard for streetsmart
