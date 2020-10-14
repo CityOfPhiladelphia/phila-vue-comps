@@ -21,11 +21,11 @@ export default {
     Topic,
   },
   mixins: [ TopicComponent ],
-  mounted() {
-    if (this.$store.state.activeTopic === null || this.$store.state.activeTopic === '') {
-      this.setDefaultTopicActive();
-    }
-  },
+  // mounted() {
+  //   if (this.$store.state.activeTopic === null || this.$store.state.activeTopic === '') {
+  //     this.setDefaultTopicActive();
+  //   }
+  // },
   methods: {
     getMoreRecords(dataSource, highestPageRetrieved) {
       // console.log('TopicSet getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
@@ -36,6 +36,7 @@ export default {
       this.$emit('handle-topic-header-click', nextTopic);
     },
     setDefaultTopicActive() {
+      console.log('TopicSet setDefaultTopicActive is running');
       if (this.$props.options.defaultTopic) {
         this.$store.commit('setActiveTopic', this.$props.options.defaultTopic);
         // this.$store.state.activeTopic = this.$props.options.defaultTopic;
