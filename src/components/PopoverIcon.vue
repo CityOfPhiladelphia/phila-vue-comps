@@ -1,7 +1,7 @@
 <template>
   <div :style="divStyle">
+    <!-- v-show="!i18nListIsOpen" -->
     <font-awesome-icon
-      v-show="!i18nListIsOpen"
       icon="globe"
       size="2x"
       :style="{ color: 'white' }"

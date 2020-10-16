@@ -11,6 +11,7 @@
         class="topic-component"
         @handle-topic-header-click="handleTopicHeaderClick"
         @get-more-records="getMoreRecords"
+        @close-popover="closePopover"
       />
     </div>
     <div v-if="isList">
@@ -27,6 +28,7 @@
           class="topic-component"
           @handle-topic-header-click="handleTopicHeaderClick"
           @get-more-records="getMoreRecords"
+          @close-popover="closePopover"
         />
       </li>
     </div>
@@ -91,6 +93,10 @@ export default {
     getMoreRecords(dataSource, highestPageRetrieved) {
       // console.log('TopicComponentGroup getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);
       this.$emit('get-more-records', dataSource, highestPageRetrieved);
+    },
+    closePopover() {
+      console.log('TopicComponentGroup closePopover is running');
+      this.$emit('close-popover');
     },
   },
 };

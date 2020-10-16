@@ -18,6 +18,7 @@
       <topic-component-group
         :topic-components="options.components"
         :item="item"
+        @close-popover="close"
       />
     </div>
   </div>
