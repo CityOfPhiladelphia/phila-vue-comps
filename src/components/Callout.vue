@@ -3,8 +3,12 @@
     <!-- <div class="callout columns small-24"> -->
     <div :class="'callout ' + calloutClass">
       <p
-        v-if="message"
+        v-if="message && !i18nEnabled"
         v-html="message"
+      />
+      <p
+        v-if="message && i18nEnabled"
+        v-html="$t(message)"
       />
       <topic-component-group
         v-if="components"
@@ -24,6 +28,10 @@ export default {
   },
   mixins: [ TopicComponent ],
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
     calloutClass() {
       let value;
       if (this.$props.options) {

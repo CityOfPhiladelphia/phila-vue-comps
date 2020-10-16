@@ -3,12 +3,20 @@
     v-if="shouldShowTable"
     class="table-container"
   >
+
     <h4
-      v-if="slots.title"
+      v-if="slots.title && !i18nEnabled"
       class="table-title"
     >
       {{ evaluateSlot(slots.title) }}
     </h4>
+    <h4
+      v-if="slots.title && i18nEnabled"
+      class="table-title"
+      v-html="$t(evaluateSlot(slots.title))"
+    >
+    </h4>
+
     <table :id="this.$props.options.id">
       <tbody>
         <tr
@@ -17,12 +25,18 @@
         >
           <th
             :style="styles.th || ''"
-            v-html="evaluateSlot(field.label)"
+            v-html="$t(evaluateSlot(field.label))"
           />
+
           <td
-            v-if="hasData"
+            v-if="hasData && !i18nEnabled"
             v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
+          <td
+            v-if="hasData && i18nEnabled"
+            v-html="$t(evaluateSlot(field.value, field.transforms, nullValue))"
+          />
+
           <td
             v-if="!hasData"
             v-html="''"
@@ -48,6 +62,10 @@ export default {
   },
   mixins: [ TopicComponent ],
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
     styles() {
       if (this.$props.options.styles) {
         return this.$props.options.styles;

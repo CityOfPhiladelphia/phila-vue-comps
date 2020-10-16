@@ -5,31 +5,34 @@
     class="center"
   >
     <div class="mb-badge panel">
+
       <div
+        v-if="!i18nEnabled"
         :style="style"
         class="mb-badge-header"
       >
         {{ evaluateSlot(slots.title) }}
       </div>
+      <div
+        v-if="i18nEnabled"
+        :style="style"
+        class="mb-badge-header"
+        v-html="$t(evaluateSlot(slots.title))"
+      >
+      </div>
+
       <div class="mb-badge-body">
         <h1>{{ evaluateSlot(slots.value) }}</h1>
         <strong>{{ evaluateSlot(slots.description) }}</strong>
       </div>
     </div>
+
     <external-link
       v-if="options && options.externalLink"
       :options="options.externalLink"
       :type="'badge'"
     />
-    <!-- <div class="external-link">
-      <a v-if="options && options.externalLink"
-      :href="externalLinkHref"
-      class="external external-link"
-      target="_blank"
-      >
-      {{ externalLinkText }}
-      </a>
-    </div> -->
+
   </div>
 </template>
 
@@ -45,22 +48,12 @@ export default {
   },
   mixins: [ TopicComponent ],
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
     style() {
       let titleBackground = this.evaluateSlot(this.slots.titleBackground);
-      // const titleBackgroundValOrFn = (this.slots || {}).titleBackground;
-      // let titleBackground;
-      //
-      // if (titleBackgroundValOrFn) {
-      //   console.log('titleBackgroundValOrFn', titleBackgroundValOrFn)
-      //   if (typeof titleBackgroundValOrFn === 'function') {
-      //     titleBackground = titleBackgroundValOrFn(this.$store.state);
-      //   } else {
-      //     titleBackground = titleBackgroundValOrFn;
-      //   }
-      // } else {
-      //   titleBackground = '#444';
-      // }
-      //
       return { background: titleBackground };
     },
     shouldShowBadge() {
@@ -80,18 +73,6 @@ export default {
       }
       return items;
     },
-    // externalLinkAction() {
-    //   return this.evaluateSlot(this.options.externalLink.action) || 'See more at ';
-    // },
-    // externalLinkText() {
-    //   const externalLinkConf = this.options.externalLink;
-    //   const actionFn = externalLinkConf.action;
-    //   const name = this.externalLinkAction || '';
-    //   return `${name}`;
-    // },
-    // externalLinkHref() {
-    //   return this.evaluateSlot(this.options.externalLink.href);
-    // },
   },
 };
 </script>

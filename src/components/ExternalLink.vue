@@ -1,6 +1,7 @@
 <template>
   <div class="external-link">
     <a
+      v-if="!i18nEnabled"
       :href="externalLinkHref"
       target="_blank"
     >
@@ -10,6 +11,25 @@
         aria-hidden="true"
       />
     </a>
+
+    <a
+      v-if="i18nEnabled"
+      :href="externalLinkHref"
+      target="_blank"
+      v-html="$t(externalLinkText)"
+    >
+    </a>
+    <a
+      v-if="i18nEnabled"
+      :href="externalLinkHref"
+      target="_blank"
+    >
+      <font-awesome-icon
+        icon="external-link-alt"
+        aria-hidden="true"
+      />
+    </a>
+
   </div>
 </template>
 
@@ -20,6 +40,10 @@ export default {
   mixins: [ TopicComponent ],
   props: [ 'count', 'limit', 'type' ],
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
     // for horizontal tables only
     externalLinkCount() {
       return this.count - this.limit;
