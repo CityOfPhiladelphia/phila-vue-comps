@@ -21,10 +21,22 @@
       >
       </div>
 
-      <div class="mb-badge-body">
+      <div
+        v-if="!i18nEnabled"
+        class="mb-badge-body"
+      >
         <h1>{{ evaluateSlot(slots.value) }}</h1>
         <strong>{{ evaluateSlot(slots.description) }}</strong>
       </div>
+      <div
+        v-if="i18nEnabled"
+        class="mb-badge-body"
+        v-html="'<h1>'+$t(evaluateSlot(slots.value))+'</h1>'"
+      >
+        <!-- <h1>{{ evaluateSlot(slots.value) }}</h1>
+        <strong>{{ evaluateSlot(slots.description) }}</strong> -->
+      </div>
+
     </div>
 
     <external-link

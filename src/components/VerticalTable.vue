@@ -33,9 +33,17 @@
             v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
           <td
-            v-if="hasData && i18nEnabled"
+            v-if="hasData && i18nEnabled && !field.link"
             v-html="$t(evaluateSlot(field.value, field.transforms, nullValue))"
           />
+          <td
+            v-if="hasData && i18nEnabled && field.link"
+            v-html="'<a target=`_blank` href=' + field.link + '>'+$t(evaluateSlot(field.value, field.transforms, nullValue))+'</a>'"
+          />
+          <!-- <td
+            v-if="hasData && i18nEnabled && field.translation == 'partial'"
+            v-html="calculatePartialTranslation(evaluateSlot(field.value, field.transforms, nullValue))"
+          /> -->
 
           <td
             v-if="!hasData"
@@ -130,6 +138,29 @@ export default {
 
     },
   },
+  // methods: {
+  //   calculatePartialTranslation(str) {
+  //     console.log('calculatePartialTranslation is running, value:', str, 'this.$i18n:', this.$i18n.locale, 'this.$config.i18n.data.messages:', this.$config.i18n.data.messages);
+  //     let messages = this.$config.i18n.data.messages[this.$i18n.locale];
+  //     let stringSplit = str.split('$t');
+  //     let newString = '';
+  //     for (let section of stringSplit) {
+  //       if (!section.includes('messages')) {
+  //         let test = 1;
+  //         // newString += section;
+  //       } else {
+  //         let sectionSplit = section.split('.');
+  //         console.log('sectionSplit:', sectionSplit);
+  //         let i;
+  //         // for (i=1; i<sectionSplit.length-1;i++) {
+  //         // }
+  //         // newString += messages[]
+  //       }
+  //     }
+  //     console.log('i18nSubstitute is running, str:', str, 'stringSplit:', stringSplit, 'messages:', messages, 'messages.voting:', messages.voting);
+  //     return messages['voting']['introPage'].p4;
+  //   },
+  // },
 };
 </script>
 
