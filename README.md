@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.20 - 10/23/2020
+
+* completes BadgeSet.vue component
+
 ### 2.1.19 - 10/23/2020
 
 * another attempt to push with github actions
