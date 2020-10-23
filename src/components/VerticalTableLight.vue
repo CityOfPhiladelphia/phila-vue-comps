@@ -35,7 +35,7 @@
 
           <!-- data -->
           <td
-            v-if="hasData && field.valueType !== 'i18n' && field.valueType !== 'component' && field.valueType !== 'component1' && field.valueType !== 'component2'"
+            v-if="hasData && field.valueType !== 'i18n' && field.valueType !== 'component' && field.valueType !== 'component1' && field.valueType !== 'component2' && field.valueType !== 'component3' && field.valueType !== 'component4'"
             :style="styles.td || ''"
             v-html="evaluateSlot(field.value, field.transforms, nullValue)"
           />
@@ -77,6 +77,23 @@
               name="component2"
             />
           </td>
+
+          <td
+            v-if="field.valueType === 'component3'"
+          >
+            <slot
+              name="component3"
+            />
+          </td>
+
+          <td
+            v-if="field.valueType === 'component4'"
+          >
+            <slot
+              name="component4"
+            />
+          </td>
+
         </tr>
       </tbody>
     </table>
