@@ -5,7 +5,8 @@
     class="center"
   >
     <div
-      v-for="propZone of evaluateSlot(slots.data)"
+      v-for="(propZone, index) of evaluateSlot(slots.data)"
+      :key="index"
       class="mb-badge panel"
     >
 
