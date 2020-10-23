@@ -43,6 +43,7 @@ export default {
   components: {
     Anchor: () => import(/* webpackChunkName: "tcg_pvc_Anchor" */'./Anchor.vue'),
     Badge: () => import(/* webpackChunkName: "tcg_pvc_Badge" */'./Badge.vue'),
+    BadgeSet: () => import(/* webpackChunkName: "tcg_pvc_Badge" */'./BadgeSet.vue'),
     ButtonComp: () => import(/* webpackChunkName: "tcg_pvc_ButtonComp" */'./ButtonComp.vue'),
     Callout: () => import(/* webpackChunkName: "tcg_pvc_Callout" */'./Callout.vue'),
     CollectionSummary: () => import(/* webpackChunkName: "tcg_pvc_CollectionSummary" */'./CollectionSummary.vue'),
