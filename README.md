@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.18 - 10/23/2020
+
+* setting up push with github actions
+
 ### 2.1.17 - 10/23/2020
 
 * changes to VerticalTableLight.vue for Covid Testing site
