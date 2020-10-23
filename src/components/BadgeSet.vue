@@ -5,49 +5,17 @@
     class="center"
   >
     <div
-      v-for="(propZone, index) of evaluateSlot(slots.data)"
+      v-for="(propZone, index) in evaluateSlot(slots.data)"
       :key="index"
       class="mb-badge panel"
     >
 
-      <div
-        v-if="!i18nEnabled"
-        :style="style"
-        class="mb-badge-header"
+      <badge
+        :slots="getSlots(propZone)"
       >
-        {{ evaluateSlot(slots.title) }}
-      </div>
-      <div
-        v-if="i18nEnabled"
-        :style="style"
-        class="mb-badge-header"
-        v-html="$t(evaluateSlot(slots.title))"
-      >
-      </div>
-
-      <div
-        v-if="!i18nEnabled"
-        class="mb-badge-body"
-      >
-        <h1>{{ evaluateSlot(slots.value) }}</h1>
-        <strong>{{ evaluateSlot(slots.description) }}</strong>
-      </div>
-      <div
-        v-if="i18nEnabled"
-        class="mb-badge-body"
-        v-html="'<h1>'+$t(evaluateSlot(slots.value))+'</h1>'"
-      >
-        <!-- <h1>{{ evaluateSlot(slots.value) }}</h1>
-        <strong>{{ evaluateSlot(slots.description) }}</strong> -->
-      </div>
+      </badge>
 
     </div>
-
-    <!-- <external-link
-      v-if="options && options.externalLink"
-      :options="options.externalLink"
-      :type="'badge'"
-    /> -->
 
   </div>
 </template>
@@ -91,6 +59,27 @@ export default {
       return items;
     },
   },
+  methods: {
+    getSlots(item) {
+      console.log('getSlots is running, item:', item);
+      let value = {
+        data: item,
+        title: 'Base Zoning Change Under Consideration',
+        titleBackground: '#e08916',
+        value: 'Proposed Zoning: ' + item.properties.PropZone,
+        description: 'A zoning change has been proposed here, but it has not yet been introduced as legislation. See ZID ' + item.properties.ZID + ' in the table below for details on this proposed change.',
+        // value: function (item) {
+        //   const proposedOnlyRemapping = state.sources.propZoning.data.find(i => i.properties.ReMap_Status === "Proposed Only");
+        //   return "Proposed Zoning: " + proposedOnlyRemapping.properties.PropZone;
+        // },
+        // description: function (state) {
+        //   const proposedOnlyRemapping = state.sources.propZoning.data.find(i => i.properties.ReMap_Status === "Proposed Only");
+        //   return 'A zoning change has been proposed here, but it has not yet been introduced as legislation. See ZID ' + proposedOnlyRemapping.properties.ZID + ' in the table below for details on this proposed change.';
+        // }
+      }
+      return value;
+    }
+  }
 };
 </script>
 
