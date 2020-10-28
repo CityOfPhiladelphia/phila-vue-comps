@@ -48,6 +48,7 @@ export default {
       buttonStyle: 'height: ' + this.$props.options.height + 'px;\
          width: ' + this.$props.options.width + 'px;\
          font-size: ' + this.$props.options.fontSize + 'px;\
+         color: ' + this.$props.options.fontColor + ';\
          ',
       actionAddress: this.$props.options.actionAddress || 'https://test-secure.phila.gov/PaymentCenter/Gateway1/InitiatePurchase.aspx',
     };
@@ -120,5 +121,13 @@ export default {
 </script>
 
 <style scoped>
+
+.external {
+  color: rgb(64, 64, 64);
+}
+
+.external:hover {
+  color: white;
+}
 
 </style>

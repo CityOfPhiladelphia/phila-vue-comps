@@ -23,12 +23,12 @@
 <script>
 // console.log('in Badge.vue script');
 import TopicComponent from './TopicComponent.vue';
-import ExternalLink from './ExternalLink.vue';
+// import ExternalLink from './ExternalLink.vue';
 
 export default {
   name: 'BadgeSet',
   components: {
-    ExternalLink,
+    // ExternalLink,
     Badge: () => import(/* webpackChunkName: "htg_pvc_Badge" */'./Badge.vue'),
   },
   mixins: [ TopicComponent ],
@@ -76,10 +76,10 @@ export default {
         //   const proposedOnlyRemapping = state.sources.propZoning.data.find(i => i.properties.ReMap_Status === "Proposed Only");
         //   return 'A zoning change has been proposed here, but it has not yet been introduced as legislation. See ZID ' + proposedOnlyRemapping.properties.ZID + ' in the table below for details on this proposed change.';
         // }
-      }
+      };
       return value;
-    }
-  }
+    },
+  },
 };
 </script>
 
