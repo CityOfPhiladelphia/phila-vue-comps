@@ -48,7 +48,6 @@ export default {
     Callout: () => import(/* webpackChunkName: "tcg_pvc_Callout" */'./Callout.vue'),
     CollectionSummary: () => import(/* webpackChunkName: "tcg_pvc_CollectionSummary" */'./CollectionSummary.vue'),
     Division: () => import(/* webpackChunkName: "tcg_pvc_Division" */'./Division.vue'),
-    ePayForm: () => import(/* webpackChunkName: "tcg_pvc_ePayForm" */'./ePayForm.vue'),
     ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
     HorizontalTable: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTable" */'./HorizontalTable.vue'),
     InfoBox: () => import(/* webpackChunkName: "tcg_pvc_InfoBox" */'./InfoBox.vue'),

@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 2.1.22 - 11/12/2020
+
+* removes files that were specific to real estate tax
+
 ### 2.1.21 - 10/28/2020
 
 * fixes buttons on HorizontalTable.vue
