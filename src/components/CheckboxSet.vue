@@ -6,7 +6,7 @@
           v-for="(currentWmLayer) in currentWmLayers"
           :key="currentWmLayer.id"
           :layer="currentWmLayer.layer"
-          :layer-name="currentWmLayer.title"
+          :layer-name="evaluateSlot(currentWmLayer.title)"
           :layer-id="currentWmLayer.id"
           :layer-definition="currentWmLayer.rest.layerDefinition"
           :opacity="currentWmLayer.opacity"
@@ -69,13 +69,17 @@ export default {
       const topicLayers = this.topicLayers;
       let topicLayersKeys = [];
       for (let topicLayer of topicLayers) {
-        topicLayersKeys.push(topicLayer.title);
+        let evalTitle = this.evaluateSlot(topicLayer.title);
+        // console.log('checkboxset currentWmLayer, topicLayer:', topicLayer, 'evalTitle:', evalTitle);
+        topicLayersKeys.push(evalTitle);
+        // topicLayersKeys.push(topicLayer.title);
       }
       let currentLayers = [];
       let currentLayersOrdered = [];
 
       // loop through all layers to calculate currentLayers
       for (let layer of layers) {
+        // console.log('in loop, layer:', layer);
         const lcFilter = this.inputLayerFilter.toLowerCase();
         const lcTagsFilter = this.inputTagsFilter.toLowerCase();
         const lcTitle = layer.title.toLowerCase();
@@ -89,7 +93,7 @@ export default {
               || topicLayersKeys.includes(layer.title) && this.activeLayers.includes(layer.title)
           ) {
             for (let topicLayer of topicLayers) {
-              if (topicLayer.title === layer.title) {
+              if (this.evaluateSlot(topicLayer.title) === layer.title) {
                 layer.options = topicLayer.options;
               }
             }
@@ -102,7 +106,7 @@ export default {
               || topicLayersKeys.includes(layer.title) && this.activeLayers.includes(layer.title)
           ) {
             for (let topicLayer of topicLayers) {
-              if (topicLayer.title === layer.title) {
+              if (this.evaluateSlot(topicLayer.title) === layer.title) {
                 layer.options = topicLayer.options;
               }
             }
@@ -114,7 +118,8 @@ export default {
               || topicLayersKeys.includes(layer.title) && this.activeLayers.includes(layer.title)
           ) {
             for (let topicLayer of topicLayers) {
-              if (topicLayer.title === layer.title) {
+              // console.log('in loop, topicLayer:', topicLayer);
+              if (this.evaluateSlot(topicLayer.title) === layer.title) {
                 layer.options = topicLayer.options;
               }
             }
