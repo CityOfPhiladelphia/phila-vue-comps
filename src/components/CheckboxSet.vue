@@ -13,6 +13,7 @@
           :legend="currentWmLayer.legend"
           :should-show-data-links="computedShouldShowDataLinks"
           :options="currentWmLayer.options"
+          :hideDisabled="hideDisabledCheckboxes"
         />
       </fieldset>
     </form>
@@ -29,6 +30,15 @@ export default {
   },
   mixins: [ TopicComponent ],
   computed: {
+    hideDisabledCheckboxes() {
+      let value;
+      if (this.$props.options.hideDisabledCheckboxes) {
+        value = true;
+      } else {
+        value = false;
+      }
+      return value;
+    },
     categories() {
       return this.$store.state.map.categories;
     },

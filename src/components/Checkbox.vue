@@ -91,6 +91,7 @@ export default {
     'legend',
     'tags',
     'shouldShowDataLinks',
+    'hideDisabled',
   ],
   data() {
     return {
@@ -111,6 +112,10 @@ export default {
       if (this.$props.options) {
         if (Object.keys(this.$props.options).includes('shouldShowCheckbox')) {
           return this.$props.options.shouldShowCheckbox;
+        } else if (Object.keys(this.$props).includes('hideDisabled')) {
+          if (this.$props.hideDisabled && this.shouldBeDisabled) {
+            return false;
+          }
         }
         return true;
       }
