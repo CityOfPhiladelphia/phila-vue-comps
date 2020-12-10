@@ -33,7 +33,7 @@
         :for="'checkbox-'+layerName"
         :class="{ disabled: shouldBeDisabled, 'label-text': shouldShowDataLink, 'label-text-no-datalinks': !shouldShowDataLink }"
       >
-        <div class="layer-name">{{ layerName }}</div>
+        <div class="layer-name">{{ computedLayerName }}</div>
       </label>
     </div>
 
