@@ -33,7 +33,7 @@
         :for="'checkbox-'+layerName"
         :class="{ disabled: shouldBeDisabled, 'label-text': shouldShowDataLink, 'label-text-no-datalinks': !shouldShowDataLink }"
       >
-        <div class="layer-name">{{ layerName }}</div>
+        <div class="layer-name">{{ computedLayerName }}</div>
       </label>
     </div>
 
@@ -91,6 +91,7 @@ export default {
     'legend',
     'tags',
     'shouldShowDataLinks',
+    'hideDisabled',
   ],
   data() {
     return {
@@ -111,6 +112,10 @@ export default {
       if (this.$props.options) {
         if (Object.keys(this.$props.options).includes('shouldShowCheckbox')) {
           return this.$props.options.shouldShowCheckbox;
+        } else if (Object.keys(this.$props).includes('hideDisabled')) {
+          if (this.$props.hideDisabled && this.shouldBeDisabled) {
+            return false;
+          }
         }
         return true;
       }
@@ -169,20 +174,35 @@ export default {
     shouldBeDisabled() {
       let value;
       const def = this.$props.layerDefinition;
-      // console.log('shouldBeDisabled is running, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
       if (def) {
         if (def.minScale) {
+          // console.log('shouldBeDisabled is running, if def.minScale, this.$props.layerName:', this.$props.layerName, 'def:', def);
           if (this.scale < def.minScale && this.scale > def.maxScale) {
+            // console.log('shouldBeDisabled is running, first if, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
             value = false;
             // return true;
           } else {
+            // console.log('shouldBeDisabled is running, first else, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
+            value = true;
+          }
+        } else if (def.maxScale) {
+          // console.log('shouldBeDisabled is running, if def.maxScale, this.$props.layerName:', this.$props.layerName, 'def:', def);
+          if (this.scale > def.maxScale) {
+            // console.log('shouldBeDisabled is running, first if, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
+            value = false;
+            // return true;
+          } else {
+            // console.log('shouldBeDisabled is running, first else, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
             value = true;
           }
         }
+        // console.log('shouldBeDisabled is running, lost zone, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
       } else {
+        // console.log('shouldBeDisabled is running, 2nd else, this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
         value = false;
         // return false;
       }
+      // console.log('shouldBeDisabled is running, value:', value, 'this.$props.layerName:', this.$props.layerName, 'def.minScale:', def.minScale, 'def.maxScale:', def.maxScale, 'this.scale:', this.scale);
       return value;
     },
     layerUrls() {

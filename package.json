@@ -19,7 +19,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/vue-fontawesome": "^0.1.5",
     "axios": "^0.19.0",
-    "date-fns": "^2.8.1",
+    "date-fns": "^2.23.0",
     "escape-html": "^1.0.3",
     "jspdf": "^1.4.1",
     "jspdf-autotable": "^3.2.8",
@@ -47,5 +47,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "engines": {
+    "yarn": "YARN NO LONGER USED - use npm instead."
+  }
 }

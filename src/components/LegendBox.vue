@@ -80,9 +80,9 @@ export default {
     },
     createLegend(scale) {
       const legend = this.$props.legend;
-      // console.log('METHOD createLegend running, this.$props.layerId:', this.$props.layerId, 'scale:', scale, 'legend:', legend);
+      console.log('METHOD createLegend running, this.$props.layerId:', this.$props.layerId, 'scale:', scale, 'legend:', legend);
       let layersHtml = '';
-      if (legend.layers.length === 1) {
+      if (legend && legend.layers.length === 1) {
         const layer = legend.layers[0];
         let legendsHtml = '';
         for (let layerLegend of layer.legend) {
@@ -97,7 +97,7 @@ export default {
           layerName: layer.layerName,
           legends: legendsHtml,
         });
-      } else {
+      } else if (legend) {
         for (let layer of legend.layers) {
           // console.log('max:', layer.maxScale, 'scale:', scale, 'min:', layer.minScale);
           let legendsHtml = '';
