@@ -1,7 +1,7 @@
 {
   "name": "@phila/vue-comps",
   "description": "A library of vue components for js apps",
-  "version": "2.1.23",
+  "version": "3.0.0",
   "author": "City of Philadelphia <maps@phila.gov>",
   "license": "MIT",
   "private": false,
