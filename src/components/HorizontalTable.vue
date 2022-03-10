@@ -89,7 +89,7 @@
               class="pvc-search-control-button"
             >
               <font-awesome-icon
-                icon="times"
+                icon="xmark"
                 class="fa-lg"
               />
             </button>
