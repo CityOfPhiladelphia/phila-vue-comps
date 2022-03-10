@@ -7,7 +7,7 @@
     >
       {{ externalLinkText }}
       <font-awesome-icon
-        icon="external-link-alt"
+        icon="arrow-up-right-from-square"
         aria-hidden="true"
       />
     </a>
@@ -25,7 +25,7 @@
       target="_blank"
     >
       <font-awesome-icon
-        icon="external-link-alt"
+        icon="arrow-up-right-from-square"
         aria-hidden="true"
       />
     </a>
