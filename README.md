@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 3.0.2 - 3/18/2022
+
+* rolls back to fontawesome 5.15.4 so that it is not ahead of phila-ui
+
 ### 3.0.1 - 3/10/2022
 
 * upgrades to fontawesome 6.0.0, updates icons.
