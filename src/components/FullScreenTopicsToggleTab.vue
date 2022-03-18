@@ -108,8 +108,7 @@ export default {
   }
 
   .align-span {
-    margin-left: 2px;
-    margin-right: 2px;
+    margin-left: 6px;
     margin-top: 30px;
   }
 

@@ -9,7 +9,7 @@
       @click="close"
     >
       <font-awesome-icon
-        icon="circle-xmark"
+        icon="times-circle"
         class="fa-2x"
       />
     </span>

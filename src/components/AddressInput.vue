@@ -33,7 +33,7 @@
       title="delete button"
       @click="handleFormX"
     >
-      <font-awesome-icon icon="xmark" />
+      <font-awesome-icon icon="times" />
     </button>
     <button
       :class="'pvc-search-control-button ' + buttonClass"

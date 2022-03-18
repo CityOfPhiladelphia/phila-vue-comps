@@ -39,7 +39,7 @@
         class="search-x"
         @click="clearSearch"
       >
-        <font-awesome-icon icon="xmark" />
+        <font-awesome-icon icon="times" />
       </button>
       <button
         class="search-submit"
