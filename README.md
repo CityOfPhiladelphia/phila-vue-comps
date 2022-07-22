@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 3.0.3 - 7/22/2022
+
+* fixes for vertical tables
+
 ### 3.0.2 - 3/18/2022
 
 * rolls back to fontawesome 5.15.4 so that it is not ahead of phila-ui
