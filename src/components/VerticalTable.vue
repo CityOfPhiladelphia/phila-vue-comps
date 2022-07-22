@@ -17,6 +17,12 @@
     >
     </h4>
 
+    <div
+      v-if="this.$props.options.subtitle"
+    >
+      {{ this.$props.options.subtitle }}
+    </div>
+
     <table :id="this.$props.options.id">
       <tbody>
         <tr
@@ -82,6 +88,14 @@ export default {
 
     },
     shouldShowTable() {
+      let conditionVal;
+      if (this.options.condition) {
+        let conditionVal = this.options.condition(this.$store.state);
+        console.log('this.options.condition:', this.options.condition, 'conditionVal:', conditionVal);
+        if (!conditionVal) {
+          return false;
+        }
+      }
       const hasData = this.hasData;
       if (this.item) {
         if (this.item.activeTable) {
@@ -89,18 +103,12 @@ export default {
           const id = this.options.id;
           if (filterValue === id) {
             return true;
-            // return hasData;
           }
           return false;
-
         }
         return true;
-        // return hasData;
-
       }
       return true;
-      // return hasData;
-
     },
     hasData() {
       // console.log(this.topicKey, '-', 'hasData?', this.dataSources);
