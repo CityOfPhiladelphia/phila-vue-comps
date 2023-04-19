@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 3.0.7 - 4/19/2023
+
+* fixes hard-coded bug in BadgeSet.vue
+
 ### 3.0.6 - 2/8/2023
 
 * ran package updates

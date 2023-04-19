@@ -66,7 +66,7 @@ export default {
         data: item,
         title: 'Base Zoning Change Under Consideration',
         titleBackground: '#e08916',
-        value: 'Proposed Zoning: ' + item.properties.PropZone,
+        value: 'Proposed Zoning: ' + item.properties[this.options.fieldname],
         description: 'A zoning change has been proposed here, but it has not yet been introduced as legislation. See ZID ' + item.properties.ZID + ' in the table below for details on this proposed change.',
         // value: function (item) {
         //   const proposedOnlyRemapping = state.sources.propZoning.data.find(i => i.properties.ReMap_Status === "Proposed Only");
