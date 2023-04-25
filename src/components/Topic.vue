@@ -87,7 +87,22 @@ export default {
       if (topicsFiltered.length !== 1) {
         throw `Could not get single config object for topic '${topicKey}'.`;
       }
-      const config = topicsFiltered[0];
+      let config = topicsFiltered[0];
+      console.log('topic config:', config, 'process.env.VUE_APP_INTERNAL:', process.env.VUE_APP_INTERNAL);
+      let indexesToRemove = [];
+      for (let [index, component] of config.components.entries()) {
+        console.log('component:', component, 'index:', index);
+        if (component.options && component.options.showOnlyIfInternal && process.env.VUE_APP_EXTERNAL) {
+          indexesToRemove.push(index);
+        }
+        if (component.options && component.options.showOnlyIfExternal && process.env.VUE_APP_INTERNAL) {
+          indexesToRemove.push(index);
+        }        
+      }
+      for (let index of indexesToRemove) {
+        config.components.splice(index, index);
+      }
+      console.log('topic config2:', config, 'process.env.VUE_APP_INTERNAL:', process.env.VUE_APP_INTERNAL);
       return config;
     },
     icon() {
