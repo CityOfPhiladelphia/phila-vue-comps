@@ -42,7 +42,7 @@ import TopicComponent from './TopicComponent.vue';
 import TopicComponentGroup from './TopicComponentGroup.vue';
 
 export default {
-  name: 'TabGroup',
+  name: 'TabGroupBuildings',
   mixins: [ TopicComponent ],
   // some internal state for things local enough that they shouldn't be in
   // vuex if we can avoid it.
