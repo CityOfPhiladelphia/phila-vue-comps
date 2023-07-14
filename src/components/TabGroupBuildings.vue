@@ -117,16 +117,17 @@ export default {
       this.$data.activeMapreg = this.titleForItem(item);
       this.$data.activeAddress = this.addressForItem(item);
 
-      const payload = {
-        parcelLayer: 'dor',
-        activeParcel: this.$data.activeItem,
-        activeMapreg: this.$data.activeMapreg,
-        activeAddress: this.$data.activeAddress,
-      };
-      this.$store.commit('setActiveParcel', payload);
-      if (this.options.map.tiledOverlayControl) {
-        this.$store.commit('setSelectedOverlay', this.activeItem);
-      }
+      // const payload = {
+      //   parcelLayer: 'dor',
+      //   activeParcel: this.$data.activeItem,
+      //   activeMapreg: this.$data.activeMapreg,
+      //   activeAddress: this.$data.activeAddress,
+      // };
+      // this.$store.commit('setActiveParcel', payload);
+      this.$store.commit('setActiveLiBuilding', this.$data.activeItem);
+      // if (this.options.map.tiledOverlayControl) {
+      //   this.$store.commit('setSelectedOverlay', this.activeItem);
+      // }
     },
     getActiveItem() {
       return this.options.activeItem(this.$store.state);
