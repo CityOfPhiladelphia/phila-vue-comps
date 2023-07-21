@@ -124,7 +124,8 @@ export default {
       //   activeAddress: this.$data.activeAddress,
       // };
       // this.$store.commit('setActiveParcel', payload);
-      this.$store.commit('setActiveLiBuilding', this.$data.activeItem);
+      // this.$store.commit('setActiveLiBuilding', this.$data.activeItem);
+      this.$store.commit('setActiveGeojsonForTopic', this.$data.activeItem);
       // if (this.options.map.tiledOverlayControl) {
       //   this.$store.commit('setSelectedOverlay', this.activeItem);
       // }
