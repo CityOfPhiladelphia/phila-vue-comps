@@ -88,6 +88,7 @@ export default {
       if (this.topicComponents) {
         let value = [];
         for (let comp of this.topicComponents) {
+          console.log('TopicComponentGroup.vue, topicComponentsComp computed, comp:', comp);
           let hide = false
           if (comp.options && comp.options.hide) {
             const items = comp.slots.items(this.$store.state);

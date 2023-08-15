@@ -116,8 +116,8 @@ export default {
   },
   methods: {
     clickedItem(item) {
-      console.log('TabGroupBuildings.vue clickedItem is running, item:', item);
       this.$data.activeItem = this.keyForItem(item);
+      console.log('TabGroupBuildings.vue clickedItem is running, item:', item, 'this.$data.activeItem:', this.$data.activeItem);
       // this.$data.activeMapreg = this.titleForItem(item);
       // this.$data.activeAddress = this.addressForItem(item);
 
@@ -162,8 +162,11 @@ export default {
       }
     },
     itemIsActive(item) {
-      console.log('itemIsActive, item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
-      const isActive = (this.activeItem.structure_id === this.keyForItem(item));
+      // console.log('itemIsActive, item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
+      let isActive;
+      if (this.activeItem) {
+        isActive = (this.activeItem.structure_id === this.keyForItem(item));
+      }
       return isActive;
     },
     sortItems(items, sortOpts) {
