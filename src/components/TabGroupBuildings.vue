@@ -83,6 +83,7 @@ export default {
   watch: {
     // when items change, update the activeItem
     items(items) {
+      console.log('TabGroupBuildings.vue, this.items:', this.items);
       const nextFirstItem = items[0];
       const nextActiveKey = this.keyForItem(nextFirstItem);
       this.activeItem = nextActiveKey;
@@ -90,6 +91,7 @@ export default {
       this.activeMapreg = nextMapreg;
       const nextAddress = this.addressForItem(nextFirstItem);
       this.activeAddress = nextAddress;
+      console.log('TabGroupBuildings.vue, watch items, nextActiveKey:', nextActiveKey);
     },
     activeItemFromState(nextActiveItem) {
       this.activeItem = nextActiveItem;
@@ -104,18 +106,20 @@ export default {
     this.$options.components.TopicComponentGroup = TopicComponentGroup;
   },
   mounted() {
-    this.getActiveItem();
-    // REVIEW globals. also is this still needed?
-    this.$data.activeItem = this.activeItemFromState;
-    this.$data.activeMapreg = this.activeMapregFromState;
-    this.$data.activeAddress = this.activeAddressFromState;
+    console.log('TabGroupBuildings mounted, this.items[0]:', this.items[0], 'this.items[0].attributes.BIN:', this.items[0].attributes.BIN);
+    // this.getActiveItem();
+    // // REVIEW globals. also is this still needed?
+    // this.$data.activeItem = this.items[0].attributes.BIN;
+    this.clickedItem(this.items[0]);
+    // this.$data.activeMapreg = this.activeMapregFromState;
+    // this.$data.activeAddress = this.activeAddressFromState;
   },
   methods: {
     clickedItem(item) {
-      // console.log('TabGroup.vue clickedItem is running, item:', item);
+      console.log('TabGroupBuildings.vue clickedItem is running, item:', item);
       this.$data.activeItem = this.keyForItem(item);
-      this.$data.activeMapreg = this.titleForItem(item);
-      this.$data.activeAddress = this.addressForItem(item);
+      // this.$data.activeMapreg = this.titleForItem(item);
+      // this.$data.activeAddress = this.addressForItem(item);
 
       // const payload = {
       //   parcelLayer: 'dor',
@@ -124,8 +128,9 @@ export default {
       //   activeAddress: this.$data.activeAddress,
       // };
       // this.$store.commit('setActiveParcel', payload);
-      // this.$store.commit('setActiveLiBuilding', this.$data.activeItem);
       this.$store.commit('setActiveGeojsonForTopic', this.$data.activeItem);
+      let activeLiBuilding = this.$store.state.sources.liBuildingCerts.data.rows.filter(structure => structure.structure_id == this.$data.activeItem)[0];
+      this.$store.commit('setActiveLiBuilding', activeLiBuilding);
       // if (this.options.map.tiledOverlayControl) {
       //   this.$store.commit('setSelectedOverlay', this.activeItem);
       // }
@@ -157,7 +162,8 @@ export default {
       }
     },
     itemIsActive(item) {
-      const isActive = (this.activeItem === this.keyForItem(item));
+      console.log('itemIsActive, item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
+      const isActive = (this.activeItem.structure_id === this.keyForItem(item));
       return isActive;
     },
     sortItems(items, sortOpts) {
