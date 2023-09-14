@@ -129,8 +129,10 @@ export default {
       // };
       // this.$store.commit('setActiveParcel', payload);
       this.$store.commit('setActiveGeojsonForTopic', this.$data.activeItem);
-      let activeLiBuilding = this.$store.state.sources.liBuildingCerts.data.rows.filter(structure => structure.structure_id == this.$data.activeItem)[0];
+      let activeLiBuilding = this.$store.state.sources.liBuildingCertSummary.data.rows.filter(structure => structure.structure_id == this.$data.activeItem)[0];
+      let activeLiBuildingCert = this.$store.state.sources.liBuildingCerts.data.rows.filter(item => item.bin === this.$data.activeItem);
       this.$store.commit('setActiveLiBuilding', activeLiBuilding);
+      this.$store.commit('setActiveLiBuildingCert', activeLiBuildingCert);
       // if (this.options.map.tiledOverlayControl) {
       //   this.$store.commit('setSelectedOverlay', this.activeItem);
       // }
