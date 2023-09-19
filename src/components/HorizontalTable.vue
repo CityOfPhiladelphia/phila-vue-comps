@@ -1217,24 +1217,33 @@ export default {
               min = subFn(max, value);
               // console.log('max:', max, 'min', min);
             } else if (direction === 'add') {
-              max = new Date();
-              min = addFn(max, value);
+              min = new Date();
+              max = addFn(min, value);
+            } else if (direction === 'both') {
+              continue;
+              // let date = new Date();
+              // max = 
             } else {
               throw `Invalid time direction: ${direction}`;
             }
 
-            // console.log('in case time, itemsFiltered:', itemsFiltered);
-            itemsFiltered = itemsFiltered.filter(item => {
-              const itemValue = getValue(item);
-              let isBetween;
-              if (typeof itemValue === 'string') {
-                isBetween = isWithinInterval(parseISO(itemValue), { start: min, end: max });
-              } else {
-                isBetween = isWithinInterval(itemValue, { start: min, end: max });
-              }
-              // console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
-              return isBetween;
-            });
+
+            if (direction === 'both') {
+              return true;
+            } else {
+              // console.log('in case time, itemsFiltered:', itemsFiltered);
+              itemsFiltered = itemsFiltered.filter(item => {
+                const itemValue = getValue(item);
+                let isBetween;
+                if (typeof itemValue === 'string') {
+                  isBetween = isWithinInterval(parseISO(itemValue), { start: min, end: max });
+                } else {
+                  isBetween = isWithinInterval(itemValue, { start: min, end: max });
+                }
+                // console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
+                return isBetween;
+              });
+            }
             // console.log('ITEMS FILTERED BY TIME FILTER', itemsFiltered);
             break;
 
