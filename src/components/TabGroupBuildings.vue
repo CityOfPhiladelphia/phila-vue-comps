@@ -170,7 +170,8 @@ export default {
       // console.log('itemIsActive, item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
       let isActive;
       if (this.activeItem) {
-        isActive = (this.activeItem.structure_id === this.keyForItem(item));
+        // isActive = (this.activeItem.structure_id === this.keyForItem(item));
+        isActive = (this.activeItem.attributes.BIN === this.keyForItem(item));
       }
       return isActive;
     },
