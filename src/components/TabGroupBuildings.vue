@@ -129,11 +129,9 @@ export default {
       // };
       // this.$store.commit('setActiveParcel', payload);
       this.$store.commit('setActiveGeojsonForTopic', this.$data.activeItem);
-      
+      let activeLiBuilding = this.$store.state.sources.liBuildingCertSummary.data.rows.filter(structure => structure.structure_id == this.$data.activeItem)[0];
+      let activeLiBuildingCert = this.$store.state.sources.liBuildingCerts.data.rows.filter(item => item.bin === this.$data.activeItem);
       let activeLiBuildingFootprint = this.$store.state.sources.liBuildingFootprints.data.features.filter(item => item.attributes.BIN === this.$data.activeItem)[0];
-      let activeLiBuilding = this.$store.state.sources.liBuildingCertSummary.targets[this.activeItem].data.rows[0];
-      let activeLiBuildingCert = this.$store.state.sources.liBuildingCerts.targets[this.activeItem].data.rows;
-      
       this.$store.commit('setActiveLiBuilding', activeLiBuilding);
       this.$store.commit('setActiveLiBuildingCert', activeLiBuildingCert);
       this.$store.commit('setActiveLiBuildingFootprint', activeLiBuildingFootprint);
