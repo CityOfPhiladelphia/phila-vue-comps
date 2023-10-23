@@ -51,8 +51,6 @@ export default {
     const items = this.evaluateSlot(this.slots.items);
     return {
       activeItem: this.activeItemFromState,// || this.keyForItem(items[0]),
-      activeMapreg: this.activeMapregFromState,// || this.titleForItem(items[0]),
-      activeAddress: this.activeAddressFromState,// || this.addressForItem(items[0])
     };
   },
   computed: {
@@ -66,12 +64,6 @@ export default {
     },
     activeItemFromState() {
       return this.getActiveItem();
-    },
-    activeMapregFromState() {
-      return this.$store.state.parcels.dor.activeMapreg;
-    },
-    activeAddressFromState() {
-      return this.$store.state.parcels.dor.activeAddress;
     },
     overlays() {
       return this.$config.map.tiledOverlays;
@@ -87,13 +79,10 @@ export default {
       const nextFirstItem = items[0];
       const nextActiveKey = this.keyForItem(nextFirstItem);
       this.activeItem = nextActiveKey;
-      const nextMapreg = this.titleForItem(nextFirstItem);
-      this.activeMapreg = nextMapreg;
-      const nextAddress = this.addressForItem(nextFirstItem);
-      this.activeAddress = nextAddress;
       console.log('TabGroupBuildings.vue, watch items, nextActiveKey:', nextActiveKey);
     },
     activeItemFromState(nextActiveItem) {
+      console.log('watch activeItemFromState, nextActiveItem:', nextActiveItem);
       this.activeItem = nextActiveItem;
     },
     // currentSelectedOverlay(nextCurrentOverlay) {
@@ -107,27 +96,12 @@ export default {
   },
   mounted() {
     console.log('TabGroupBuildings mounted, this.items[0]:', this.items[0], 'this.items[0].attributes.BIN:', this.items[0].attributes.BIN);
-    // this.getActiveItem();
-    // // REVIEW globals. also is this still needed?
-    // this.$data.activeItem = this.items[0].attributes.BIN;
     this.clickedItem(this.items[0]);
-    // this.$data.activeMapreg = this.activeMapregFromState;
-    // this.$data.activeAddress = this.activeAddressFromState;
   },
   methods: {
     clickedItem(item) {
       this.$data.activeItem = this.keyForItem(item);
       console.log('TabGroupBuildings.vue clickedItem is running, item:', item, 'this.$data.activeItem:', this.$data.activeItem);
-      // this.$data.activeMapreg = this.titleForItem(item);
-      // this.$data.activeAddress = this.addressForItem(item);
-
-      // const payload = {
-      //   parcelLayer: 'dor',
-      //   activeParcel: this.$data.activeItem,
-      //   activeMapreg: this.$data.activeMapreg,
-      //   activeAddress: this.$data.activeAddress,
-      // };
-      // this.$store.commit('setActiveParcel', payload);
       this.$store.commit('setActiveGeojsonForTopic', this.$data.activeItem);
       let activeLiBuilding = this.$store.state.sources.liBuildingCertSummary.data.rows.filter(structure => structure.structure_id == this.$data.activeItem)[0];
       let activeLiBuildingCert = this.$store.state.sources.liBuildingCerts.data.rows.filter(item => item.bin === this.$data.activeItem);
@@ -135,10 +109,6 @@ export default {
       this.$store.commit('setActiveLiBuilding', activeLiBuilding);
       this.$store.commit('setActiveLiBuildingCert', activeLiBuildingCert);
       this.$store.commit('setActiveLiBuildingFootprint', activeLiBuildingFootprint);
-
-      // if (this.options.map.tiledOverlayControl) {
-      //   this.$store.commit('setSelectedOverlay', this.activeItem);
-      // }
     },
     getActiveItem() {
       return this.options.activeItem(this.$store.state);
@@ -159,20 +129,14 @@ export default {
         return null;
       }
     },
-    addressForItem(item) {
-      try {
-        return this.options.getAddress(item);
-      } catch (e) {
-        return null;
-      }
-    },
     itemIsActive(item) {
-      // console.log('itemIsActive, item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
       let isActive;
+      // if (this.activeItem && this.activeItem.attributes) {
       if (this.activeItem) {
         // isActive = (this.activeItem.structure_id === this.keyForItem(item));
-        isActive = (this.activeItem.attributes.BIN === this.keyForItem(item));
+        isActive = (this.activeItem === this.keyForItem(item));
       }
+      console.log('itemIsActive, isActive:', isActive, 'item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
       return isActive;
     },
     sortItems(items, sortOpts) {
@@ -230,7 +194,6 @@ export default {
           throw `Unknown sort order: ${order}`;
         }
       }
-
       // console.log('compare', valA, 'to', valB, ', result:', result);
 
       return result;

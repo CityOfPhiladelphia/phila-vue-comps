@@ -88,14 +88,14 @@ export default {
       if (this.topicComponents) {
         let value = [];
         for (let comp of this.topicComponents) {
-          console.log('TopicComponentGroup.vue, topicComponentsComp computed, comp:', comp);
+          // console.log('TopicComponentGroup.vue, topicComponentsComp computed, comp:', comp);
           let hide = false
           if (comp.options && comp.options.hide) {
             const items = comp.slots.items(this.$store.state);
             console.log('hide topicComponentsComp computed, items:', items, 'comp.options.hide(items):', comp.options.hide(items));
             hide = comp.options.hide(items);
           }
-          console.log('topicComponentsComp, comp:', comp, 'hide:', hide);
+          // console.log('topicComponentsComp, comp:', comp, 'hide:', hide);
           if (!hide) {
             value.push(comp);
           }
