@@ -14,7 +14,6 @@
           :href="'#parcel-' + keyForItem(item)"
           @click.prevent="clickedItem(item)"
         >
-          <!-- @click.prevent="activeItem = keyForItem(item)" -->
           {{ titleForItem(item) }}
         </a>
       </li>
@@ -65,12 +64,6 @@ export default {
     activeItemFromState() {
       return this.getActiveItem();
     },
-    overlays() {
-      return this.$config.map.tiledOverlays;
-    },
-    currentSelectedOverlay() {
-      return this.$store.state.map.selectedOverlay;
-    },
   },
   watch: {
     // when items change, update the activeItem
@@ -85,11 +78,6 @@ export default {
       console.log('watch activeItemFromState, nextActiveItem:', nextActiveItem);
       this.activeItem = nextActiveItem;
     },
-    // currentSelectedOverlay(nextCurrentOverlay) {
-    //   const nextOverlay = nextCurrentOverlay.replace(/\D/g,'');
-    //   const el = document.getElementById('overlay-select');
-    //   el.value = nextOverlay;
-    // }
   },
   beforeCreate() {
     this.$options.components.TopicComponentGroup = TopicComponentGroup;
@@ -103,8 +91,8 @@ export default {
       this.$data.activeItem = this.keyForItem(item);
       console.log('TabGroupBuildings.vue clickedItem is running, item:', item, 'this.$data.activeItem:', this.$data.activeItem);
       this.$store.commit('setActiveGeojsonForTopic', this.$data.activeItem);
-      let activeLiBuilding = this.$store.state.sources.liBuildingCertSummary.data.rows.filter(structure => structure.structure_id == this.$data.activeItem)[0];
-      let activeLiBuildingCert = this.$store.state.sources.liBuildingCerts.data.rows.filter(item => item.bin === this.$data.activeItem);
+      let activeLiBuilding = this.$store.state.sources.liBuildingCertSummary.data[0].rows.filter(structure => structure.structure_id == this.$data.activeItem)[0];
+      let activeLiBuildingCert = this.$store.state.sources.liBuildingCerts.data[0].rows.filter(item => item.bin === this.$data.activeItem);
       let activeLiBuildingFootprint = this.$store.state.sources.liBuildingFootprints.data.features.filter(item => item.attributes.BIN === this.$data.activeItem)[0];
       this.$store.commit('setActiveLiBuilding', activeLiBuilding);
       this.$store.commit('setActiveLiBuildingCert', activeLiBuildingCert);
@@ -131,12 +119,10 @@ export default {
     },
     itemIsActive(item) {
       let isActive;
-      // if (this.activeItem && this.activeItem.attributes) {
       if (this.activeItem) {
-        // isActive = (this.activeItem.structure_id === this.keyForItem(item));
         isActive = (this.activeItem === this.keyForItem(item));
       }
-      console.log('itemIsActive, isActive:', isActive, 'item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
+      // console.log('itemIsActive, isActive:', isActive, 'item:', item, 'this.activeItem:', this.activeItem, 'this.keyForItem(item):', this.keyForItem(item));
       return isActive;
     },
     sortItems(items, sortOpts) {

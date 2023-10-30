@@ -76,7 +76,7 @@ export default {
 
       // make an object of value => quantity
       const valueQuantities = items.reduce((obj, item) => {
-        console.log('in reduce, obj:', obj, 'item:', item);
+        // console.log('in reduce, obj:', obj, 'item:', item);
         const val = getValue(item);
         obj[val] = obj[val] || 0;
         obj[val]++;
