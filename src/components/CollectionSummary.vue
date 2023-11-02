@@ -68,7 +68,7 @@ export default {
     },
     valueQuantities() {
       const items = this.slots.items(this.$store.state);
-      console.log('valueQuantities, items:', items);
+      // console.log('valueQuantities, items:', items);
       if (!items) {
         return;
       }

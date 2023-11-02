@@ -68,14 +68,14 @@ export default {
   watch: {
     // when items change, update the activeItem
     items(items) {
-      console.log('TabGroupBuildings.vue, this.items:', this.items);
+      // console.log('TabGroupBuildings.vue, this.items:', this.items);
       const nextFirstItem = items[0];
       const nextActiveKey = this.keyForItem(nextFirstItem);
       this.activeItem = nextActiveKey;
-      console.log('TabGroupBuildings.vue, watch items, nextActiveKey:', nextActiveKey);
+      // console.log('TabGroupBuildings.vue, watch items, nextActiveKey:', nextActiveKey);
     },
     activeItemFromState(nextActiveItem) {
-      console.log('watch activeItemFromState, nextActiveItem:', nextActiveItem);
+      // console.log('watch activeItemFromState, nextActiveItem:', nextActiveItem);
       this.activeItem = nextActiveItem;
     },
   },
@@ -83,7 +83,7 @@ export default {
     this.$options.components.TopicComponentGroup = TopicComponentGroup;
   },
   mounted() {
-    console.log('TabGroupBuildings mounted, this.items[0]:', this.items[0], 'this.items[0].attributes.BIN:', this.items[0].attributes.BIN);
+    // console.log('TabGroupBuildings mounted, this.items[0]:', this.items[0], 'this.items[0].attributes.BIN:', this.items[0].attributes.BIN);
     this.clickedItem(this.items[0]);
   },
   methods: {

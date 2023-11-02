@@ -92,7 +92,7 @@ export default {
           let hide = false
           if (comp.options && comp.options.hide) {
             const items = comp.slots.items(this.$store.state);
-            console.log('hide topicComponentsComp computed, items:', items, 'comp.options.hide(items):', comp.options.hide(items));
+            // console.log('hide topicComponentsComp computed, items:', items, 'comp.options.hide(items):', comp.options.hide(items));
             hide = comp.options.hide(items);
           }
           // console.log('topicComponentsComp, comp:', comp, 'hide:', hide);
