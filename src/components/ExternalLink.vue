@@ -53,7 +53,7 @@ export default {
       let value;
       const actionFn = this.options.action;
       if (actionFn) {
-        value = actionFn(this.externalLinkCount) || 'See more at ';
+        value = actionFn(this.externalLinkCount, this.externalLinkDataFromState) || 'See more at ';
       }
       return value;
     },

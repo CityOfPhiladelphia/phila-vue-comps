@@ -68,6 +68,7 @@ export default {
     },
     valueQuantities() {
       const items = this.slots.items(this.$store.state);
+      // console.log('valueQuantities, items:', items);
       if (!items) {
         return;
       }
@@ -75,6 +76,7 @@ export default {
 
       // make an object of value => quantity
       const valueQuantities = items.reduce((obj, item) => {
+        // console.log('in reduce, obj:', obj, 'item:', item);
         const val = getValue(item);
         obj[val] = obj[val] || 0;
         obj[val]++;

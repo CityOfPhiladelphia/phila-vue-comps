@@ -175,7 +175,7 @@ export default {
             (this.status !== 'waiting' && !this.hasData)
         )
       );
-      shouldShowError && console.log('BINGO BINGO BINGO:', this.topicKey, 'shouldShowError:', shouldShowError, 'status:', this.status, 'hasData:', this.hasData);
+      // shouldShowError && console.log('BINGO BINGO BINGO:', this.topicKey, 'shouldShowError:', shouldShowError, 'status:', this.status, 'hasData:', this.hasData);
       return shouldShowError;
     },
     errorMessage() {

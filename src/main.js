@@ -34,6 +34,7 @@ import OverlayToggleGroup from './components/OverlayToggleGroup.vue';
 import Paragraph from './components/Paragraph.vue';
 import SpanComp from './components/SpanComp.vue';
 import TabGroup from './components/TabGroup.vue';
+import TabGroupBuildings from './components/TabGroupBuildings.vue';
 import VerticalTable from './components/VerticalTable.vue';
 import VerticalTableLight from './components/VerticalTableLight.vue';
 import VerticalTable3CellsLight from './components/VerticalTable3CellsLight.vue';
@@ -74,6 +75,7 @@ export {
   Paragraph,
   SpanComp,
   TabGroup,
+  TabGroupBuildings,
   VerticalTable,
   VerticalTableLight,
   VerticalTable3CellsLight,

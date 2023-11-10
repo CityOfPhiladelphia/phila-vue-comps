@@ -3,7 +3,7 @@
     <div v-if="!isList">
       <component
         :is="comp.type"
-        v-for="(comp, compIndex) in topicComponents"
+        v-for="(comp, compIndex) in topicComponentsComp"
         :key="getCompKey(key, compIndex)"
         :slots="comp.slots"
         :options="comp.options"
@@ -16,7 +16,7 @@
     </div>
     <div v-if="isList">
       <li
-        v-for="(comp, compIndex) in topicComponents"
+        v-for="(comp, compIndex) in topicComponentsComp"
         :key="compIndex"
       >
         <component
@@ -62,6 +62,7 @@ export default {
     PopoverLink: () => import(/* webpackChunkName: "tcg_pvc_PopoverLink" */'./PopoverLink.vue'),
     Popover: () => import(/* webpackChunkName: "tcg_pvc_Popover" */'./Popover.vue'),
     TabGroup: () => import(/* webpackChunkName: "tcg_pvc_TabGroup" */'./TabGroup.vue'),
+    TabGroupBuildings: () => import(/* webpackChunkName: "tcg_pvc_TabGroupBuildings" */'./TabGroupBuildings.vue'),
     BadgeCustom: () => import(/* webpackChunkName: "tcg_pvc_BadgeCustom" */'./BadgeCustom.vue'),
     Topic: () => import(/* webpackChunkName: "tcg_pvc_Topic" */'./Topic.vue'),
     TopicSet: () => import(/* webpackChunkName: "tcg_pvc_TopicSet" */'./TopicSet.vue'),
@@ -81,6 +82,27 @@ export default {
       // therefore won't work with the examples. this is good enough :)
       key: generateUniqueId(),
     };
+  },
+  computed: {
+    topicComponentsComp() {
+      if (this.topicComponents) {
+        let value = [];
+        for (let comp of this.topicComponents) {
+          // console.log('TopicComponentGroup.vue, topicComponentsComp computed, comp:', comp);
+          let hide = false
+          if (comp.options && comp.options.hide) {
+            const items = comp.slots.items(this.$store.state);
+            // console.log('hide topicComponentsComp computed, items:', items, 'comp.options.hide(items):', comp.options.hide(items));
+            hide = comp.options.hide(items);
+          }
+          // console.log('topicComponentsComp, comp:', comp, 'hide:', hide);
+          if (!hide) {
+            value.push(comp);
+          }
+        }
+        return value;
+      }
+    },
   },
   methods: {
     getCompKey(compGroupKey, compIndex) {
