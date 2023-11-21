@@ -139,7 +139,7 @@ export default {
         // add activeTableId to local data
         // console.log('for loop, this.options.components:', this.options.components);
         for (let comp of this.options.tables) {
-          console.log('for loop, comp:', comp);
+          // console.log('for loop, comp:', comp);
           if (comp.options.id === defaultTableName) {
             this.tableGroupData.activeTableId = comp._id;
           }
@@ -203,7 +203,7 @@ export default {
       return { value, unit, direction };
     },
     handleFilterValueChange(e) {
-      // console.log('handle activeTable value change', e);
+      console.log('handle activeTable value change', e);
       const target = e.target;
       const slug = target.value;
       // deslugify filter value
@@ -225,10 +225,10 @@ export default {
       this.$store.commit('setHorizontalTableGroupActiveTable', this.tableGroupData);
       // this.$store.commit('setHorizontalTableGroupActiveTableId', this.activeTable);
       
-      this.$store.commit('setHorizontalTableGroupActiveFilters', {
-        tableGroupId: this.tableGroupData.tableGroupId,
-        activeFilterValues: {},
-      });
+      // this.$store.commit('setHorizontalTableGroupActiveFilters', {
+      //   tableGroupId: this.tableGroupData.tableGroupId,
+      //   activeFilterValues: {},
+      // });
     },
   },
 };

@@ -704,14 +704,25 @@ export default {
   },
   watch: {
     itemsAfterFilters(nextItems) {
-      // console.log('WATCH items after filters', nextItems);
+      console.log('WATCH items after filters, this.options.id:', this.options.id, 'nextItems:', nextItems);
       // this.$nextTick(() => {
+
+      let tableGroupId = this.item.tableGroupId;
+      let activeTableId, activeFilterValues;
+      // let theSelect = document.getElementById('time-select');
+      if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+        activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
+        activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+      }
+      
       if (this.$store.state.horizontalTables) {
         this.updateTableFilteredData();
-        this.$store.commit('setHorizontalTableGroupActiveFilters', {
-          tableGroupId: this.item.tableGroupId,
-          activeFilterValues: this.filterSelections['filter-0'],
-        });
+        if (this.$store.state.horizontalTableGroups && this.options.tableId == activeTableId) {
+          this.$store.commit('setHorizontalTableGroupActiveFilters', {
+            tableGroupId: this.item.tableGroupId,
+            activeFilterValues: this.filterSelections['filter-0'],
+          });
+        }
       }
       // })
     },
@@ -1415,7 +1426,7 @@ export default {
     },
     // this updates the global state that stores filtered table rows
     updateTableFilteredData() {
-      console.log('update table filtered data is running, options:', this.options);
+      // console.log('update table filtered data is running, options:', this.options);
 
       // get table id
       const { tableId } = this.options;
