@@ -806,9 +806,11 @@ export default {
         }
         console.log('horizontal table mounted, activeSortValues:', activeSortValues);
         this.filterSelections[key] = defaultValue;
-        this.sortField = activeSortValues;
-        let theSort = document.getElementById('time-sort-'+activeTableId);
-        theSort.value = activeSortValues;
+        if (activeSortValues) {
+          this.sortField = activeSortValues;
+          let theSort = document.getElementById('time-sort-'+activeTableId);
+          theSort.value = activeSortValues;
+        }
 
         // theSelect.selectedIndex = "1";
       }
