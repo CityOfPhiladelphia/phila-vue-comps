@@ -53,6 +53,7 @@
             Sort by
           </div>
           <select
+            :id="'time-sort-'+options.tableId"
             class="pvc-select"
             @change="handleSortValueChange"
           >
@@ -786,7 +787,7 @@ export default {
         if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
           activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
           activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
-          activeSortValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+          activeSortValues = this.$store.state.horizontalTableGroups[tableGroupId].activeSortValues;
         }
         if (this.$store.state.horizontalTableGroups && this.options.tableId == activeTableId && Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length > 0) {
           console.log('created setting filter to:', this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues);
@@ -803,8 +804,12 @@ export default {
           // let theSelect = document.getElementById('time-select-'+activeTableId);
           // theSelect.selectedIndex = "0";
         }
+        console.log('horizontal table mounted, activeSortValues:', activeSortValues);
         this.filterSelections[key] = defaultValue;
         this.sortField = activeSortValues;
+        let theSort = document.getElementById('time-sort-'+activeTableId);
+        theSort.value = activeSortValues;
+
         // theSelect.selectedIndex = "1";
       }
     }
