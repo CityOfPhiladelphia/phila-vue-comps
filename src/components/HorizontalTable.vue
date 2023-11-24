@@ -781,11 +781,12 @@ export default {
         const key = `filter-${index}`;
         let defaultValue;
         let tableGroupId = this.item.tableGroupId;
-        let activeTableId, activeFilterValues;
+        let activeTableId, activeFilterValues, activeSortValues;
         // let theSelect = document.getElementById('time-select');
         if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
           activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
           activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+          activeSortValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
         }
         if (this.$store.state.horizontalTableGroups && this.options.tableId == activeTableId && Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length > 0) {
           console.log('created setting filter to:', this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues);
@@ -803,6 +804,7 @@ export default {
           // theSelect.selectedIndex = "0";
         }
         this.filterSelections[key] = defaultValue;
+        this.sortField = activeSortValues;
         // theSelect.selectedIndex = "1";
       }
     }
@@ -1200,9 +1202,24 @@ export default {
       return { value, unit, direction };
     },
     handleSortValueChange(e) {
-      // console.log('handleSortValueChange running', e);
-
+      console.log('handleSortValueChange running e:', e, 'e.target.value:', e.target.value);
       const value = e.target.value;
+
+      let tableGroupId = this.item.tableGroupId;
+      let activeTableId;//, activeFilterValues;
+      // let theSelect = document.getElementById('time-select');
+      if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+        activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
+        // activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+      }
+
+      if (this.$store.state.horizontalTables) {
+        this.$store.commit('setHorizontalTableGroupActiveSort', {
+          tableGroupId: this.item.tableGroupId,
+          activeSortValues: value,
+        });
+      }
+
       this.sortField = value;
     },
     handleFilterValueChange(e) {
