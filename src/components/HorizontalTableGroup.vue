@@ -14,6 +14,7 @@
           {{ filter.label }}
         </div>
         <select
+          id="mb-select"
           class="mb-select"
           @change="handleFilterValueChange"
         >
@@ -89,9 +90,40 @@ export default {
     },
   },
   created() {
-    // console.log('horizontalTableGroup created is starting, this.tableGroupData:', this.tableGroupData);
-    if (this.options.filters) {
-      // console.log('horizontalTableGroup created, if this.options.filters is running:', this.options.filters, this.options.filters.entries());
+    console.log('horizontalTableGroup created is starting');
+  },
+  mounted() {
+    console.log('horizontalTableGroup mounted is starting, this.tableGroupData:', this.tableGroupData);
+    if (this.$store.state.horizontalTableGroups[this.options.horizontalTableGroupId].activeTable) {
+      console.log('horizontalTableGroup mounted inside if, this.$store.state.horizontalTableGroups[this.options.horizontalTableGroupId].activeTable:', this.$store.state.horizontalTableGroups[this.options.horizontalTableGroupId].activeTable);
+      let defaultTableName = this.$store.state.horizontalTableGroups[this.options.horizontalTableGroupId].activeTable;
+      let defaultTableId = this.$store.state.horizontalTableGroups[this.options.horizontalTableGroupId].activeTableId;
+      this.tableGroupData.activeTable = defaultTableName;
+        // add activeTableId to local data
+        // console.log('for loop, this.options.components:', this.options.components);
+        for (let comp of this.options.tables) {
+          if (comp.options.id === defaultTableName) {
+            this.tableGroupData.activeTableId = comp._id;
+          }
+        }
+        const $select = document.getElementById('mb-select');
+        let selectedIndex;
+        let filterValues = this.$props.options.filters[0].values;
+        console.log('filterValues:', filterValues);
+        
+        // for (let [table, index] of this.$props.options.filters[0].values) {
+        for (let [index, table] of filterValues.entries()) {
+          console.log('table:', table, 'index:', index);
+          if (table.value === defaultTableName) {
+            selectedIndex = index;
+          }
+        }
+        // console.log('$select:', $select, 'selectedIndex:', selectedIndex, 'this.$props.options.filters[0].values:', this.$props.options.filters[0].values, 'defaultTableName:', defaultTableName, 'defaultTableId:', defaultTableId);
+
+        $select.selectedIndex = selectedIndex;
+        // this.$store.commit('setHorizontalTableGroupActiveTable', this.tableGroupData);
+    } else if (this.options.filters) {
+      // console.log('horizontalTableGroup mounted, if this.options.filters is running:', this.options.filters, this.options.filters.entries());
       for (let filter of this.options.filters) {
         // for (let [index, filter] of this.options.filters.entries()) {
         // console.log('for loop, this.options.filters:', this.options.filters[0]);
@@ -107,6 +139,7 @@ export default {
         // add activeTableId to local data
         // console.log('for loop, this.options.components:', this.options.components);
         for (let comp of this.options.tables) {
+          // console.log('for loop, comp:', comp);
           if (comp.options.id === defaultTableName) {
             this.tableGroupData.activeTableId = comp._id;
           }
@@ -115,10 +148,10 @@ export default {
         this.$store.commit('setHorizontalTableGroupActiveTable', this.tableGroupData);
         // this.$store.commit('setHorizontalTableGroupActiveTableId', this.activeTable);
       }
-      // console.log('horizontalTableGroup created, if this.options.filters is ending');
+      // console.log('horizontalTableGroup mounted, if this.options.filters is ending');
     }
     if (this.options.alternate) {
-      // console.log('horizontalTableGroup created, if this.options.alternate - mainTable', this.options.alternate.mainTable, this.altMainTable, 'dependentTable', this.options.alternate.dependentTable, this.altDepTable);
+      // console.log('horizontalTableGroup mounted, if this.options.alternate - mainTable', this.options.alternate.mainTable, this.altMainTable, 'dependentTable', this.options.alternate.dependentTable, this.altDepTable);
       const sources = this.$store.state.sources;
       // console.log('Tablegroup source check dep', sources[this.altDepTable.dataSource].data);
       // console.log('Tablegroup source check main', sources[this.altMainTable.dataSource].data);
@@ -170,7 +203,7 @@ export default {
       return { value, unit, direction };
     },
     handleFilterValueChange(e) {
-      // console.log('handle activeTable value change', e);
+      console.log('handle activeTable value change', e);
       const target = e.target;
       const slug = target.value;
       // deslugify filter value
@@ -191,6 +224,11 @@ export default {
       // console.log('handleFilterValueChange, this.tableGroupData:', this.tableGroupData);
       this.$store.commit('setHorizontalTableGroupActiveTable', this.tableGroupData);
       // this.$store.commit('setHorizontalTableGroupActiveTableId', this.activeTable);
+      
+      // this.$store.commit('setHorizontalTableGroupActiveFilters', {
+      //   tableGroupId: this.tableGroupData.tableGroupId,
+      //   activeFilterValues: {},
+      // });
     },
   },
 };

@@ -26,6 +26,7 @@
               {{ filter.label }}
             </div>
             <select
+              :id="'time-select-'+options.tableId"
               class="pvc-select"
               @change="handleFilterValueChange"
             >
@@ -52,6 +53,7 @@
             Sort by
           </div>
           <select
+            :id="'time-sort-'+options.tableId"
             class="pvc-select"
             @change="handleSortValueChange"
           >
@@ -314,9 +316,18 @@ export default {
     //                                   return acc;
     //                                 }, {});
     let defaultFilterSelections = {};
-    for (let index=0; index < filters.length; index++) {
-      defaultFilterSelections['filter-' + index] = filters[index].values[0];
+
+    let tableGroupId = this.item.tableGroupId;
+    console.log('Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length:', Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length);
+    if (this.$store.state.horizontalTableGroups && Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length > 0) {
+      console.log('setting filter to:', this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues);
+      defaultFilterSelections['filter-0'] = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+    } else {
+      for (let index=0; index < filters.length; index++) {
+        defaultFilterSelections['filter-' + index] = filters[index].values[0];
+      }
     }
+
     // console.log('in horiz table data, filters:', filters, 'filtersKeys:', filtersKeys, 'defaultFilterSelections:', defaultFilterSelections);
     let sortFields;
     if (this.options.sort){
@@ -694,10 +705,25 @@ export default {
   },
   watch: {
     itemsAfterFilters(nextItems) {
-      // console.log('WATCH items after filters', nextItems);
+      console.log('WATCH items after filters, this.options.id:', this.options.id, 'nextItems:', nextItems);
       // this.$nextTick(() => {
+
+      let tableGroupId = this.item.tableGroupId;
+      let activeTableId, activeFilterValues;
+      // let theSelect = document.getElementById('time-select');
+      if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+        activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
+        activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+      }
+      
       if (this.$store.state.horizontalTables) {
         this.updateTableFilteredData();
+        if (this.$store.state.horizontalTableGroups && this.options.tableId == activeTableId) {
+          this.$store.commit('setHorizontalTableGroupActiveFilters', {
+            tableGroupId: this.item.tableGroupId,
+            activeFilterValues: this.filterSelections['filter-0'],
+          });
+        }
       }
       // })
     },
@@ -707,13 +733,36 @@ export default {
   // },
   created() {
     // console.log('horiz table created props slots items', this.$props.slots.items);
-    if (this.filters) {
-      for (let [ index, filter ] of this.filters.entries()) {
-        const key = `filter-${index}`;
-        const defaultValue = filter.values[0] || {};
-        this.filterSelections[key] = defaultValue;
-      }
-    }
+    
+    // if (this.filters) {
+    //   for (let [ index, filter ] of this.filters.entries()) {
+    //     const key = `filter-${index}`;
+    //     let defaultValue;
+    //     let tableGroupId = this.item.tableGroupId;
+    //     let activeTableId, activeFilterValues;
+    //     let theSelect = document.getElementById('time-select');
+    //     if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+    //       activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
+    //       activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+    //     }
+    //     if (this.$store.state.horizontalTableGroups && this.options.tableId == activeTableId && Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length > 0) {
+    //       console.log('created setting filter to:', this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues);
+    //       defaultValue = activeFilterValues;
+    //       // let theSelect = document.getElementById('time-select');
+    //       console.log('theSelect:', theSelect, defaultValue.direction + '-' + defaultValue.value + '-' + defaultValue.unit);
+    //       // theSelect.value = defaultValue.direction + '-' + defaultValue.value + '-' + defaultValue.unit;
+    //       theSelect.selectedIndex = "1";
+    //     } else {
+    //       defaultValue = filter.values[0] || {};
+    //       // console.log('created theSelect:', theSelect, 'defaultValue:', defaultValue, 'defaultValue.direction:', defaultValue.direction, 'defaultValue.value:', defaultValue.value, 'defaultValue.unit:', defaultValue.unit);
+    //       // theSelect.value = defaultValue.direction + '-' + defaultValue.value + '-' + defaultValue.unit;
+    //       // let theSelect = document.getElementById('time-select');
+    //       theSelect.selectedIndex = "0";
+    //     }
+    //     this.filterSelections[key] = defaultValue;
+    //   }
+    // }
+
 
     // put row data in state once on load
     // const data = this.itemsAfterSearch;
@@ -726,8 +775,55 @@ export default {
   },
   mounted() {
     // console.log('horiz table mounted props slots items', this.$props.slots.items);
+    
+    
+    if (this.filters) {
+      for (let [ index, filter ] of this.filters.entries()) {
+        const key = `filter-${index}`;
+        let defaultValue;
+        let tableGroupId = this.item.tableGroupId;
+        let activeTableId, activeFilterValues, activeSortValues;
+        // let theSelect = document.getElementById('time-select');
+        if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+          activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
+          activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+          activeSortValues = this.$store.state.horizontalTableGroups[tableGroupId].activeSortValues;
+        }
+        if (this.$store.state.horizontalTableGroups && this.options.tableId == activeTableId && Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length > 0) {
+          console.log('created setting filter to:', this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues);
+          defaultValue = activeFilterValues;
+          let theSelect = document.getElementById('time-select-'+activeTableId);
+          // theSelect.value = 'wawa';
+          theSelect.value = defaultValue.direction + '-' + defaultValue.value + '-' + defaultValue.unit;
+          // theSelect.selectedIndex = "2";
+          console.log('created this.options.id:', this.options.id, 'theSelect:', theSelect, defaultValue.direction + '-' + defaultValue.value + '-' + defaultValue.unit);
+        } else {
+          defaultValue = filter.values[0] || {};
+          // console.log('created theSelect:', theSelect, 'defaultValue:', defaultValue, 'defaultValue.direction:', defaultValue.direction, 'defaultValue.value:', defaultValue.value, 'defaultValue.unit:', defaultValue.unit);
+          // theSelect.value = defaultValue.direction + '-' + defaultValue.value + '-' + defaultValue.unit;
+          // let theSelect = document.getElementById('time-select-'+activeTableId);
+          // theSelect.selectedIndex = "0";
+        }
+        console.log('horizontal table mounted, activeSortValues:', activeSortValues);
+        this.filterSelections[key] = defaultValue;
+        if (activeSortValues) {
+          this.sortField = activeSortValues;
+          let theSort = document.getElementById('time-sort-'+activeTableId);
+          theSort.value = activeSortValues;
+        }
+
+        // theSelect.selectedIndex = "1";
+      }
+    }
+
+    
+    
     if (this.$store.state.horizontalTables) {
       this.updateTableFilteredData();
+      // this.$store.commit('setHorizontalTableGroupActiveFilters', {
+      //   tableGroupId: this.item.tableGroupId,
+      //   activeFilterValues: this.filterSelections['filter-0'],
+      // });
       // this is the start of an added zone
       if(typeof this.$props.options.customClass != 'undefined') {
         if( this.$props.options.customClass.table != 'undefined'
@@ -1113,9 +1209,24 @@ export default {
       return { value, unit, direction };
     },
     handleSortValueChange(e) {
-      // console.log('handleSortValueChange running', e);
-
+      console.log('handleSortValueChange running e:', e, 'e.target.value:', e.target.value);
       const value = e.target.value;
+
+      let tableGroupId = this.item.tableGroupId;
+      let activeTableId;//, activeFilterValues;
+      // let theSelect = document.getElementById('time-select');
+      if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+        activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
+        // activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
+      }
+
+      if (this.$store.state.horizontalTables) {
+        this.$store.commit('setHorizontalTableGroupActiveSort', {
+          tableGroupId: this.item.tableGroupId,
+          activeSortValues: value,
+        });
+      }
+
       this.sortField = value;
     },
     handleFilterValueChange(e) {
@@ -1217,24 +1328,33 @@ export default {
               min = subFn(max, value);
               // console.log('max:', max, 'min', min);
             } else if (direction === 'add') {
-              max = new Date();
-              min = addFn(max, value);
+              min = new Date();
+              max = addFn(min, value);
+            } else if (direction === 'both') {
+              continue;
+              // let date = new Date();
+              // max = 
             } else {
               throw `Invalid time direction: ${direction}`;
             }
 
-            // console.log('in case time, itemsFiltered:', itemsFiltered);
-            itemsFiltered = itemsFiltered.filter(item => {
-              const itemValue = getValue(item);
-              let isBetween;
-              if (typeof itemValue === 'string') {
-                isBetween = isWithinInterval(parseISO(itemValue), { start: min, end: max });
-              } else {
-                isBetween = isWithinInterval(itemValue, { start: min, end: max });
-              }
-              // console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
-              return isBetween;
-            });
+
+            if (direction === 'both') {
+              return true;
+            } else {
+              // console.log('in case time, itemsFiltered:', itemsFiltered);
+              itemsFiltered = itemsFiltered.filter(item => {
+                const itemValue = getValue(item);
+                let isBetween;
+                if (typeof itemValue === 'string') {
+                  isBetween = isWithinInterval(parseISO(itemValue), { start: min, end: max });
+                } else {
+                  isBetween = isWithinInterval(itemValue, { start: min, end: max });
+                }
+                // console.log('itemValue:', itemValue, 'min:', min, 'max:', max, 'isBetween:', isBetween);
+                return isBetween;
+              });
+            }
             // console.log('ITEMS FILTERED BY TIME FILTER', itemsFiltered);
             break;
 
