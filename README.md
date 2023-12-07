@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 3.0.10 - 12/7/2023
+
+* changes to github push to npm
+
 ### 3.0.9 - 12/7/2023
 
 * changes for ux-review and adding new nearby data to atlas
