@@ -711,7 +711,8 @@ export default {
       let tableGroupId = this.item.tableGroupId;
       let activeTableId, activeFilterValues;
       // let theSelect = document.getElementById('time-select');
-      if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+      console.log('tableGroupId:', tableGroupId);
+      if (this.$store.state.horizontalTableGroups && tableGroupId && tableGroupId != 'undefined') {
         activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
         activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
       }
