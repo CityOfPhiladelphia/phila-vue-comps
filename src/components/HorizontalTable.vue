@@ -318,9 +318,9 @@ export default {
     let defaultFilterSelections = {};
 
     let tableGroupId = this.item.tableGroupId;
-    console.log('Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length:', Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length);
-    if (this.$store.state.horizontalTableGroups && Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length > 0) {
-      console.log('setting filter to:', this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues);
+    // console.log('Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length:', Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length);
+    if (tableGroupId && tableGroupId != 'undefined' && this.$store.state.horizontalTableGroups && Object.keys(this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues).length > 0) {
+      // console.log('setting filter to:', this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues);
       defaultFilterSelections['filter-0'] = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
     } else {
       for (let index=0; index < filters.length; index++) {
@@ -711,7 +711,8 @@ export default {
       let tableGroupId = this.item.tableGroupId;
       let activeTableId, activeFilterValues;
       // let theSelect = document.getElementById('time-select');
-      if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+      console.log('tableGroupId:', tableGroupId);
+      if (this.$store.state.horizontalTableGroups && tableGroupId && tableGroupId != 'undefined') {
         activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
         activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
       }
