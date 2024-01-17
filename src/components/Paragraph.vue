@@ -1,9 +1,16 @@
 <template>
-  <p
-    v-show="vshowComputed"
-    :style="style"
-    v-html="message"
-  />
+  <div>
+    <p
+      v-if="!i18nEnabled && vshowComputed"
+      :style="style"
+      v-html="message"
+    />
+    <p
+      v-if="i18nEnabled && vshowComputed"
+      :style="style"
+      v-html="$t(message)"
+    />
+  </div>
 </template>
 
 <script>
@@ -12,6 +19,10 @@ import TopicComponent from './TopicComponent.vue';
 export default {
   mixins: [ TopicComponent ],
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
     additionalTags() {
       return this.$props.slots.additionalTags || [];
     },
