@@ -13,6 +13,16 @@
     </a>
 
     <a
+      v-if="i18nEnabled && options.frontIcon"
+      :href="externalLinkHref"
+      target="_blank"
+    >
+      <font-awesome-icon
+        :icon="options.frontIcon"
+        aria-hidden="true"
+      />
+    </a>
+    <a
       v-if="i18nEnabled"
       :href="externalLinkHref"
       target="_blank"

@@ -1216,17 +1216,22 @@ export default {
       let tableGroupId = this.item.tableGroupId;
       let activeTableId;//, activeFilterValues;
       // let theSelect = document.getElementById('time-select');
-      if (this.$store.state.horizontalTableGroups && tableGroupId != 'undefined') {
+      if (this.$store.state.horizontalTableGroups.length && tableGroupId != 'undefined') {
         activeTableId = this.$store.state.horizontalTableGroups[tableGroupId].activeTableId;
         // activeFilterValues = this.$store.state.horizontalTableGroups[tableGroupId].activeFilterValues;
       }
 
-      if (this.$store.state.horizontalTables) {
+      if (this.$store.state.horizontalTableGroups.length) {
         this.$store.commit('setHorizontalTableGroupActiveSort', {
           tableGroupId: this.item.tableGroupId,
           activeSortValues: value,
         });
-      }
+      } //else if (this.$store.state.horizontalTables) {
+        // this.$store.commit('setHorizontalTableGroupActiveSort', {
+        //   tableGroupId: this.item.tableGroupId,
+        //   activeSortValues: value,
+        // });
+      // }
 
       this.sortField = value;
     },
