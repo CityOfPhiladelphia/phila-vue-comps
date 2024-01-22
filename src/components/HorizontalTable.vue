@@ -173,10 +173,26 @@
         <!-- this is the end of an added zone -->
 
         <div v-if="slots.title">
-          <h4 style="display:inline-block">
+          <h4
+            v-if="i18nEnabled"
+            style="display:inline-block"
+            v-html="$t(evaluateSlot(slots.title))"
+          />
+          <h5
+            v-if="i18nEnabled"
+            style="display:inline-block; color: gray"
+            v-html="$t(evaluateSlot(slots.subtitle))"
+          />
+          <h4
+            v-if="!i18nEnabled"
+            style="display:inline-block"
+          >
             {{ evaluateSlot(slots.title) }} {{ countText }}
           </h4>
-          <h5 style="display:inline-block; color: gray">
+          <h5
+            v-if="!i18nEnabled"
+            style="display:inline-block; color: gray"
+          >
             {{ evaluateSlot(slots.subtitle) }}
           </h5>
           <!-- <a
@@ -206,6 +222,20 @@
           <thead v-if="shouldShowHeaders !== false">
             <tr>
               <th
+                v-if="i18nEnabled"
+                v-for="field in fields"
+                :key="field.label"
+                :class="typeof options.customClass != 'undefined'
+                  && typeof options.customClass.th != 'undefined' ?
+                    specifySortType(field.label) : ''"
+                :title="typeof options.customClass != 'undefined'
+                  && typeof options.customClass.title != 'undefined' ?
+                    options.customClass.title : ''"
+                v-html="$t(evaluateSlot(field.label))"
+              >
+              </th>
+              <th
+                v-if="!i18nEnabled"
                 v-for="field in fields"
                 :key="field.label"
                 :class="typeof options.customClass != 'undefined'
@@ -351,6 +381,10 @@ export default {
     return initialData;
   },
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
     buttonPositionClass() {
       let value;
       if (this.$props.options.export.buttonPosition) {
