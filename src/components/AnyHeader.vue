@@ -1,34 +1,64 @@
 <template>
   <div>
     <h1
-      v-if="headerType === 'h1'"
+      v-if="!i18nEnabled && headerType === 'h1'"
+      :style="style"
+      v-html="message"
+    />
+    <h1
+      v-if="i18nEnabled && headerType === 'h1'"
+      :style="style"
+      v-html="$t(message)"
+    />
+    <h2
+      v-if="!i18nEnabled && headerType === 'h2'"
       :style="style"
       v-html="message"
     />
     <h2
-      v-if="headerType === 'h2'"
+      v-if="i18nEnabled && headerType === 'h2'"
+      :style="style"
+      v-html="$t(message)"
+    />
+    <h3
+      v-if="!i18nEnabled && headerType === 'h3'"
       :style="style"
       v-html="message"
     />
     <h3
-      v-if="headerType === 'h3'"
+      v-if="i18nEnabled && headerType === 'h3'"
+      :style="style"
+      v-html="$t(message)"
+    />
+    <h4
+      v-if="!i18nEnabled && headerType === 'h4'"
       :style="style"
       v-html="message"
     />
     <h4
-      v-if="headerType === 'h4'"
+      v-if="i18nEnabled && headerType === 'h4'"
+      :style="style"
+      v-html="$t(message)"
+    />
+    <h5
+      v-if="!i18nEnabled && headerType === 'h5'"
       :style="style"
       v-html="message"
     />
     <h5
-      v-if="headerType === 'h5'"
+      v-if="i18nEnabled && headerType === 'h5'"
+      :style="style"
+      v-html="$t(message)"
+    />
+    <h6
+      v-if="!i18nEnabled && headerType === 'h6'"
       :style="style"
       v-html="message"
     />
     <h6
-      v-if="headerType === 'h6'"
+      v-if="i18nEnabled && headerType === 'h6'"
       :style="style"
-      v-html="message"
+      v-html="$t(message)"
     />
   </div>
 </template>
@@ -40,6 +70,10 @@ export default {
   name: 'AnyHeader',
   mixins: [ TopicComponent ],
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
     headerType() {
       return this.$props.options.headerType;
     },

@@ -57,6 +57,7 @@ export default {
     Paragraph: () => import(/* webpackChunkName: "tcg_pvc_Paragraph" */'./Paragraph.vue'),
     SpanComp: () => import(/* webpackChunkName: "tcg_pvc_SpanComp" */'./SpanComp.vue'),
     List: () => import(/* webpackChunkName: "tcg_pvc_List" */'./List.vue'),
+    UnorderedList: () => import(/* webpackChunkName: "tcg_pvc_UnorderedList" */'./UnorderedList.vue'),
     HorizontalTableGroup: () => import(/* webpackChunkName: "tcg_pvc_HorizontalTableGroup" */'./HorizontalTableGroup.vue'),
     PopoverIcon: () => import(/* webpackChunkName: "tcg_pvc_PopoverIcon" */'./PopoverIcon.vue'),
     PopoverLink: () => import(/* webpackChunkName: "tcg_pvc_PopoverLink" */'./PopoverLink.vue'),
