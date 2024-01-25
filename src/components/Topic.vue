@@ -80,9 +80,10 @@ export default {
     },
     // returns the full config object for the topic
     topic() {
-      const topicKey = this.$props.topicKey;
+      const topicKey = this.$props.topicKey || this.options.topicKey;
       const topicsFiltered = this.$config.topics.filter((topic) => {
-        return topic.key === this.$props.topicKey;
+        // return topic.key === this.$props.topicKey;
+        return topic.key === topicKey;
       });
       if (topicsFiltered.length !== 1) {
         throw `Could not get single config object for topic '${topicKey}'.`;

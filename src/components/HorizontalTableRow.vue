@@ -28,8 +28,12 @@
           :field-label="field.label"
         />
         <div
-          v-if="!field.popoverLink"
+          v-if="!i18nEnabled && !field.popoverLink"
           v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+        />
+        <div
+          v-if="i18nEnabled && !field.popoverLink"
+          v-html="$t(field.label) + ': ' + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
       </b>
 
@@ -43,10 +47,16 @@
         />
         <div>
           <div
-            v-if="!field.popoverLink"
+            v-if="!i18nEnabled && !field.popoverLink"
             :style="field.customStyle"
             v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
           />
+          <div
+            v-if="i18nEnabled && !field.popoverLink"
+            :style="field.customStyle"
+            v-html="$t(field.label) + ': ' + evaluateSlot(field.value, field.transforms, field.nullValue)"
+          />
+
           <font-awesome-icon
             v-if="mobileIcon(field.mobileIcon)"
             v-show="evaluateSlot(field.hideMobileIcon)"
@@ -97,6 +107,13 @@ export default {
     return data;
   },
   computed: {
+    i18nEnabled() {
+      let value = this.$config.i18n && this.$config.i18n.enabled;
+      return value;
+    },
+    // i18nLocale() {
+    //   return this.$i18n.locale;
+    // },
     // tdClass() {
     //   let value = {
     //     'custom-class': typeof field.customClass != 'undefined'? field.customClass : '',
@@ -183,6 +200,11 @@ export default {
   //   console.log('horizontaltablerow mounted');
   // },
   methods: {
+    // getCellValue(field) {
+    //   let label = this.evaluateFieldLabel(field.label);
+    //   console.log('field.label', field.label, 'label', label, 'this.$config.i18n.data.messages[this.i18nLocale]:', this.$config.i18n.data.messages[this.i18nLocale]);
+    //   return this.$config.i18n.data.messages[this.i18nLocale][field.label] + this.evaluateSlot(field.value, field.transforms, field.nullValue)
+    // },
     // handleRowMouseover(e) {
     //   // console.log('handleRowMouseover is starting');
     //   if(!this.isMobileOrTablet && !this.$props.options.mouseOverDisabled) {

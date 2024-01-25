@@ -44,6 +44,7 @@ import TopicComponent from './components/TopicComponent.vue';
 import TopicComponentGroup from './components/TopicComponentGroup.vue';
 import Popover from './components/Popover.vue';
 import PopoverLink from './components/PopoverLink.vue';
+import UnorderedList from './components/UnorderedList.vue';
 
 import pvcStore from './store.js';
 
@@ -85,4 +86,5 @@ export {
   TopicComponentGroup,
   Popover,
   PopoverLink,
+  UnorderedList,
 };
