@@ -29,11 +29,11 @@
         />
         <div
           v-if="!i18nEnabled && !field.popoverLink"
-          v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+          v-html="evaluateFieldLabel(field.label) + addColon() + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
         <div
           v-if="i18nEnabled && !field.popoverLink"
-          v-html="$t(field.label) + ': ' + evaluateSlot(field.value, field.transforms, field.nullValue)"
+          v-html="$t(evaluateFieldLabel(field.label)) + addColon() + evaluateSlot(field.value, field.transforms, field.nullValue)"
         />
       </b>
 
@@ -49,12 +49,12 @@
           <div
             v-if="!i18nEnabled && !field.popoverLink"
             :style="field.customStyle"
-            v-html="evaluateFieldLabel(field.label) + evaluateSlot(field.value, field.transforms, field.nullValue)"
+            v-html="evaluateFieldLabel(field.label) + addColon() + evaluateSlot(field.value, field.transforms, field.nullValue)"
           />
           <div
             v-if="i18nEnabled && !field.popoverLink"
             :style="field.customStyle"
-            v-html="$t(field.label) + ': ' + evaluateSlot(field.value, field.transforms, field.nullValue)"
+            v-html="$t(evaluateFieldLabel(field.label)) + addColon() + evaluateSlot(field.value, field.transforms, field.nullValue)"
           />
 
           <font-awesome-icon
@@ -348,11 +348,18 @@ export default {
       }
     },
     evaluateFieldLabel(label) {
-      // console.log('evaluateFieldLabel, label:', label);
+      console.log('evaluateFieldLabel, label:', label);
       if (this.showFieldLabel && this.$props.totalRowField !== label.toLowerCase()) {
-        return label + ': ';
+        return label;
       }
       return '';
+    },
+    addColon() {
+      if (this.showFieldLabel) {
+        return ': ';
+      } else {
+        return ''
+      }
     },
   },
 };
@@ -373,8 +380,8 @@ export default {
     color: #000;
   }
 
-  .half-screen-table-cell {
+  /* .half-screen-table-cell {
     max-width: 300px;
-  }
+  } */
 
 </style>
