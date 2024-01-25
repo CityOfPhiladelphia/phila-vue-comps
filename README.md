@@ -35,6 +35,10 @@ To publish a new version of @phila/vue-comps to NPM:
 3. Push with tags: `git push && git push --tags`.
 4. Update wiki docs to reflect new version and/or dependency changes.
 
+### 3.0.12 - 1/25/2024
+
+* fixes cells of horizontal tables
+
 ### 3.0.11 - 1/25/2024
 
 * additions to components for the creation of the voter hub app, which requires translations in all components
