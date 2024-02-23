@@ -25,9 +25,7 @@
     <div
       v-if="this.$props.options.subtitle && i18nEnabled"
       v-html="$t(evaluateSlot(this.$props.options.subtitle))"
-    >
-      <!-- {{ $t(this.$props.options.subtitle) }} -->
-    </div>
+    />
 
     <table :id="this.$props.options.id">
       <tbody>
