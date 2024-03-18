@@ -192,13 +192,13 @@ export default {
     },
   },
   created() {
-    // console.log('horizontaltablerow created');
+    console.log('horizontaltablerow created');
     window.addEventListener('resize', this.handleWindowResize);
     this.handleWindowResize();
   },
-  // mounted() {
-  //   console.log('horizontaltablerow mounted');
-  // },
+  mounted() {
+    console.log('horizontaltablerow mounted');
+  },
   methods: {
     // getCellValue(field) {
     //   let label = this.evaluateFieldLabel(field.label);

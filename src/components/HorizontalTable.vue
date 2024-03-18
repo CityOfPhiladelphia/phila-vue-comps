@@ -252,7 +252,7 @@
           <tbody>
             <horizontal-table-row
               v-for="item in itemsLimited"
-              :key="item._featureId"
+              :key="getFeatureId(item)"
               :item="item"
               :fields="fields"
               :has-overlay="hasOverlay"
@@ -311,6 +311,9 @@
 </template>
 
 <script>
+
+import { defineAsyncComponent } from 'vue';
+
 import TopicComponent from './TopicComponent.vue';
 import ButtonCompLight from './ButtonCompLight.vue';
 // import HorizontalTableRow from './HorizontalTableRow.vue';
@@ -330,8 +333,10 @@ const DEFAULT_SORT_FIELDS = [
 export default {
   components: {
     ButtonCompLight: () => import(/* webpackChunkName: "pvc_pvc_ButtonCompLight" */'./ButtonCompLight.vue'),
-    HorizontalTableRow: () => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue'),
-    ExternalLink: () => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue'),
+    HorizontalTableRow: defineAsyncComponent(() => import(/* webpackChunkName: "ht_pvc_HorizontalTableRow" */'./HorizontalTableRow.vue')),
+    ExternalLink: defineAsyncComponent(() => import(/* webpackChunkName: "pvc_ExternalLink" */'./ExternalLink.vue')),
+    // HorizontalTableRow,
+    // ExternalLink,
   },
   mixins: [ TopicComponent, ButtonCompLight ],
   data() {
@@ -870,6 +875,15 @@ export default {
     }
   },
   methods: {
+    getFeatureId(item) {
+      let value;
+      if (item._featureId){
+        value = item._featureId;
+      } else {
+        value = item.cartodb_id;
+      }
+      return value;
+    },
     // this is the start of an added zone
     specifySortType(field){
       return this.$props.options.customClass.th(field);
