@@ -26,32 +26,49 @@
       v-if="this.$props.options.subtitle && i18nEnabled"
       v-html="$t(evaluateSlot(this.$props.options.subtitle))"
     >
-      <!-- {{ $t(this.$props.options.subtitle) }} -->
     </div>
 
     <table :id="this.$props.options.id">
       <tbody>
         <tr
           v-for="(field, index) in slots.fields"
+          class="adjustable-table-row"
+          height="20px"
           :key="index"
         >
           <th
             :style="styles.th || ''"
+            class="adjustable-table-row"
             v-html="$t(evaluateSlot(field.label))"
           />
 
           <td
             v-if="hasData && !i18nEnabled"
-            v-html="evaluateSlot(field.value, field.transforms, nullValue)"
-          />
+          >
+            <div
+              class="adjustable-table-row"
+              v-html="evaluateSlot(field.value, field.transforms, nullValue)"
+            />
+          </td>
+
           <td
             v-if="hasData && i18nEnabled && !field.link"
-            v-html="$t(evaluateSlot(field.value, field.transforms, nullValue))"
-          />
+          >
+            <div
+              class="adjustable-table-row"
+              v-html="$t(evaluateSlot(field.value, field.transforms, nullValue))"
+            />
+          </td>
+
           <td
             v-if="hasData && i18nEnabled && field.link"
-            v-html="'<a target=`_blank` href=' + field.link + '>'+$t(evaluateSlot(field.value, field.transforms, nullValue))+'</a>'"
-          />
+          >
+            <div
+              class="adjustable-table-row"
+              v-html="'<a target=`_blank` href=' + field.link + '>'+$t(evaluateSlot(field.value, field.transforms, nullValue))+'</a>'"
+            />
+          </td>
+
           <!-- <td
             v-if="hasData && i18nEnabled && field.translation == 'partial'"
             v-html="calculatePartialTranslation(evaluateSlot(field.value, field.transforms, nullValue))"
@@ -59,6 +76,7 @@
 
           <td
             v-if="!hasData"
+            class="adjustable-table-row"
             v-html="''"
           />
         </tr>
@@ -179,6 +197,30 @@ export default {
 </script>
 
 <style scoped>
+
+  /* tr {
+    height: 20px;
+  }
+
+  .adjustable-table-row {
+    height: 20px !important;
+  } */
+
+  /* tbody tr th {
+    max-height: 30px;
+    overflow: hidden;
+  }
+
+  tbody tr td div {
+    max-height: 30px;
+    overflow: hidden;
+  } */
+
+  .adjustable-table-row {
+    max-height: 30px;
+    overflow: hidden;
+  }
+
   table {
     margin: 0;
   }
