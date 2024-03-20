@@ -38,6 +38,8 @@
 <script>
 import generateUniqueId from '../util/unique-id';
 
+import { defineAsyncComponent } from 'vue'
+
 export default {
   name: 'TopicComponentGroup',
   components: {
@@ -65,8 +67,8 @@ export default {
     TabGroup: () => import(/* webpackChunkName: "tcg_pvc_TabGroup" */'./TabGroup.vue'),
     TabGroupBuildings: () => import(/* webpackChunkName: "tcg_pvc_TabGroupBuildings" */'./TabGroupBuildings.vue'),
     BadgeCustom: () => import(/* webpackChunkName: "tcg_pvc_BadgeCustom" */'./BadgeCustom.vue'),
-    Topic: () => import(/* webpackChunkName: "tcg_pvc_Topic" */'./Topic.vue'),
-    TopicSet: () => import(/* webpackChunkName: "tcg_pvc_TopicSet" */'./TopicSet.vue'),
+    Topic: defineAsyncComponent(() => import(/* webpackChunkName: "tcg_pvc_Topic" */'./Topic.vue')),
+    TopicSet: defineAsyncComponent(() => import(/* webpackChunkName: "tcg_pvc_TopicSet" */'./TopicSet.vue')),
     AnyHeader: () => import(/* webpackChunkName: "tcg_pvc_AnyHeader" */'./AnyHeader.vue'),
     CheckboxSet: () => import(/* webpackChunkName: "tcg_pvc_CheckboxSet" */'./CheckboxSet.vue'),
     RadioButtonSet: () => import(/* webpackChunkName: "tcg_pvc_RadioButtonSet" */'./RadioButtonSet.vue'),

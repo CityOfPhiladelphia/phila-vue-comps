@@ -21,11 +21,12 @@ export default {
     Topic,
   },
   mixins: [ TopicComponent ],
-  // mounted() {
+  mounted() {
+    console.log('TopicSet mounted is running, this.$config.topics:', this.$config.topics);
   //   if (this.$store.state.activeTopic === null || this.$store.state.activeTopic === '') {
   //     this.setDefaultTopicActive();
   //   }
-  // },
+  },
   methods: {
     getMoreRecords(dataSource, highestPageRetrieved) {
       // console.log('TopicSet getMoreRecords is running, dataSource:', dataSource, 'highestPageRetrieved:', highestPageRetrieved);

@@ -55,7 +55,6 @@
       class="topic-body"
       v-html="errorMessage"
     >
-      <!-- Could not locate records for that address. -->
     </div>
   </div>
 </template>
@@ -200,7 +199,8 @@ export default {
 
         let topicStatus;
         const sourceStatuses = dataSources.map(dataSource => {
-          const targetsFn = this.$config.dataSources[dataSource].targets;
+          // const targetsFn = this.$config.dataSources[dataSource].targets;
+          const targetsFn = false;
 
           // if the data source is configured for targets
           if (targetsFn) {
@@ -221,6 +221,7 @@ export default {
             // if the data source is not configured for targets, just check that
             // it has data
           }
+          console.log('dataSource:', dataSource, 'this.$store.state.sources:', this.$store.state.sources, 'this.$store.state.sources[dataSource]:', this.$store.state.sources[dataSource]);
           return [ this.$store.state.sources[dataSource].status ];
 
         });

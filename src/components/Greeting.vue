@@ -11,7 +11,6 @@
       class="greeting"
       v-html="message"
     >
-      <!-- {{ this.$props.message }} -->
     </div>
 
     <div
