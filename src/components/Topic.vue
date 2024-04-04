@@ -75,7 +75,6 @@ export default {
         return true;
       }
       return false;
-
     },
     // returns the full config object for the topic
     topic() {
