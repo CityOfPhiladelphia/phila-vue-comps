@@ -21,7 +21,7 @@
     "axios": "^0.19.0",
     "date-fns": "^2.29.2",
     "escape-html": "^1.0.3",
-    "jspdf": "^1.4.1",
+    "jspdf": "^4.2.1",
     "jspdf-autotable": "^3.5.25",
     "lodash-es": "^4.17.14",
     "phila-standards": "^1.0.2",
